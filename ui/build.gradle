@@ -1,0 +1,96 @@
+/*
+ * Copyright 2018 Stéphane Baiget
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+kotlin { experimental { coroutines 'enable' } }
+
+android {
+
+    buildToolsVersion Android.buildToolsVersion
+    compileSdkVersion Android.compileSdkVersion
+
+    compileOptions {
+        sourceCompatibility Versions.java
+        targetCompatibility Versions.java
+    }
+
+    defaultConfig {
+        versionCode Android.versionCode
+        versionName Android.versionName
+        minSdkVersion Android.minSdkVersion
+        targetSdkVersion Android.targetSdkVersion
+        vectorDrawables.useSupportLibrary = true
+        resConfigs "en", "fr"
+    }
+
+//    signingConfigs {
+//        release {
+//            storeFile file(appSigning.storeFilePath)
+//            storePassword appSigning.storePassword
+//            keyAlias appSigning.keyAlias
+//            keyPassword appSigning.keyPassword
+//        }
+//    }
+
+    buildTypes {
+        release {
+            //signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+            debuggable false
+            jniDebuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard.pro'
+        }
+
+        debug {
+            minifyEnabled false
+            debuggable true
+            applicationIdSuffix '.debug'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/rxjava.properties'
+    }
+}
+
+dependencies {
+    implementation project(':cache')
+    implementation project(':remote')
+    implementation project(':data')
+    implementation project(':domain')
+    implementation Libs.kotlinStd
+    implementation Libs.coroutinesCore
+    implementation Libs.coroutinesAndroid
+    implementation Libs.anko
+    implementation Libs.appcompat
+    implementation Libs.vectorDrawable
+    implementation Libs.recyclerview
+    implementation Libs.material
+    implementation Libs.constraintLayout
+    implementation Libs.ktx
+    implementation Libs.lifecycle
+    implementation Libs.timber
+    implementation Libs.koinAndroid
+}

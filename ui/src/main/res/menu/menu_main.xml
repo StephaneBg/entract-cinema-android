@@ -14,18 +14,18 @@
   ~  limitations under the License.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/chart"
+        android:id="@+id/today"
         android:icon="@drawable/ic_local_movies_black_24dp"
         android:title="@string/menu_today"
-        app:showAsAction="always" />
+        />
 
     <item
-        android:id="@+id/clear"
-        android:icon="@drawable/ic_camera_roll_black_24dp"
+        android:id="@+id/coming"
+        android:icon="@drawable/ic_video_camera_black_24dp"
         android:title="@string/menu_coming"
-        app:showAsAction="always" />
+        />
 </menu>

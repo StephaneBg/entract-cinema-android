@@ -14,20 +14,22 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.ui.base
+package com.cinema.entract.ui.view.today
 
-import androidx.fragment.app.Fragment
-import com.cinema.entract.remote.network.NoConnectivityException
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.cinema.entract.ui.R
-import java.net.SocketTimeoutException
+import com.cinema.entract.ui.base.BaseLceFragment
 
-open class BaseFragment : Fragment() {
+class TodayFragment : BaseLceFragment<RecyclerView>() {
 
-    open fun getErrorMessage(throwable: Throwable?): String {
-        return when (throwable) {
-            is NoConnectivityException -> getString(R.string.error_no_connectivity)
-            is SocketTimeoutException -> getString(R.string.error_no_connectivity)
-            else -> getString(R.string.error_general)
-        }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+        inflater.inflate(R.layout.fragment_today, container, false)
+
+    companion object {
+        fun newInstance(): TodayFragment = TodayFragment()
     }
 }

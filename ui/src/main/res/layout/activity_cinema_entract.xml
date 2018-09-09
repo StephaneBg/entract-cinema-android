@@ -29,7 +29,7 @@
         >
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/headerContainer"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:title="@string/app_name"
@@ -37,17 +37,18 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
-        android:id="@+id/lapContainer"
+        android:id="@+id/mainContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/gray"
+        app:elevation="4dp"
         app:menu="@menu/menu_main"
         />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

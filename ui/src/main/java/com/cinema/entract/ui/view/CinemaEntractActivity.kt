@@ -19,11 +19,39 @@ package com.cinema.entract.ui.view
 import android.os.Bundle
 import com.cinema.entract.ui.R
 import com.cinema.entract.ui.base.BaseActivity
+import com.cinema.entract.ui.ext.addFragment
+import com.cinema.entract.ui.ext.replaceFragment
+import com.cinema.entract.ui.view.today.TodayFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import org.jetbrains.anko.find
 
 class CinemaEntractActivity : BaseActivity() {
+
+    private lateinit var bottomNav: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cinema_entract)
+        initWidgets()
+        initBottomNavigation()
+
+        savedInstanceState ?: addFragment(R.id.mainContainer, TodayFragment.newInstance())
+    }
+
+    private fun initWidgets() {
+        bottomNav = find(R.id.bottomNavigation)
+    }
+
+    private fun initBottomNavigation() {
+        bottomNav.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.today -> {
+                    replaceFragment(R.id.mainContainer, TodayFragment.newInstance())
+                    true
+                }
+                R.id.coming -> TODO()
+                else -> false
+            }
+        }
     }
 }

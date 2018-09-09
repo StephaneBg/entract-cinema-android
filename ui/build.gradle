@@ -16,7 +16,6 @@
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 kotlin { experimental { coroutines 'enable' } }
 
@@ -76,7 +75,7 @@ android {
 }
 
 dependencies {
-    implementation project(':cache')
+//    implementation project(':cache')
     implementation project(':remote')
     implementation project(':data')
     implementation project(':domain')

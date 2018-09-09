@@ -14,20 +14,15 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.ui.base
+package com.cinema.entract.remote.network
 
-import androidx.fragment.app.Fragment
-import com.cinema.entract.remote.network.NoConnectivityException
-import com.cinema.entract.ui.R
-import java.net.SocketTimeoutException
+import android.content.Context
+import android.net.ConnectivityManager
 
-open class BaseFragment : Fragment() {
+object NetworkUtils {
 
-    open fun getErrorMessage(throwable: Throwable?): String {
-        return when (throwable) {
-            is NoConnectivityException -> getString(R.string.error_no_connectivity)
-            is SocketTimeoutException -> getString(R.string.error_no_connectivity)
-            else -> getString(R.string.error_general)
-        }
+    fun isNetworkAvailable(context: Context): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return connectivityManager.activeNetworkInfo?.isConnected ?: false
     }
 }

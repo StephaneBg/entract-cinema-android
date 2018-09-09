@@ -21,9 +21,9 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 
-inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
+inline fun FragmentManager.inTransaction(function: FragmentTransaction.() -> Unit) {
     val fragmentTransaction = beginTransaction()
-    fragmentTransaction.func()
+    fragmentTransaction.function()
     fragmentTransaction.commit()
 }
 

@@ -13,13 +13,12 @@
   ~  See the License for the specific language governing permissions and
   ~  limitations under the License.
   -->
-<resources>
 
-    <string name="app_name" translatable="false">Entract Cinema</string>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
 
-    <string name="menu_today">Séances du jour</string>
-    <string name="menu_coming">Programme</string>
-
-    <string name="error_no_connectivity">Aucun réseau/nCliquez pour réessayer</string>
-    <string name="error_general">Une erreur est survenue</string>
-</resources>
+</LinearLayout>

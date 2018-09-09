@@ -14,20 +14,20 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.ui.base
+package com.cinema.entract.remote.network
 
-import androidx.fragment.app.Fragment
-import com.cinema.entract.remote.network.NoConnectivityException
-import com.cinema.entract.ui.R
-import java.net.SocketTimeoutException
+import android.content.Context
 
-open class BaseFragment : Fragment() {
+import okhttp3.Interceptor
+import okhttp3.Response
 
-    open fun getErrorMessage(throwable: Throwable?): String {
-        return when (throwable) {
-            is NoConnectivityException -> getString(R.string.error_no_connectivity)
-            is SocketTimeoutException -> getString(R.string.error_no_connectivity)
-            else -> getString(R.string.error_general)
+class ConnectivityInterceptor(private val context: Context) : Interceptor {
+
+    override fun intercept(chain: Interceptor.Chain): Response {
+        if (NetworkUtils.isNetworkAvailable(context)) {
+            return chain.proceed(chain.request())
+        } else {
+            throw NoConnectivityException()
         }
     }
 }

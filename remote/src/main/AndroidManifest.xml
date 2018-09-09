@@ -14,4 +14,10 @@
   ~  limitations under the License.
   -->
 
-<manifest package="com.cinema.entract.remote"/>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.cinema.entract.remote"
+    >
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+</manifest>

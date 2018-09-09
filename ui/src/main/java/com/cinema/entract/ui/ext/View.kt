@@ -16,12 +16,12 @@
 
 package com.cinema.entract.ui.ext
 
-import androidx.annotation.LayoutRes
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import androidx.annotation.LayoutRes
 
 fun View.show() {
     animate()
@@ -54,7 +54,7 @@ fun EditText.onImeActionDone(function: () -> Unit) {
     setOnEditorActionListener { _, actionId, _ ->
         when (actionId) {
             EditorInfo.IME_ACTION_DONE -> {
-                function.invoke()
+                function()
                 true
             }
             else -> false

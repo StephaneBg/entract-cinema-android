@@ -14,20 +14,9 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.ui.base
+package com.cinema.entract.ui.ext
 
+import android.view.View
 import androidx.fragment.app.Fragment
-import com.cinema.entract.remote.network.NoConnectivityException
-import com.cinema.entract.ui.R
-import java.net.SocketTimeoutException
 
-open class BaseFragment : Fragment() {
-
-    open fun getErrorMessage(throwable: Throwable?): String {
-        return when (throwable) {
-            is NoConnectivityException -> getString(R.string.error_no_connectivity)
-            is SocketTimeoutException -> getString(R.string.error_no_connectivity)
-            else -> getString(R.string.error_general)
-        }
-    }
-}
+inline fun <reified T : View> Fragment.find(id: Int): T = view?.findViewById(id) as T

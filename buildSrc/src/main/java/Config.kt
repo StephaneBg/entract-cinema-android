@@ -32,22 +32,6 @@
 
 import org.gradle.api.JavaVersion
 
-/*
- * Copyright 2018 Stéphane Baiget
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 object Versions {
     val java = JavaVersion.VERSION_1_8
     val androidGradle = "3.2.0-rc02"
@@ -60,6 +44,8 @@ object Versions {
     val lifecyle = "2.0.0-beta01"
     val room = "2.0.0-alpha1"
     val timber = "4.5.1"
+    val retrofit = "2.4.0"
+    val retrofitCoroutines = "1.0.0"
     val moshi = "1.5.0"
     val anko = "0.10.5"
     val koin = "1.0.0-RC-1"
@@ -82,7 +68,7 @@ object Android {
 }
 
 object Libs {
-    val kotlinStd = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
+    val kotlinStd = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}"
     val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
     val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
     val anko = "org.jetbrains.anko:anko-commons:${Versions.anko}"
@@ -100,6 +86,9 @@ object Libs {
     val material = "com.google.android.material:material:${Versions.material}"
 
     val timber = "com.jakewharton.timber:timber:${Versions.timber}"
+    val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
+    val retrofitCoroutines =
+        "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-experimental-adapter:${Versions.retrofitCoroutines}"
     val moshi = "com.squareup.moshi:moshi:${Versions.moshi}"
     val koinAndroid = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
 }

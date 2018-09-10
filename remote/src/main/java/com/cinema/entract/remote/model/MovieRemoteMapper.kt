@@ -14,18 +14,21 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.remote.di
+package com.cinema.entract.remote.model
 
 import com.cinema.entract.data.model.MovieData
-import com.cinema.entract.data.repo.CinemaRemote
-import com.cinema.entract.remote.CinemaRemoteImpl
-import com.cinema.entract.remote.model.MovieRemote
-import com.cinema.entract.remote.model.MovieRemoteMapper
-import com.cinema.entract.remote.model.RemoteMapper
-import org.koin.dsl.module.module
 
-val remoteModule = module {
+class MovieRemoteMapper : RemoteMapper<MovieRemote, MovieData> {
 
-    factory { CinemaRemoteImpl(get(), get()) as CinemaRemote }
-    single { MovieRemoteMapper() as RemoteMapper<MovieRemote, MovieData> }
+    override fun mapFromRemote(model: MovieRemote) = MovieData(
+        model.titre,
+        model.date,
+        model.horaire,
+        model.troisDimension,
+        model.vo,
+        model.affiche,
+        model.duree,
+        model.annee,
+        model.synopsis
+    )
 }

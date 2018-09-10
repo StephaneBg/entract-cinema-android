@@ -16,7 +16,8 @@
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+
+kotlin { experimental { coroutines 'enable' } }
 
 android {
 
@@ -53,10 +54,7 @@ android {
 dependencies {
     implementation project(':domain')
     implementation Libs.kotlinStd
-    implementation Libs.room
-    implementation Libs.moshi
+    implementation Libs.coroutinesCore
     implementation Libs.koinAndroid
     implementation Libs.timber
-
-    kapt Libs.roomCompiler
 }

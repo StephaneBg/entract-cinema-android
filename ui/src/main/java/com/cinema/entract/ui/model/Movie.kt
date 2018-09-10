@@ -14,14 +14,16 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.remote.network
+package com.cinema.entract.ui.model
 
-import kotlinx.coroutines.experimental.Deferred
-import retrofit2.http.GET
-import retrofit2.http.Query
-
-interface CinemaEntractApi {
-
-    @GET("today")
-    fun getToday(@Query("jour") day: String): Deferred<Any>
-}
+data class Movie(
+    val title: String,
+    val date: String,
+    val schedule: String,
+    val threeDimension: Boolean,
+    val originalVersion: Boolean,
+    val coverUrl: String,
+    val duration: String,
+    val yearOfProduction: String,
+    val synopsis: String
+)

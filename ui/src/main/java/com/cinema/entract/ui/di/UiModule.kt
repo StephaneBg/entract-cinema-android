@@ -16,7 +16,13 @@
 
 package com.cinema.entract.ui.di
 
+import com.cinema.entract.data.model.MovieData
+import com.cinema.entract.ui.model.Mapper
+import com.cinema.entract.ui.model.Movie
+import com.cinema.entract.ui.model.MovieMapper
 import org.koin.dsl.module.module
 
 val uiModule = module {
+
+    single { MovieMapper() as Mapper<Movie, MovieData> }
 }

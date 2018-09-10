@@ -14,10 +14,11 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.remote.model
+package com.cinema.entract.data.repo
 
-interface Mapper<Remote, Data> {
+import com.cinema.entract.data.model.MovieData
 
-    fun mapFromCache(model: Remote): Data
-    fun mapToCache(model: Data, gameId: Long): Remote
+interface CinemaDataStore {
+
+    suspend fun getMovies(day: String): List<MovieData>
 }

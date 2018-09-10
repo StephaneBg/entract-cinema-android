@@ -14,18 +14,20 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.remote.di
+package com.cinema.entract.remote
 
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.repo.CinemaRemote
-import com.cinema.entract.remote.CinemaRemoteImpl
 import com.cinema.entract.remote.model.MovieRemote
-import com.cinema.entract.remote.model.MovieRemoteMapper
 import com.cinema.entract.remote.model.RemoteMapper
-import org.koin.dsl.module.module
 
-val remoteModule = module {
+class CinemaRemoteImpl(
+    private val service: CinemaService,
+    private val mapper: RemoteMapper<MovieRemote, MovieData>
+) : CinemaRemote {
 
-    factory { CinemaRemoteImpl(get(), get()) as CinemaRemote }
-    single { MovieRemoteMapper() as RemoteMapper<MovieRemote, MovieData> }
+    override suspend fun getMovies(day: String): List<MovieData> {
+        val movies = service.getMovies(day).await()
+        return movies.map { mapper.mapFromRemote(it) }
+    }
 }

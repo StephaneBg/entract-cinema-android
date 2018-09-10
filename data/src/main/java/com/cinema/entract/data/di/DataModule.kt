@@ -14,9 +14,17 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.cache.di
+package com.cinema.entract.data.di
 
+import com.cinema.entract.data.model.DataMapper
+import com.cinema.entract.data.model.MovieData
+import com.cinema.entract.data.model.MovieDataMapper
+import com.cinema.entract.data.source.CinemaDataStoreFactory
+import com.cinema.entract.domain.model.MovieDomain
 import org.koin.dsl.module.module
 
 val dataModule = module {
+
+    single { MovieDataMapper() as DataMapper<MovieData, MovieDomain> }
+    factory { CinemaDataStoreFactory(get(), get()) }
 }

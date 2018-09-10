@@ -14,18 +14,19 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.remote.di
+package com.cinema.entract.data.source
 
-import com.cinema.entract.data.model.MovieData
-import com.cinema.entract.data.repo.CinemaRemote
-import com.cinema.entract.remote.CinemaRemoteImpl
-import com.cinema.entract.remote.model.MovieRemote
-import com.cinema.entract.remote.model.MovieRemoteMapper
-import com.cinema.entract.remote.model.RemoteMapper
-import org.koin.dsl.module.module
+import com.cinema.entract.data.repo.CinemaDataStore
 
-val remoteModule = module {
+class CinemaDataStoreFactory(
+    private val cinemaCacheDataStore: CinemaCacheDataStore,
+    private val cinemaRemoteDataStore: CinemaRemoteDataStore
+) {
 
-    factory { CinemaRemoteImpl(get(), get()) as CinemaRemote }
-    single { MovieRemoteMapper() as RemoteMapper<MovieRemote, MovieData> }
+    // TODO Add logic for cache management
+    fun retrieveDataStore(): CinemaDataStore = retrieveRemoteDataStore()
+
+    fun retrieveCacheDataStore() = cinemaCacheDataStore
+
+    fun retrieveRemoteDataStore() = cinemaRemoteDataStore
 }

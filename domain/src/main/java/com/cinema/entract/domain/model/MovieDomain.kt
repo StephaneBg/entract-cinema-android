@@ -14,10 +14,16 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.cache.model
+package com.cinema.entract.domain.model
 
-interface Mapper<Cache, Data> {
-
-    fun mapFromCache(model: Cache): Data
-    fun mapToCache(model: Data, gameId: Long): Cache
-}
+data class MovieDomain(
+    val title: String,
+    val date: String,
+    val schedule: String,
+    val threeDimension: Boolean,
+    val originalVersion: Boolean,
+    val coverUrl: String,
+    val duration: String,
+    val yearOfProduction: String,
+    val synopsis: String
+)

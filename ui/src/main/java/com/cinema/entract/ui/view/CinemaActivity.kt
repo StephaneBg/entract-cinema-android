@@ -25,7 +25,7 @@ import com.cinema.entract.ui.view.today.TodayFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.jetbrains.anko.find
 
-class CinemaEntractActivity : BaseActivity() {
+class CinemaActivity : BaseActivity() {
 
     private lateinit var bottomNav: BottomNavigationView
 

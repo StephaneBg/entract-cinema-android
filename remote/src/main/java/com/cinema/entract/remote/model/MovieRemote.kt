@@ -14,18 +14,24 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.remote.di
+package com.cinema.entract.remote.model
 
-import com.cinema.entract.data.model.MovieData
-import com.cinema.entract.data.repo.CinemaRemote
-import com.cinema.entract.remote.CinemaRemoteImpl
-import com.cinema.entract.remote.model.MovieRemote
-import com.cinema.entract.remote.model.MovieRemoteMapper
-import com.cinema.entract.remote.model.RemoteMapper
-import org.koin.dsl.module.module
+import com.squareup.moshi.Json
 
-val remoteModule = module {
-
-    factory { CinemaRemoteImpl(get(), get()) as CinemaRemote }
-    single { MovieRemoteMapper() as RemoteMapper<MovieRemote, MovieData> }
-}
+data class MovieRemote(
+    val id_film: String,
+    val titre: String,
+    val date: String,
+    val horaire: String,
+    @Json(name = "3d") val troisDimension: Boolean,
+    val vo: Boolean,
+    val affiche: String,
+    val duree: String,
+    val annee: String,
+    val pays: String,
+    val style: String,
+    val de: String,
+    val avec: String,
+    val synopsis: String,
+    val bande_annonce: String
+)

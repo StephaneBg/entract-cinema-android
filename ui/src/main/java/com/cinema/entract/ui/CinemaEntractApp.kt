@@ -17,9 +17,10 @@
 package com.cinema.entract.ui
 
 import android.app.Application
-import com.cinema.entract.cache.di.dataModule
-import com.cinema.entract.cache.di.remoteModule
+import com.cinema.entract.cache.di.cacheModule
+import com.cinema.entract.data.di.dataModule
 import com.cinema.entract.domain.di.domainModule
+import com.cinema.entract.remote.di.remoteModule
 import com.cinema.entract.ui.di.uiModule
 import org.koin.android.ext.android.startKoin
 import org.koin.log.EmptyLogger
@@ -36,6 +37,7 @@ class CinemaEntractApp : Application() {
         startKoin(
             this,
             listOf(
+                cacheModule,
                 remoteModule,
                 dataModule,
                 domainModule,

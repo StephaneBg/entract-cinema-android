@@ -14,18 +14,15 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.remote.di
+package com.cinema.entract.remote
 
-import com.cinema.entract.data.model.MovieData
-import com.cinema.entract.data.repo.CinemaRemote
-import com.cinema.entract.remote.CinemaRemoteImpl
 import com.cinema.entract.remote.model.MovieRemote
-import com.cinema.entract.remote.model.MovieRemoteMapper
-import com.cinema.entract.remote.model.RemoteMapper
-import org.koin.dsl.module.module
+import kotlinx.coroutines.experimental.Deferred
+import retrofit2.http.GET
+import retrofit2.http.Query
 
-val remoteModule = module {
+interface CinemaService {
 
-    factory { CinemaRemoteImpl(get(), get()) as CinemaRemote }
-    single { MovieRemoteMapper() as RemoteMapper<MovieRemote, MovieData> }
+    @GET("getFilmsJour.php")
+    fun getMovies(@Query("jour") day: String): Deferred<List<MovieRemote>>
 }

@@ -16,24 +16,25 @@
 
 package com.cinema.entract.data.di
 
-import com.cinema.entract.data.model.DataMapper
-import com.cinema.entract.data.model.MovieData
+import com.cinema.entract.data.model.DayDataMapper
 import com.cinema.entract.data.model.MovieDataMapper
+import com.cinema.entract.data.model.WeekDataMapper
 import com.cinema.entract.data.repository.CinemaRepositoryImpl
 import com.cinema.entract.data.source.CinemaCacheDataStore
 import com.cinema.entract.data.source.CinemaDataStoreFactory
 import com.cinema.entract.data.source.CinemaRemoteDataStore
-import com.cinema.entract.domain.model.MovieDomain
 import com.cinema.entract.domain.repository.CinemaRepository
 import org.koin.dsl.module.module
 
 val dataModule = module {
 
-    single { MovieDataMapper() as DataMapper<MovieData, MovieDomain> }
+    single { MovieDataMapper() }
+    single { DayDataMapper(get()) }
+    single { WeekDataMapper(get()) }
 
-    factory { CinemaDataStoreFactory(get(), get()) }
     factory { CinemaRemoteDataStore(get()) }
     factory { CinemaCacheDataStore(get()) }
+    factory { CinemaDataStoreFactory(get(), get()) }
 
-    factory { CinemaRepositoryImpl(get(), get()) as CinemaRepository }
+    factory { CinemaRepositoryImpl(get(), get(), get()) as CinemaRepository }
 }

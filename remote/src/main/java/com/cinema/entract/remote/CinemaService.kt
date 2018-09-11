@@ -17,6 +17,7 @@
 package com.cinema.entract.remote
 
 import com.cinema.entract.remote.model.MovieRemote
+import com.cinema.entract.remote.model.WeekRemote
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
 import kotlinx.coroutines.experimental.Deferred
 import retrofit2.Retrofit
@@ -28,6 +29,9 @@ interface CinemaService {
 
     @GET("getFilmsJour.php")
     fun getMovies(@Query("jour") day: String): Deferred<List<MovieRemote>>
+
+    @GET("getProgramme.php")
+    fun getSchedule(): Deferred<List<WeekRemote>>
 }
 
 fun createService(): CinemaService = Retrofit.Builder()

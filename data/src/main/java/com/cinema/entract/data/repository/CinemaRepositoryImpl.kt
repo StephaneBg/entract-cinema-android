@@ -16,17 +16,22 @@
 
 package com.cinema.entract.data.repository
 
-import com.cinema.entract.data.model.DataMapper
-import com.cinema.entract.data.model.MovieData
+import com.cinema.entract.data.model.MovieDataMapper
+import com.cinema.entract.data.model.WeekDataMapper
 import com.cinema.entract.data.source.CinemaDataStoreFactory
 import com.cinema.entract.domain.model.MovieDomain
+import com.cinema.entract.domain.model.WeekDomain
 import com.cinema.entract.domain.repository.CinemaRepository
 
 class CinemaRepositoryImpl(
     private val dataStoreFactory: CinemaDataStoreFactory,
-    private val mapper: DataMapper<MovieData, MovieDomain>
+    private val movieMapper: MovieDataMapper,
+    private val weekMapper: WeekDataMapper
 ) : CinemaRepository {
 
     override suspend fun getMovies(day: String): List<MovieDomain> =
-        dataStoreFactory.retrieveDataStore().getMovies(day).map { mapper.mapToDomain(it) }
+        dataStoreFactory.retrieveDataStore().getMovies(day).map { movieMapper.mapToDomain(it) }
+
+    override suspend fun getSchedule(): List<WeekDomain> =
+        dataStoreFactory.retrieveDataStore().getSchedule().map { weekMapper.mapToDomain(it) }
 }

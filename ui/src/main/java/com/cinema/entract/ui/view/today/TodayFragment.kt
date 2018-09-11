@@ -26,8 +26,11 @@ import com.cinema.entract.ui.base.BaseLceFragment
 
 class TodayFragment : BaseLceFragment<RecyclerView>() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.fragment_today, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? = inflater.inflate(R.layout.fragment_today, container, false)
 
     companion object {
         fun newInstance(): TodayFragment = TodayFragment()

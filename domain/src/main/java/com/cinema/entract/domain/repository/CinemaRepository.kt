@@ -17,9 +17,12 @@
 package com.cinema.entract.domain.repository
 
 import com.cinema.entract.domain.model.MovieDomain
+import com.cinema.entract.domain.model.WeekDomain
 
 
 interface CinemaRepository {
 
     suspend fun getMovies(day: String): List<MovieDomain>
+
+    suspend fun getSchedule(): List<WeekDomain>
 }

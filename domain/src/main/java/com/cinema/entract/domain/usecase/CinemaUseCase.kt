@@ -17,6 +17,7 @@
 package com.cinema.entract.domain.usecase
 
 import com.cinema.entract.domain.model.MovieDomain
+import com.cinema.entract.domain.model.WeekDomain
 import com.cinema.entract.domain.repository.CinemaRepository
 import java.util.*
 
@@ -24,4 +25,7 @@ class CinemaUseCase(private val repo: CinemaRepository) : BaseUseCase() {
 
     suspend fun getMovies(day: Date?): List<MovieDomain> =
         asyncAwait { repo.getMovies("11-09-2018") }
+
+    suspend fun getSchedule(): List<WeekDomain> =
+        asyncAwait { repo.getSchedule().filter { it.hasMovies } }
 }

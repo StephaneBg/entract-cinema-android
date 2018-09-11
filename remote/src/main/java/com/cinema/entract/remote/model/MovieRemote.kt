@@ -19,19 +19,19 @@ package com.cinema.entract.remote.model
 import com.squareup.moshi.Json
 
 data class MovieRemote(
-    val id_film: String,
-    val titre: String,
-    val date: String,
-    val horaire: String,
-    @Json(name = "3d") val troisDimension: Boolean,
-    val vo: Boolean,
-    val affiche: String,
-    val duree: String,
-    val annee: String,
-    val pays: String,
-    val style: String,
-    val de: String,
-    val avec: String,
-    val synopsis: String,
-    val bande_annonce: String
+    val id_film: String?,
+    val titre: String?,
+    val date: String?,
+    val horaire: String?,
+    @Json(name = "3d") val troisDimension: Boolean?,
+    val vo: Boolean?,
+    val affiche: String?,
+    val duree: String?,
+    val annee: String?,
+    val pays: String?,
+    val style: String?,
+    val de: String?,
+    val avec: String?,
+    val synopsis: String?,
+    val bande_annonce: String?
 )

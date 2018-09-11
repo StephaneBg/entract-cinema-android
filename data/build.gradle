@@ -32,22 +32,7 @@ android {
     defaultConfig {
         minSdkVersion Android.minSdkVersion
         targetSdkVersion Android.targetSdkVersion
-        resConfigs "en", "fr"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled true
-            debuggable false
-            jniDebuggable false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard.pro'
-            consumerProguardFiles 'proguard.pro'
-        }
-
-        debug {
-            minifyEnabled false
-            debuggable true
-        }
+        resConfigs "fr"
     }
 }
 

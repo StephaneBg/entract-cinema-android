@@ -35,7 +35,7 @@ android {
         minSdkVersion Android.minSdkVersion
         targetSdkVersion Android.targetSdkVersion
         vectorDrawables.useSupportLibrary = true
-        resConfigs "en", "fr"
+        resConfigs "fr"
     }
 
 //    signingConfigs {

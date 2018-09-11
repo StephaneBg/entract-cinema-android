@@ -14,12 +14,14 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.domain.repository
+package com.cinema.entract.domain.usecase
 
 import com.cinema.entract.domain.model.MovieDomain
+import com.cinema.entract.domain.repository.CinemaRepository
+import java.util.*
 
+class CinemaUseCase(private val repo: CinemaRepository) : BaseUseCase() {
 
-interface CinemaRepository {
-
-    suspend fun getMovies(day: String): List<MovieDomain>
+    suspend fun getMovies(day: Date?): List<MovieDomain> =
+        asyncAwait { repo.getMovies("11-09-2018") }
 }

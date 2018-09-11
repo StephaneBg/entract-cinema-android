@@ -14,12 +14,6 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.domain.repository
+package com.cinema.entract.data.repo
 
-import com.cinema.entract.domain.model.MovieDomain
-
-
-interface CinemaRepository {
-
-    suspend fun getMovies(day: String): List<MovieDomain>
-}
+interface CinemaCache

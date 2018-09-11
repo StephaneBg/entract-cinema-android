@@ -14,11 +14,12 @@
   ~  limitations under the License.
   -->
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rootContainer"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     >
 
@@ -39,8 +40,8 @@
     <FrameLayout
         android:id="@+id/mainContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -48,7 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:elevation="4dp"
+        app:elevation="8dp"
         app:menu="@menu/menu_main"
         />
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

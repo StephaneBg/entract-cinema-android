@@ -14,10 +14,11 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.ui.mapper
+package com.cinema.entract.data.repository
 
-interface Mapper<Domain, Ui> {
+import com.cinema.entract.data.model.MovieData
 
-    fun mapFromDomain(model: Domain): Ui
-    fun mapToDomain(model: Ui): Domain
+interface CinemaRemote {
+
+    suspend fun getMovies(day: String): List<MovieData>
 }

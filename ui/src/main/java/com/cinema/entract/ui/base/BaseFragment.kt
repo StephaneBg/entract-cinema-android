@@ -26,7 +26,7 @@ open class BaseFragment : Fragment() {
     open fun getErrorMessage(throwable: Throwable?): String {
         return when (throwable) {
             is NoConnectivityException -> getString(R.string.error_no_connectivity)
-            is SocketTimeoutException -> getString(R.string.error_no_connectivity)
+            is SocketTimeoutException -> getString(R.string.error_general)
             else -> getString(R.string.error_general)
         }
     }

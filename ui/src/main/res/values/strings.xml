@@ -15,11 +15,16 @@
   -->
 <resources>
 
-    <string name="app_name" translatable="false">Entract Cinema</string>
+    <string name="app_name"
+        translatable="false">Entract Cinema</string>
 
     <string name="menu_today">Séances du jour</string>
     <string name="menu_coming">Programme</string>
 
-    <string name="error_no_connectivity">Aucun réseau/nCliquez pour réessayer</string>
-    <string name="error_general">Une erreur est survenue</string>
+    <string name="error_no_connectivity">Aucun réseau\nCliquez pour réessayer</string>
+    <string name="error_general">Une erreur est survenue\nCliquez pour réessayer</string>
+
+    <string name="today_original_version">VOST</string>
+    <string name="today_three_dimension">3D</string>
+    <string name="today_no_movie_message">Pas de séance ce jour</string>
 </resources>

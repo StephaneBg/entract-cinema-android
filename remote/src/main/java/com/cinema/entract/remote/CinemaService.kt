@@ -18,10 +18,7 @@ package com.cinema.entract.remote
 
 import com.cinema.entract.remote.model.MovieRemote
 import com.cinema.entract.remote.model.WeekRemote
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
 import kotlinx.coroutines.experimental.Deferred
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -33,10 +30,3 @@ interface CinemaService {
     @GET("getProgramme.php")
     fun getSchedule(): Deferred<List<WeekRemote>>
 }
-
-fun createService(): CinemaService = Retrofit.Builder()
-    .baseUrl("http://mobile-grenadecinema.fr/php/rest/")
-    .addCallAdapterFactory(CoroutineCallAdapterFactory())
-    .addConverterFactory(MoshiConverterFactory.create())
-    .build()
-    .create(CinemaService::class.java)

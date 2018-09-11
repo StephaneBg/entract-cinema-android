@@ -17,17 +17,25 @@
 package com.cinema.entract.remote
 
 import com.cinema.entract.data.model.MovieData
+import com.cinema.entract.data.model.WeekData
 import com.cinema.entract.data.repository.CinemaRemote
 import com.cinema.entract.remote.model.MovieRemote
 import com.cinema.entract.remote.model.RemoteMapper
+import com.cinema.entract.remote.model.WeekRemote
 
 class CinemaRemoteImpl(
     private val service: CinemaService,
-    private val mapper: RemoteMapper<MovieRemote, MovieData>
+    private val movieMapper: RemoteMapper<MovieRemote, MovieData>,
+    private val weekMapper: RemoteMapper<WeekRemote, WeekData>
 ) : CinemaRemote {
 
     override suspend fun getMovies(day: String): List<MovieData> {
         val movies = service.getMovies(day).await()
-        return movies.map { mapper.mapFromRemote(it) }
+        return movies.map { movieMapper.mapFromRemote(it) }
+    }
+
+    override suspend fun getSchedule(): List<WeekData> {
+        val schedule = service.getSchedule().await()
+        return schedule.map { weekMapper.mapFromRemote(it) }
     }
 }

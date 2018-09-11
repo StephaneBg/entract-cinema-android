@@ -14,14 +14,11 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.data.repository
+package com.cinema.entract.data.model
 
-import com.cinema.entract.data.model.MovieData
-import com.cinema.entract.data.model.WeekData
-
-interface CinemaRemote {
-
-    suspend fun getMovies(day: String): List<MovieData>
-
-    suspend fun getSchedule(): List<WeekData>
-}
+data class WeekData(
+    val beginDay: String,
+    val endDay: String,
+    val days: List<DayData>,
+    val hasMovies: Boolean
+)

@@ -17,12 +17,17 @@
 package com.cinema.entract.data.source
 
 import com.cinema.entract.data.model.MovieData
+import com.cinema.entract.data.model.WeekData
 import com.cinema.entract.data.repository.CinemaCache
 import com.cinema.entract.data.repository.CinemaDataStore
 
 class CinemaCacheDataStore(private val cinemaCache: CinemaCache) : CinemaDataStore {
 
     override suspend fun getMovies(day: String): List<MovieData> {
+        TODO("not implemented")
+    }
+
+    override suspend fun getSchedule(): List<WeekData> {
         TODO("not implemented")
     }
 }

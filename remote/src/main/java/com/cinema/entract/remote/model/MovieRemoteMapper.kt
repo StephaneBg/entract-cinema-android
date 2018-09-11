@@ -21,14 +21,14 @@ import com.cinema.entract.data.model.MovieData
 class MovieRemoteMapper : RemoteMapper<MovieRemote, MovieData> {
 
     override fun mapFromRemote(model: MovieRemote) = MovieData(
-        model.titre,
-        model.date,
-        model.horaire,
-        model.troisDimension,
-        model.vo,
-        model.affiche,
-        model.duree,
-        model.annee,
-        model.synopsis
+        model.titre ?: "",
+        model.date ?: "",
+        model.horaire ?: "",
+        model.troisDimension ?: false,
+        model.vo ?: false,
+        model.affiche ?: "",
+        model.duree ?: "",
+        model.annee ?: "",
+        model.synopsis ?: ""
     )
 }

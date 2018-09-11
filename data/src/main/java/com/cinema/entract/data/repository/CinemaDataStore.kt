@@ -17,8 +17,11 @@
 package com.cinema.entract.data.repository
 
 import com.cinema.entract.data.model.MovieData
+import com.cinema.entract.data.model.WeekData
 
 interface CinemaDataStore {
 
     suspend fun getMovies(day: String): List<MovieData>
+
+    suspend fun getSchedule(): List<WeekData>
 }

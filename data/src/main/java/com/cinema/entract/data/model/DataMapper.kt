@@ -18,6 +18,5 @@ package com.cinema.entract.data.model
 
 interface DataMapper<Data, Domain> {
 
-    fun mapFromDomain(model: Domain): Data
     fun mapToDomain(model: Data): Domain
 }

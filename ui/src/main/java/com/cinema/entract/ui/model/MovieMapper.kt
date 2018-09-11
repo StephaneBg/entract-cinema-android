@@ -16,11 +16,11 @@
 
 package com.cinema.entract.ui.model
 
-import com.cinema.entract.data.model.MovieData
+import com.cinema.entract.domain.model.MovieDomain
 
-class MovieMapper : Mapper<Movie, MovieData> {
+class MovieMapper : Mapper<Movie, MovieDomain> {
 
-    override fun mapFromDomain(model: MovieData) = Movie(
+    override fun mapFromDomain(model: MovieDomain) = Movie(
         model.title,
         model.date,
         model.schedule,
@@ -32,7 +32,7 @@ class MovieMapper : Mapper<Movie, MovieData> {
         model.synopsis
     )
 
-    override fun mapToDomain(model: Movie) = MovieData(
+    override fun mapToDomain(model: Movie) = MovieDomain(
         model.title,
         model.date,
         model.schedule,

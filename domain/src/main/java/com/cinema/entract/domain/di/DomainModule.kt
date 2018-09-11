@@ -16,7 +16,10 @@
 
 package com.cinema.entract.domain.di
 
+import com.cinema.entract.domain.usecase.CinemaUseCase
 import org.koin.dsl.module.module
 
 val domainModule = module {
+
+    factory { CinemaUseCase(get()) }
 }

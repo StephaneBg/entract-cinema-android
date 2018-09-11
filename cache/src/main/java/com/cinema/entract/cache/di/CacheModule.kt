@@ -16,7 +16,11 @@
 
 package com.cinema.entract.cache.di
 
+import com.cinema.entract.cache.repo.DatabaseRepo
+import com.cinema.entract.data.repository.CinemaCache
 import org.koin.dsl.module.module
 
 val cacheModule = module {
+
+    single { DatabaseRepo(get()) as CinemaCache }
 }

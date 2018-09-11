@@ -14,11 +14,6 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.data.repo
+package com.cinema.entract.data.repository
 
-import com.cinema.entract.data.model.MovieData
-
-interface CinemaRemote {
-
-    suspend fun getMovies(day: String): List<MovieData>
-}
+interface CinemaCache

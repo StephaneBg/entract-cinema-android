@@ -14,11 +14,19 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.data.repo
+package com.cinema.entract.data.repository
 
+import com.cinema.entract.data.model.DataMapper
 import com.cinema.entract.data.model.MovieData
+import com.cinema.entract.data.source.CinemaDataStoreFactory
+import com.cinema.entract.domain.model.MovieDomain
+import com.cinema.entract.domain.repository.CinemaRepository
 
-interface CinemaDataStore {
+class CinemaRepositoryImpl(
+    private val dataStoreFactory: CinemaDataStoreFactory,
+    private val mapper: DataMapper<MovieData, MovieDomain>
+) : CinemaRepository {
 
-    suspend fun getMovies(day: String): List<MovieData>
+    override suspend fun getMovies(day: String): List<MovieDomain> =
+        dataStoreFactory.retrieveDataStore().getMovies(day).map { mapper.mapToDomain(it) }
 }

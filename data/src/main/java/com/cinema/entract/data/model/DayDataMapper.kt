@@ -14,14 +14,14 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.data.repository
+package com.cinema.entract.data.model
 
-import com.cinema.entract.data.model.MovieData
-import com.cinema.entract.data.model.WeekData
+import com.cinema.entract.domain.model.DayDomain
 
-interface CinemaRemote {
+class DayDataMapper(private val mapper: MovieDataMapper) : DataMapper<DayData, DayDomain> {
 
-    suspend fun getMovies(day: String): List<MovieData>
-
-    suspend fun getSchedule(): List<WeekData>
+    override fun mapToDomain(model: DayData) = DayDomain(
+        model.day,
+        model.movies.map { mapper.mapToDomain(it) }
+    )
 }

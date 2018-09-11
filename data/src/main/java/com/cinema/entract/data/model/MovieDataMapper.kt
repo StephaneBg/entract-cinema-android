@@ -31,16 +31,4 @@ class MovieDataMapper : DataMapper<MovieData, MovieDomain> {
         model.yearOfProduction,
         model.synopsis
     )
-
-    override fun mapFromDomain(model: MovieDomain) = MovieData(
-        model.title,
-        model.date,
-        model.schedule,
-        model.threeDimension,
-        model.originalVersion,
-        model.coverUrl,
-        model.duration,
-        model.yearOfProduction,
-        model.synopsis
-    )
 }

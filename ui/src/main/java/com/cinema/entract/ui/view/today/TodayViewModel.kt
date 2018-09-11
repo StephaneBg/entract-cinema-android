@@ -18,24 +18,29 @@ package com.cinema.entract.ui.view.today
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.cinema.entract.domain.model.MovieDomain
 import com.cinema.entract.domain.usecase.CinemaUseCase
 import com.cinema.entract.ui.base.BaseViewModel
 import com.cinema.entract.ui.base.Error
+import com.cinema.entract.ui.base.Loading
 import com.cinema.entract.ui.base.Resource
 import com.cinema.entract.ui.base.Success
+import com.cinema.entract.ui.model.Mapper
 import com.cinema.entract.ui.model.Movie
-import com.cinema.entract.ui.model.MovieMapper
 import java.util.*
 
 class TodayViewModel(
     useCase: CinemaUseCase,
-    private val mapper: MovieMapper
+    private val mapper: Mapper<Movie, MovieDomain>
 ) : BaseViewModel<CinemaUseCase>(useCase) {
 
     private val movies = MutableLiveData<Resource<List<Movie>>>()
 
     fun getMovies(): LiveData<Resource<List<Movie>>> {
-        movies.value ?: retrieveMovies()
+        movies.value ?: run {
+            movies.postValue(Loading())
+            retrieveMovies()
+        }
         return movies
     }
 

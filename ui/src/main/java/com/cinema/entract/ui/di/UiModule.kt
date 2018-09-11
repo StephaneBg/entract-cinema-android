@@ -16,13 +16,16 @@
 
 package com.cinema.entract.ui.di
 
-import com.cinema.entract.data.model.MovieData
+import com.cinema.entract.domain.model.MovieDomain
 import com.cinema.entract.ui.model.Mapper
 import com.cinema.entract.ui.model.Movie
 import com.cinema.entract.ui.model.MovieMapper
+import com.cinema.entract.ui.view.today.TodayViewModel
+import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
 
 val uiModule = module {
 
-    single { MovieMapper() as Mapper<Movie, MovieData> }
+    single { MovieMapper() as Mapper<Movie, MovieDomain> }
+    viewModel { TodayViewModel(get(), get()) }
 }

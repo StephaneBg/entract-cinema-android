@@ -16,7 +16,7 @@
 
 package com.cinema.entract.data.source
 
-import com.cinema.entract.data.repo.CinemaDataStore
+import com.cinema.entract.data.repository.CinemaDataStore
 
 class CinemaDataStoreFactory(
     private val cinemaCacheDataStore: CinemaCacheDataStore,

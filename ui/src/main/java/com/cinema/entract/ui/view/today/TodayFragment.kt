@@ -20,17 +20,58 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.cinema.entract.ui.R
 import com.cinema.entract.ui.base.BaseLceFragment
+import com.cinema.entract.ui.base.Error
+import com.cinema.entract.ui.base.Loading
+import com.cinema.entract.ui.base.Resource
+import com.cinema.entract.ui.base.Success
+import com.cinema.entract.ui.ext.find
+import com.cinema.entract.ui.ext.observe
+import com.cinema.entract.ui.model.Movie
+import com.cinema.entract.ui.widget.EmptyRecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import org.jetbrains.anko.find
+import org.koin.android.ext.android.inject
 
-class TodayFragment : BaseLceFragment<RecyclerView>() {
+class TodayFragment : BaseLceFragment<EmptyRecyclerView>() {
+
+    private val viewModel by inject<TodayViewModel>()
+    private val todayAdapter = TodayAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_today, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        with(contentView.find<EmptyRecyclerView>(R.id.recyclerView)) {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = todayAdapter
+            emptyView = contentView.find(R.id.emptyView)
+            setHasFixedSize(true)
+        }
+
+        find<FloatingActionButton>(R.id.fab).isVisible = false
+
+        observe(viewModel.getMovies(), ::displayMovies)
+    }
+
+    private fun displayMovies(resource: Resource<List<Movie>>?) {
+        when (resource) {
+            is Loading -> showLoading()
+            is Success -> {
+                todayAdapter.updateMovies(resource.data ?: emptyList())
+                showContent()
+            }
+            is Error -> showError(resource.error) { viewModel.getMovies() }
+        }
+    }
 
     companion object {
         fun newInstance(): TodayFragment = TodayFragment()

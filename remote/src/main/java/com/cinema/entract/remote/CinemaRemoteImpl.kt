@@ -17,7 +17,7 @@
 package com.cinema.entract.remote
 
 import com.cinema.entract.data.model.MovieData
-import com.cinema.entract.data.repo.CinemaRemote
+import com.cinema.entract.data.repository.CinemaRemote
 import com.cinema.entract.remote.model.MovieRemote
 import com.cinema.entract.remote.model.RemoteMapper
 

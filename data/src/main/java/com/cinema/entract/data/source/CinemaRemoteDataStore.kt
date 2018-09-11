@@ -17,8 +17,8 @@
 package com.cinema.entract.data.source
 
 import com.cinema.entract.data.model.MovieData
-import com.cinema.entract.data.repo.CinemaDataStore
-import com.cinema.entract.data.repo.CinemaRemote
+import com.cinema.entract.data.repository.CinemaDataStore
+import com.cinema.entract.data.repository.CinemaRemote
 
 class CinemaRemoteDataStore(private val cinemaRemote: CinemaRemote) : CinemaDataStore {
 

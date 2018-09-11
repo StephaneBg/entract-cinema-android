@@ -15,17 +15,40 @@
   -->
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
 
-    <androidx.recyclerview.widget.RecyclerView
+    <FrameLayout
+        android:id="@id/contentView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <com.cinema.entract.ui.widget.EmptyRecyclerView
+            android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layoutAnimation="@anim/layout_animation_fall_down"
         tools:listitem="@layout/item_today_movie"
         />
 
-    <include layout="@layout/include_loading_error"/>
+        <include layout="@layout/include_empty" />
+    </FrameLayout>
+
+    <include layout="@layout/include_loading_error" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="@dimen/margin_padding_size_medium"
+        android:layout_marginBottom="@dimen/margin_padding_size_medium"
+        android:tint="@color/white"
+        app:srcCompat="@drawable/ic_date_range_black_24dp"
+        tools:ignore="RtlHardcoded"
+        />
 </FrameLayout>

@@ -22,13 +22,17 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 
-class EmptyRecyclerView : RecyclerView {
-
-    constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
+class EmptyRecyclerView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : RecyclerView(context, attrs, defStyleAttr) {
 
     var emptyView: View? = null
+        set(value) {
+            field = value
+            checkIfEmpty()
+        }
 
     private val observer = object : RecyclerView.AdapterDataObserver() {
         override fun onChanged() {

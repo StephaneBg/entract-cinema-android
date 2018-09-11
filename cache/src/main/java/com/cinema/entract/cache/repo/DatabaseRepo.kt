@@ -17,7 +17,7 @@
 package com.cinema.entract.cache.repo
 
 import android.content.Context
+import com.cinema.entract.data.repository.CinemaCache
 
 
-class DatabaseRepo(private val context: Context) {
-}
+class DatabaseRepo(private val context: Context) : CinemaCache

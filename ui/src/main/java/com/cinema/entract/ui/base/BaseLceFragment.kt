@@ -18,7 +18,7 @@ package com.cinema.entract.ui.base
 
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
+import android.widget.Button
 import com.cinema.entract.ui.R
 import com.cinema.entract.ui.ext.find
 import com.cinema.entract.ui.ext.hide
@@ -29,7 +29,7 @@ open class BaseLceFragment<T : View> : BaseFragment() {
 
     lateinit var contentView: T
     lateinit var loadingView: View
-    lateinit var errorView: TextView
+    lateinit var errorView: Button
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         contentView = find<View>(R.id.contentView) as T
@@ -49,10 +49,11 @@ open class BaseLceFragment<T : View> : BaseFragment() {
         loadingView.show()
     }
 
-    fun showError(throwable: Throwable?) {
+    fun showError(throwable: Throwable?, action: () -> Unit) {
         contentView.hide()
         loadingView.hide()
         errorView.text = getErrorMessage(throwable)
+        errorView.setOnClickListener { action() }
         errorView.show()
     }
 }

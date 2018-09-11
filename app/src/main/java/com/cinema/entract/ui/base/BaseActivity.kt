@@ -14,19 +14,24 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.data.source
+package com.cinema.entract.ui.base
 
-import com.cinema.entract.data.model.MovieData
-import com.cinema.entract.data.model.WeekData
-import com.cinema.entract.data.repository.CinemaCache
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 
-class CinemaCacheDataStore(private val cinemaCache: CinemaCache) : CinemaDataStore {
+open class BaseActivity : AppCompatActivity() {
 
-    override suspend fun getMovies(day: String): List<MovieData> {
-        TODO("not implemented")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onUpPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
-    override suspend fun getSchedule(): List<WeekData> {
-        TODO("not implemented")
+    open fun onUpPressed() {
+        onBackPressed()
     }
 }

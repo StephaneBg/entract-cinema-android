@@ -14,19 +14,18 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.data.source
+package com.cinema.entract.data.interactor
 
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
-import com.cinema.entract.data.repository.CinemaCache
+import com.cinema.entract.data.repository.CinemaRepository
+import java.util.*
 
-class CinemaCacheDataStore(private val cinemaCache: CinemaCache) : CinemaDataStore {
+class CinemaUseCase(private val repo: CinemaRepository) : BaseUseCase() {
 
-    override suspend fun getMovies(day: String): List<MovieData> {
-        TODO("not implemented")
-    }
+    suspend fun getMovies(day: Date?): List<MovieData> =
+        asyncAwait { repo.getMovies("12-09-2018") }
 
-    override suspend fun getSchedule(): List<WeekData> {
-        TODO("not implemented")
-    }
+    suspend fun getSchedule(): List<WeekData> =
+        asyncAwait { repo.getSchedule().filter { it.hasMovies } }
 }

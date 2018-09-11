@@ -14,19 +14,20 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.data.source
+package com.cinema.entract.ui.di
 
-import com.cinema.entract.data.model.MovieData
-import com.cinema.entract.data.model.WeekData
-import com.cinema.entract.data.repository.CinemaCache
+import com.cinema.entract.ui.mapper.DayMapper
+import com.cinema.entract.ui.mapper.MovieMapper
+import com.cinema.entract.ui.mapper.WeekMapper
+import com.cinema.entract.ui.view.today.TodayViewModel
+import org.koin.androidx.viewmodel.ext.koin.viewModel
+import org.koin.dsl.module.module
 
-class CinemaCacheDataStore(private val cinemaCache: CinemaCache) : CinemaDataStore {
+val uiModule = module {
 
-    override suspend fun getMovies(day: String): List<MovieData> {
-        TODO("not implemented")
-    }
+    single { MovieMapper() }
+    single { DayMapper(get()) }
+    single { WeekMapper(get()) }
 
-    override suspend fun getSchedule(): List<WeekData> {
-        TODO("not implemented")
-    }
+    viewModel { TodayViewModel(get(), get()) }
 }

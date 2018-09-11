@@ -14,19 +14,17 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.data.source
+package com.cinema.entract.data.repository
 
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
-import com.cinema.entract.data.repository.CinemaCache
+import com.cinema.entract.data.source.CinemaDataStoreFactory
 
-class CinemaCacheDataStore(private val cinemaCache: CinemaCache) : CinemaDataStore {
+class CinemaRepository(private val dataStoreFactory: CinemaDataStoreFactory) {
 
-    override suspend fun getMovies(day: String): List<MovieData> {
-        TODO("not implemented")
-    }
+    suspend fun getMovies(day: String): List<MovieData> =
+        dataStoreFactory.retrieveDataStore().getMovies(day)
 
-    override suspend fun getSchedule(): List<WeekData> {
-        TODO("not implemented")
-    }
+    suspend fun getSchedule(): List<WeekData> =
+        dataStoreFactory.retrieveDataStore().getSchedule().filter { it.hasMovies }
 }

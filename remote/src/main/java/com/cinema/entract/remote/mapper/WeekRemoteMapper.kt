@@ -14,19 +14,17 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.data.source
+package com.cinema.entract.remote.mapper
 
-import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
-import com.cinema.entract.data.repository.CinemaCache
+import com.cinema.entract.remote.model.WeekRemote
 
-class CinemaCacheDataStore(private val cinemaCache: CinemaCache) : CinemaDataStore {
+class WeekRemoteMapper(private val mapper: DayRemoteMapper) : RemoteMapper<WeekRemote, WeekData> {
 
-    override suspend fun getMovies(day: String): List<MovieData> {
-        TODO("not implemented")
-    }
-
-    override suspend fun getSchedule(): List<WeekData> {
-        TODO("not implemented")
-    }
+    override fun mapToData(model: WeekRemote) = WeekData(
+        model.debutSemaine,
+        model.finSemaine,
+        model.jours.map { mapper.mapToData(it) },
+        model.filmsDisponibles
+    )
 }

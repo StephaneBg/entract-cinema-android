@@ -14,19 +14,22 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.data.source
+package com.cinema.entract.ui.mapper
 
 import com.cinema.entract.data.model.MovieData
-import com.cinema.entract.data.model.WeekData
-import com.cinema.entract.data.repository.CinemaCache
+import com.cinema.entract.ui.model.Movie
 
-class CinemaCacheDataStore(private val cinemaCache: CinemaCache) : CinemaDataStore {
+class MovieMapper : Mapper<Movie, MovieData> {
 
-    override suspend fun getMovies(day: String): List<MovieData> {
-        TODO("not implemented")
-    }
-
-    override suspend fun getSchedule(): List<WeekData> {
-        TODO("not implemented")
-    }
+    override fun mapToUi(model: MovieData) = Movie(
+        model.title,
+        model.date,
+        model.schedule,
+        model.threeDimension,
+        model.originalVersion,
+        model.coverUrl,
+        model.duration,
+        model.yearOfProduction,
+        model.synopsis
+    )
 }

@@ -21,7 +21,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.cinema.entract.ui.R
 import com.cinema.entract.ui.base.BaseLceFragment
 import com.cinema.entract.ui.base.Error
@@ -53,6 +55,7 @@ class TodayFragment : BaseLceFragment<EmptyRecyclerView>() {
         with(contentView.find<EmptyRecyclerView>(R.id.recyclerView)) {
             layoutManager = LinearLayoutManager(activity)
             adapter = todayAdapter
+            addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
             emptyView = contentView.find(R.id.emptyView)
             setHasFixedSize(true)
         }

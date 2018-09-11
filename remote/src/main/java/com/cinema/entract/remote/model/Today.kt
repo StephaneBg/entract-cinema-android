@@ -14,19 +14,8 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.remote
+package com.cinema.entract.remote.model
 
-import com.cinema.entract.remote.model.Today
-import com.cinema.entract.remote.model.WeekRemote
-import kotlinx.coroutines.experimental.Deferred
-import retrofit2.http.GET
-import retrofit2.http.Query
-
-interface CinemaService {
-
-    @GET("getFilmsJour.php")
-    fun getMovies(@Query("jour") day: String): Deferred<Today>
-
-    @GET("getProgramme.php")
-    fun getSchedule(): Deferred<List<WeekRemote>>
-}
+data class Today(
+    val films: List<MovieRemote>
+)

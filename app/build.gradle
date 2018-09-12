@@ -93,4 +93,5 @@ dependencies {
     implementation Libs.timber
     implementation Libs.koinAndroid
     implementation Libs.glide
+    implementation Libs.datePicker
 }

@@ -13,7 +13,7 @@
   ~  See the License for the specific language governing permissions and
   ~  limitations under the License.
   -->
-<FrameLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -21,19 +21,37 @@
     android:layout_height="match_parent"
     >
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        >
+
+        <TextView
+            android:id="@+id/date"
+            style="@style/TextAppearance.MaterialComponents.Subtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:gravity="center"
+            android:textColor="@color/white"
+            tools:text="Date"
+            />
+    </com.google.android.material.appbar.AppBarLayout>
+
     <FrameLayout
         android:id="@id/contentView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         >
 
         <com.cinema.entract.ui.widget.EmptyRecyclerView
             android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layoutAnimation="@anim/layout_animation_fall_down"
-        tools:listitem="@layout/item_today_movie"
-        />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layoutAnimation="@anim/layout_animation_fall_down"
+            tools:listitem="@layout/item_today_movie"
+            />
 
         <include layout="@layout/include_empty" />
     </FrameLayout>
@@ -51,4 +69,4 @@
         app:srcCompat="@drawable/ic_date_range_black_24dp"
         tools:ignore="RtlHardcoded"
         />
-</FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

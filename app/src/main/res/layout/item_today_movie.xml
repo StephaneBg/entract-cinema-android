@@ -20,13 +20,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:layout_editor_absoluteY="25dp"
     >
 
     <ImageView
         android:id="@+id/cover"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:importantForAccessibility="no"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -43,10 +42,11 @@
         android:layout_marginStart="@dimen/margin_padding_size_medium"
         android:layout_marginTop="@dimen/margin_padding_size_medium"
         android:layout_marginEnd="@dimen/margin_padding_size_medium"
+        android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cover"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Movie title"
+        tools:text="Movie with an extra extra long title"
         />
 
     <TextView
@@ -57,6 +57,7 @@
         android:layout_marginStart="@dimen/margin_padding_size_medium"
         android:layout_marginTop="@dimen/margin_padding_size_medium"
         android:layout_marginEnd="@dimen/margin_padding_size_medium"
+        android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cover"
         app:layout_constraintTop_toBottomOf="@+id/title"
@@ -70,8 +71,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_padding_size_medium"
         android:layout_marginTop="@dimen/margin_padding_size_small"
+        android:layout_marginBottom="@dimen/margin_padding_size_medium"
         android:text="@string/today_original_version"
         android:textColor="@color/blue_500"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cover"
         app:layout_constraintTop_toBottomOf="@+id/scheduleDuration"
         />
@@ -83,8 +86,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_padding_size_medium"
         android:layout_marginTop="@dimen/margin_padding_size_small"
+        android:layout_marginBottom="@dimen/margin_padding_size_medium"
         android:text="@string/today_three_dimension"
         android:textColor="@color/red_500"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/originalVersion"
         app:layout_constraintTop_toBottomOf="@+id/scheduleDuration"
         />

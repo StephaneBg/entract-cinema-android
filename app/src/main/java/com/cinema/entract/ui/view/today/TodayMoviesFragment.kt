@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cinema.entract.ui.R
 import com.cinema.entract.ui.ext.find
 import com.cinema.entract.ui.ext.observe
+import com.cinema.entract.ui.ext.replaceFragment
 import com.cinema.entract.ui.model.Movie
 import com.cinema.entract.ui.view.base.BaseLceFragment
 import com.cinema.entract.ui.view.base.Error
@@ -40,10 +41,10 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import org.jetbrains.anko.find
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class TodayFragment : BaseLceFragment<EmptyRecyclerView>() {
+class TodayMoviesFragment : BaseLceFragment<EmptyRecyclerView>() {
 
     private val viewModel by sharedViewModel<TodayViewModel>()
-    private val todayAdapter = TodayAdapter()
+    private val todayAdapter = TodayMoviesAdapter(::onMovieSelected)
 
     private lateinit var datePicker: MaterialCalendarView
     private lateinit var alertDialog: AlertDialog
@@ -52,7 +53,7 @@ class TodayFragment : BaseLceFragment<EmptyRecyclerView>() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_today, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_today_movies, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -82,6 +83,15 @@ class TodayFragment : BaseLceFragment<EmptyRecyclerView>() {
         }
     }
 
+    private fun onMovieSelected(movie: Movie) {
+        viewModel.selectedMovie = movie
+        requireActivity().replaceFragment(
+            R.id.mainContainer,
+            TodayDetailsFragment.newInstance(),
+            true
+        )
+    }
+
     private fun displayDatePicker() {
         datePicker =
                 layoutInflater.inflate(R.layout.fragment_date_picker, null) as MaterialCalendarView
@@ -98,6 +108,6 @@ class TodayFragment : BaseLceFragment<EmptyRecyclerView>() {
     }
 
     companion object {
-        fun newInstance(): TodayFragment = TodayFragment()
+        fun newInstance(): TodayMoviesFragment = TodayMoviesFragment()
     }
 }

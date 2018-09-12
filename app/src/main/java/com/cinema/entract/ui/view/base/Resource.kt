@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.ui.base
+package com.cinema.entract.ui.view.base
 
 sealed class Resource<out T> constructor(val data: T?, val refresh: Boolean, val error: Throwable?)
 

@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.ui.base
+package com.cinema.entract.ui.view.base
 
 import androidx.annotation.CallSuper
 import androidx.lifecycle.ViewModel

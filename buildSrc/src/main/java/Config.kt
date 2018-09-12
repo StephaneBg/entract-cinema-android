@@ -30,6 +30,22 @@
  *  limitations under the License.
  */
 
+/*
+ * Copyright 2018 Stéphane Baiget
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
 import org.gradle.api.JavaVersion
 
 object Versions {
@@ -50,6 +66,7 @@ object Versions {
     val koin = "1.0.0-RC-2"
     val ktx = "1.0.0-alpha1"
     val glide = "4.8.0"
+    val datePicker = "2.0.0"
 }
 
 object Build {
@@ -92,4 +109,5 @@ object Libs {
         "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-experimental-adapter:${Versions.retrofitCoroutines}"
     val koinAndroid = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
     val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
+    val datePicker = "com.github.prolificinteractive:material-calendarview:${Versions.datePicker}"
 }

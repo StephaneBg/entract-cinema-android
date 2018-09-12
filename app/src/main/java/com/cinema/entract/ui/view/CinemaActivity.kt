@@ -24,6 +24,7 @@ import com.cinema.entract.ui.ext.replaceFragment
 import com.cinema.entract.ui.view.today.TodayFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.jetbrains.anko.find
+import org.jetbrains.anko.toast
 
 class CinemaActivity : BaseActivity() {
 
@@ -49,7 +50,10 @@ class CinemaActivity : BaseActivity() {
                     replaceFragment(R.id.mainContainer, TodayFragment.newInstance())
                     true
                 }
-                R.id.coming -> TODO()
+                R.id.coming -> {
+                    toast("Bientôt :)")
+                    true
+                }
                 else -> false
             }
         }

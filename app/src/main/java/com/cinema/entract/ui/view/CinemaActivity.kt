@@ -52,7 +52,7 @@ class CinemaActivity : BaseActivity() {
                 }
                 R.id.coming -> {
                     toast("Bientôt :)")
-                    true
+                    false
                 }
                 else -> false
             }

@@ -29,6 +29,7 @@ import com.cinema.entract.ui.model.Movie
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import timber.log.Timber
+import java.util.Locale
 
 class TodayViewModel(
     useCase: CinemaUseCase,
@@ -36,13 +37,22 @@ class TodayViewModel(
 ) : BaseViewModel<CinemaUseCase>(useCase) {
 
     private val movies = MutableLiveData<Resource<List<Movie>>>()
+    private val date = MutableLiveData<String>()
 
     fun getMovies(): LiveData<Resource<List<Movie>>> {
         movies.value ?: retrieveMovies()
         return movies
     }
 
-    fun getMovies(day: LocalDate) = retrieveMovies(day)
+    fun getDate(): LiveData<String> {
+        date.value ?: updateDate(null)
+        return date
+    }
+
+    fun getMovies(day: LocalDate) {
+        retrieveMovies(day)
+        updateDate(day)
+    }
 
     private fun retrieveMovies() = retrieveMovies(null)
 
@@ -50,17 +60,21 @@ class TodayViewModel(
         movies.postValue(Loading())
         launchAsyncTryCatch(
             {
-                val date = day?.let { formatDate(it) }
+                val date = day?.format(DateTimeFormatter.ofPattern("dd-MM-yyy"))
                 val fetchedMovies = useCase.getMovies(date).map { mapper.mapToUi(it) }
                 movies.postValue(Success(fetchedMovies))
             },
             {
                 Timber.e(it)
                 movies.postValue(Error(it))
+                date.postValue("Entract Cinema")
             }
         )
     }
 
-    private fun formatDate(date: LocalDate): String =
-        date.format(DateTimeFormatter.ofPattern("dd-MM-yyy"))
+    private fun updateDate(day: LocalDate?) {
+        val formattedDate = (day ?: LocalDate.now())
+            .format(DateTimeFormatter.ofPattern("dd MMMM yyy", Locale.FRANCE))
+        date.postValue(formattedDate)
+    }
 }

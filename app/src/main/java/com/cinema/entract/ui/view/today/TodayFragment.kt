@@ -20,6 +20,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -64,6 +65,7 @@ class TodayFragment : BaseLceFragment<EmptyRecyclerView>() {
         }
 
         observe(viewModel.getMovies(), ::displayMovies)
+        observe(viewModel.getDate()) { find<TextView>(R.id.date).text = it }
     }
 
     private fun displayMovies(resource: Resource<List<Movie>>?) {

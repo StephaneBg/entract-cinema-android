@@ -21,7 +21,7 @@ import com.cinema.entract.ui.R
 import com.cinema.entract.ui.ext.addFragment
 import com.cinema.entract.ui.ext.replaceFragment
 import com.cinema.entract.ui.view.base.BaseActivity
-import com.cinema.entract.ui.view.today.TodayFragment
+import com.cinema.entract.ui.view.today.TodayMoviesFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.jetbrains.anko.find
 import org.jetbrains.anko.toast
@@ -36,7 +36,7 @@ class CinemaActivity : BaseActivity() {
         initWidgets()
         initBottomNavigation()
 
-        savedInstanceState ?: addFragment(R.id.mainContainer, TodayFragment.newInstance())
+        savedInstanceState ?: addFragment(R.id.mainContainer, TodayMoviesFragment.newInstance())
     }
 
     private fun initWidgets() {
@@ -47,7 +47,7 @@ class CinemaActivity : BaseActivity() {
         bottomNav.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.today -> {
-                    replaceFragment(R.id.mainContainer, TodayFragment.newInstance())
+                    replaceFragment(R.id.mainContainer, TodayMoviesFragment.newInstance())
                     true
                 }
                 R.id.coming -> {

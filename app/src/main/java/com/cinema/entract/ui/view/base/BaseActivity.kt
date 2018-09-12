@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.ui.base
+package com.cinema.entract.ui.view.base
 
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity

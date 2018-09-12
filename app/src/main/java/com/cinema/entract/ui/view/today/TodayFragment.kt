@@ -20,7 +20,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,11 +35,11 @@ import com.cinema.entract.ui.model.Movie
 import com.cinema.entract.ui.widget.EmptyRecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.jetbrains.anko.find
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class TodayFragment : BaseLceFragment<EmptyRecyclerView>() {
 
-    private val viewModel by inject<TodayViewModel>()
+    private val viewModel by sharedViewModel<TodayViewModel>()
     private val todayAdapter = TodayAdapter()
 
     override fun onCreateView(
@@ -60,7 +59,9 @@ class TodayFragment : BaseLceFragment<EmptyRecyclerView>() {
             setHasFixedSize(true)
         }
 
-        find<FloatingActionButton>(R.id.fab).isVisible = false
+        find<FloatingActionButton>(R.id.fab).setOnClickListener {
+            DatePickerDialogFragment.show(requireFragmentManager())
+        }
 
         observe(viewModel.getMovies(), ::displayMovies)
     }

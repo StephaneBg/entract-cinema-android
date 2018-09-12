@@ -38,9 +38,9 @@ android {
 dependencies {
     implementation project(':data')
     implementation Libs.kotlinStd
-//    implementation Libs.room
+    implementation Libs.room
     implementation Libs.koinAndroid
     implementation Libs.timber
 
-//    kapt Libs.roomCompiler
+    kapt Libs.roomCompiler
 }

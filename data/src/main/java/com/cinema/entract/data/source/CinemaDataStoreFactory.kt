@@ -24,7 +24,7 @@ class CinemaDataStoreFactory(
     // TODO Add logic for cache management
     fun retrieveDataStore(): CinemaDataStore = retrieveRemoteDataStore()
 
-    fun retrieveCacheDataStore() = cinemaCacheDataStore
+    private fun retrieveCacheDataStore() = cinemaCacheDataStore
 
-    fun retrieveRemoteDataStore() = cinemaRemoteDataStore
+    private fun retrieveRemoteDataStore() = cinemaRemoteDataStore
 }

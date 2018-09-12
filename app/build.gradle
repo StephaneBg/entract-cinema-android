@@ -78,6 +78,7 @@ dependencies {
     implementation project(':cache')
     implementation project(':remote')
     implementation project(':data')
+
     implementation Libs.kotlinStd
     implementation Libs.coroutinesCore
     implementation Libs.coroutinesAndroid
@@ -91,4 +92,5 @@ dependencies {
     implementation Libs.lifecycle
     implementation Libs.timber
     implementation Libs.koinAndroid
+    implementation Libs.glide
 }

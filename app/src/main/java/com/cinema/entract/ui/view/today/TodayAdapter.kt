@@ -21,8 +21,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.cinema.entract.ui.R
 import com.cinema.entract.ui.ext.inflate
 import com.cinema.entract.ui.model.Movie
@@ -55,11 +57,11 @@ class TodayAdapter : RecyclerView.Adapter<TodayAdapter.ViewHolder>() {
         @SuppressLint("SetTextI18n")
         fun bind(movie: Movie) {
             itemView.apply {
-                cover.isVisible = false
+                Glide.with(context).load(movie.coverUrl).into(cover)
                 title.text = movie.title
                 scheduleDuration.text = "${movie.schedule} - ${movie.duration}"
                 originalVersion.isVisible = movie.isOriginalVersion
-                threeDimension.isVisible = movie.isThreeDimension
+                threeDimension.isInvisible = !movie.isThreeDimension
             }
         }
     }

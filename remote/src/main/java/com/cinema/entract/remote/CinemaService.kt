@@ -16,6 +16,7 @@
 
 package com.cinema.entract.remote
 
+import com.cinema.entract.remote.model.ParametersRemote
 import com.cinema.entract.remote.model.Today
 import com.cinema.entract.remote.model.WeekRemote
 import kotlinx.coroutines.experimental.Deferred
@@ -29,4 +30,7 @@ interface CinemaService {
 
     @GET("getProgramme.php")
     fun getSchedule(): Deferred<List<WeekRemote>>
+
+    @GET("getParametres.php")
+    fun getParameters(): Deferred<ParametersRemote>
 }

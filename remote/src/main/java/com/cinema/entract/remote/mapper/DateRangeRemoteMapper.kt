@@ -14,17 +14,15 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.data.repository
+package com.cinema.entract.remote.mapper
 
 import com.cinema.entract.data.model.DateRangeData
-import com.cinema.entract.data.model.MovieData
-import com.cinema.entract.data.model.WeekData
+import com.cinema.entract.remote.model.DateRangeRemote
 
-interface CinemaRemote {
+class DateRangeRemoteMapper : RemoteMapper<DateRangeRemote, DateRangeData> {
 
-    suspend fun getMovies(day: String): List<MovieData>
-
-    suspend fun getSchedule(): List<WeekData>
-
-    suspend fun getParameters(): DateRangeData
+    override fun mapToData(model: DateRangeRemote) = DateRangeData(
+        model.date_minimum,
+        model.date_maximum
+    )
 }

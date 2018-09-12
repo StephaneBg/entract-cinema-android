@@ -29,7 +29,11 @@ class MovieMapper : Mapper<Movie, MovieData> {
         model.originalVersion,
         model.coverUrl,
         model.duration,
-        model.yearOfProduction,
-        model.synopsis
+        "Sortie en ${model.yearOfProduction}",
+        model.genre,
+        "De ${model.director}",
+        "Avec ${model.cast}",
+        "Synopsis\n${model.synopsis}",
+        model.teaserUrl
     )
 }

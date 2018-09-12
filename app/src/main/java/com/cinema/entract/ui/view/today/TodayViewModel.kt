@@ -38,6 +38,7 @@ class TodayViewModel(
 
     private val movies = MutableLiveData<Resource<List<Movie>>>()
     private val date = MutableLiveData<String>()
+    var selectedMovie: Movie? = null
 
     fun getMovies(): LiveData<Resource<List<Movie>>> {
         movies.value ?: retrieveMovies()

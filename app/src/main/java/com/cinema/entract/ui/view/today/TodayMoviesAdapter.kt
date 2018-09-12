@@ -30,7 +30,8 @@ import com.cinema.entract.ui.ext.inflate
 import com.cinema.entract.ui.model.Movie
 import org.jetbrains.anko.find
 
-class TodayAdapter : RecyclerView.Adapter<TodayAdapter.ViewHolder>() {
+class TodayMoviesAdapter(private val selection: (Movie) -> Unit) :
+    RecyclerView.Adapter<TodayMoviesAdapter.ViewHolder>() {
 
     private var movies = emptyList<Movie>()
 
@@ -62,6 +63,8 @@ class TodayAdapter : RecyclerView.Adapter<TodayAdapter.ViewHolder>() {
                 scheduleDuration.text = "${movie.schedule} - ${movie.duration}"
                 originalVersion.isVisible = movie.isOriginalVersion
                 threeDimension.isInvisible = !movie.isThreeDimension
+
+                setOnClickListener { selection(movie) }
             }
         }
     }

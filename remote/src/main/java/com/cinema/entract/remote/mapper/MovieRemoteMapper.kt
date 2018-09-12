@@ -30,6 +30,10 @@ class MovieRemoteMapper : RemoteMapper<MovieRemote, MovieData> {
         model.affiche ?: "",
         model.duree ?: "",
         model.annee ?: "",
-        model.synopsis ?: ""
+        model.style ?: "",
+        model.de ?: "",
+        model.avec ?: "",
+        model.synopsis ?: "",
+        model.bande_annonce ?: ""
     )
 }

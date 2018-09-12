@@ -25,5 +25,9 @@ data class Movie(
     val coverUrl: String,
     val duration: String,
     val yearOfProduction: String,
-    val synopsis: String
+    val genre: String,
+    val director: String,
+    val cast: String,
+    val synopsis: String,
+    val teaserUrl: String
 )

@@ -18,7 +18,7 @@ package com.cinema.entract.ui.view.today
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.cinema.entract.data.interactor.CinemaUseCase
+import com.cinema.entract.data.interactor.TodayUseCase
 import com.cinema.entract.ui.base.BaseViewModel
 import com.cinema.entract.ui.base.Error
 import com.cinema.entract.ui.base.Loading
@@ -32,9 +32,9 @@ import timber.log.Timber
 import java.util.Locale
 
 class TodayViewModel(
-    useCase: CinemaUseCase,
+    useCase: TodayUseCase,
     private val mapper: MovieMapper
-) : BaseViewModel<CinemaUseCase>(useCase) {
+) : BaseViewModel<TodayUseCase>(useCase) {
 
     private val movies = MutableLiveData<Resource<List<Movie>>>()
     private val date = MutableLiveData<String>()

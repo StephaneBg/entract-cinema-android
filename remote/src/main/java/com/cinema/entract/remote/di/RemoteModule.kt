@@ -19,6 +19,7 @@ package com.cinema.entract.remote.di
 import com.cinema.entract.data.repository.CinemaRemote
 import com.cinema.entract.remote.CinemaRemoteImpl
 import com.cinema.entract.remote.createService
+import com.cinema.entract.remote.mapper.DateRangeRemoteMapper
 import com.cinema.entract.remote.mapper.DayRemoteMapper
 import com.cinema.entract.remote.mapper.MovieRemoteMapper
 import com.cinema.entract.remote.mapper.WeekRemoteMapper
@@ -31,6 +32,7 @@ val remoteModule = module {
     single { MovieRemoteMapper() }
     single { DayRemoteMapper(get()) }
     single { WeekRemoteMapper(get()) }
+    single { DateRangeRemoteMapper() }
 
-    factory { CinemaRemoteImpl(get(), get(), get()) as CinemaRemote }
+    factory { CinemaRemoteImpl(get(), get(), get(), get()) as CinemaRemote }
 }

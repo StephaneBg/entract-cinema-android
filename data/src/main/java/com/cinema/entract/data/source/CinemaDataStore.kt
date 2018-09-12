@@ -14,6 +14,7 @@
  *  limitations under the License.
  */package com.cinema.entract.data.source
 
+import com.cinema.entract.data.model.DateRangeData
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
 
@@ -22,4 +23,6 @@ interface CinemaDataStore {
     suspend fun getMovies(day: String): List<MovieData>
 
     suspend fun getSchedule(): List<WeekData>
+
+    suspend fun getParameters(): DateRangeData
 }

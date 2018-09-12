@@ -14,17 +14,11 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.data.repository
+package com.cinema.entract.ui.model
 
-import com.cinema.entract.data.model.DateRangeData
-import com.cinema.entract.data.model.MovieData
-import com.cinema.entract.data.model.WeekData
+import org.threeten.bp.LocalDate
 
-interface CinemaRemote {
-
-    suspend fun getMovies(day: String): List<MovieData>
-
-    suspend fun getSchedule(): List<WeekData>
-
-    suspend fun getParameters(): DateRangeData
-}
+data class Parameters(
+    val maxDate: LocalDate,
+    val minDate: LocalDate
+)

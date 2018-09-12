@@ -16,6 +16,7 @@
 
 package com.cinema.entract.data.source
 
+import com.cinema.entract.data.model.DateRangeData
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
 import com.cinema.entract.data.repository.CinemaRemote
@@ -25,4 +26,6 @@ class CinemaRemoteDataStore(private val cinemaRemote: CinemaRemote) : CinemaData
     override suspend fun getMovies(day: String): List<MovieData> = cinemaRemote.getMovies(day)
 
     override suspend fun getSchedule(): List<WeekData> = cinemaRemote.getSchedule()
+
+    override suspend fun getParameters(): DateRangeData = cinemaRemote.getParameters()
 }

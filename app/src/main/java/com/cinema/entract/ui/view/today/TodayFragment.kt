@@ -21,6 +21,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,6 +36,7 @@ import com.cinema.entract.ui.ext.observe
 import com.cinema.entract.ui.model.Movie
 import com.cinema.entract.ui.widget.EmptyRecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import org.jetbrains.anko.find
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -42,6 +44,9 @@ class TodayFragment : BaseLceFragment<EmptyRecyclerView>() {
 
     private val viewModel by sharedViewModel<TodayViewModel>()
     private val todayAdapter = TodayAdapter()
+
+    private lateinit var datePicker: MaterialCalendarView
+    private lateinit var alertDialog: AlertDialog
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,9 +65,7 @@ class TodayFragment : BaseLceFragment<EmptyRecyclerView>() {
             setHasFixedSize(true)
         }
 
-        find<FloatingActionButton>(R.id.fab).setOnClickListener {
-            DatePickerDialogFragment.show(requireFragmentManager())
-        }
+        find<FloatingActionButton>(R.id.fab).setOnClickListener { displayDatePicker() }
 
         observe(viewModel.getMovies(), ::displayMovies)
         observe(viewModel.getDate()) { find<TextView>(R.id.date).text = it }
@@ -77,6 +80,21 @@ class TodayFragment : BaseLceFragment<EmptyRecyclerView>() {
             }
             is Error -> showError(resource.error) { viewModel.getMovies() }
         }
+    }
+
+    private fun displayDatePicker() {
+        datePicker =
+                layoutInflater.inflate(R.layout.fragment_date_picker, null) as MaterialCalendarView
+        datePicker.setOnDateChangedListener { _, day, _ ->
+            viewModel.getMovies(day.date)
+            alertDialog.dismiss()
+        }
+
+        alertDialog = AlertDialog.Builder(requireContext())
+            .setView(datePicker)
+            .setNegativeButton(android.R.string.cancel, null)
+            .create()
+        alertDialog.show()
     }
 
     companion object {

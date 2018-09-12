@@ -14,17 +14,13 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.data.repository
+package com.cinema.entract.data.interactor
 
-import com.cinema.entract.data.model.DateRangeData
-import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
+import com.cinema.entract.data.repository.CinemaRepository
 
-interface CinemaRemote {
+class ScheduleUseCase(private val repo: CinemaRepository) : BaseUseCase() {
 
-    suspend fun getMovies(day: String): List<MovieData>
-
-    suspend fun getSchedule(): List<WeekData>
-
-    suspend fun getParameters(): DateRangeData
+    suspend fun getSchedule(): List<WeekData> =
+        asyncAwait { repo.getSchedule().filter { it.hasMovies } }
 }

@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.ui.base
+package com.cinema.entract.ui.view.base
 
 import androidx.fragment.app.Fragment
 import com.cinema.entract.remote.network.NoConnectivityException

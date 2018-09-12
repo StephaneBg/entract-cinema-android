@@ -26,8 +26,9 @@ import com.cinema.entract.ui.base.Resource
 import com.cinema.entract.ui.base.Success
 import com.cinema.entract.ui.mapper.MovieMapper
 import com.cinema.entract.ui.model.Movie
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
 import timber.log.Timber
-import java.util.*
 
 class TodayViewModel(
     useCase: CinemaUseCase,
@@ -37,21 +38,20 @@ class TodayViewModel(
     private val movies = MutableLiveData<Resource<List<Movie>>>()
 
     fun getMovies(): LiveData<Resource<List<Movie>>> {
-        movies.value ?: run {
-            movies.postValue(Loading())
-            retrieveMovies()
-        }
+        movies.value ?: retrieveMovies()
         return movies
     }
 
-    fun getMovies(day: Date) = retrieveMovies(day)
+    fun getMovies(day: LocalDate) = retrieveMovies(day)
 
     private fun retrieveMovies() = retrieveMovies(null)
 
-    private fun retrieveMovies(day: Date?) {
+    private fun retrieveMovies(day: LocalDate?) {
+        movies.postValue(Loading())
         launchAsyncTryCatch(
             {
-                val fetchedMovies = useCase.getMovies(day).map { mapper.mapToUi(it) }
+                val date = day?.let { formatDate(it) }
+                val fetchedMovies = useCase.getMovies(date).map { mapper.mapToUi(it) }
                 movies.postValue(Success(fetchedMovies))
             },
             {
@@ -60,4 +60,7 @@ class TodayViewModel(
             }
         )
     }
+
+    private fun formatDate(date: LocalDate): String =
+        date.format(DateTimeFormatter.ofPattern("dd-MM-yyy"))
 }

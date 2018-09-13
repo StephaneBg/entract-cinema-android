@@ -55,9 +55,7 @@ class TodayViewModel(
         updateDate(day)
     }
 
-    private fun retrieveMovies() = retrieveMovies(null)
-
-    private fun retrieveMovies(day: LocalDate?) {
+    private fun retrieveMovies(day: LocalDate? = null) {
         movies.postValue(Loading())
         launchAsyncTryCatch(
             {

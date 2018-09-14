@@ -18,9 +18,10 @@ package com.cinema.entract.data.interactor
 
 import com.cinema.entract.data.model.DateRangeData
 import com.cinema.entract.data.model.MovieData
+import com.cinema.entract.data.model.WeekData
 import com.cinema.entract.data.repository.CinemaRepository
 
-class TodayUseCase(private val repo: CinemaRepository) : BaseUseCase() {
+class CinemaUseCase(private val repo: CinemaRepository) : BaseUseCase() {
 
     var dateRange: DateRangeData? = null
         private set
@@ -29,4 +30,7 @@ class TodayUseCase(private val repo: CinemaRepository) : BaseUseCase() {
         dateRange ?: asyncAwait { dateRange = repo.getParameters() }
         return asyncAwait { repo.getMovies(day) }
     }
+
+    suspend fun getSchedule(): List<WeekData> =
+        asyncAwait { repo.getSchedule().filter { it.hasMovies } }
 }

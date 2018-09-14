@@ -20,6 +20,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.cinema.entract.data.interactor.TodayUseCase
 import com.cinema.entract.ui.mapper.MovieMapper
+import com.cinema.entract.ui.model.DateRange
 import com.cinema.entract.ui.model.Movie
 import com.cinema.entract.ui.view.base.BaseViewModel
 import com.cinema.entract.ui.view.base.Error
@@ -29,7 +30,6 @@ import com.cinema.entract.ui.view.base.Success
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import timber.log.Timber
-import java.util.Locale
 
 class TodayViewModel(
     useCase: TodayUseCase,
@@ -38,6 +38,7 @@ class TodayViewModel(
 
     private val movies = MutableLiveData<Resource<List<Movie>>>()
     private val date = MutableLiveData<String>()
+
     var selectedMovie: Movie? = null
 
     fun getMovies(): LiveData<Resource<List<Movie>>> {
@@ -46,7 +47,7 @@ class TodayViewModel(
     }
 
     fun getDate(): LiveData<String> {
-        date.value ?: updateDate(null)
+        date.value ?: updateDate()
         return date
     }
 
@@ -55,11 +56,15 @@ class TodayViewModel(
         updateDate(day)
     }
 
+    fun getDateRange(): DateRange? = useCase.dateRange?.let {
+        DateRange(LocalDate.parse(it.minimumDate), LocalDate.parse(it.maximumDate))
+    }
+
     private fun retrieveMovies(day: LocalDate? = null) {
         movies.postValue(Loading())
         launchAsyncTryCatch(
             {
-                val date = day?.format(DateTimeFormatter.ofPattern("dd-MM-yyy"))
+                val date = (day ?: LocalDate.now()).format()
                 val fetchedMovies = useCase.getMovies(date).map { mapper.mapToUi(it) }
                 movies.postValue(Success(fetchedMovies))
             },
@@ -71,9 +76,10 @@ class TodayViewModel(
         )
     }
 
-    private fun updateDate(day: LocalDate?) {
-        val formattedDate = (day ?: LocalDate.now())
-            .format(DateTimeFormatter.ofPattern("dd MMMM yyy", Locale.FRANCE))
+    private fun updateDate(day: LocalDate? = null) {
+        val formattedDate = (day ?: LocalDate.now()).format()
         date.postValue(formattedDate)
     }
+
+    private fun LocalDate.format() = this.format(DateTimeFormatter.ISO_LOCAL_DATE)
 }

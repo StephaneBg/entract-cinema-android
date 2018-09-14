@@ -19,18 +19,14 @@ package com.cinema.entract.data.interactor
 import com.cinema.entract.data.model.DateRangeData
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.repository.CinemaRepository
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 
 class TodayUseCase(private val repo: CinemaRepository) : BaseUseCase() {
 
-    private val sdf = SimpleDateFormat("dd-MM-yyy", Locale.FRANCE)
+    var dateRange: DateRangeData? = null
+        private set
 
-    suspend fun getMovies(day: String?): List<MovieData> =
-        asyncAwait { repo.getMovies(day ?: getCurrentDate()) }
-
-    suspend fun getParameters(): DateRangeData = asyncAwait { repo.getParameters() }
-
-    private fun getCurrentDate(): String = sdf.format(Calendar.getInstance().time)
+    suspend fun getMovies(day: String): List<MovieData> {
+        dateRange ?: asyncAwait { dateRange = repo.getParameters() }
+        return asyncAwait { repo.getMovies(day) }
+    }
 }

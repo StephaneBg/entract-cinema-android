@@ -24,9 +24,9 @@ import android.widget.TextView
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.cinema.entract.ui.R
 import com.cinema.entract.ui.ext.inflate
+import com.cinema.entract.ui.ext.load
 import com.cinema.entract.ui.model.Movie
 import org.jetbrains.anko.find
 
@@ -58,7 +58,7 @@ class TodayMoviesAdapter(private val selection: (Movie) -> Unit) :
         @SuppressLint("SetTextI18n")
         fun bind(movie: Movie) {
             itemView.apply {
-                Glide.with(context).load(movie.coverUrl).into(cover)
+                cover.load(movie.coverUrl)
                 title.text = movie.title
                 scheduleDuration.text = "${movie.schedule} - ${movie.duration}"
                 originalVersion.isVisible = movie.isOriginalVersion

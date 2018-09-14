@@ -22,7 +22,7 @@ import com.cinema.entract.remote.model.DayRemote
 class DayRemoteMapper(private val mapper: MovieRemoteMapper) : RemoteMapper<DayRemote, DayData> {
 
     override fun mapToData(model: DayRemote) = DayData(
-        model.jour,
-        model.films.map { mapper.mapToData(it) }
+        model.jour ?: "",
+        model.films?.map { mapper.mapToData(it) } ?: emptyList()
     )
 }

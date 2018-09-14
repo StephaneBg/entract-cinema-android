@@ -34,5 +34,5 @@ val remoteModule = module {
     single { WeekRemoteMapper(get()) }
     single { DateRangeRemoteMapper() }
 
-    factory { CinemaRemoteImpl(get(), get(), get(), get()) as CinemaRemote }
+    factory<CinemaRemote> { CinemaRemoteImpl(get(), get(), get(), get()) }
 }

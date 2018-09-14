@@ -17,6 +17,6 @@
 package com.cinema.entract.remote.model
 
 data class DayRemote(
-    val jour: String,
-    val films: List<MovieRemote>
+    val jour: String?,
+    val films: List<MovieRemote>?
 )

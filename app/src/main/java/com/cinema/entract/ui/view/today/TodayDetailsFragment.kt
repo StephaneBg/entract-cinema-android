@@ -20,9 +20,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
-import com.bumptech.glide.Glide
 import com.cinema.entract.ui.R
+import com.cinema.entract.ui.ext.load
 import com.cinema.entract.ui.view.base.BaseFragment
 import org.jetbrains.anko.find
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -41,7 +42,7 @@ class TodayDetailsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.selectedMovie?.let {
             with(view) {
-                Glide.with(context).load(it.coverUrl).into(find(R.id.cover))
+                find<ImageView>(R.id.cover).load(it.coverUrl)
                 find<TextView>(R.id.title).text = it.title
                 find<TextView>(R.id.director).text = it.director
                 find<TextView>(R.id.cast).text = it.cast

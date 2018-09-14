@@ -93,11 +93,16 @@ class TodayMoviesFragment : BaseLceFragment<EmptyRecyclerView>() {
     }
 
     private fun displayDatePicker() {
-        datePicker =
-                layoutInflater.inflate(R.layout.fragment_date_picker, null) as MaterialCalendarView
+        datePicker = MaterialCalendarView(context)
         datePicker.setOnDateChangedListener { _, day, _ ->
             viewModel.getMovies(day.date)
             alertDialog.dismiss()
+        }
+        viewModel.getDateRange()?.let {
+            datePicker.state().edit()
+                .setMinimumDate(it.minimumDate)
+                .setMaximumDate(it.maximumDate)
+                .commit()
         }
 
         alertDialog = AlertDialog.Builder(requireContext())

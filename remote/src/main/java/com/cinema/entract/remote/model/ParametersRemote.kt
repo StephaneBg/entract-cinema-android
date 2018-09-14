@@ -17,5 +17,5 @@
 package com.cinema.entract.remote.model
 
 data class ParametersRemote(
-    val periode: DateRangeRemote
+    val periode: DateRangeRemote?
 )

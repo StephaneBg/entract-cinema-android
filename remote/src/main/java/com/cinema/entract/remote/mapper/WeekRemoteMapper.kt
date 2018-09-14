@@ -22,9 +22,9 @@ import com.cinema.entract.remote.model.WeekRemote
 class WeekRemoteMapper(private val mapper: DayRemoteMapper) : RemoteMapper<WeekRemote, WeekData> {
 
     override fun mapToData(model: WeekRemote) = WeekData(
-        model.debutSemaine,
-        model.finSemaine,
-        model.jours.map { mapper.mapToData(it) },
-        model.filmsDisponibles
+        model.debutSemaine ?: "",
+        model.finSemaine ?: "",
+        model.jours?.map { mapper.mapToData(it) } ?: emptyList(),
+        model.filmsDisponibles ?: false
     )
 }

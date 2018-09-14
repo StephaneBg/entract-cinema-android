@@ -22,5 +22,5 @@ import org.koin.dsl.module.module
 
 val cacheModule = module {
 
-    single { DatabaseRepo(get()) as CinemaCache }
+    single<CinemaCache> { DatabaseRepo(get()) }
 }

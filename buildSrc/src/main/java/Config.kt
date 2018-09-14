@@ -35,7 +35,7 @@ import org.gradle.api.JavaVersion
 object Versions {
     val java = JavaVersion.VERSION_1_8
     val androidGradle = "3.2.0-rc03"
-    val kotlin = "1.2.61"
+    val kotlin = "1.2.70"
     val coroutines = "0.24.0"
     val appcompat = "1.0.0-rc01"
     val recyclerView = "1.0.0-rc01"

@@ -29,6 +29,6 @@ class CinemaRepository(private val dataStoreFactory: CinemaDataStoreFactory) {
     suspend fun getSchedule(): List<WeekData> =
         dataStoreFactory.retrieveDataStore().getSchedule().filter { it.hasMovies }
 
-    suspend fun getParameters(): DateRangeData =
+    suspend fun getParameters(): DateRangeData? =
         dataStoreFactory.retrieveDataStore().getParameters()
 }

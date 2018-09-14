@@ -19,10 +19,12 @@ package com.cinema.entract.remote.mapper
 import com.cinema.entract.data.model.DateRangeData
 import com.cinema.entract.remote.model.DateRangeRemote
 
-class DateRangeRemoteMapper : RemoteMapper<DateRangeRemote, DateRangeData> {
+class DateRangeRemoteMapper : RemoteMapper<DateRangeRemote, DateRangeData?> {
 
-    override fun mapToData(model: DateRangeRemote) = DateRangeData(
-        model.date_minimum,
-        model.date_maximum
-    )
+    override fun mapToData(model: DateRangeRemote): DateRangeData? =
+        if (null == model.date_minimum || null == model.date_maximum) {
+            null
+        } else {
+            DateRangeData(model.date_minimum, model.date_maximum)
+        }
 }

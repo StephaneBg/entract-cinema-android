@@ -33,7 +33,7 @@ class CinemaRemoteImpl(
 
     override suspend fun getMovies(day: String): List<MovieData> {
         val movies = service.getMovies(day).await()
-        return movies.films.map { movieMapper.mapToData(it) }
+        return movies.map { movieMapper.mapToData(it) }
     }
 
     override suspend fun getSchedule(): List<WeekData> {
@@ -41,8 +41,8 @@ class CinemaRemoteImpl(
         return schedule.map { weekMapper.mapToData(it) }
     }
 
-    override suspend fun getParameters(): DateRangeData {
+    override suspend fun getParameters(): DateRangeData? {
         val parameters = service.getParameters().await()
-        return paramMapper.mapToData(parameters.periode)
+        return parameters.periode?.let { paramMapper.mapToData(it) }
     }
 }

@@ -14,8 +14,9 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.remote.model
+package com.cinema.entract.ui.ext
 
-data class Today(
-    val films: List<MovieRemote>
-)
+import android.widget.ImageView
+import com.bumptech.glide.Glide
+
+fun ImageView.load(url: String) = Glide.with(context).load(url).into(this)

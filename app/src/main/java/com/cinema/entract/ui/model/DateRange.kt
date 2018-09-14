@@ -14,9 +14,11 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.remote.model
+package com.cinema.entract.ui.model
 
-data class DateRangeRemote(
-    val date_minimum: String?,
-    val date_maximum: String?
+import org.threeten.bp.LocalDate
+
+data class DateRange(
+    val minimumDate: LocalDate,
+    val maximumDate: LocalDate
 )

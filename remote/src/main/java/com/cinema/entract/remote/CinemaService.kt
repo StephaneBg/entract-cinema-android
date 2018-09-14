@@ -16,8 +16,8 @@
 
 package com.cinema.entract.remote
 
+import com.cinema.entract.remote.model.MovieRemote
 import com.cinema.entract.remote.model.ParametersRemote
-import com.cinema.entract.remote.model.Today
 import com.cinema.entract.remote.model.WeekRemote
 import kotlinx.coroutines.experimental.Deferred
 import retrofit2.http.GET
@@ -26,7 +26,7 @@ import retrofit2.http.Query
 interface CinemaService {
 
     @GET("getFilmsJour.php")
-    fun getMovies(@Query("jour") day: String): Deferred<Today>
+    fun getMovies(@Query("jour") day: String): Deferred<List<MovieRemote>>
 
     @GET("getProgramme.php")
     fun getSchedule(): Deferred<List<WeekRemote>>

@@ -21,7 +21,7 @@ import com.cinema.entract.app.R
 import com.cinema.entract.app.ext.addFragment
 import com.cinema.entract.app.ext.replaceFragment
 import com.cinema.entract.app.ui.base.BaseActivity
-import com.cinema.entract.app.ui.today.TodayDetailsFragment
+import com.cinema.entract.app.ui.details.MovieDetailsFragment
 import com.cinema.entract.app.ui.today.TodayMoviesFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.jetbrains.anko.find
@@ -59,7 +59,7 @@ class CinemaActivity : BaseActivity() {
 
     private fun handleToday(): Boolean =
         when (supportFragmentManager.findFragmentById(R.id.mainContainer)) {
-            is TodayDetailsFragment -> {
+            is MovieDetailsFragment -> {
                 supportFragmentManager.popBackStack()
                 true
             }

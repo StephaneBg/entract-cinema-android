@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.app.ui.today
+package com.cinema.entract.app.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -26,20 +26,19 @@ import com.cinema.entract.app.ui.base.Error
 import com.cinema.entract.app.ui.base.Loading
 import com.cinema.entract.app.ui.base.Resource
 import com.cinema.entract.app.ui.base.Success
-import com.cinema.entract.data.interactor.TodayUseCase
+import com.cinema.entract.data.interactor.CinemaUseCase
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import timber.log.Timber
 
-class TodayViewModel(
-    useCase: TodayUseCase,
+class CinemaViewModel(
+    useCase: CinemaUseCase,
     private val mapper: MovieMapper
-) : BaseViewModel<TodayUseCase>(useCase) {
+) : BaseViewModel<CinemaUseCase>(useCase) {
 
     private val movies = MutableLiveData<Resource<List<Movie>>>()
     private val date = MutableLiveData<String>()
-
-    var selectedMovie: Movie? = null
+    private val selectedMovie = MutableLiveData<Resource<Movie>>()
 
     fun getMovies(): LiveData<Resource<List<Movie>>> {
         movies.value ?: retrieveMovies()
@@ -59,6 +58,10 @@ class TodayViewModel(
     fun getDateRange(): DateRange? = useCase.dateRange?.let {
         DateRange(LocalDate.parse(it.minimumDate), LocalDate.parse(it.maximumDate))
     }
+
+    fun getSelectedMovie(): LiveData<Resource<Movie>> = selectedMovie
+
+    fun setSelectedMovie(movie: Movie) = selectedMovie.postValue(Success(movie))
 
     private fun retrieveMovies(day: LocalDate? = null) {
         movies.postValue(Loading())

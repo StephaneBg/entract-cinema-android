@@ -19,7 +19,7 @@ package com.cinema.entract.app.di
 import com.cinema.entract.app.mapper.DayMapper
 import com.cinema.entract.app.mapper.MovieMapper
 import com.cinema.entract.app.mapper.WeekMapper
-import com.cinema.entract.app.ui.today.TodayViewModel
+import com.cinema.entract.app.ui.CinemaViewModel
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
 
@@ -29,5 +29,5 @@ val uiModule = module {
     single { DayMapper(get()) }
     single { WeekMapper(get()) }
 
-    viewModel { TodayViewModel(get(), get()) }
+    viewModel { CinemaViewModel(get(), get()) }
 }

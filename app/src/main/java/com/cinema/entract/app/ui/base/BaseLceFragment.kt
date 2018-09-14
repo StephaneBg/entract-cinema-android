@@ -19,6 +19,7 @@ package com.cinema.entract.app.ui.base
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import androidx.annotation.CallSuper
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ext.find
 import com.cinema.entract.app.ext.hide
@@ -31,6 +32,7 @@ open class BaseLceFragment<T : View> : BaseFragment() {
     lateinit var loadingView: View
     lateinit var errorView: Button
 
+    @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         contentView = find<View>(R.id.contentView) as T
         loadingView = find(R.id.loadingView)

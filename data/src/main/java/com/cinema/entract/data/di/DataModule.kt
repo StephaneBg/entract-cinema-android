@@ -16,7 +16,7 @@
 
 package com.cinema.entract.data.di
 
-import com.cinema.entract.data.interactor.TodayUseCase
+import com.cinema.entract.data.interactor.CinemaUseCase
 import com.cinema.entract.data.repository.CinemaRepository
 import com.cinema.entract.data.source.CinemaCacheDataStore
 import com.cinema.entract.data.source.CinemaDataStoreFactory
@@ -30,5 +30,5 @@ val dataModule = module {
     factory { CinemaDataStoreFactory(get(), get()) }
 
     factory { CinemaRepository(get()) }
-    factory { TodayUseCase(get()) }
+    factory { CinemaUseCase(get()) }
 }

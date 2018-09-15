@@ -17,6 +17,6 @@
 package com.cinema.entract.data.model
 
 data class DayData(
-    val day: String,
+    val date: String,
     val movies: List<MovieData>
 )

@@ -14,18 +14,13 @@
   ~  limitations under the License.
   -->
 
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item
-        android:id="@+id/movies"
-        android:icon="@drawable/ic_local_movies_black_24dp"
-        android:title="@string/menu_today"
-        />
-
-    <item
-        android:id="@+id/schedule"
-        android:icon="@drawable/ic_video_camera_black_24dp"
-        android:title="@string/menu_coming"
-        />
-</menu>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/TextAppearance.MaterialComponents.Body2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/margin_padding_size_medium"
+    android:background="@color/blue_50"
+    tools:text="Du 16 au 25"
+    />

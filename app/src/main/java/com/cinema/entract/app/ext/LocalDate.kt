@@ -14,16 +14,13 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.app.mapper
+package com.cinema.entract.app.ext
 
-import com.cinema.entract.app.model.Week
-import com.cinema.entract.data.model.WeekData
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
+import java.util.Locale
 
-class WeekMapper(private val mapper: DayMapper) : Mapper<Week, WeekData> {
+private val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.FRANCE)
+fun LocalDate.formatToUi(): String = this.format(formatter)
 
-    override fun mapToUi(model: WeekData) = Week(
-        "Du ${model.beginDay} au ${model.endDay}",
-        model.days.map { mapper.mapToUi(it) },
-        model.hasMovies
-    )
-}
+fun LocalDate.formatToUTC(): String = this.format(DateTimeFormatter.ISO_LOCAL_DATE)

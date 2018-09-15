@@ -16,8 +16,10 @@
 
 package com.cinema.entract.app.model
 
+import org.threeten.bp.LocalDate
+
 sealed class ScheduleEntry
 
 data class WeekHeader(val dateRange: String) : ScheduleEntry()
 data class DayHeader(val date: String) : ScheduleEntry()
-data class MovieEntry(val movie: Movie, val date: String) : ScheduleEntry()
+data class MovieEntry(val movie: Movie, val date: LocalDate) : ScheduleEntry()

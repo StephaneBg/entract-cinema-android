@@ -16,7 +16,9 @@
 
 package com.cinema.entract.data.model
 
+import org.threeten.bp.LocalDate
+
 data class DateRangeData(
-    val minimumDate: String,
-    val maximumDate: String
+    val minimumDate: LocalDate,
+    val maximumDate: LocalDate
 )

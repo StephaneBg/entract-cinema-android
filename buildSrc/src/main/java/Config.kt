@@ -35,6 +35,7 @@ object Versions {
     val ktx = "1.0.0-alpha1"
     val glide = "4.8.0"
     val datePicker = "2.0.0"
+    val jsr310 = "1.1.0"
 }
 
 object Build {
@@ -78,4 +79,5 @@ object Libs {
     val koinAndroid = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
     val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
     val datePicker = "com.github.prolificinteractive:material-calendarview:${Versions.datePicker}"
+    val jsr310 = "com.jakewharton.threetenabp:threetenabp:${Versions.jsr310}"
 }

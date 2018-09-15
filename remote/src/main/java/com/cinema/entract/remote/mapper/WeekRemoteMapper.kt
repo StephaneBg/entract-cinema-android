@@ -18,12 +18,13 @@ package com.cinema.entract.remote.mapper
 
 import com.cinema.entract.data.model.WeekData
 import com.cinema.entract.remote.model.WeekRemote
+import org.threeten.bp.LocalDate
 
 class WeekRemoteMapper(private val mapper: DayRemoteMapper) : RemoteMapper<WeekRemote, WeekData> {
 
     override fun mapToData(model: WeekRemote) = WeekData(
-        model.debutsemaine ?: "",
-        model.finsemaine ?: "",
+        LocalDate.parse(model.debutsemaine) ?: error("Unknown date"),
+        LocalDate.parse(model.finsemaine) ?: error("Unknown date"),
         model.jours?.map { mapper.mapToData(it) } ?: emptyList(),
         model.filmsDisponibles ?: false
     )

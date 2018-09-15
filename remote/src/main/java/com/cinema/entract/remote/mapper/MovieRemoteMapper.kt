@@ -18,12 +18,13 @@ package com.cinema.entract.remote.mapper
 
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.remote.model.MovieRemote
+import org.threeten.bp.LocalDate
 
 class MovieRemoteMapper : RemoteMapper<MovieRemote, MovieData> {
 
     override fun mapToData(model: MovieRemote) = MovieData(
         model.titre ?: "",
-        model.date ?: "",
+        LocalDate.parse(model.date) ?: error("Unknown date"),
         model.horaire ?: "",
         model.troisDimension ?: false,
         model.vo ?: false,

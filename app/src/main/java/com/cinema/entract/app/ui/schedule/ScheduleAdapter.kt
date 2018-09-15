@@ -19,7 +19,6 @@ package com.cinema.entract.app.ui.schedule
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.cinema.entract.app.R
@@ -29,8 +28,9 @@ import com.cinema.entract.app.model.MovieEntry
 import com.cinema.entract.app.model.ScheduleEntry
 import com.cinema.entract.app.model.WeekHeader
 import org.jetbrains.anko.find
+import org.threeten.bp.LocalDate
 
-class ScheduleAdapter(private val selection: (String) -> Unit) :
+class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var schedule = emptyList<ScheduleEntry>()
@@ -52,7 +52,7 @@ class ScheduleAdapter(private val selection: (String) -> Unit) :
 
     @Suppress("UNCHECKED_CAST")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) =
-        (holder as ScheduleViewHolder<ScheduleEntry>).onBind(schedule[position])
+        (holder as ScheduleViewHolder<ScheduleEntry>).bind(schedule[position])
 
     override fun getItemViewType(position: Int): Int = when (schedule[position]) {
         is WeekHeader -> TYPE_WEEK_HEADER
@@ -62,14 +62,14 @@ class ScheduleAdapter(private val selection: (String) -> Unit) :
 
     inner class WeekHeaderHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         ScheduleViewHolder<WeekHeader> {
-        override fun onBind(model: WeekHeader) {
+        override fun bind(model: WeekHeader) {
             (itemView as TextView).text = model.dateRange
         }
     }
 
     inner class DayHeaderHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         ScheduleViewHolder<DayHeader> {
-        override fun onBind(model: DayHeader) {
+        override fun bind(model: DayHeader) {
             (itemView as TextView).text = model.date
         }
     }
@@ -82,17 +82,19 @@ class ScheduleAdapter(private val selection: (String) -> Unit) :
         private val originalVersion = itemView.find<TextView>(R.id.originalVersion)
         private val threeDimension = itemView.find<TextView>(R.id.threeDimension)
 
-        override fun onBind(model: MovieEntry) {
+        override fun bind(model: MovieEntry) {
             schedule.text = model.movie.schedule
             title.text = model.movie.title
             originalVersion.isVisible = model.movie.isOriginalVersion
-            threeDimension.isInvisible = !model.movie.isThreeDimension
-            itemView.setOnClickListener { selection(model.date) }
+            threeDimension.isVisible = model.movie.isThreeDimension
+            itemView.setOnClickListener {
+                if (model.date.isAfter(LocalDate.now().minusDays(1))) selection(model.date)
+            }
         }
     }
 
     interface ScheduleViewHolder<T : ScheduleEntry> {
-        fun onBind(model: T)
+        fun bind(model: T)
     }
 
     companion object {

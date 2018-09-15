@@ -41,4 +41,5 @@ dependencies {
     implementation Libs.coroutinesCore
     implementation Libs.koinAndroid
     implementation Libs.timber
+    implementation Libs.jsr310
 }

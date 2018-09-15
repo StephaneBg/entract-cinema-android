@@ -63,7 +63,7 @@ class CinemaViewModel(
 
     fun setSelectedMovie(movie: Movie) = selectedMovie.postValue(Success(movie))
 
-    private fun retrieveMovies(day: LocalDate? = null) {
+    fun retrieveMovies(day: LocalDate? = null) {
         movies.postValue(Loading())
         launchAsyncTryCatch(
             {

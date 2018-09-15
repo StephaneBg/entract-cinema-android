@@ -22,6 +22,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -40,7 +41,6 @@ import com.cinema.entract.app.ui.details.MovieDetailsFragment
 import com.cinema.entract.app.widget.EmptyRecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
-import org.jetbrains.anko.find
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class TodayMoviesFragment : BaseLceFragment<EmptyRecyclerView>() {
@@ -50,6 +50,9 @@ class TodayMoviesFragment : BaseLceFragment<EmptyRecyclerView>() {
 
     private lateinit var datePicker: MaterialCalendarView
     private lateinit var alertDialog: AlertDialog
+    private lateinit var empty: View
+    private lateinit var fab: FloatingActionButton
+    private lateinit var date: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,18 +63,39 @@ class TodayMoviesFragment : BaseLceFragment<EmptyRecyclerView>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(contentView.find<EmptyRecyclerView>(R.id.recyclerView)) {
+        empty = find(R.id.emptyView)
+        fab = find(R.id.fab)
+        date = find(R.id.date)
+        with(contentView) {
             layoutManager = LinearLayoutManager(activity)
+            emptyView = empty
             adapter = todayAdapter
             addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
-            emptyView = contentView.find(R.id.emptyView)
             setHasFixedSize(true)
         }
 
-        find<FloatingActionButton>(R.id.fab).setOnClickListener { displayDatePicker() }
+        fab.setOnClickListener { displayDatePicker() }
 
         observe(viewModel.getMovies(), ::manageResource)
-        observe(viewModel.getDate()) { find<TextView>(R.id.date).text = it }
+        observe(viewModel.getDate()) { date.text = it }
+    }
+
+    override fun showContent() {
+        fab.isVisible = true
+        super.showContent()
+        contentView.checkIfEmpty()
+    }
+
+    override fun showLoading() {
+        fab.isVisible = false
+        empty.isVisible = false
+        super.showLoading()
+    }
+
+    override fun showError(throwable: Throwable?, action: () -> Unit) {
+        fab.isVisible = false
+        empty.isVisible = false
+        super.showError(throwable, action)
     }
 
     private fun manageResource(resource: Resource<List<Movie>>?) {
@@ -81,7 +105,7 @@ class TodayMoviesFragment : BaseLceFragment<EmptyRecyclerView>() {
                 todayAdapter.updateMovies(resource.data ?: emptyList())
                 showContent()
             }
-            is Error -> showError(resource.error) { viewModel.getMovies() }
+            is Error -> showError(resource.error) { viewModel.retrieveMovies() }
         }
     }
 

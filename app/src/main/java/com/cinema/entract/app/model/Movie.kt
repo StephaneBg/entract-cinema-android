@@ -16,9 +16,11 @@
 
 package com.cinema.entract.app.model
 
+import org.threeten.bp.LocalDate
+
 data class Movie(
     val title: String,
-    val date: String,
+    val date: LocalDate,
     val schedule: String,
     val isThreeDimension: Boolean,
     val isOriginalVersion: Boolean,

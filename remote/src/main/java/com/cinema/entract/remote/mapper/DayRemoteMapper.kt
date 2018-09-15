@@ -18,11 +18,12 @@ package com.cinema.entract.remote.mapper
 
 import com.cinema.entract.data.model.DayData
 import com.cinema.entract.remote.model.DayRemote
+import org.threeten.bp.LocalDate
 
 class DayRemoteMapper(private val mapper: MovieRemoteMapper) : RemoteMapper<DayRemote, DayData> {
 
     override fun mapToData(model: DayRemote) = DayData(
-        model.jour ?: "",
+        LocalDate.parse(model.jour) ?: LocalDate.now(),
         model.films?.map { mapper.mapToData(it) } ?: emptyList()
     )
 }

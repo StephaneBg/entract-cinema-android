@@ -55,11 +55,6 @@ class CinemaViewModel(
         return date
     }
 
-    fun getMovies(day: LocalDate) {
-        retrieveMovies(day)
-        updateDate(day)
-    }
-
     fun getDateRange(): DateRange? = useCase.dateRange?.let {
         DateRange(it.minimumDate, it.maximumDate)
     }
@@ -80,6 +75,7 @@ class CinemaViewModel(
                 val date = (day ?: LocalDate.now()).formatToUTC()
                 val fetchedMovies = useCase.getMovies(date).map { movieMapper.mapToUi(it) }
                 movies.postValue(Success(fetchedMovies))
+                updateDate(day)
             },
             {
                 Timber.e(it)

@@ -16,13 +16,13 @@
 
 package com.cinema.entract.app.mapper
 
-import com.cinema.entract.app.ext.formatToUi
+import com.cinema.entract.app.ext.longFormatToUi
+import com.cinema.entract.app.ext.shortFormatToUi
 import com.cinema.entract.app.model.DayHeader
 import com.cinema.entract.app.model.MovieEntry
 import com.cinema.entract.app.model.ScheduleEntry
 import com.cinema.entract.app.model.WeekHeader
 import com.cinema.entract.data.model.WeekData
-import org.threeten.bp.LocalDate
 
 class ScheduleMapper(private val mapper: MovieMapper) :
     Mapper<List<ScheduleEntry>, List<WeekData>> {
@@ -30,15 +30,16 @@ class ScheduleMapper(private val mapper: MovieMapper) :
     override fun mapToUi(model: List<WeekData>): List<ScheduleEntry> {
         val list = mutableListOf<ScheduleEntry>()
         model.forEach { week ->
-            list.add(WeekHeader("Du ${week.beginDay} au ${week.endDay}"))
+            list.add(WeekHeader("Du ${week.beginDay.shortFormatToUi()} au ${week.endDay.shortFormatToUi()}"))
 
-            week.days.forEach { day ->
-                list.add(DayHeader(LocalDate.parse(day.date).formatToUi()))
+            week.days.filter { it.movies.isNotEmpty() }
+                .forEach { day ->
+                    list.add(DayHeader(day.date.longFormatToUi()))
 
-                day.movies.forEach { movie ->
-                    list.add(MovieEntry(mapper.mapToUi(movie), day.date))
+                    day.movies.forEach { movie ->
+                        list.add(MovieEntry(mapper.mapToUi(movie), day.date))
+                    }
                 }
-            }
         }
 
         return list

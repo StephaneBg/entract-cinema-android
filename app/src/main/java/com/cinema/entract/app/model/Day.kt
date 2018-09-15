@@ -16,7 +16,9 @@
 
 package com.cinema.entract.app.model
 
+import org.threeten.bp.LocalDate
+
 data class Day(
-    val day: String,
+    val day: LocalDate,
     val movies: List<Movie>
 )

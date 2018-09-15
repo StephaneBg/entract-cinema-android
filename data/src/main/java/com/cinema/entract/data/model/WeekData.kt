@@ -16,9 +16,11 @@
 
 package com.cinema.entract.data.model
 
+import org.threeten.bp.LocalDate
+
 data class WeekData(
-    val beginDay: String,
-    val endDay: String,
+    val beginDay: LocalDate,
+    val endDay: LocalDate,
     val days: List<DayData>,
     val hasMovies: Boolean
 )

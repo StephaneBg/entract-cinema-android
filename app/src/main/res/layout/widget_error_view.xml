@@ -29,7 +29,7 @@
         android:layout_height="96dp"
         android:layout_gravity="center"
         android:importantForAccessibility="no"
-        android:tint="@color/blue_50"
+        android:tint="@color/primary_50"
         app:srcCompat="@drawable/ic_error_outline_black_24dp"
         />
 

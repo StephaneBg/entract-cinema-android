@@ -19,7 +19,7 @@ package com.cinema.entract.app.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.cinema.entract.app.ext.formatToUTC
-import com.cinema.entract.app.ext.formatToUi
+import com.cinema.entract.app.ext.longFormatToUi
 import com.cinema.entract.app.mapper.MovieMapper
 import com.cinema.entract.app.mapper.ScheduleMapper
 import com.cinema.entract.app.model.DateRange
@@ -61,7 +61,7 @@ class CinemaViewModel(
     }
 
     fun getDateRange(): DateRange? = useCase.dateRange?.let {
-        DateRange(LocalDate.parse(it.minimumDate), LocalDate.parse(it.maximumDate))
+        DateRange(it.minimumDate, it.maximumDate)
     }
 
     fun getSelectedMovie(): LiveData<Movie> = selectedMovie
@@ -103,7 +103,7 @@ class CinemaViewModel(
     }
 
     private fun updateDate(day: LocalDate? = null) {
-        val formattedDate = (day ?: LocalDate.now()).formatToUi()
+        val formattedDate = (day ?: LocalDate.now()).longFormatToUi()
         date.postValue(Success(formattedDate))
     }
 }

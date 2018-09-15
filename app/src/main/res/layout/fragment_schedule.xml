@@ -59,7 +59,7 @@
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:importantForAccessibility="no"
-            android:tint="@color/blue_50"
+            android:tint="@color/primary_50"
             app:srcCompat="@drawable/ic_movie_black_24dp"
             />
 

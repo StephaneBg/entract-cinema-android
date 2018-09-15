@@ -20,7 +20,11 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import java.util.Locale
 
-private val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.FRANCE)
-fun LocalDate.formatToUi(): String = this.format(formatter)
+private val longFormatter = DateTimeFormatter.ofPattern("EEEE d MMMM", Locale.FRANCE)
+private val shortFormatter = DateTimeFormatter.ofPattern("d MMMM", Locale.FRANCE)
+
+fun LocalDate.longFormatToUi(): String = this.format(longFormatter).capitalize()
+
+fun LocalDate.shortFormatToUi(): String = this.format(shortFormatter).capitalize()
 
 fun LocalDate.formatToUTC(): String = this.format(DateTimeFormatter.ISO_LOCAL_DATE)

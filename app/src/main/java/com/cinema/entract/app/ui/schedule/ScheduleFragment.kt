@@ -21,6 +21,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.core.widget.toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -40,7 +41,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class ScheduleFragment : BaseLceFragment<EmptyRecyclerView>() {
 
     private val viewModel by sharedViewModel<CinemaViewModel>()
-    private val scheduleAdapter = ScheduleAdapter {}
+    private val scheduleAdapter = ScheduleAdapter { requireContext().toast("Clic !") }
 
     private lateinit var empty: View
 

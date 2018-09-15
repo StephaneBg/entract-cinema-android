@@ -60,17 +60,25 @@ class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
         is MovieEntry -> TYPE_MOVIE
     }
 
+    private fun isSelectable(date: LocalDate): Boolean = date.isAfter(LocalDate.now().minusDays(1))
+
     inner class WeekHeaderHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         ScheduleViewHolder<WeekHeader> {
         override fun bind(model: WeekHeader) {
-            (itemView as TextView).text = model.dateRange
+            (itemView as TextView).text = model.dateUi
         }
     }
 
     inner class DayHeaderHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         ScheduleViewHolder<DayHeader> {
         override fun bind(model: DayHeader) {
-            (itemView as TextView).text = model.date
+            (itemView as TextView).text = model.dateUi
+            if (isSelectable(model.date)) {
+                itemView.setOnClickListener { selection(model.date) }
+                itemView.alpha = 1.0f
+            } else {
+                itemView.alpha = PAST_ITEM_ALPHA
+            }
         }
     }
 
@@ -87,8 +95,11 @@ class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
             title.text = model.movie.title
             originalVersion.isVisible = model.movie.isOriginalVersion
             threeDimension.isVisible = model.movie.isThreeDimension
-            itemView.setOnClickListener {
-                if (model.date.isAfter(LocalDate.now().minusDays(1))) selection(model.date)
+            if (isSelectable(model.date)) {
+                itemView.setOnClickListener { selection(model.date) }
+                itemView.alpha = 1.0f
+            } else {
+                itemView.alpha = PAST_ITEM_ALPHA
             }
         }
     }
@@ -98,6 +109,7 @@ class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
     }
 
     companion object {
+        private const val PAST_ITEM_ALPHA = 0.6f
         private const val TYPE_WEEK_HEADER = 0
         private const val TYPE_DAY_HEADER = 1
         private const val TYPE_MOVIE = 2

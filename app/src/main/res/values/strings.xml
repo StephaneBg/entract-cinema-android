@@ -25,7 +25,9 @@
     <string name="error_general">Une erreur est survenue</string>
     <string name="error_retry_action">Réessayer</string>
 
-    <string name="today_original_version">VOST</string>
-    <string name="today_three_dimension">3D</string>
-    <string name="today_no_movie_message">Pas de séance ce jour</string>
+    <string name="movies_original_version">VOST</string>
+    <string name="movies_three_dimension">3D</string>
+    <string name="movies_no_movie_message">Pas de séance ce jour</string>
+
+    <string name="schedule_no_movie_message">Pas de séances à venir</string>
 </resources>

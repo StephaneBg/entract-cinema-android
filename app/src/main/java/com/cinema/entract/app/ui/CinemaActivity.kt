@@ -21,11 +21,11 @@ import com.cinema.entract.app.R
 import com.cinema.entract.app.ext.addFragment
 import com.cinema.entract.app.ext.replaceFragment
 import com.cinema.entract.app.ui.base.BaseActivity
-import com.cinema.entract.app.ui.details.MovieDetailsFragment
-import com.cinema.entract.app.ui.today.TodayMoviesFragment
+import com.cinema.entract.app.ui.details.DetailsFragment
+import com.cinema.entract.app.ui.movies.MoviesFragment
+import com.cinema.entract.app.ui.schedule.ScheduleFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.jetbrains.anko.find
-import org.jetbrains.anko.toast
 
 class CinemaActivity : BaseActivity() {
 
@@ -37,7 +37,7 @@ class CinemaActivity : BaseActivity() {
         initWidgets()
         initBottomNavigation()
 
-        savedInstanceState ?: addFragment(R.id.mainContainer, TodayMoviesFragment.newInstance())
+        savedInstanceState ?: addFragment(R.id.mainContainer, MoviesFragment.newInstance())
     }
 
     private fun initWidgets() {
@@ -47,25 +47,31 @@ class CinemaActivity : BaseActivity() {
     private fun initBottomNavigation() {
         bottomNav.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.today -> handleToday()
-                R.id.coming -> {
-                    toast("Bientôt :)")
-                    false
-                }
+                R.id.movies -> handleMovies()
+                R.id.schedule -> handleSchedule()
                 else -> false
             }
         }
     }
 
-    private fun handleToday(): Boolean =
+    private fun handleMovies(): Boolean =
         when (supportFragmentManager.findFragmentById(R.id.mainContainer)) {
-            is MovieDetailsFragment -> {
+            is DetailsFragment -> {
                 supportFragmentManager.popBackStack()
                 true
             }
-            is TodayMoviesFragment -> false
+            is MoviesFragment -> false
             else -> {
-                replaceFragment(R.id.mainContainer, TodayMoviesFragment.newInstance())
+                replaceFragment(R.id.mainContainer, MoviesFragment.newInstance())
+                true
+            }
+        }
+
+    private fun handleSchedule(): Boolean =
+        when (supportFragmentManager.findFragmentById(R.id.mainContainer)) {
+            is ScheduleFragment -> false
+            else -> {
+                replaceFragment(R.id.mainContainer, ScheduleFragment.newInstance())
                 true
             }
         }

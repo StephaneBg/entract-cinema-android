@@ -20,6 +20,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
     >
 
     <ImageView
@@ -43,11 +44,10 @@
         android:layout_marginStart="@dimen/margin_padding_size_medium"
         android:layout_marginTop="@dimen/margin_padding_size_medium"
         android:layout_marginEnd="@dimen/margin_padding_size_medium"
-        android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cover"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Movie with an extra extra long title"
+        tools:text="Film avec un titre très long mais alors vraiment très long"
         />
 
     <TextView
@@ -73,7 +73,7 @@
         android:layout_marginStart="@dimen/margin_padding_size_medium"
         android:layout_marginTop="@dimen/margin_padding_size_small"
         android:layout_marginBottom="@dimen/margin_padding_size_medium"
-        android:text="@string/today_original_version"
+        android:text="@string/movies_original_version"
         android:textColor="@color/blue_500"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cover"
@@ -88,7 +88,7 @@
         android:layout_marginStart="@dimen/margin_padding_size_medium"
         android:layout_marginTop="@dimen/margin_padding_size_small"
         android:layout_marginBottom="@dimen/margin_padding_size_medium"
-        android:text="@string/today_three_dimension"
+        android:text="@string/movies_three_dimension"
         android:textColor="@color/red_500"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/originalVersion"

@@ -14,73 +14,79 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.app.ui.details
+package com.cinema.entract.app.ui.schedule
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.cinema.entract.app.R
-import com.cinema.entract.app.ext.load
+import com.cinema.entract.app.ext.find
 import com.cinema.entract.app.ext.observe
-import com.cinema.entract.app.model.Movie
+import com.cinema.entract.app.model.ScheduleEntry
 import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.app.ui.base.BaseLceFragment
 import com.cinema.entract.app.ui.base.Error
 import com.cinema.entract.app.ui.base.Loading
 import com.cinema.entract.app.ui.base.Resource
 import com.cinema.entract.app.ui.base.Success
-import org.jetbrains.anko.find
+import com.cinema.entract.app.widget.EmptyRecyclerView
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class MovieDetailsFragment : BaseLceFragment<View>() {
+class ScheduleFragment : BaseLceFragment<EmptyRecyclerView>() {
 
     private val viewModel by sharedViewModel<CinemaViewModel>()
+    private val scheduleAdapter = ScheduleAdapter {}
+
+    private lateinit var empty: View
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_today_details, container, false)
-
+    ): View? = inflater.inflate(R.layout.fragment_schedule, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observe(viewModel.getSelectedMovie(), ::manageResource)
+
+        empty = find(R.id.emptyView)
+        with(contentView) {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = scheduleAdapter
+            emptyView = empty
+            addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
+        }
+
+        observe(viewModel.getSchedule(), ::displaySchedule)
     }
 
-    private fun manageResource(resource: Resource<Movie>?) {
+    override fun showLoading() {
+        empty.isVisible = false
+        super.showLoading()
+    }
+
+    override fun showError(throwable: Throwable?, action: () -> Unit) {
+        empty.isVisible = false
+        super.showError(throwable, action)
+    }
+
+    private fun displaySchedule(resource: Resource<List<ScheduleEntry>>?) {
         when (resource) {
             is Loading -> showLoading()
             is Success -> {
-                resource.data?.let { updateUi(it) }
+                scheduleAdapter.updateSchedule(resource.data ?: emptyList())
                 showContent()
             }
-            is Error -> showError(resource.error) { viewModel.getMovies() }
+            is Error -> showError(resource.error) { viewModel.retrieveSchedule() }
         }
-    }
 
-    private fun updateUi(movie: Movie) {
-        contentView.apply {
-            find<ImageView>(R.id.cover).load(movie.coverUrl)
-            find<TextView>(R.id.title).text = movie.title
-            find<TextView>(R.id.director).text = movie.director
-            movie.cast.apply {
-                val view = find<TextView>(R.id.cast)
-                if (isEmpty()) view.isVisible = false
-                else view.text = this
-            }
-            find<TextView>(R.id.year).text = movie.yearOfProduction
-            find<TextView>(R.id.duration).text = movie.duration
-            find<TextView>(R.id.genre).text = movie.genre
-            find<TextView>(R.id.synopsis).text = movie.synopsis
-        }
     }
 
     companion object {
-        fun newInstance() = MovieDetailsFragment()
+        fun newInstance(): ScheduleFragment = ScheduleFragment()
     }
 }

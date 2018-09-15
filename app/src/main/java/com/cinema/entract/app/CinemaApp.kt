@@ -21,16 +21,18 @@ import com.cinema.entract.app.di.uiModule
 import com.cinema.entract.cache.di.cacheModule
 import com.cinema.entract.data.di.dataModule
 import com.cinema.entract.remote.di.remoteModule
+import com.jakewharton.threetenabp.AndroidThreeTen
 import org.koin.android.ext.android.startKoin
 import org.koin.log.EmptyLogger
 import timber.log.Timber
 
 
-class CinemaEntractApp : Application() {
+class CinemaApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
 
+        AndroidThreeTen.init(this)
         if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
 
         startKoin(

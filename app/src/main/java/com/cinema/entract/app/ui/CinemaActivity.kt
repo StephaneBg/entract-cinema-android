@@ -33,7 +33,7 @@ class CinemaActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_cinema_entract)
+        setContentView(R.layout.activity_cinema)
         initWidgets()
         initBottomNavigation()
 

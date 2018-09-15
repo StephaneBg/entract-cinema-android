@@ -94,4 +94,5 @@ dependencies {
     implementation Libs.koinAndroid
     implementation Libs.glide
     implementation Libs.datePicker
+    implementation Libs.jsr310
 }

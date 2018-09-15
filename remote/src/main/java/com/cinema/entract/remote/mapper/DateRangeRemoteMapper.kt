@@ -18,6 +18,7 @@ package com.cinema.entract.remote.mapper
 
 import com.cinema.entract.data.model.DateRangeData
 import com.cinema.entract.remote.model.DateRangeRemote
+import org.threeten.bp.LocalDate
 
 class DateRangeRemoteMapper : RemoteMapper<DateRangeRemote, DateRangeData?> {
 
@@ -25,6 +26,9 @@ class DateRangeRemoteMapper : RemoteMapper<DateRangeRemote, DateRangeData?> {
         if (null == model.date_minimum || null == model.date_maximum) {
             null
         } else {
-            DateRangeData(model.date_minimum, model.date_maximum)
+            DateRangeData(
+                LocalDate.parse(model.date_minimum),
+                LocalDate.parse(model.date_maximum)
+            )
         }
 }

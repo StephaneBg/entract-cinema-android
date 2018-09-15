@@ -14,15 +14,10 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.app.mapper
+package com.cinema.entract.app.model
 
-import com.cinema.entract.app.model.Day
-import com.cinema.entract.data.model.DayData
+sealed class ScheduleEntry
 
-class DayMapper(private val mapper: MovieMapper) : Mapper<Day, DayData> {
-
-    override fun mapToUi(model: DayData) = Day(
-        model.day,
-        model.movies.map { mapper.mapToUi(it) }
-    )
-}
+data class WeekHeader(val dateRange: String) : ScheduleEntry()
+data class DayHeader(val date: String) : ScheduleEntry()
+data class MovieEntry(val movie: Movie, val date: String) : ScheduleEntry()

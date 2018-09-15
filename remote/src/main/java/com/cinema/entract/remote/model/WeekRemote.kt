@@ -17,8 +17,8 @@
 package com.cinema.entract.remote.model
 
 data class WeekRemote(
-    val debutSemaine: String?,
-    val finSemaine: String?,
+    val debutsemaine: String?,
+    val finsemaine: String?,
     val jours: List<DayRemote>?,
     val filmsDisponibles: Boolean?
 )

@@ -24,7 +24,7 @@ class MovieMapper : Mapper<Movie, MovieData> {
     override fun mapToUi(model: MovieData) = Movie(
         model.title,
         model.date,
-        model.schedule,
+        model.schedule.replace("h", ":"),
         model.threeDimension,
         model.originalVersion,
         model.coverUrl,

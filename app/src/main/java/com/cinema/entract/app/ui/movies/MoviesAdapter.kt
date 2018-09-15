@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.app.ui.today
+package com.cinema.entract.app.ui.movies
 
 import android.annotation.SuppressLint
 import android.view.View
@@ -30,8 +30,8 @@ import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.model.Movie
 import org.jetbrains.anko.find
 
-class TodayMoviesAdapter(private val selection: (Movie) -> Unit) :
-    RecyclerView.Adapter<TodayMoviesAdapter.ViewHolder>() {
+class MoviesAdapter(private val selection: (Movie) -> Unit) :
+    RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
 
     private var movies = emptyList<Movie>()
 
@@ -41,7 +41,7 @@ class TodayMoviesAdapter(private val selection: (Movie) -> Unit) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        ViewHolder(parent.inflate(R.layout.item_today_movie))
+        ViewHolder(parent.inflate(R.layout.list_item_movies))
 
     override fun getItemCount(): Int = movies.size
 

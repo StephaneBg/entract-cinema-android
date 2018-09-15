@@ -30,18 +30,24 @@ class ScheduleMapper(private val mapper: MovieMapper) :
     override fun mapToUi(model: List<WeekData>): List<ScheduleEntry> {
         val list = mutableListOf<ScheduleEntry>()
         model.forEach { week ->
-            list.add(WeekHeader("Du ${week.beginDay.shortFormatToUi()} au ${week.endDay.shortFormatToUi()}"))
+            list.add(WeekHeader(formatWeekHeader(week)))
 
             week.days.filter { it.movies.isNotEmpty() }
                 .forEach { day ->
-                    list.add(DayHeader(day.date.longFormatToUi()))
+                    list.add(DayHeader(day.date.longFormatToUi(), day.date))
 
                     day.movies.forEach { movie ->
                         list.add(MovieEntry(mapper.mapToUi(movie), day.date))
                     }
                 }
         }
-
         return list
     }
+
+    private fun formatWeekHeader(week: WeekData): String =
+        if (week.beginDay.monthValue == week.endDay.monthValue) {
+            "Du ${week.beginDay.dayOfMonth} au ${week.endDay.shortFormatToUi()}"
+        } else {
+            "Du ${week.beginDay.shortFormatToUi()} au ${week.endDay.shortFormatToUi()}"
+        }
 }

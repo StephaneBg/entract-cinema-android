@@ -40,6 +40,10 @@ class CinemaActivity : BaseActivity() {
         savedInstanceState ?: addFragment(R.id.mainContainer, MoviesFragment.newInstance())
     }
 
+    fun selectMovies() {
+        bottomNav.selectedItemId = R.id.movies
+    }
+
     private fun initWidgets() {
         bottomNav = find(R.id.bottomNavigation)
     }

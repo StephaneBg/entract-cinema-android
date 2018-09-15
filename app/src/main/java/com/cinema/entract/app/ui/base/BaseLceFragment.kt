@@ -18,19 +18,19 @@ package com.cinema.entract.app.ui.base
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import androidx.annotation.CallSuper
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ext.find
 import com.cinema.entract.app.ext.hide
 import com.cinema.entract.app.ext.show
+import com.cinema.entract.app.widget.ErrorView
 
 @Suppress("UNCHECKED_CAST")
 open class BaseLceFragment<T : View> : BaseFragment() {
 
     lateinit var contentView: T
     lateinit var loadingView: View
-    lateinit var errorView: Button
+    lateinit var errorView: ErrorView
 
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,23 +39,24 @@ open class BaseLceFragment<T : View> : BaseFragment() {
         errorView = find(R.id.errorView)
     }
 
-    fun showContent() {
+    @CallSuper
+    open fun showContent() {
         errorView.hide()
         loadingView.hide()
         contentView.show()
     }
 
-    fun showLoading() {
+    @CallSuper
+    open fun showLoading() {
         contentView.hide()
         errorView.hide()
         loadingView.show()
     }
 
-    fun showError(throwable: Throwable?, action: () -> Unit) {
+    @CallSuper
+    open fun showError(throwable: Throwable?, action: () -> Unit) {
         contentView.hide()
         loadingView.hide()
-        errorView.text = getErrorMessage(throwable)
-        errorView.setOnClickListener { action() }
-        errorView.show()
+        errorView.show(getErrorMessage(throwable), action)
     }
 }

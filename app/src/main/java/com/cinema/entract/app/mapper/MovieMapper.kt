@@ -32,8 +32,8 @@ class MovieMapper : Mapper<Movie, MovieData> {
         "Sortie en ${model.yearOfProduction}",
         model.genre,
         "De ${model.director}",
-        "Avec ${model.cast}",
-        "Synopsis\n${model.synopsis}",
+        if (model.cast.isEmpty()) "" else "Avec ${model.cast}",
+        model.synopsis,
         model.teaserUrl
     )
 }

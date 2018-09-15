@@ -29,10 +29,6 @@ class EmptyRecyclerView @JvmOverloads constructor(
 ) : RecyclerView(context, attrs, defStyleAttr) {
 
     var emptyView: View? = null
-        set(value) {
-            field = value
-            checkIfEmpty()
-        }
 
     private val observer = object : RecyclerView.AdapterDataObserver() {
         override fun onChanged() {
@@ -56,7 +52,7 @@ class EmptyRecyclerView @JvmOverloads constructor(
         checkIfEmpty()
     }
 
-    private fun checkIfEmpty() {
+    fun checkIfEmpty() {
         val isEmptyVisible = adapter?.itemCount == 0
         emptyView?.isVisible = isEmptyVisible
         isVisible = !isEmptyVisible

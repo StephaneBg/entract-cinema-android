@@ -21,7 +21,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.core.widget.toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +28,7 @@ import com.cinema.entract.app.R
 import com.cinema.entract.app.ext.find
 import com.cinema.entract.app.ext.observe
 import com.cinema.entract.app.model.ScheduleEntry
+import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.app.ui.base.BaseLceFragment
 import com.cinema.entract.app.ui.base.Error
@@ -37,11 +37,12 @@ import com.cinema.entract.app.ui.base.Resource
 import com.cinema.entract.app.ui.base.Success
 import com.cinema.entract.app.widget.EmptyRecyclerView
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.threeten.bp.LocalDate
 
 class ScheduleFragment : BaseLceFragment<EmptyRecyclerView>() {
 
     private val viewModel by sharedViewModel<CinemaViewModel>()
-    private val scheduleAdapter = ScheduleAdapter { requireContext().toast("Clic !") }
+    private val scheduleAdapter = ScheduleAdapter(::handleSelection)
 
     private lateinit var empty: View
 
@@ -85,6 +86,11 @@ class ScheduleFragment : BaseLceFragment<EmptyRecyclerView>() {
             is Error -> showError(resource.error) { viewModel.retrieveSchedule() }
         }
 
+    }
+
+    private fun handleSelection(date: LocalDate) {
+        viewModel.retrieveMovies(date)
+        (requireActivity() as CinemaActivity).selectMovies()
     }
 
     companion object {

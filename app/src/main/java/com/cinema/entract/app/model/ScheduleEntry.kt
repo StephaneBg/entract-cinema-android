@@ -20,6 +20,6 @@ import org.threeten.bp.LocalDate
 
 sealed class ScheduleEntry
 
-data class WeekHeader(val dateRange: String) : ScheduleEntry()
-data class DayHeader(val date: String) : ScheduleEntry()
+data class WeekHeader(val dateUi: String) : ScheduleEntry()
+data class DayHeader(val dateUi: String, val date: LocalDate) : ScheduleEntry()
 data class MovieEntry(val movie: Movie, val date: LocalDate) : ScheduleEntry()

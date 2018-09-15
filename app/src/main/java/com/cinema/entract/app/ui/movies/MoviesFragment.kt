@@ -125,7 +125,7 @@ class MoviesFragment : BaseLceFragment<EmptyRecyclerView>() {
     private fun displayDatePicker() {
         datePicker = MaterialCalendarView(context)
         datePicker.setOnDateChangedListener { _, day, _ ->
-            viewModel.getMovies(day.date)
+            viewModel.retrieveMovies(day.date)
             alertDialog.dismiss()
         }
         viewModel.getDateRange()?.let {

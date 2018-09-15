@@ -21,5 +21,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/margin_padding_size_medium"
+    android:background="?selectableItemBackground"
     tools:text="15 septembre 2018"
     />

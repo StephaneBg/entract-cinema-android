@@ -22,6 +22,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isVisible
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.ext.observe
@@ -55,21 +56,27 @@ class MovieDetailsFragment : BaseLceFragment<View>() {
         when (resource) {
             is Loading -> showLoading()
             is Success -> {
-                resource.data?.let {
-                    contentView.apply {
-                        find<ImageView>(R.id.cover).load(it.coverUrl)
-                        find<TextView>(R.id.title).text = it.title
-                        find<TextView>(R.id.director).text = it.director
-                        find<TextView>(R.id.cast).text = it.cast
-                        find<TextView>(R.id.year).text = it.yearOfProduction
-                        find<TextView>(R.id.duration).text = it.duration
-                        find<TextView>(R.id.genre).text = it.genre
-                        find<TextView>(R.id.synopsis).text = it.synopsis
-                    }
-                }
+                resource.data?.let { updateUi(it) }
                 showContent()
             }
             is Error -> showError(resource.error) { viewModel.getMovies() }
+        }
+    }
+
+    private fun updateUi(movie: Movie) {
+        contentView.apply {
+            find<ImageView>(R.id.cover).load(movie.coverUrl)
+            find<TextView>(R.id.title).text = movie.title
+            find<TextView>(R.id.director).text = movie.director
+            movie.cast.apply {
+                val view = find<TextView>(R.id.cast)
+                if (isEmpty()) view.isVisible = false
+                else view.text = this
+            }
+            find<TextView>(R.id.year).text = movie.yearOfProduction
+            find<TextView>(R.id.duration).text = movie.duration
+            find<TextView>(R.id.genre).text = movie.genre
+            find<TextView>(R.id.synopsis).text = movie.synopsis
         }
     }
 

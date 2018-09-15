@@ -38,24 +38,56 @@
             />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <FrameLayout
+    <com.cinema.entract.app.widget.EmptyRecyclerView
         android:id="@id/contentView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layoutAnimation="@anim/layout_animation_fall_down"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        />
+
+    <LinearLayout
+        android:id="@id/emptyView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:ignore="UseCompoundDrawables"
         >
 
-        <com.cinema.entract.app.widget.EmptyRecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layoutAnimation="@anim/layout_animation_fall_down"
+        <ImageView
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:importantForAccessibility="no"
+            android:tint="@color/blue_50"
+            app:srcCompat="@drawable/ic_movie_black_24dp"
             />
 
-        <include layout="@layout/include_empty" />
-    </FrameLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/today_no_movie_message"
+            />
+    </LinearLayout>
 
-    <include layout="@layout/include_loading_error" />
+    <ProgressBar
+        android:id="@id/loadingView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:visibility="gone"
+        tools:visibility="visible"
+        />
+
+    <com.cinema.entract.app.widget.ErrorView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        tools:visibility="visible"
+        />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

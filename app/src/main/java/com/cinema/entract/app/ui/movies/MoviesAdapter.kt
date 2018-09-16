@@ -51,7 +51,8 @@ class MoviesAdapter(private val selection: (Movie) -> Unit) :
 
         private val cover = itemView.find<ImageView>(R.id.cover)
         private val title = itemView.find<TextView>(R.id.title)
-        private val scheduleDuration = itemView.find<TextView>(R.id.scheduleDuration)
+        private val schedule = itemView.find<TextView>(R.id.schedule)
+        private val duration = itemView.find<TextView>(R.id.duration)
         private val originalVersion = itemView.find<TextView>(R.id.originalVersion)
         private val threeDimension = itemView.find<TextView>(R.id.threeDimension)
 
@@ -60,10 +61,10 @@ class MoviesAdapter(private val selection: (Movie) -> Unit) :
             itemView.apply {
                 cover.load(movie.coverUrl)
                 title.text = movie.title
-                scheduleDuration.text = "${movie.schedule} - ${movie.duration}"
+                schedule.text = movie.schedule
+                duration.text = movie.duration
                 originalVersion.isVisible = movie.isOriginalVersion
                 threeDimension.isInvisible = !movie.isThreeDimension
-
                 setOnClickListener { selection(movie) }
             }
         }

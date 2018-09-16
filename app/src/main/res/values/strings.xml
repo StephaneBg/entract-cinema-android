@@ -32,6 +32,8 @@
 
     <string name="schedule_no_movie_message">Pas de séances à venir</string>
 
+    <string name="details_teaser">Bande annonce</string>
+
     <string name="direction_place_name">Cinéma L\'Entract</string>
     <string name="direction_address">Avenue Lazare Carnot\n31330 Grenade</string>
     <string name="direction_navigate_to">M\'y rendre</string>

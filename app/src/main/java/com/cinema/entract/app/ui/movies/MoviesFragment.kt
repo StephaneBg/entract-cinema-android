@@ -22,7 +22,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -38,19 +37,18 @@ import com.cinema.entract.app.ui.base.Loading
 import com.cinema.entract.app.ui.base.Resource
 import com.cinema.entract.app.ui.base.Success
 import com.cinema.entract.app.ui.details.DetailsFragment
-import com.cinema.entract.app.widget.EmptyRecyclerView
+import com.cinema.entract.app.widget.EmptynessLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class MoviesFragment : BaseLceFragment<EmptyRecyclerView>() {
+class MoviesFragment : BaseLceFragment<EmptynessLayout>() {
 
     private val viewModel by sharedViewModel<CinemaViewModel>()
     private val moviesAdapter = MoviesAdapter(::onMovieSelected)
 
     private lateinit var datePicker: MaterialCalendarView
     private lateinit var alertDialog: AlertDialog
-    private lateinit var empty: View
     private lateinit var fab: FloatingActionButton
     private lateinit var date: TextView
 
@@ -63,37 +61,18 @@ class MoviesFragment : BaseLceFragment<EmptyRecyclerView>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        empty = find(R.id.emptyView)
-        fab = find(R.id.fab)
-        date = find(R.id.date)
         with(contentView) {
-            layoutManager = LinearLayoutManager(activity)
-            emptyView = empty
-            adapter = moviesAdapter
-            addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
+            recyclerView.layoutManager = LinearLayoutManager(activity)
+            recyclerView.addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
+            setAdapter(moviesAdapter)
         }
 
+        date = find(R.id.date)
+        fab = find(R.id.fab)
         fab.setOnClickListener { displayDatePicker() }
 
         observe(viewModel.getMovies(), ::manageResource)
         observe(viewModel.getDate(), ::manageDate)
-    }
-
-    override fun showContent() {
-        fab.isVisible = true
-        super.showContent()
-    }
-
-    override fun showLoading() {
-        fab.isVisible = false
-        empty.isVisible = false
-        super.showLoading()
-    }
-
-    override fun showError(throwable: Throwable?, action: () -> Unit) {
-        fab.isVisible = false
-        empty.isVisible = false
-        super.showError(throwable, action)
     }
 
     private fun manageResource(resource: Resource<List<Movie>>?) {

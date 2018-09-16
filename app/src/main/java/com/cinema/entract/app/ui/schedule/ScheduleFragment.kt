@@ -20,12 +20,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cinema.entract.app.R
-import com.cinema.entract.app.ext.find
 import com.cinema.entract.app.ext.observe
 import com.cinema.entract.app.model.ScheduleEntry
 import com.cinema.entract.app.ui.CinemaActivity
@@ -35,16 +33,14 @@ import com.cinema.entract.app.ui.base.Error
 import com.cinema.entract.app.ui.base.Loading
 import com.cinema.entract.app.ui.base.Resource
 import com.cinema.entract.app.ui.base.Success
-import com.cinema.entract.app.widget.EmptyRecyclerView
+import com.cinema.entract.app.widget.EmptynessLayout
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.threeten.bp.LocalDate
 
-class ScheduleFragment : BaseLceFragment<EmptyRecyclerView>() {
+class ScheduleFragment : BaseLceFragment<EmptynessLayout>() {
 
     private val viewModel by sharedViewModel<CinemaViewModel>()
     private val scheduleAdapter = ScheduleAdapter(::handleSelection)
-
-    private lateinit var empty: View
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,25 +51,13 @@ class ScheduleFragment : BaseLceFragment<EmptyRecyclerView>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        empty = find(R.id.emptyView)
         with(contentView) {
-            layoutManager = LinearLayoutManager(activity)
-            adapter = scheduleAdapter
-            emptyView = empty
-            addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
+            recyclerView.layoutManager = LinearLayoutManager(activity)
+            recyclerView.addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
+            setAdapter(scheduleAdapter)
         }
 
         observe(viewModel.getSchedule(), ::displaySchedule)
-    }
-
-    override fun showLoading() {
-        empty.isVisible = false
-        super.showLoading()
-    }
-
-    override fun showError(throwable: Throwable?, action: () -> Unit) {
-        empty.isVisible = false
-        super.showError(throwable, action)
     }
 
     private fun displaySchedule(resource: Resource<List<ScheduleEntry>>?) {

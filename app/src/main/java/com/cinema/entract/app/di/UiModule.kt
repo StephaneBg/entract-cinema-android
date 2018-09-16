@@ -19,6 +19,7 @@ package com.cinema.entract.app.di
 import com.cinema.entract.app.mapper.MovieMapper
 import com.cinema.entract.app.mapper.ScheduleMapper
 import com.cinema.entract.app.ui.CinemaViewModel
+import com.cinema.entract.app.ui.details.DetailsViewModel
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
 
@@ -28,4 +29,5 @@ val uiModule = module {
     single { ScheduleMapper(get()) }
 
     viewModel { CinemaViewModel(get(), get(), get()) }
+    viewModel { DetailsViewModel() }
 }

@@ -13,7 +13,7 @@
   ~  See the License for the specific language governing permissions and
   ~  limitations under the License.
   -->
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -46,103 +46,129 @@
             />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ImageView
-        android:id="@+id/cover"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/margin_padding_size_medium"
-        android:layout_marginTop="@dimen/margin_padding_size_medium"
-        android:importantForAccessibility="no"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@+id/genre"
-        app:layout_constraintDimensionRatio="2:3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        tools:srcCompat="@tools:sample/avatars[2]"
-        />
-
-    <TextView
-        android:id="@+id/director"
-        style="@style/TextAppearance.MaterialComponents.Body2"
-        android:layout_width="0dp"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_padding_size_medium"
-        android:layout_marginTop="@dimen/margin_padding_size_medium"
-        android:layout_marginEnd="@dimen/margin_padding_size_medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cover"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        tools:text="De Dog Bob"
-        />
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        >
 
-    <TextView
-        android:id="@+id/cast"
-        style="@style/TextAppearance.MaterialComponents.Body2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_padding_size_medium"
-        android:layout_marginTop="@dimen/margin_padding_size_small"
-        android:layout_marginEnd="@dimen/margin_padding_size_medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cover"
-        app:layout_constraintTop_toBottomOf="@+id/director"
-        tools:text="Avec Pepette, Pipitte, Papatte et Puputte"
-        />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@id/contentView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
 
-    <TextView
-        android:id="@+id/year"
-        style="@style/TextAppearance.MaterialComponents.Body2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_padding_size_medium"
-        android:layout_marginTop="@dimen/margin_padding_size_small"
-        android:layout_marginEnd="@dimen/margin_padding_size_medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cover"
-        app:layout_constraintTop_toBottomOf="@+id/cast"
-        tools:text="Sortie en 1985"
-        />
+            <ImageView
+                android:id="@+id/cover"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginTop="@dimen/margin_padding_size_medium"
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="@+id/genre"
+                app:layout_constraintDimensionRatio="2:3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars[2]"
+                />
 
-    <TextView
-        android:id="@+id/duration"
-        style="@style/TextAppearance.MaterialComponents.Body2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_padding_size_medium"
-        android:layout_marginTop="@dimen/margin_padding_size_small"
-        android:layout_marginEnd="@dimen/margin_padding_size_medium"
-        android:maxLines="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cover"
-        app:layout_constraintTop_toBottomOf="@+id/year"
-        tools:text="1h30"
-        />
+            <TextView
+                android:id="@+id/director"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginTop="@dimen/margin_padding_size_medium"
+                android:layout_marginEnd="@dimen/margin_padding_size_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cover"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="De Dog Bob"
+                />
 
-    <TextView
-        android:id="@+id/genre"
-        style="@style/TextAppearance.MaterialComponents.Body2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_padding_size_medium"
-        android:layout_marginTop="@dimen/margin_padding_size_small"
-        android:layout_marginEnd="@dimen/margin_padding_size_medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cover"
-        app:layout_constraintTop_toBottomOf="@+id/duration"
-        tools:text="Kung-fu"
-        />
+            <TextView
+                android:id="@+id/cast"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginTop="@dimen/margin_padding_size_small"
+                android:layout_marginEnd="@dimen/margin_padding_size_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cover"
+                app:layout_constraintTop_toBottomOf="@+id/director"
+                tools:text="Avec Pepette, Pipitte, Papatte et Puputte"
+                />
 
-    <TextView
-        android:id="@+id/synopsis"
-        style="@style/TextAppearance.MaterialComponents.Body1"
-        android:layout_width="0dp"
+            <TextView
+                android:id="@+id/year"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginTop="@dimen/margin_padding_size_small"
+                android:layout_marginEnd="@dimen/margin_padding_size_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cover"
+                app:layout_constraintTop_toBottomOf="@+id/cast"
+                tools:text="Sortie en 1985"
+                />
+
+            <TextView
+                android:id="@+id/duration"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginTop="@dimen/margin_padding_size_small"
+                android:layout_marginEnd="@dimen/margin_padding_size_medium"
+                android:maxLines="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cover"
+                app:layout_constraintTop_toBottomOf="@+id/year"
+                tools:text="1h30"
+                />
+
+            <TextView
+                android:id="@+id/genre"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginTop="@dimen/margin_padding_size_small"
+                android:layout_marginEnd="@dimen/margin_padding_size_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cover"
+                app:layout_constraintTop_toBottomOf="@+id/duration"
+                tools:text="Kung-fu"
+                />
+
+            <TextView
+                android:id="@+id/synopsis"
+                style="@style/TextAppearance.MaterialComponents.Body1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginTop="@dimen/margin_padding_size_large"
+                android:layout_marginEnd="@dimen/margin_padding_size_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/genre"
+                tools:text="Synopsis"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_padding_size_medium"
-        android:layout_marginTop="@dimen/margin_padding_size_large"
-        android:layout_marginEnd="@dimen/margin_padding_size_medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/genre"
-        tools:text="Synopsis"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="@dimen/margin_padding_size_medium"
+        android:layout_marginBottom="@dimen/margin_padding_size_medium"
+        android:tint="@color/white"
+        app:srcCompat="@drawable/ic_calendar_add_black_24dp"
+        tools:ignore="RtlHardcoded"
         />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

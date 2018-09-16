@@ -16,7 +16,10 @@
 
 package com.cinema.entract.app.ui.details
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.CalendarContract
+import android.provider.CalendarContract.Events
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,11 +33,15 @@ import com.cinema.entract.app.ext.observe
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.app.ui.base.BaseFragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class DetailsFragment : BaseFragment() {
 
-    private val viewModel by sharedViewModel<CinemaViewModel>()
+    private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
+    private val detailsViewModel by viewModel<DetailsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,7 +52,7 @@ class DetailsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observe(viewModel.getSelectedMovie(), ::displayMovie)
+        observe(cinemaViewModel.getSelectedMovie(), ::displayMovie)
     }
 
     private fun displayMovie(movie: Movie?) {
@@ -62,7 +69,21 @@ class DetailsFragment : BaseFragment() {
             find<TextView>(R.id.duration).text = movie.duration
             find<TextView>(R.id.genre).text = movie.genre
             find<TextView>(R.id.synopsis).text = movie.synopsis
+            find<FloatingActionButton>(R.id.fab).setOnClickListener { _ -> addCalendarEvent(it) }
         }
+    }
+
+    private fun addCalendarEvent(movie: Movie) {
+        val (beginTime, endTime) = detailsViewModel.getEventSchedule(movie)
+        val intent = Intent(Intent.ACTION_INSERT)
+            .setData(Events.CONTENT_URI)
+            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime)
+            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime)
+            .putExtra(Events.TITLE, movie.title)
+            .putExtra(Events.DESCRIPTION, getString(R.string.app_name))
+            .putExtra(Events.EVENT_LOCATION, getString(R.string.direction_address))
+            .putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY)
+        startActivity(intent)
     }
 
     companion object {

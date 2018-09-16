@@ -23,6 +23,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ext.inflate
+import com.cinema.entract.app.ext.isTodayOrLater
 import com.cinema.entract.app.model.DayHeader
 import com.cinema.entract.app.model.MovieEntry
 import com.cinema.entract.app.model.ScheduleEntry
@@ -60,8 +61,6 @@ class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
         is MovieEntry -> TYPE_MOVIE
     }
 
-    private fun isSelectable(date: LocalDate): Boolean = date.isAfter(LocalDate.now().minusDays(1))
-
     inner class WeekHeaderHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         ScheduleViewHolder<WeekHeader> {
         override fun bind(model: WeekHeader) {
@@ -73,12 +72,7 @@ class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
         ScheduleViewHolder<DayHeader> {
         override fun bind(model: DayHeader) {
             (itemView as TextView).text = model.dateUi
-            if (isSelectable(model.date)) {
-                itemView.setOnClickListener { selection(model.date) }
-                itemView.alpha = 1.0f
-            } else {
-                itemView.alpha = PAST_ITEM_ALPHA
-            }
+            manageSelection(itemView, model.date)
         }
     }
 
@@ -95,12 +89,17 @@ class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
             title.text = model.movie.title
             originalVersion.isVisible = model.movie.isOriginalVersion
             threeDimension.isVisible = model.movie.isThreeDimension
-            if (isSelectable(model.date)) {
-                itemView.setOnClickListener { selection(model.date) }
-                itemView.alpha = 1.0f
-            } else {
-                itemView.alpha = PAST_ITEM_ALPHA
-            }
+            manageSelection(itemView, model.date)
+        }
+    }
+
+    private fun manageSelection(itemView: View, date: LocalDate) {
+        if (date.isTodayOrLater()) {
+            itemView.alpha = 1.0f
+            itemView.setOnClickListener { selection(date) }
+        } else {
+            itemView.alpha = PAST_ITEM_ALPHA
+            itemView.setOnClickListener { }
         }
     }
 

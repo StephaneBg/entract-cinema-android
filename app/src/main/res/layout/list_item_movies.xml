@@ -51,7 +51,7 @@
         />
 
     <TextView
-        android:id="@+id/scheduleDuration"
+        android:id="@+id/schedule"
         style="@style/TextAppearance.MaterialComponents.Body1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -62,7 +62,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cover"
         app:layout_constraintTop_toBottomOf="@+id/title"
-        tools:text="20h30 - 2h19"
+        tools:text="20:30"
+        />
+
+    <TextView
+        android:id="@+id/duration"
+        style="@style/TextAppearance.MaterialComponents.Body1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_padding_size_medium"
+        android:layout_marginTop="@dimen/margin_padding_size_small"
+        android:layout_marginEnd="@dimen/margin_padding_size_medium"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cover"
+        app:layout_constraintTop_toBottomOf="@+id/schedule"
+        tools:text="1h34"
         />
 
     <TextView
@@ -77,7 +92,7 @@
         android:textColor="@color/primary_500"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cover"
-        app:layout_constraintTop_toBottomOf="@+id/scheduleDuration"
+        app:layout_constraintTop_toBottomOf="@+id/duration"
         />
 
     <TextView
@@ -92,6 +107,6 @@
         android:textColor="@color/secondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/originalVersion"
-        app:layout_constraintTop_toBottomOf="@+id/scheduleDuration"
+        app:layout_constraintTop_toBottomOf="@+id/duration"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

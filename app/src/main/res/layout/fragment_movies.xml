@@ -38,38 +38,58 @@
             />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.cinema.entract.app.widget.EmptyRecyclerView
+
+    <com.cinema.entract.app.widget.EmptynessLayout
         android:id="@id/contentView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layoutAnimation="@anim/layout_animation_fall_down"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        />
-
-    <LinearLayout
-        android:id="@id/emptyView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:orientation="vertical"
-        tools:ignore="UseCompoundDrawables"
         >
 
-        <ImageView
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:importantForAccessibility="no"
-            android:tint="@color/primary_50"
-            app:srcCompat="@drawable/ic_movie_black_24dp"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@id/contentView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layoutAnimation="@anim/layout_animation_fall_down"
             />
 
-        <TextView
+        <LinearLayout
+            android:id="@id/emptyView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/movies_no_movie_message"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables"
+            >
+
+            <ImageView
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:importantForAccessibility="no"
+                android:tint="@color/primary_50"
+                app:srcCompat="@drawable/ic_movie_black_24dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/movies_no_movie_message"
+                />
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="@dimen/margin_padding_size_medium"
+            android:layout_marginBottom="@dimen/margin_padding_size_medium"
+            android:tint="@color/white"
+            app:srcCompat="@drawable/ic_date_range_black_24dp"
+            tools:ignore="RtlHardcoded"
             />
-    </LinearLayout>
+    </com.cinema.entract.app.widget.EmptynessLayout>
 
     <ProgressBar
         android:id="@id/loadingView"
@@ -87,17 +107,5 @@
         android:layout_gravity="center"
         android:visibility="gone"
         tools:visibility="visible"
-        />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_marginRight="@dimen/margin_padding_size_medium"
-        android:layout_marginBottom="@dimen/margin_padding_size_medium"
-        android:tint="@color/white"
-        app:srcCompat="@drawable/ic_date_range_black_24dp"
-        tools:ignore="RtlHardcoded"
         />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

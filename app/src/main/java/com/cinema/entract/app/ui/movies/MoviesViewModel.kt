@@ -61,7 +61,7 @@ class MoviesViewModel(
 
     fun retrieveMovies(day: LocalDate? = null) {
         movies.postValue(Loading())
-        launchAsyncTryCatch(
+        launchAsync(
             {
                 val date = (day ?: LocalDate.now()).formatToUTC()
                 val fetchedMovies = useCase.getMovies(date).map { movieMapper.mapToUi(it) }

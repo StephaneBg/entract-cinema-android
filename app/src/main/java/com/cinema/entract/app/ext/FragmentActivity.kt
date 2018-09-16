@@ -18,14 +18,6 @@ package com.cinema.entract.app.ext
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-
-inline fun FragmentManager.inTransaction(function: FragmentTransaction.() -> Unit) {
-    val fragmentTransaction = beginTransaction()
-    fragmentTransaction.function()
-    fragmentTransaction.commit()
-}
 
 fun FragmentActivity.addFragment(frameId: Int, fragment: Fragment, addBackStack: Boolean = false) {
     supportFragmentManager.inTransaction {

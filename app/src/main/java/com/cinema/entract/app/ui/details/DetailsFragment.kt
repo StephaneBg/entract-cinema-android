@@ -16,6 +16,7 @@
 
 package com.cinema.entract.app.ui.details
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.provider.CalendarContract
@@ -23,8 +24,10 @@ import android.provider.CalendarContract.Events
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ext.find
@@ -69,7 +72,24 @@ class DetailsFragment : BaseFragment() {
             find<TextView>(R.id.duration).text = movie.duration
             find<TextView>(R.id.genre).text = movie.genre
             find<TextView>(R.id.synopsis).text = movie.synopsis
+            val teaser = find<Button>(R.id.teaser)
+            if (movie.teaserId.isNotEmpty()) {
+                teaser.setOnClickListener { _ -> showTeaser(it) }
+            } else {
+                teaser.isVisible = false
+            }
             find<FloatingActionButton>(R.id.fab).setOnClickListener { _ -> addCalendarEvent(it) }
+        }
+    }
+
+    private fun showTeaser(movie: Movie) {
+        val appIntent = Intent(Intent.ACTION_VIEW, "vnd.youtube:${movie.teaserId}".toUri())
+        val webIntent =
+            Intent(Intent.ACTION_VIEW, "http://www.youtube.com/watch?v=${movie.teaserId}".toUri())
+        try {
+            requireContext().startActivity(appIntent)
+        } catch (ex: ActivityNotFoundException) {
+            requireContext().startActivity(webIntent)
         }
     }
 

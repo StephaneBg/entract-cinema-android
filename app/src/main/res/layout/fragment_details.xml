@@ -157,6 +157,20 @@
                 app:layout_constraintTop_toBottomOf="@+id/genre"
                 tools:text="Synopsis"
                 />
+
+            <Button
+                android:id="@+id/teaser"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginTop="@dimen/margin_padding_size_large"
+                android:layout_marginEnd="@dimen/margin_padding_size_medium"
+                android:text="@string/details_teaser"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/synopsis"
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

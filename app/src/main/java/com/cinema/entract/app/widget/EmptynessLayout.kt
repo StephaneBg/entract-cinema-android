@@ -19,16 +19,38 @@ package com.cinema.entract.app.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.cinema.entract.app.R
 
-class EmptyRecyclerView @JvmOverloads constructor(
+class EmptynessLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : RecyclerView(context, attrs, defStyleAttr) {
+) : FrameLayout(context, attrs, defStyleAttr) {
 
-    var emptyView: View? = null
+    lateinit var recyclerView: RecyclerView
+        private set
+    private lateinit var emptyView: View
+
+    override fun addView(child: View?, index: Int, params: ViewGroup.LayoutParams?) {
+        super.addView(child, index, params)
+
+        when {
+            child is RecyclerView -> recyclerView = child
+            R.id.emptyView == child?.id -> emptyView = child
+        }
+    }
+
+    fun setAdapter(adapter: RecyclerView.Adapter<*>?) {
+        val oldAdapter = recyclerView.adapter
+        oldAdapter?.unregisterAdapterDataObserver(observer)
+        recyclerView.adapter = adapter
+        adapter?.registerAdapterDataObserver(observer)
+        checkIfEmpty()
+    }
 
     private val observer = object : RecyclerView.AdapterDataObserver() {
         override fun onChanged() {
@@ -44,17 +66,9 @@ class EmptyRecyclerView @JvmOverloads constructor(
         }
     }
 
-    override fun setAdapter(adapter: RecyclerView.Adapter<*>?) {
-        val oldAdapter = getAdapter()
-        oldAdapter?.unregisterAdapterDataObserver(observer)
-        super.setAdapter(adapter)
-        adapter?.registerAdapterDataObserver(observer)
-        checkIfEmpty()
-    }
-
     fun checkIfEmpty() {
-        val isEmptyVisible = adapter?.itemCount == 0
-        emptyView?.isVisible = isEmptyVisible
+        val isEmptyVisible = recyclerView.adapter?.itemCount == 0
+        emptyView.isVisible = isEmptyVisible
         isVisible = !isEmptyVisible
     }
 }

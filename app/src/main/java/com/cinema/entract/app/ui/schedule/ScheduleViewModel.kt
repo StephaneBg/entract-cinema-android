@@ -42,7 +42,7 @@ class ScheduleViewModel(
 
     fun retrieveSchedule() {
         schedule.postValue(Loading())
-        launchAsyncTryCatch(
+        launchAsync(
             {
                 schedule.postValue(Success(scheduleMapper.mapToUi(useCase.getSchedule())))
             },

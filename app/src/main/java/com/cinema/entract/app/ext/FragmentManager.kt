@@ -16,10 +16,11 @@
 
 package com.cinema.entract.app.ext
 
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 
-fun <T : Any, L : LiveData<T>> LifecycleOwner.observe(liveData: L, body: (T?) -> Unit) {
-    liveData.observe(this, Observer(body))
+inline fun FragmentManager.inTransaction(function: FragmentTransaction.() -> Unit) {
+    val fragmentTransaction = beginTransaction()
+    fragmentTransaction.function()
+    fragmentTransaction.commit()
 }

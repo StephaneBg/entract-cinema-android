@@ -18,10 +18,8 @@ package com.cinema.entract.app.ui.base
 
 import androidx.annotation.CallSuper
 import androidx.lifecycle.ViewModel
-import com.cinema.entract.app.utils.CoroutinesUtils.Companion.tryCatch
-import com.cinema.entract.app.utils.CoroutinesUtils.Companion.tryCatchFinally
-import com.cinema.entract.app.utils.CoroutinesUtils.Companion.tryFinally
 import com.cinema.entract.data.interactor.BaseUseCase
+import kotlinx.coroutines.experimental.CancellationException
 import kotlinx.coroutines.experimental.CoroutineScope
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.android.UI
@@ -32,47 +30,21 @@ open class BaseViewModel<out UseCase : BaseUseCase>(val useCase: UseCase) : View
 
     private val asyncJobs = mutableListOf<Job>()
 
-    @CallSuper
-    @Synchronized
-    protected fun launchAsync(block: suspend CoroutineScope.() -> Unit) {
-        val job: Job = launch(UI) { block() }
-        asyncJobs.add(job)
-        job.invokeOnCompletion { asyncJobs.remove(job) }
-    }
-
-    @Synchronized
-    protected fun launchAsyncTryCatch(
-        tryBlock: suspend CoroutineScope.() -> Unit,
-        catchBlock: suspend CoroutineScope.(Throwable) -> Unit,
-        handleCancellationExceptionManually: Boolean = false
+    fun <T> launchAsync(
+        function: suspend CoroutineScope.() -> T,
+        catch: (Throwable) -> T
     ) {
-        launchAsync { tryCatch(tryBlock, catchBlock, handleCancellationExceptionManually) }
-    }
-
-    @Synchronized
-    protected fun launchAsyncTryCatchFinally(
-        tryBlock: suspend CoroutineScope.() -> Unit,
-        catchBlock: suspend CoroutineScope.(Throwable) -> Unit,
-        finallyBlock: suspend CoroutineScope.() -> Unit,
-        handleCancellationExceptionManually: Boolean = false
-    ) {
-        launchAsync {
-            tryCatchFinally(
-                tryBlock,
-                catchBlock,
-                finallyBlock,
-                handleCancellationExceptionManually
-            )
+        val job = launch(UI) {
+            try {
+                function()
+            } catch (e: Throwable) {
+                if (e !is CancellationException) catch(e)
+            }
         }
-    }
-
-    @Synchronized
-    protected fun launchAsyncTryFinally(
-        tryBlock: suspend CoroutineScope.() -> Unit,
-        finallyBlock: suspend CoroutineScope.() -> Unit,
-        suppressCancellationException: Boolean = false
-    ) {
-        launchAsync { tryFinally(tryBlock, finallyBlock, suppressCancellationException) }
+        job.invokeOnCompletion {
+            asyncJobs.remove(job)
+        }
+        asyncJobs.add(job)
     }
 
     @CallSuper
@@ -86,9 +58,7 @@ open class BaseViewModel<out UseCase : BaseUseCase>(val useCase: UseCase) : View
         }
     }
 
-    @CallSuper
-    @Synchronized
-    open fun cleanup() {
+    override fun onCleared() {
         cancelAllAsync()
     }
 }

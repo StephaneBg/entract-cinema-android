@@ -30,7 +30,6 @@ import com.cinema.entract.app.ext.find
 import com.cinema.entract.app.ext.observe
 import com.cinema.entract.app.ext.replaceFragment
 import com.cinema.entract.app.model.Movie
-import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.app.ui.base.BaseLceFragment
 import com.cinema.entract.app.ui.base.Error
 import com.cinema.entract.app.ui.base.Loading
@@ -44,7 +43,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class MoviesFragment : BaseLceFragment<EmptynessLayout>() {
 
-    private val viewModel by sharedViewModel<CinemaViewModel>()
+    private val moviesViewModel by sharedViewModel<MoviesViewModel>()
     private val moviesAdapter = MoviesAdapter(::onMovieSelected)
 
     private lateinit var datePicker: MaterialCalendarView
@@ -71,8 +70,8 @@ class MoviesFragment : BaseLceFragment<EmptynessLayout>() {
         fab = find(R.id.fab)
         fab.setOnClickListener { displayDatePicker() }
 
-        observe(viewModel.getMovies(), ::manageResource)
-        observe(viewModel.getDate(), ::manageDate)
+        observe(moviesViewModel.getMovies(), ::manageResource)
+        observe(moviesViewModel.getDate(), ::manageDate)
     }
 
     private fun manageResource(resource: Resource<List<Movie>>?) {
@@ -82,7 +81,7 @@ class MoviesFragment : BaseLceFragment<EmptynessLayout>() {
                 moviesAdapter.updateMovies(resource.data ?: emptyList())
                 showContent()
             }
-            is Error -> showError(resource.error) { viewModel.retrieveMovies() }
+            is Error -> showError(resource.error) { moviesViewModel.retrieveMovies() }
         }
     }
 
@@ -93,7 +92,7 @@ class MoviesFragment : BaseLceFragment<EmptynessLayout>() {
     }
 
     private fun onMovieSelected(movie: Movie) {
-        viewModel.setSelectedMovie(movie)
+        moviesViewModel.setSelectedMovie(movie)
         requireActivity().replaceFragment(
             R.id.mainContainer,
             DetailsFragment.newInstance(),
@@ -104,10 +103,10 @@ class MoviesFragment : BaseLceFragment<EmptynessLayout>() {
     private fun displayDatePicker() {
         datePicker = MaterialCalendarView(context)
         datePicker.setOnDateChangedListener { _, day, _ ->
-            viewModel.retrieveMovies(day.date)
+            moviesViewModel.retrieveMovies(day.date)
             alertDialog.dismiss()
         }
-        viewModel.getDateRange()?.let {
+        moviesViewModel.getDateRange()?.let {
             datePicker.state().edit()
                 .setMinimumDate(it.minimumDate)
                 .setMaximumDate(it.maximumDate)

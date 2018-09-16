@@ -32,12 +32,6 @@ open class BaseViewModel<out UseCase : BaseUseCase>(val useCase: UseCase) : View
 
     private val asyncJobs = mutableListOf<Job>()
 
-    override fun onCleared() {
-        super.onCleared()
-        useCase.cleanup()
-        cleanup()
-    }
-
     @CallSuper
     @Synchronized
     protected fun launchAsync(block: suspend CoroutineScope.() -> Unit) {

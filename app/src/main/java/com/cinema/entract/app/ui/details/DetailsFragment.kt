@@ -31,8 +31,8 @@ import com.cinema.entract.app.ext.find
 import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.ext.observe
 import com.cinema.entract.app.model.Movie
-import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.app.ui.base.BaseFragment
+import com.cinema.entract.app.ui.movies.MoviesViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -40,7 +40,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailsFragment : BaseFragment() {
 
-    private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
+    private val cinemaViewModel by sharedViewModel<MoviesViewModel>()
     private val detailsViewModel by viewModel<DetailsViewModel>()
 
     override fun onCreateView(

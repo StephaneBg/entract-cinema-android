@@ -27,19 +27,21 @@ import com.cinema.entract.app.R
 import com.cinema.entract.app.ext.observe
 import com.cinema.entract.app.model.ScheduleEntry
 import com.cinema.entract.app.ui.CinemaActivity
-import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.app.ui.base.BaseLceFragment
 import com.cinema.entract.app.ui.base.Error
 import com.cinema.entract.app.ui.base.Loading
 import com.cinema.entract.app.ui.base.Resource
 import com.cinema.entract.app.ui.base.Success
+import com.cinema.entract.app.ui.movies.MoviesViewModel
 import com.cinema.entract.app.widget.EmptynessLayout
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.threeten.bp.LocalDate
 
 class ScheduleFragment : BaseLceFragment<EmptynessLayout>() {
 
-    private val viewModel by sharedViewModel<CinemaViewModel>()
+    private val moviesViewModel by sharedViewModel<MoviesViewModel>()
+    private val scheduleViewModel by viewModel<ScheduleViewModel>()
     private val scheduleAdapter = ScheduleAdapter(::handleSelection)
 
     override fun onCreateView(
@@ -57,7 +59,7 @@ class ScheduleFragment : BaseLceFragment<EmptynessLayout>() {
             setAdapter(scheduleAdapter)
         }
 
-        observe(viewModel.getSchedule(), ::displaySchedule)
+        observe(scheduleViewModel.getSchedule(), ::displaySchedule)
     }
 
     private fun displaySchedule(resource: Resource<List<ScheduleEntry>>?) {
@@ -67,13 +69,13 @@ class ScheduleFragment : BaseLceFragment<EmptynessLayout>() {
                 scheduleAdapter.updateSchedule(resource.data ?: emptyList())
                 showContent()
             }
-            is Error -> showError(resource.error) { viewModel.retrieveSchedule() }
+            is Error -> showError(resource.error) { scheduleViewModel.retrieveSchedule() }
         }
 
     }
 
     private fun handleSelection(date: LocalDate) {
-        viewModel.retrieveMovies(date)
+        moviesViewModel.retrieveMovies(date)
         (requireActivity() as CinemaActivity).selectMovies()
     }
 

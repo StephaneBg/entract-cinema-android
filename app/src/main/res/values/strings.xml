@@ -20,6 +20,7 @@
 
     <string name="menu_today">Séances du jour</string>
     <string name="menu_coming">Programme</string>
+    <string name="menu_direction">Y aller</string>
 
     <string name="error_no_connectivity">Aucun réseau</string>
     <string name="error_general">Une erreur est survenue</string>
@@ -30,4 +31,8 @@
     <string name="movies_no_movie_message">Pas de séance ce jour</string>
 
     <string name="schedule_no_movie_message">Pas de séances à venir</string>
+
+    <string name="direction_place_name">Cinéma L\'Entract</string>
+    <string name="direction_address">Avenue Lazare Carnot\n31330 Grenade</string>
+    <string name="direction_navigate_to">M\'y rendre</string>
 </resources>

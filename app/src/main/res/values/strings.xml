@@ -20,7 +20,7 @@
 
     <string name="menu_today">Séances du jour</string>
     <string name="menu_coming">Programme</string>
-    <string name="menu_direction">Y aller</string>
+    <string name="menu_information">Infos pratiques</string>
 
     <string name="error_no_connectivity">Aucun réseau</string>
     <string name="error_server">Le serveur ne répond pas</string>
@@ -35,7 +35,7 @@
 
     <string name="details_teaser">Bande annonce</string>
 
-    <string name="direction_place_name">Cinéma L\'Entract</string>
-    <string name="direction_address">Avenue Lazare Carnot\n31330 Grenade</string>
-    <string name="direction_navigate_to">M\'y rendre</string>
+    <string name="information_place_name">Cinéma L\'Entract</string>
+    <string name="information_address">Avenue Lazare Carnot\n31330 Grenade</string>
+    <string name="information_navigate_to">M\'y rendre</string>
 </resources>

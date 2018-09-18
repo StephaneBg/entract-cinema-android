@@ -29,8 +29,8 @@
         android:title="@string/menu_coming"
         />
     <item
-        android:id="@+id/direction"
+        android:id="@+id/information"
         android:icon="@drawable/ic_directions_black_24dp"
-        android:title="@string/menu_direction"
+        android:title="@string/menu_information"
         />
 </menu>

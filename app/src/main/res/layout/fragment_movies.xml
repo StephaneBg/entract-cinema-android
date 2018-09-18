@@ -47,9 +47,11 @@
         >
 
         <androidx.recyclerview.widget.RecyclerView
+            android:clipToPadding="false"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layoutAnimation="@anim/layout_animation_fall_down"
+            android:paddingBottom="@dimen/margin_padding_size_extra_large"
             />
 
         <LinearLayout

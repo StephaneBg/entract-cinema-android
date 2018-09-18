@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.app.ui.direction
+package com.cinema.entract.app.ui.information
 
 import android.content.Intent
 import android.os.Bundle
@@ -28,13 +28,13 @@ import com.cinema.entract.app.ext.find
 import com.cinema.entract.app.ui.base.BaseFragment
 
 
-class DirectionFragment : BaseFragment() {
+class InformationFragment : BaseFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_direction, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_information, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,6 +48,6 @@ class DirectionFragment : BaseFragment() {
     }
 
     companion object {
-        fun newInstance(): DirectionFragment = DirectionFragment()
+        fun newInstance(): InformationFragment = InformationFragment()
     }
 }

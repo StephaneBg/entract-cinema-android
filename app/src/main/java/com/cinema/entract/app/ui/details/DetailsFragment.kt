@@ -18,9 +18,11 @@ package com.cinema.entract.app.ui.details
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.provider.CalendarContract
 import android.provider.CalendarContract.Events
+import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,9 +68,16 @@ class DetailsFragment : BaseFragment() {
                 else view.text = this
             }
             find<TextView>(R.id.year).text = movie.yearOfProduction
+            find<TextView>(R.id.schedule).text = movie.schedule
             find<TextView>(R.id.duration).text = movie.duration
             find<TextView>(R.id.genre).text = movie.genre
-            find<TextView>(R.id.synopsis).text = movie.synopsis
+
+            val synopsis = find<TextView>(R.id.synopsis)
+            synopsis.text = movie.synopsis
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                synopsis.justificationMode = Layout.JUSTIFICATION_MODE_INTER_WORD
+            }
+
             val teaser = find<Button>(R.id.teaser)
             if (movie.teaserId.isNotEmpty()) {
                 teaser.setOnClickListener { _ -> showTeaser(it) }
@@ -98,7 +107,7 @@ class DetailsFragment : BaseFragment() {
             .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime)
             .putExtra(Events.TITLE, movie.title)
             .putExtra(Events.DESCRIPTION, getString(R.string.app_name))
-            .putExtra(Events.EVENT_LOCATION, getString(R.string.direction_address))
+            .putExtra(Events.EVENT_LOCATION, getString(R.string.information_address))
             .putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY)
         startActivity(intent)
     }

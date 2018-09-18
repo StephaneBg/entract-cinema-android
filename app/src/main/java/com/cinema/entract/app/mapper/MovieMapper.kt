@@ -22,6 +22,7 @@ import com.cinema.entract.data.model.MovieData
 class MovieMapper : Mapper<Movie, MovieData> {
 
     override fun mapToUi(model: MovieData) = Movie(
+        model.id,
         model.title,
         model.date,
         model.schedule.replace("h", ":"),

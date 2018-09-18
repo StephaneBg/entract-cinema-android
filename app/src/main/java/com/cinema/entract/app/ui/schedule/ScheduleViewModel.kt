@@ -26,30 +26,34 @@ import com.cinema.entract.app.ui.base.Loading
 import com.cinema.entract.app.ui.base.Resource
 import com.cinema.entract.app.ui.base.Success
 import com.cinema.entract.data.interactor.CinemaUseCase
+import org.threeten.bp.LocalDate
 import timber.log.Timber
 
 class ScheduleViewModel(
-    useCase: CinemaUseCase,
+    private val useCase: CinemaUseCase,
     private val scheduleMapper: ScheduleMapper
-) : BaseViewModel<CinemaUseCase>(useCase) {
+) : BaseViewModel() {
 
-    private val schedule = MutableLiveData<Resource<List<ScheduleEntry>>>()
+    private val scheduleLiveData = MutableLiveData<Resource<List<ScheduleEntry>>>()
 
     fun getSchedule(): LiveData<Resource<List<ScheduleEntry>>> {
-        schedule.value ?: retrieveSchedule()
-        return schedule
+        scheduleLiveData.value ?: retrieveSchedule()
+        return scheduleLiveData
     }
 
     fun retrieveSchedule() {
-        schedule.postValue(Loading())
+        scheduleLiveData.postValue(Loading())
         launchAsync(
             {
-                schedule.postValue(Success(scheduleMapper.mapToUi(useCase.getSchedule())))
+                val schedule = useCase.getSchedule()
+                scheduleLiveData.postValue(Success(scheduleMapper.mapToUi(schedule)))
             },
             {
                 Timber.e(it)
-                schedule.postValue(Error(it))
+                scheduleLiveData.postValue(Error(it))
             }
         )
     }
+
+    fun selectDate(date: LocalDate) = useCase.selectDate(date)
 }

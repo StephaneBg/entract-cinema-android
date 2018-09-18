@@ -19,6 +19,7 @@ package com.cinema.entract.data.model
 import org.threeten.bp.LocalDate
 
 data class MovieData(
+    val id: String,
     val title: String,
     val date: LocalDate,
     val schedule: String,

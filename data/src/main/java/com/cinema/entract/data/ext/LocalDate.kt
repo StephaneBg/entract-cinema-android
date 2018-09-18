@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.app.ext
+package com.cinema.entract.data.ext
 
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter

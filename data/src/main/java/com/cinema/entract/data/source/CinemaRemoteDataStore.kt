@@ -27,5 +27,5 @@ class CinemaRemoteDataStore(private val cinemaRemote: CinemaRemote) : CinemaData
 
     override suspend fun getSchedule(): List<WeekData> = cinemaRemote.getSchedule()
 
-    override suspend fun getParameters(): DateRangeData? = cinemaRemote.getParameters()
+    override suspend fun getParameters(): DateRangeData = cinemaRemote.getParameters()
 }

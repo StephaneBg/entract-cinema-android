@@ -19,8 +19,11 @@ package com.cinema.entract.app.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ext.show
 import org.jetbrains.anko.find
@@ -31,6 +34,7 @@ class ErrorView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
+    private val image: ImageView
     private val message: TextView
     private val action: Button
 
@@ -39,12 +43,18 @@ class ErrorView @JvmOverloads constructor(
         id = R.id.errorView
         inflate(context, R.layout.widget_error_view, this)
 
+        image = find(R.id.errorImage)
         message = find(R.id.errorMessage)
         action = find(R.id.errorAction)
     }
 
-    fun show(errorMessage: String, retryAction: () -> Unit) {
-        message.text = errorMessage
+    fun show(
+        @DrawableRes drawable: Int = R.drawable.ic_error_outline_black_24dp,
+        @StringRes msg: Int = R.string.error_general,
+        retryAction: () -> Unit
+    ) {
+        image.setImageResource(drawable)
+        message.setText(msg)
         action.setOnClickListener { retryAction() }
         show()
     }

@@ -16,12 +16,12 @@
 
 package com.cinema.entract.app.mapper
 
-import com.cinema.entract.app.ext.longFormatToUi
-import com.cinema.entract.app.ext.shortFormatToUi
 import com.cinema.entract.app.model.DayHeader
 import com.cinema.entract.app.model.MovieEntry
 import com.cinema.entract.app.model.ScheduleEntry
 import com.cinema.entract.app.model.WeekHeader
+import com.cinema.entract.data.ext.longFormatToUi
+import com.cinema.entract.data.ext.shortFormatToUi
 import com.cinema.entract.data.model.WeekData
 
 class ScheduleMapper(private val mapper: MovieMapper) :

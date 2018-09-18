@@ -24,5 +24,5 @@ interface CinemaDataStore {
 
     suspend fun getSchedule(): List<WeekData>
 
-    suspend fun getParameters(): DateRangeData?
+    suspend fun getParameters(): DateRangeData
 }

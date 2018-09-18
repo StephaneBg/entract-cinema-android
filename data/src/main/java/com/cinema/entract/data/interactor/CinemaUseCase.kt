@@ -16,21 +16,49 @@
 
 package com.cinema.entract.data.interactor
 
+import com.cinema.entract.data.ext.formatToUTC
 import com.cinema.entract.data.model.DateRangeData
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
 import com.cinema.entract.data.repository.CinemaRepository
+import org.threeten.bp.LocalDate
 
 class CinemaUseCase(private val repo: CinemaRepository) : BaseUseCase() {
 
-    var dateRange: DateRangeData? = null
-        private set
+    private var date: LocalDate? = null
+    private var dateRange: DateRangeData? = null
+    private var movies = emptyList<MovieData>() // TODO: manage in cache
+    private var selectedMovieId: String = ""
 
-    suspend fun getMovies(day: String): List<MovieData> {
-        dateRange ?: asyncAwait { dateRange = repo.getParameters() }
-        return asyncAwait { repo.getMovies(day) }
+    private fun getDate(): LocalDate = date ?: LocalDate.now()
+
+    suspend fun getMovies(): Pair<List<MovieData>, DateRangeData> =
+        fetchMovies() to fetchDateRange()
+
+    private suspend fun fetchMovies(): List<MovieData> {
+        movies = asyncAwait { repo.getMovies(getDate().formatToUTC()) }
+        return movies
+    }
+
+    private suspend fun fetchDateRange(): DateRangeData {
+        return dateRange ?: run {
+            val range = asyncAwait { repo.getParameters() }
+            dateRange = range
+            range
+        }
     }
 
     suspend fun getSchedule(): List<WeekData> =
         asyncAwait { repo.getSchedule().filter { it.hasMovies } }
+
+    fun selectDate(selectedDate: LocalDate) {
+        date = selectedDate
+    }
+
+    fun selectMovie(movieId: String) {
+        selectedMovieId = movieId
+    }
+
+    fun getSelectedMovie(): MovieData =
+        movies.find { it.id == selectedMovieId } ?: error("No selected movie")
 }

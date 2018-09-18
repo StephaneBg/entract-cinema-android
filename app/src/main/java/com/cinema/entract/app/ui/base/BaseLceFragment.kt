@@ -57,6 +57,6 @@ open class BaseLceFragment<T : View> : BaseFragment() {
     open fun showError(throwable: Throwable?, action: () -> Unit) {
         contentView.hide()
         loadingView.hide()
-        errorView.show(getErrorMessage(throwable), action)
+        errorView.show(getErrorDrawable(throwable), getErrorMessage(throwable), action)
     }
 }

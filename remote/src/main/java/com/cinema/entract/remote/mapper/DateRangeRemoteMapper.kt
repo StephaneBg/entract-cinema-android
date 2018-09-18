@@ -20,11 +20,11 @@ import com.cinema.entract.data.model.DateRangeData
 import com.cinema.entract.remote.model.DateRangeRemote
 import org.threeten.bp.LocalDate
 
-class DateRangeRemoteMapper : RemoteMapper<DateRangeRemote, DateRangeData?> {
+class DateRangeRemoteMapper : RemoteMapper<DateRangeRemote, DateRangeData> {
 
-    override fun mapToData(model: DateRangeRemote): DateRangeData? =
+    override fun mapToData(model: DateRangeRemote): DateRangeData =
         if (null == model.date_minimum || null == model.date_maximum) {
-            null
+            error("Incorrect server response")
         } else {
             DateRangeData(
                 LocalDate.parse(model.date_minimum),

@@ -18,8 +18,6 @@ package com.cinema.entract.app.ui.movies
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.cinema.entract.app.ext.formatToUTC
-import com.cinema.entract.app.ext.longFormatToUi
 import com.cinema.entract.app.mapper.MovieMapper
 import com.cinema.entract.app.model.DateRange
 import com.cinema.entract.app.model.Movie
@@ -28,56 +26,60 @@ import com.cinema.entract.app.ui.base.Error
 import com.cinema.entract.app.ui.base.Loading
 import com.cinema.entract.app.ui.base.Resource
 import com.cinema.entract.app.ui.base.Success
+import com.cinema.entract.data.ext.longFormatToUi
 import com.cinema.entract.data.interactor.CinemaUseCase
 import org.threeten.bp.LocalDate
 import timber.log.Timber
 
 class MoviesViewModel(
-    useCase: CinemaUseCase,
+    private val useCase: CinemaUseCase,
     private val movieMapper: MovieMapper
-) : BaseViewModel<CinemaUseCase>(useCase) {
+) : BaseViewModel() {
 
-    private val movies = MutableLiveData<Resource<List<Movie>>>()
-    private val date = MutableLiveData<Resource<String>>()
-    private val selectedMovie = MutableLiveData<Movie>()
+    private val moviesLiveData = MutableLiveData<Resource<List<Movie>>>()
+    private val dateLiveData = MutableLiveData<Resource<String>>()
+
+    var dateRange: DateRange? = null
+        private set
 
     fun getMovies(): LiveData<Resource<List<Movie>>> {
-        movies.value ?: retrieveMovies()
-        return movies
+        moviesLiveData.value ?: retrieveMovies()
+        return moviesLiveData
     }
 
     fun getDate(): LiveData<Resource<String>> {
-        date.value ?: updateDate()
-        return date
+        dateLiveData.value ?: updateDate()
+        return dateLiveData
     }
 
-    fun getDateRange(): DateRange? = useCase.dateRange?.let {
-        DateRange(it.minimumDate, it.maximumDate)
+    fun selectMovie(movie: Movie) {
+        useCase.selectMovie(movie.id)
     }
 
-    fun getSelectedMovie(): LiveData<Movie> = selectedMovie
+    fun retrieveMovies(date: LocalDate) {
+        useCase.selectDate(date)
+        updateDate(date)
+        retrieveMovies()
+    }
 
-    fun setSelectedMovie(movie: Movie) = selectedMovie.postValue(movie)
-
-    fun retrieveMovies(day: LocalDate? = null) {
-        movies.postValue(Loading())
+    fun retrieveMovies() {
+        moviesLiveData.postValue(Loading())
         launchAsync(
             {
-                val date = (day ?: LocalDate.now()).formatToUTC()
-                val fetchedMovies = useCase.getMovies(date).map { movieMapper.mapToUi(it) }
-                movies.postValue(Success(fetchedMovies))
-                updateDate(day)
+                val (movies, range) = useCase.getMovies()
+                moviesLiveData.postValue(Success(movies.map { movieMapper.mapToUi(it) }))
+                dateRange = DateRange(range.minimumDate, range.maximumDate)
             },
             {
                 Timber.e(it)
-                movies.postValue(Error(it))
-                date.postValue(Success(null))
+                moviesLiveData.postValue(Error(it))
+                dateLiveData.postValue(Success(null))
             }
         )
     }
 
     private fun updateDate(day: LocalDate? = null) {
         val formattedDate = (day ?: LocalDate.now()).longFormatToUi()
-        date.postValue(Success(formattedDate))
+        dateLiveData.postValue(Success(formattedDate))
     }
 }

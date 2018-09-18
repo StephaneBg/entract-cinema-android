@@ -39,11 +39,11 @@ import com.cinema.entract.app.ui.details.DetailsFragment
 import com.cinema.entract.app.widget.EmptynessLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MoviesFragment : BaseLceFragment<EmptynessLayout>() {
 
-    private val moviesViewModel by sharedViewModel<MoviesViewModel>()
+    private val moviesViewModel by viewModel<MoviesViewModel>()
     private val moviesAdapter = MoviesAdapter(::onMovieSelected)
 
     private lateinit var datePicker: MaterialCalendarView
@@ -92,7 +92,7 @@ class MoviesFragment : BaseLceFragment<EmptynessLayout>() {
     }
 
     private fun onMovieSelected(movie: Movie) {
-        moviesViewModel.setSelectedMovie(movie)
+        moviesViewModel.selectMovie(movie)
         requireActivity().replaceFragment(
             R.id.mainContainer,
             DetailsFragment.newInstance(),
@@ -106,7 +106,7 @@ class MoviesFragment : BaseLceFragment<EmptynessLayout>() {
             moviesViewModel.retrieveMovies(day.date)
             alertDialog.dismiss()
         }
-        moviesViewModel.getDateRange()?.let {
+        moviesViewModel.dateRange?.let {
             datePicker.state().edit()
                 .setMinimumDate(it.minimumDate)
                 .setMaximumDate(it.maximumDate)

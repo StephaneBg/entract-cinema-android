@@ -35,15 +35,12 @@ import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.ext.observe
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.base.BaseFragment
-import com.cinema.entract.app.ui.movies.MoviesViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class DetailsFragment : BaseFragment() {
 
-    private val cinemaViewModel by sharedViewModel<MoviesViewModel>()
     private val detailsViewModel by viewModel<DetailsViewModel>()
 
     override fun onCreateView(
@@ -55,7 +52,7 @@ class DetailsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observe(cinemaViewModel.getSelectedMovie(), ::displayMovie)
+        observe(detailsViewModel.getMovie(), ::displayMovie)
     }
 
     private fun displayMovie(movie: Movie?) {

@@ -31,7 +31,7 @@ class CinemaCacheDataStore(private val cinemaCache: CinemaCache) : CinemaDataSto
         TODO("not implemented")
     }
 
-    override suspend fun getParameters(): DateRangeData? {
+    override suspend fun getParameters(): DateRangeData {
         TODO("not implemented")
     }
 }

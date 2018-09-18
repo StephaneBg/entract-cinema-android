@@ -31,5 +31,5 @@ val uiModule = module {
 
     viewModel { MoviesViewModel(get(), get()) }
     viewModel { ScheduleViewModel(get(), get()) }
-    viewModel { DetailsViewModel() }
+    viewModel { DetailsViewModel(get(), get()) }
 }

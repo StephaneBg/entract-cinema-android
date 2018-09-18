@@ -22,7 +22,7 @@ import kotlinx.coroutines.experimental.async
 
 open class BaseUseCase {
 
-    private val deferredObjects: MutableList<Deferred<*>> = mutableListOf()
+    private val deferredObjects = mutableListOf<Deferred<*>>()
 
     @CallSuper
     @Synchronized
@@ -37,23 +37,5 @@ open class BaseUseCase {
     @Synchronized
     protected suspend fun <T> asyncAwait(block: suspend CoroutineScope.() -> T): T {
         return async(block).await()
-    }
-
-    @CallSuper
-    @Synchronized
-    protected fun cancelAllAsync() {
-        val deferredObjectsSize = deferredObjects.size
-
-        if (deferredObjectsSize > 0) {
-            for (i in deferredObjectsSize - 1 downTo 0) {
-                deferredObjects[i].cancel()
-            }
-        }
-    }
-
-    @CallSuper
-    @Synchronized
-    open fun cleanup() {
-        cancelAllAsync()
     }
 }

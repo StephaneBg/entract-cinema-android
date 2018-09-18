@@ -22,7 +22,7 @@ import com.cinema.entract.app.ext.addFragment
 import com.cinema.entract.app.ext.replaceFragment
 import com.cinema.entract.app.ui.base.BaseActivity
 import com.cinema.entract.app.ui.details.DetailsFragment
-import com.cinema.entract.app.ui.direction.DirectionFragment
+import com.cinema.entract.app.ui.information.InformationFragment
 import com.cinema.entract.app.ui.movies.MoviesFragment
 import com.cinema.entract.app.ui.schedule.ScheduleFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -54,7 +54,7 @@ class CinemaActivity : BaseActivity() {
             when (it.itemId) {
                 R.id.movies -> handleMovies()
                 R.id.schedule -> handleSchedule()
-                R.id.direction -> handleDirection()
+                R.id.information -> handleDirection()
                 else -> false
             }
         }
@@ -83,7 +83,7 @@ class CinemaActivity : BaseActivity() {
         }
 
     private fun handleDirection(): Boolean {
-        replaceFragment(R.id.mainContainer, DirectionFragment.newInstance())
+        replaceFragment(R.id.mainContainer, InformationFragment.newInstance())
         return true
     }
 }

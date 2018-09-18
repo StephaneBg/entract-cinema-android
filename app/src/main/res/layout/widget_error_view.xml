@@ -25,6 +25,7 @@
     >
 
     <ImageView
+        android:id="@+id/errorImage"
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_gravity="center"
@@ -44,7 +45,7 @@
 
     <Button
         android:id="@id/errorAction"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

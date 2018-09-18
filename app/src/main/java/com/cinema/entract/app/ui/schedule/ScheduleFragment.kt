@@ -32,15 +32,12 @@ import com.cinema.entract.app.ui.base.Error
 import com.cinema.entract.app.ui.base.Loading
 import com.cinema.entract.app.ui.base.Resource
 import com.cinema.entract.app.ui.base.Success
-import com.cinema.entract.app.ui.movies.MoviesViewModel
 import com.cinema.entract.app.widget.EmptynessLayout
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.threeten.bp.LocalDate
 
 class ScheduleFragment : BaseLceFragment<EmptynessLayout>() {
 
-    private val moviesViewModel by sharedViewModel<MoviesViewModel>()
     private val scheduleViewModel by viewModel<ScheduleViewModel>()
     private val scheduleAdapter = ScheduleAdapter(::handleSelection)
 
@@ -75,7 +72,7 @@ class ScheduleFragment : BaseLceFragment<EmptynessLayout>() {
     }
 
     private fun handleSelection(date: LocalDate) {
-        moviesViewModel.retrieveMovies(date)
+        scheduleViewModel.selectDate(date)
         (requireActivity() as CinemaActivity).selectMovies()
     }
 

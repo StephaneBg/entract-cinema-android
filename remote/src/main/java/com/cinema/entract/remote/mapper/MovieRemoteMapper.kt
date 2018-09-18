@@ -23,6 +23,7 @@ import org.threeten.bp.LocalDate
 class MovieRemoteMapper : RemoteMapper<MovieRemote, MovieData> {
 
     override fun mapToData(model: MovieRemote) = MovieData(
+        model.id_film ?: "",
         model.titre ?: "",
         LocalDate.parse(model.date) ?: error("Unknown date"),
         model.horaire ?: "",

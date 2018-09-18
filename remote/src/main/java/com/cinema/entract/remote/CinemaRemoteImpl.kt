@@ -41,8 +41,9 @@ class CinemaRemoteImpl(
         return schedule.map { weekMapper.mapToData(it) }
     }
 
-    override suspend fun getParameters(): DateRangeData? {
+    override suspend fun getParameters(): DateRangeData {
         val parameters = service.getParameters().await()
         return parameters.periode?.let { paramMapper.mapToData(it) }
+            ?: error("Incorrect server response")
     }
 }

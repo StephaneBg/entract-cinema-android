@@ -30,7 +30,13 @@ class CinemaUseCase(private val repo: CinemaRepository) : BaseUseCase() {
     private var movies = emptyList<MovieData>() // TODO: manage in cache
     private var selectedMovieId: String = ""
 
-    private fun getDate(): LocalDate = date ?: LocalDate.now()
+    fun getDate(): LocalDate = date ?: initDate()
+
+    private fun initDate(): LocalDate {
+        val now = LocalDate.now()
+        date = now
+        return now
+    }
 
     suspend fun getMovies(): Pair<List<MovieData>, DateRangeData> =
         fetchMovies() to fetchDateRange()
@@ -40,12 +46,12 @@ class CinemaUseCase(private val repo: CinemaRepository) : BaseUseCase() {
         return movies
     }
 
-    private suspend fun fetchDateRange(): DateRangeData {
-        return dateRange ?: run {
-            val range = asyncAwait { repo.getParameters() }
-            dateRange = range
-            range
-        }
+    private suspend fun fetchDateRange(): DateRangeData = dateRange ?: initDateRange()
+
+    private suspend fun initDateRange(): DateRangeData {
+        val range = asyncAwait { repo.getParameters() }
+        dateRange = range
+        return range
     }
 
     suspend fun getSchedule(): List<WeekData> =

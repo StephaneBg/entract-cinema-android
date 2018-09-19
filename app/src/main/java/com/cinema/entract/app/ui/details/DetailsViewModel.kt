@@ -48,8 +48,7 @@ class DetailsViewModel(
             movie.date.month.value - 1,
             movie.date.dayOfMonth,
             time.hour,
-            time.minute,
-            0
+            time.minute
         )
         val beginTime = Calendar.getInstance()
         beginTime.set(
@@ -65,7 +64,7 @@ class DetailsViewModel(
         time = time.plusMinutes(duration[1].toLong())
         dateTime = LocalDateTime.of(
             movie.date.year,
-            movie.date.month.value,
+            movie.date.month.value - 1,
             movie.date.dayOfMonth,
             time.hour,
             time.minute,

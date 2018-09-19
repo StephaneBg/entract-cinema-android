@@ -27,6 +27,11 @@
     <string name="error_general">Une erreur est survenue</string>
     <string name="error_retry_action">Réessayer</string>
 
+    <string name="movies_schedule">Horaire : %1$s</string>
+    <string name="movies_duration">Durée : %1$s</string>
+    <string name="movies_production_year">Sortie en %1$s</string>
+    <string name="movies_director">De %1$s</string>
+    <string name="movies_cast">Avec %1$s</string>
     <string name="movies_original_version">VOST</string>
     <string name="movies_three_dimension">3D</string>
     <string name="movies_no_movie_message">Pas de séance ce jour</string>

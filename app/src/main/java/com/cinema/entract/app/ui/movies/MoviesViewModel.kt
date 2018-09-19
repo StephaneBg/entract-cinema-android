@@ -47,10 +47,7 @@ class MoviesViewModel(
         return moviesLiveData
     }
 
-    fun getDate(): LiveData<Resource<String>> {
-        dateLiveData.value ?: updateDate()
-        return dateLiveData
-    }
+    fun getDate(): LiveData<Resource<String>> = dateLiveData
 
     fun selectMovie(movie: Movie) {
         useCase.selectMovie(movie.id)
@@ -58,7 +55,6 @@ class MoviesViewModel(
 
     fun retrieveMovies(date: LocalDate) {
         useCase.selectDate(date)
-        updateDate(date)
         retrieveMovies()
     }
 
@@ -69,6 +65,7 @@ class MoviesViewModel(
                 val (movies, range) = useCase.getMovies()
                 moviesLiveData.postValue(Success(movies.map { movieMapper.mapToUi(it) }))
                 dateRange = DateRange(range.minimumDate, range.maximumDate)
+                dateLiveData.postValue(Success(useCase.getDate().longFormatToUi()))
             },
             {
                 Timber.e(it)
@@ -76,10 +73,5 @@ class MoviesViewModel(
                 dateLiveData.postValue(Success(null))
             }
         )
-    }
-
-    private fun updateDate(day: LocalDate? = null) {
-        val formattedDate = (day ?: LocalDate.now()).longFormatToUi()
-        dateLiveData.postValue(Success(formattedDate))
     }
 }

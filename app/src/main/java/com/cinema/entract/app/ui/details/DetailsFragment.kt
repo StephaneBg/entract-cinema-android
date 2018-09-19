@@ -61,15 +61,16 @@ class DetailsFragment : BaseFragment() {
         movie?.let {
             find<ImageView>(R.id.cover).load(movie.coverUrl)
             find<TextView>(R.id.title).text = movie.title
-            find<TextView>(R.id.director).text = movie.director
+            find<TextView>(R.id.director).text = getString(R.string.movies_director, movie.director)
             movie.cast.apply {
                 val view = find<TextView>(R.id.cast)
                 if (isEmpty()) view.isVisible = false
-                else view.text = this
+                else view.text = getString(R.string.movies_cast, this)
             }
-            find<TextView>(R.id.year).text = movie.yearOfProduction
-            find<TextView>(R.id.schedule).text = movie.schedule
-            find<TextView>(R.id.duration).text = movie.duration
+            find<TextView>(R.id.year).text =
+                    getString(R.string.movies_production_year, movie.yearOfProduction)
+            find<TextView>(R.id.schedule).text = getString(R.string.movies_schedule, movie.schedule)
+            find<TextView>(R.id.duration).text = getString(R.string.movies_duration, movie.duration)
             find<TextView>(R.id.genre).text = movie.genre
 
             val synopsis = find<TextView>(R.id.synopsis)

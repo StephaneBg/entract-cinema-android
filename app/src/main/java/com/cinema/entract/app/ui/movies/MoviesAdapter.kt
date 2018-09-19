@@ -61,8 +61,8 @@ class MoviesAdapter(private val selection: (Movie) -> Unit) :
             itemView.apply {
                 cover.load(movie.coverUrl)
                 title.text = movie.title
-                schedule.text = movie.schedule
-                duration.text = movie.duration
+                schedule.text = context.getString(R.string.movies_schedule, movie.schedule)
+                duration.text = context.getString(R.string.movies_duration, movie.duration)
                 originalVersion.isVisible = movie.isOriginalVersion
                 threeDimension.isInvisible = !movie.isThreeDimension
                 setOnClickListener { selection(movie) }

@@ -35,8 +35,10 @@ import com.cinema.entract.app.R
 import com.cinema.entract.app.ext.find
 import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.ext.observe
+import com.cinema.entract.app.ext.toSpanned
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.base.BaseFragment
+import com.cinema.entract.data.ext.longFormatToUi
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -59,28 +61,34 @@ class DetailsFragment : BaseFragment() {
 
     private fun displayMovie(movie: Movie?) {
         movie?.let {
-            find<ImageView>(R.id.cover).load(movie.coverUrl)
-            find<TextView>(R.id.title).text = movie.title
-            find<TextView>(R.id.director).text = getString(R.string.movies_director, movie.director)
-            movie.cast.apply {
+            find<TextView>(R.id.dateTime).text = getString(
+                R.string.details_date_with_time,
+                it.date.longFormatToUi(),
+                it.schedule
+            )
+            find<ImageView>(R.id.cover).load(it.coverUrl)
+            find<TextView>(R.id.title).text = it.title
+            find<TextView>(R.id.director).text =
+                    getString(R.string.details_director, it.director).toSpanned()
+            it.cast.apply {
                 val view = find<TextView>(R.id.cast)
                 if (isEmpty()) view.isVisible = false
-                else view.text = getString(R.string.movies_cast, this)
+                else view.text = getString(R.string.details_cast, this).toSpanned()
             }
             find<TextView>(R.id.year).text =
-                    getString(R.string.movies_production_year, movie.yearOfProduction)
-            find<TextView>(R.id.schedule).text = getString(R.string.movies_schedule, movie.schedule)
-            find<TextView>(R.id.duration).text = getString(R.string.movies_duration, movie.duration)
-            find<TextView>(R.id.genre).text = movie.genre
+                    getString(R.string.details_production_year, it.yearOfProduction).toSpanned()
+            find<TextView>(R.id.duration).text =
+                    getString(R.string.details_duration, it.duration)
+            find<TextView>(R.id.genre).text = it.genre
 
             val synopsis = find<TextView>(R.id.synopsis)
-            synopsis.text = movie.synopsis
+            synopsis.text = it.synopsis
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 synopsis.justificationMode = Layout.JUSTIFICATION_MODE_INTER_WORD
             }
 
             val teaser = find<Button>(R.id.teaser)
-            if (movie.teaserId.isNotEmpty()) {
+            if (it.teaserId.isNotEmpty()) {
                 teaser.setOnClickListener { _ -> showTeaser(it) }
             } else {
                 teaser.isVisible = false

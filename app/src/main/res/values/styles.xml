@@ -16,12 +16,12 @@
 
 <resources>
 
-    <style name="Theme.Entract"
+    <style name="Theme.Cinema"
         parent="Theme.MaterialComponents.Light">
         <item name="colorPrimary">@color/primary_500</item>
         <item name="colorPrimaryDark">@color/primary_700</item>
         <item name="colorAccent">@color/secondary</item>
-        <item name="alertDialogTheme">@style/Theme.AlertDialog</item>
+        <item name="alertDialogTheme">@style/Theme.Cinema.AlertDialog</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
@@ -29,36 +29,38 @@
         <item name="android:listDivider">@drawable/divider</item>
     </style>
 
-    <style name="Theme.AlertDialog"
+    <style name="Theme.Cinema.AlertDialog"
         parent="Theme.MaterialComponents.Light.Dialog.Alert">
-        <item name="buttonBarPositiveButtonStyle">@style/Widget.Button.Dialog.Positive</item>
-        <item name="buttonBarNeutralButtonStyle">@style/Widget.Button.Dialog.Neutral</item>
-        <item name="buttonBarNegativeButtonStyle">@style/Widget.Button.Dialog.Negative</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.Cinema.Button.Dialog.Positive</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Widget.Cinema.Button.Dialog.Neutral</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.Cinema.Button.Dialog.Negative</item>
     </style>
 
-    <style name="Widget.Button.Dialog.Positive"
+    <style name="Widget.Cinema.Button.Dialog.Positive"
         parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textColor">@color/primary_500</item>
     </style>
 
-    <style name="Widget.Button.Dialog.Neutral"
+    <style name="Widget.Cinema.Button.Dialog.Neutral"
         parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textColor">@color/primary_500</item>
     </style>
 
-    <style name="Widget.Button.Dialog.Negative"
+    <style name="Widget.Cinema.Button.Dialog.Negative"
         parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textColor">@color/secondary</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay"
+    <style name="ThemeOverlay.Cinema.AppBarOverlay"
         parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay"
+    <style name="ThemeOverlay.Cinema.PopupOverlay"
         parent="ThemeOverlay.MaterialComponents.Light" />
 
-    <style name="TextAppearance.Title"
-        parent="TextAppearance.MaterialComponents.Headline6">
-        <item name="android:textColor">@color/primary_500</item>
+    <style name="TextAppearance.Cinema.Appbar.Title"
+        parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 </resources>

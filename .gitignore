@@ -28,3 +28,4 @@ build/
 # Keys
 key
 signing.gradle
+*.jks

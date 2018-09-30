@@ -48,9 +48,6 @@ object Android {
     val minSdkVersion = 21
     val targetSdkVersion = 28
     val compileSdkVersion = 28
-    val applicationId = "com.cinema.entract"
-    val versionCode = 1
-    val versionName = "0.1"
 }
 
 object Libs {

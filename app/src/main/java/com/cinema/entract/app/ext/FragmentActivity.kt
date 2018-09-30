@@ -16,6 +16,7 @@
 
 package com.cinema.entract.app.ext
 
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 
@@ -43,10 +44,12 @@ fun FragmentActivity.addFragment(
 fun FragmentActivity.replaceFragment(
     frameId: Int,
     fragment: Fragment,
+    sharedElement: View? = null,
     addBackStack: Boolean = false
 ) {
     supportFragmentManager.inTransaction {
         replace(frameId, fragment)
+        sharedElement?.let { addSharedElement(it, it.transitionName) }
         if (addBackStack) addToBackStack(null)
     }
 }

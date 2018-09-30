@@ -27,8 +27,6 @@ class CinemaUseCase(private val repo: CinemaRepository) : BaseUseCase() {
 
     private var date: LocalDate? = null
     private var dateRange: DateRangeData? = null
-    private var movies = emptyList<MovieData>() // TODO: manage in cache
-    private var selectedMovieId: String = ""
 
     fun getDate(): LocalDate = date ?: initDate()
 
@@ -41,10 +39,8 @@ class CinemaUseCase(private val repo: CinemaRepository) : BaseUseCase() {
     suspend fun getMovies(): Pair<List<MovieData>, DateRangeData> =
         fetchMovies() to fetchDateRange()
 
-    private suspend fun fetchMovies(): List<MovieData> {
-        movies = asyncAwait { repo.getMovies(getDate().formatToUTC()) }
-        return movies
-    }
+    private suspend fun fetchMovies(): List<MovieData> =
+        asyncAwait { repo.getMovies(getDate().formatToUTC()) }
 
     private suspend fun fetchDateRange(): DateRangeData = dateRange ?: initDateRange()
 
@@ -60,11 +56,4 @@ class CinemaUseCase(private val repo: CinemaRepository) : BaseUseCase() {
     fun selectDate(selectedDate: LocalDate) {
         date = selectedDate
     }
-
-    fun selectMovie(movieId: String) {
-        selectedMovieId = movieId
-    }
-
-    fun getSelectedMovie(): MovieData =
-        movies.find { it.id == selectedMovieId } ?: error("No selected movie")
 }

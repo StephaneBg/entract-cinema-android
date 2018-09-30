@@ -23,7 +23,7 @@ import com.cinema.entract.app.model.ScheduleEntry
 import com.cinema.entract.app.ui.base.BaseViewModel
 import com.cinema.entract.app.ui.base.Error
 import com.cinema.entract.app.ui.base.Loading
-import com.cinema.entract.app.ui.base.Resource
+import com.cinema.entract.app.ui.base.State
 import com.cinema.entract.app.ui.base.Success
 import com.cinema.entract.data.interactor.CinemaUseCase
 import org.threeten.bp.LocalDate
@@ -34,9 +34,9 @@ class ScheduleViewModel(
     private val scheduleMapper: ScheduleMapper
 ) : BaseViewModel() {
 
-    private val scheduleLiveData = MutableLiveData<Resource<List<ScheduleEntry>>>()
+    private val scheduleLiveData = MutableLiveData<State<List<ScheduleEntry>>>()
 
-    fun getSchedule(): LiveData<Resource<List<ScheduleEntry>>> {
+    fun getSchedule(): LiveData<State<List<ScheduleEntry>>> {
         scheduleLiveData.value ?: retrieveSchedule()
         return scheduleLiveData
     }

@@ -30,11 +30,11 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ext.find
 import com.cinema.entract.app.ext.load
-import com.cinema.entract.app.ext.observe
 import com.cinema.entract.app.ext.toSpanned
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.base.BaseFragment
@@ -56,45 +56,46 @@ class DetailsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observe(detailsViewModel.getMovie(), ::displayMovie)
+        displayMovieDetails()
     }
 
-    private fun displayMovie(movie: Movie?) {
-        movie?.let {
-            find<TextView>(R.id.dateTime).text = getString(
-                R.string.details_date_with_time,
-                it.date.longFormatToUi(),
-                it.schedule
-            )
-            find<ImageView>(R.id.cover).load(it.coverUrl)
-            find<TextView>(R.id.title).text = it.title
-            find<TextView>(R.id.director).text =
-                    getString(R.string.details_director, it.director).toSpanned()
-            it.cast.apply {
-                val view = find<TextView>(R.id.cast)
-                if (isEmpty()) view.isVisible = false
-                else view.text = getString(R.string.details_cast, this).toSpanned()
-            }
-            find<TextView>(R.id.year).text =
-                    getString(R.string.details_production_year, it.yearOfProduction).toSpanned()
-            find<TextView>(R.id.duration).text =
-                    getString(R.string.details_duration, it.duration)
-            find<TextView>(R.id.genre).text = it.genre
-
-            val synopsis = find<TextView>(R.id.synopsis)
-            synopsis.text = it.synopsis
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                synopsis.justificationMode = Layout.JUSTIFICATION_MODE_INTER_WORD
-            }
-
-            val teaser = find<Button>(R.id.teaser)
-            if (it.teaserId.isNotEmpty()) {
-                teaser.setOnClickListener { _ -> showTeaser(it) }
-            } else {
-                teaser.isVisible = false
-            }
-            find<FloatingActionButton>(R.id.fab).setOnClickListener { _ -> addCalendarEvent(it) }
+    private fun displayMovieDetails() {
+        val movie = arguments?.getParcelable<Movie>(MOVIE)!!
+        find<TextView>(R.id.dateTime).text = getString(
+            R.string.details_date_with_time,
+            movie.date.longFormatToUi(),
+            movie.schedule
+        )
+        find<ImageView>(R.id.cover).apply {
+            transitionName = arguments?.getString(TRANSITION_NAME)
+            load(movie.coverUrl)
         }
+        find<TextView>(R.id.title).text = movie.title
+        find<TextView>(R.id.director).text =
+                getString(R.string.details_director, movie.director).toSpanned()
+        movie.cast.apply {
+            val view = find<TextView>(R.id.cast)
+            if (isEmpty()) view.isVisible = false
+            else view.text = getString(R.string.details_cast, this).toSpanned()
+        }
+        find<TextView>(R.id.year).text =
+                getString(R.string.details_production_year, movie.yearOfProduction).toSpanned()
+        find<TextView>(R.id.duration).text = getString(R.string.details_duration, movie.duration)
+        find<TextView>(R.id.genre).text = movie.genre
+
+        val synopsis = find<TextView>(R.id.synopsis)
+        synopsis.text = movie.synopsis
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            synopsis.justificationMode = Layout.JUSTIFICATION_MODE_INTER_WORD
+        }
+
+        val teaser = find<Button>(R.id.teaser)
+        if (movie.teaserId.isNotEmpty()) {
+            teaser.setOnClickListener { _ -> showTeaser(movie) }
+        } else {
+            teaser.isVisible = false
+        }
+        find<FloatingActionButton>(R.id.fab).setOnClickListener { _ -> addCalendarEvent(movie) }
     }
 
     private fun showTeaser(movie: Movie) {
@@ -122,6 +123,14 @@ class DetailsFragment : BaseFragment() {
     }
 
     companion object {
-        fun newInstance() = DetailsFragment()
+        private const val MOVIE = "MOVIE"
+        private const val TRANSITION_NAME = "TRANSITION_NAME"
+
+        fun newInstance(movie: Movie, transitionName: String) = DetailsFragment().apply {
+            arguments = bundleOf(
+                MOVIE to movie,
+                TRANSITION_NAME to transitionName
+            )
+        }
     }
 }

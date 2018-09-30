@@ -44,7 +44,7 @@ object Build {
 }
 
 object Android {
-    val buildToolsVersion = "28.0.2"
+    val buildToolsVersion = "28.0.3"
     val minSdkVersion = 21
     val targetSdkVersion = 28
     val compileSdkVersion = 28

@@ -24,7 +24,7 @@ import okhttp3.Response
 class ConnectivityInterceptor(private val context: Context) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        if (NetworkUtils.isNetworkAvailable(context)) {
+        if (isNetworkAvailable(context)) {
             return chain.proceed(chain.request())
         } else {
             throw NoConnectivityException()

@@ -24,7 +24,7 @@ import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.base.BaseViewModel
 import com.cinema.entract.app.ui.base.Error
 import com.cinema.entract.app.ui.base.Loading
-import com.cinema.entract.app.ui.base.Resource
+import com.cinema.entract.app.ui.base.State
 import com.cinema.entract.app.ui.base.Success
 import com.cinema.entract.data.ext.longFormatToUi
 import com.cinema.entract.data.interactor.CinemaUseCase
@@ -36,21 +36,14 @@ class MoviesViewModel(
     private val movieMapper: MovieMapper
 ) : BaseViewModel() {
 
-    private val moviesLiveData = MutableLiveData<Resource<List<Movie>>>()
-    private val dateLiveData = MutableLiveData<Resource<String>>()
+    private val state = MutableLiveData<State<OnScreen>>()
 
     var dateRange: DateRange? = null
         private set
 
-    fun getMovies(): LiveData<Resource<List<Movie>>> {
-        moviesLiveData.value ?: retrieveMovies()
-        return moviesLiveData
-    }
-
-    fun getDate(): LiveData<Resource<String>> = dateLiveData
-
-    fun selectMovie(movie: Movie) {
-        useCase.selectMovie(movie.id)
+    fun getState(): LiveData<State<OnScreen>> {
+        state.value ?: retrieveMovies()
+        return state
     }
 
     fun retrieveMovies(date: LocalDate) {
@@ -59,19 +52,23 @@ class MoviesViewModel(
     }
 
     fun retrieveMovies() {
-        moviesLiveData.postValue(Loading())
+        state.postValue(Loading())
         launchAsync(
             {
                 val (movies, range) = useCase.getMovies()
-                moviesLiveData.postValue(Success(movies.map { movieMapper.mapToUi(it) }))
+                state.postValue(Success(
+                        movies.map { movieMapper.mapToUi(it) } to useCase.getDate().longFormatToUi()
+                    ))
                 dateRange = DateRange(range.minimumDate, range.maximumDate)
-                dateLiveData.postValue(Success(useCase.getDate().longFormatToUi()))
             },
             {
                 Timber.e(it)
-                moviesLiveData.postValue(Error(it))
-                dateLiveData.postValue(Success(null))
+                state.postValue(Error(it))
             }
         )
     }
 }
+
+typealias OnScreen = Pair<List<Movie>, String>
+fun OnScreen.getMovies() = this.first
+fun OnScreen.getDate() = this.second

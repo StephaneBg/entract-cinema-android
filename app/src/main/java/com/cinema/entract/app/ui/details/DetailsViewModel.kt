@@ -16,29 +16,13 @@
 
 package com.cinema.entract.app.ui.details
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.cinema.entract.app.mapper.MovieMapper
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.base.BaseViewModel
-import com.cinema.entract.data.interactor.CinemaUseCase
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
-import java.util.Calendar
+import java.util.*
 
-class DetailsViewModel(
-    private val useCase: CinemaUseCase,
-    private val mapper: MovieMapper
-) : BaseViewModel() {
-
-    private val movieLiveData = MutableLiveData<Movie>()
-
-    fun getMovie(): LiveData<Movie> {
-        movieLiveData.value ?: movieLiveData.postValue(retrieveMovie())
-        return movieLiveData
-    }
-
-    private fun retrieveMovie(): Movie = mapper.mapToUi(useCase.getSelectedMovie())
+class DetailsViewModel : BaseViewModel() {
 
     fun getEventSchedule(movie: Movie): Pair<Long, Long> {
         val schedule = movie.schedule.split(":").map { Integer.parseInt(it) }

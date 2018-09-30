@@ -20,11 +20,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.TransitionInflater
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ext.find
 import com.cinema.entract.app.ext.observe
@@ -33,7 +35,7 @@ import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.base.BaseLceFragment
 import com.cinema.entract.app.ui.base.Error
 import com.cinema.entract.app.ui.base.Loading
-import com.cinema.entract.app.ui.base.Resource
+import com.cinema.entract.app.ui.base.State
 import com.cinema.entract.app.ui.base.Success
 import com.cinema.entract.app.ui.details.DetailsFragment
 import com.cinema.entract.app.widget.EmptynessLayout
@@ -63,6 +65,7 @@ class MoviesFragment : BaseLceFragment<EmptynessLayout>() {
         with(contentView) {
             recyclerView.layoutManager = LinearLayoutManager(activity)
             recyclerView.addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
+            recyclerView.setHasFixedSize(true)
             setAdapter(moviesAdapter)
         }
 
@@ -70,32 +73,42 @@ class MoviesFragment : BaseLceFragment<EmptynessLayout>() {
         fab = find(R.id.fab)
         fab.setOnClickListener { displayDatePicker() }
 
-        observe(moviesViewModel.getMovies(), ::manageResource)
-        observe(moviesViewModel.getDate(), ::manageDate)
+        observe(moviesViewModel.getState(), ::manageResource)
     }
 
-    private fun manageResource(resource: Resource<List<Movie>>?) {
-        when (resource) {
+    private fun manageResource(state: State<OnScreen>?) {
+        when (state) {
             is Loading -> showLoading()
             is Success -> {
-                moviesAdapter.updateMovies(resource.data ?: emptyList())
+                moviesAdapter.updateMovies(state.data?.getMovies() ?: emptyList())
+                date.text = state.data?.getDate() ?: getString(R.string.app_name)
                 showContent()
             }
-            is Error -> showError(resource.error) { moviesViewModel.retrieveMovies() }
+            is Error -> {
+                showError(state.error) { moviesViewModel.retrieveMovies() }
+                date.text = getString(R.string.app_name)
+            }
         }
     }
 
-    private fun manageDate(resource: Resource<String>?) {
-        resource?.let {
-            date.text = it.data ?: getString(R.string.app_name)
-        }
-    }
+    private fun onMovieSelected(movie: Movie, cover: ImageView) {
+        val context = requireContext()
+        sharedElementReturnTransition =
+                TransitionInflater.from(context).inflateTransition(R.transition.cover_transition)
+        exitTransition = TransitionInflater.from(context)
+            .inflateTransition(android.R.transition.no_transition)
 
-    private fun onMovieSelected(movie: Movie) {
-        moviesViewModel.selectMovie(movie)
+        val detailFragment = DetailsFragment.newInstance(movie, cover.transitionName).apply {
+            sharedElementEnterTransition = TransitionInflater.from(context)
+                .inflateTransition(R.transition.cover_transition)
+            enterTransition = TransitionInflater.from(context)
+                .inflateTransition(android.R.transition.no_transition)
+        }
+
         requireActivity().replaceFragment(
             R.id.mainContainer,
-            DetailsFragment.newInstance(),
+            detailFragment,
+            cover,
             true
         )
     }

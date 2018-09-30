@@ -30,7 +30,7 @@ import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.app.ui.base.BaseLceFragment
 import com.cinema.entract.app.ui.base.Error
 import com.cinema.entract.app.ui.base.Loading
-import com.cinema.entract.app.ui.base.Resource
+import com.cinema.entract.app.ui.base.State
 import com.cinema.entract.app.ui.base.Success
 import com.cinema.entract.app.widget.EmptynessLayout
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -59,14 +59,14 @@ class ScheduleFragment : BaseLceFragment<EmptynessLayout>() {
         observe(scheduleViewModel.getSchedule(), ::displaySchedule)
     }
 
-    private fun displaySchedule(resource: Resource<List<ScheduleEntry>>?) {
-        when (resource) {
+    private fun displaySchedule(state: State<List<ScheduleEntry>>?) {
+        when (state) {
             is Loading -> showLoading()
             is Success -> {
-                scheduleAdapter.updateSchedule(resource.data ?: emptyList())
+                scheduleAdapter.updateSchedule(state.data ?: emptyList())
                 showContent()
             }
-            is Error -> showError(resource.error) { scheduleViewModel.retrieveSchedule() }
+            is Error -> showError(state.error) { scheduleViewModel.retrieveSchedule() }
         }
 
     }

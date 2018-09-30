@@ -16,8 +16,11 @@
 
 package com.cinema.entract.app.model
 
+import android.os.Parcel
+import android.os.Parcelable
 import org.threeten.bp.LocalDate
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 data class Movie(
     val id: String,
     val title: String,
@@ -33,4 +36,52 @@ data class Movie(
     val cast: String,
     val synopsis: String,
     val teaserId: String
-)
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readSerializable() as LocalDate,
+        parcel.readString(),
+        parcel.readByte() != 0.toByte(),
+        parcel.readByte() != 0.toByte(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString()
+    )
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(id)
+        parcel.writeString(title)
+        parcel.writeSerializable(date)
+        parcel.writeString(schedule)
+        parcel.writeByte(if (isThreeDimension) 1 else 0)
+        parcel.writeByte(if (isOriginalVersion) 1 else 0)
+        parcel.writeString(coverUrl)
+        parcel.writeString(duration)
+        parcel.writeString(yearOfProduction)
+        parcel.writeString(genre)
+        parcel.writeString(director)
+        parcel.writeString(cast)
+        parcel.writeString(synopsis)
+        parcel.writeString(teaserId)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Movie> {
+        override fun createFromParcel(parcel: Parcel): Movie {
+            return Movie(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Movie?> {
+            return arrayOfNulls(size)
+        }
+    }
+}

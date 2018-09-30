@@ -30,7 +30,7 @@ import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.model.Movie
 import org.jetbrains.anko.find
 
-class MoviesAdapter(private val selection: (Movie) -> Unit) :
+class MoviesAdapter(private val selection: (Movie, ImageView) -> Unit) :
     RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
 
     private var movies = emptyList<Movie>()
@@ -60,12 +60,13 @@ class MoviesAdapter(private val selection: (Movie) -> Unit) :
         fun bind(movie: Movie) {
             itemView.apply {
                 cover.load(movie.coverUrl)
+                cover.transitionName = "cover_transition_$adapterPosition"
                 title.text = movie.title
                 schedule.text = context.getString(R.string.movies_schedule, movie.schedule)
                 duration.text = context.getString(R.string.movies_duration, movie.duration)
                 originalVersion.isVisible = movie.isOriginalVersion
                 threeDimension.isInvisible = !movie.isThreeDimension
-                setOnClickListener { selection(movie) }
+                setOnClickListener { selection(movie, cover) }
             }
         }
     }

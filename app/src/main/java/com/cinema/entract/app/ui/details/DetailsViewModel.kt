@@ -43,41 +43,31 @@ class DetailsViewModel(
     fun getEventSchedule(movie: Movie): Pair<Long, Long> {
         val schedule = movie.schedule.split(":").map { Integer.parseInt(it) }
         var time = LocalTime.of(schedule[0], schedule[1])
-        var dateTime = LocalDateTime.of(
+        val beginTime = LocalDateTime.of(
             movie.date.year,
             movie.date.month.value - 1,
             movie.date.dayOfMonth,
             time.hour,
             time.minute
         )
-        val beginTime = Calendar.getInstance()
-        beginTime.set(
-            dateTime.year,
-            dateTime.month.value - 1,
-            dateTime.dayOfMonth,
-            dateTime.hour,
-            dateTime.minute
-        )
 
         val duration = movie.duration.split("h").map { Integer.parseInt(it) }
         time = time.plusHours(duration[0].toLong())
         time = time.plusMinutes(duration[1].toLong())
-        dateTime = LocalDateTime.of(
+        val endTime = LocalDateTime.of(
             movie.date.year,
             movie.date.month.value - 1,
             movie.date.dayOfMonth,
             time.hour,
-            time.minute,
-            0
+            time.minute
         )
-        val endTime = Calendar.getInstance()
-        endTime.set(
-            dateTime.year,
-            dateTime.month.value,
-            dateTime.dayOfMonth,
-            dateTime.hour,
-            dateTime.minute
-        )
-        return beginTime.timeInMillis to endTime.timeInMillis
+
+        return beginTime.toCalendar().timeInMillis to endTime.toCalendar().timeInMillis
+    }
+
+    private fun LocalDateTime.toCalendar(): Calendar {
+        val calendar = Calendar.getInstance()
+        calendar.set(this.year, this.month.value, this.dayOfMonth, this.hour, this.minute)
+        return calendar
     }
 }

@@ -30,8 +30,8 @@ android {
     }
 
     defaultConfig {
-        versionCode Android.versionCode
-        versionName Android.versionName
+        versionCode 2
+        versionName "0.2"
         minSdkVersion Android.minSdkVersion
         targetSdkVersion Android.targetSdkVersion
         vectorDrawables.useSupportLibrary = true

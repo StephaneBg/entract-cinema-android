@@ -27,6 +27,7 @@ class CinemaUseCase(private val repo: CinemaRepository) : BaseUseCase() {
 
     private var date: LocalDate? = null
     private var dateRange: DateRangeData? = null
+    private var movies: List<MovieData>? = null
 
     fun getDate(): LocalDate = date ?: initDate()
 
@@ -39,8 +40,13 @@ class CinemaUseCase(private val repo: CinemaRepository) : BaseUseCase() {
     suspend fun getMovies(): Pair<List<MovieData>, DateRangeData> =
         fetchMovies() to fetchDateRange()
 
-    private suspend fun fetchMovies(): List<MovieData> =
-        asyncAwait { repo.getMovies(getDate().formatToUTC()) }
+    private suspend fun fetchMovies(): List<MovieData> = movies ?: initMovies()
+
+    private suspend fun initMovies(): List<MovieData> {
+        val fetchedMovies = asyncAwait { repo.getMovies(getDate().formatToUTC()) }
+        movies = fetchedMovies
+        return fetchedMovies
+    }
 
     private suspend fun fetchDateRange(): DateRangeData = dateRange ?: initDateRange()
 
@@ -51,6 +57,8 @@ class CinemaUseCase(private val repo: CinemaRepository) : BaseUseCase() {
     }
 
     suspend fun getSchedule(): List<WeekData> = repo.getSchedule().filter { it.hasMovies }
+
+    suspend fun getEventUrl(): String? = repo.getEvent().url
 
     fun selectDate(selectedDate: LocalDate) {
         date = selectedDate

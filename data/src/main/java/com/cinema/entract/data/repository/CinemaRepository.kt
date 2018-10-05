@@ -17,6 +17,7 @@
 package com.cinema.entract.data.repository
 
 import com.cinema.entract.data.model.DateRangeData
+import com.cinema.entract.data.model.EventData
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
 import com.cinema.entract.data.source.CinemaDataStoreFactory
@@ -34,6 +35,8 @@ class CinemaRepository(
 
     suspend fun getParameters(): DateRangeData =
         dataStoreFactory.retrieveDataStore().getParameters()
+
+    suspend fun getEvent(): EventData = dataStoreFactory.retrieveDataStore().getEventUrl()
 
     fun getUserPreferences(): UserPreferences = userPreferences
 }

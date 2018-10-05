@@ -35,7 +35,7 @@ fun createService(networkUtils: NetworkUtils): CinemaService = Retrofit.Builder(
 private fun makeOkHttpClient(networkUtils: NetworkUtils): OkHttpClient {
     return OkHttpClient.Builder()
         .addInterceptor(ConnectivityInterceptor(networkUtils))
-        .connectTimeout(120, TimeUnit.SECONDS)
-        .readTimeout(120, TimeUnit.SECONDS)
+        .connectTimeout(60, TimeUnit.SECONDS)
+        .readTimeout(60, TimeUnit.SECONDS)
         .build()
 }

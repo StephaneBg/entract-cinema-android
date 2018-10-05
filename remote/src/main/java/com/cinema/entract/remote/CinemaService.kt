@@ -16,6 +16,7 @@
 
 package com.cinema.entract.remote
 
+import com.cinema.entract.remote.model.EventRemote
 import com.cinema.entract.remote.model.MovieRemote
 import com.cinema.entract.remote.model.ParametersRemote
 import com.cinema.entract.remote.model.WeekRemote
@@ -33,4 +34,7 @@ interface CinemaService {
 
     @GET("getParametres.php")
     fun getParameters(): Deferred<ParametersRemote>
+
+    @GET("getLiensEvenement.php")
+    fun getEvent(): Deferred<EventRemote>
 }

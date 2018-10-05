@@ -16,8 +16,8 @@
 
 package com.cinema.entract.app.ui.base
 
-sealed class State<out T> constructor(val data: T?, val refresh: Boolean, val error: Throwable?)
+sealed class State<out T>
 
-class Success<out T>(data: T?, refresh: Boolean = false) : State<T>(data, refresh, null)
-class Loading(refresh: Boolean = false) : State<Nothing>(null, refresh, null)
-class Error(error: Throwable?) : State<Nothing>(null, false, error)
+class Success<out T>(val data: T?, val refresh: Boolean = false) : State<T>()
+class Loading(val refresh: Boolean = false) : State<Nothing>()
+class Error(val error: Throwable?) : State<Nothing>()

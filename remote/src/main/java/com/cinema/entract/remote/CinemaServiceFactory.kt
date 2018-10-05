@@ -16,7 +16,7 @@
 
 package com.cinema.entract.remote
 
-import android.content.Context
+import com.cinema.entract.core.utils.NetworkUtils
 import com.cinema.entract.remote.network.ConnectivityInterceptor
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
@@ -24,17 +24,17 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
-fun createService(context: Context): CinemaService = Retrofit.Builder()
+fun createService(networkUtils: NetworkUtils): CinemaService = Retrofit.Builder()
     .baseUrl("http://mobile-grenadecinema.fr/php/rest/")
-    .client(makeOkHttpClient(context))
+    .client(makeOkHttpClient(networkUtils))
     .addCallAdapterFactory(CoroutineCallAdapterFactory())
     .addConverterFactory(MoshiConverterFactory.create())
     .build()
     .create(CinemaService::class.java)
 
-private fun makeOkHttpClient(context: Context): OkHttpClient {
+private fun makeOkHttpClient(networkUtils: NetworkUtils): OkHttpClient {
     return OkHttpClient.Builder()
-        .addInterceptor(ConnectivityInterceptor(context))
+        .addInterceptor(ConnectivityInterceptor(networkUtils))
         .connectTimeout(120, TimeUnit.SECONDS)
         .readTimeout(120, TimeUnit.SECONDS)
         .build()

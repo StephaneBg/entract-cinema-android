@@ -21,11 +21,7 @@ import androidx.lifecycle.MutableLiveData
 import com.cinema.entract.app.mapper.MovieMapper
 import com.cinema.entract.app.model.DateRange
 import com.cinema.entract.app.model.Movie
-import com.cinema.entract.app.ui.base.BaseViewModel
-import com.cinema.entract.app.ui.base.Error
-import com.cinema.entract.app.ui.base.Loading
-import com.cinema.entract.app.ui.base.State
-import com.cinema.entract.app.ui.base.Success
+import com.cinema.entract.app.ui.base.*
 import com.cinema.entract.data.ext.longFormatToUi
 import com.cinema.entract.data.interactor.CinemaUseCase
 import org.threeten.bp.LocalDate
@@ -56,9 +52,11 @@ class MoviesViewModel(
         launchAsync(
             {
                 val (movies, range) = useCase.getMovies()
-                state.postValue(Success(
+                state.postValue(
+                    Success(
                         movies.map { movieMapper.mapToUi(it) } to useCase.getDate().longFormatToUi()
-                    ))
+                    )
+                )
                 dateRange = DateRange(range.minimumDate, range.maximumDate)
             },
             {
@@ -70,5 +68,6 @@ class MoviesViewModel(
 }
 
 typealias OnScreen = Pair<List<Movie>, String>
+
 fun OnScreen.getMovies() = this.first
 fun OnScreen.getDate() = this.second

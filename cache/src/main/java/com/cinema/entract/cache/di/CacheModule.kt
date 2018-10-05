@@ -16,11 +16,14 @@
 
 package com.cinema.entract.cache.di
 
-import com.cinema.entract.cache.repo.DatabaseRepo
+import com.cinema.entract.cache.repository.CinemaCacheImpl
+import com.cinema.entract.cache.repository.UserPreferencesImpl
 import com.cinema.entract.data.repository.CinemaCache
+import com.cinema.entract.data.repository.UserPreferences
 import org.koin.dsl.module.module
 
 val cacheModule = module {
 
-    single<CinemaCache> { DatabaseRepo(get()) }
+    single<CinemaCache> { CinemaCacheImpl(get()) }
+    single<UserPreferences> { UserPreferencesImpl(get()) }
 }

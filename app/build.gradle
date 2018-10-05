@@ -75,6 +75,7 @@ android {
 }
 
 dependencies {
+    implementation project(':core')
     implementation project(':cache')
     implementation project(':remote')
     implementation project(':data')

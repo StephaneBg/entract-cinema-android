@@ -50,8 +50,7 @@ class CinemaUseCase(private val repo: CinemaRepository) : BaseUseCase() {
         return range
     }
 
-    suspend fun getSchedule(): List<WeekData> =
-        asyncAwait { repo.getSchedule().filter { it.hasMovies } }
+    suspend fun getSchedule(): List<WeekData> = repo.getSchedule().filter { it.hasMovies }
 
     fun selectDate(selectedDate: LocalDate) {
         date = selectedDate

@@ -30,7 +30,12 @@
         />
     <item
         android:id="@+id/information"
-        android:icon="@drawable/ic_directions_black_24dp"
+        android:icon="@drawable/ic_info_outline_black_24dp"
         android:title="@string/menu_information"
+        />
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="@string/menu_settings"
         />
 </menu>

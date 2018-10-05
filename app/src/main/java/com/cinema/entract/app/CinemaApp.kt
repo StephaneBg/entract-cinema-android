@@ -19,6 +19,7 @@ package com.cinema.entract.app
 import android.app.Application
 import com.cinema.entract.app.di.uiModule
 import com.cinema.entract.cache.di.cacheModule
+import com.cinema.entract.core.di.coreModule
 import com.cinema.entract.data.di.dataModule
 import com.cinema.entract.remote.di.remoteModule
 import com.jakewharton.threetenabp.AndroidThreeTen
@@ -38,6 +39,7 @@ class CinemaApp : Application() {
         startKoin(
             this,
             listOf(
+                coreModule,
                 cacheModule,
                 remoteModule,
                 dataModule,

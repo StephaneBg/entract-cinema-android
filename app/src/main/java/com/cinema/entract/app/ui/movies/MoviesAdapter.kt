@@ -28,10 +28,13 @@ import com.cinema.entract.app.R
 import com.cinema.entract.app.ext.inflate
 import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.model.Movie
+import com.cinema.entract.app.ui.COVER_ALPHA
 import org.jetbrains.anko.find
 
-class MoviesAdapter(private val selection: (Movie, ImageView) -> Unit) :
-    RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
+class MoviesAdapter(
+    private val loadCover: Boolean,
+    private val selection: (Movie, ImageView) -> Unit
+) : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
 
     private var movies = emptyList<Movie>()
 
@@ -59,7 +62,12 @@ class MoviesAdapter(private val selection: (Movie, ImageView) -> Unit) :
         @SuppressLint("SetTextI18n")
         fun bind(movie: Movie) {
             itemView.apply {
-                cover.load(movie.coverUrl)
+                if (loadCover) {
+                    cover.load(movie.coverUrl)
+                } else {
+                    cover.setImageResource(R.drawable.ic_movie_black_24dp)
+                    cover.alpha = COVER_ALPHA
+                }
                 cover.transitionName = "cover_transition_$adapterPosition"
                 title.text = movie.title
                 schedule.text = context.getString(R.string.movies_schedule, movie.schedule)

@@ -22,20 +22,13 @@ import kotlinx.coroutines.experimental.async
 
 open class BaseUseCase {
 
-    private val deferredObjects = mutableListOf<Deferred<*>>()
+    @CallSuper
+    @Synchronized
+    protected suspend fun <T> async(block: suspend CoroutineScope.() -> T): Deferred<T> =
+        async(CommonPool) { block() }
 
     @CallSuper
     @Synchronized
-    protected suspend fun <T> async(block: suspend CoroutineScope.() -> T): Deferred<T> {
-        val deferred: Deferred<T> = async(CommonPool) { block() }
-        deferredObjects.add(deferred)
-        deferred.invokeOnCompletion { deferredObjects.remove(deferred) }
-        return deferred
-    }
-
-    @CallSuper
-    @Synchronized
-    protected suspend fun <T> asyncAwait(block: suspend CoroutineScope.() -> T): T {
-        return async(block).await()
-    }
+    protected suspend fun <T> asyncAwait(block: suspend CoroutineScope.() -> T): T =
+        async(block).await()
 }

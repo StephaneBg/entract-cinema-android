@@ -14,19 +14,20 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.remote.network
+package com.cinema.entract.core.utils
 
-import com.cinema.entract.core.utils.NetworkUtils
-import okhttp3.Interceptor
-import okhttp3.Response
+import android.content.Context
+import android.net.ConnectivityManager
 
-class ConnectivityInterceptor(private val networkUtils: NetworkUtils) : Interceptor {
+class NetworkUtils(context: Context) {
 
-    override fun intercept(chain: Interceptor.Chain): Response {
-        if (networkUtils.isNetworkAvailable()) {
-            return chain.proceed(chain.request())
-        } else {
-            throw NoConnectivityException()
-        }
+    private val connectivityManager =
+        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+    fun isNetworkAvailable(): Boolean {
+        return connectivityManager.activeNetworkInfo?.isConnected ?: false
     }
+
+    fun isConnectedOnWifi(): Boolean =
+        connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected
 }

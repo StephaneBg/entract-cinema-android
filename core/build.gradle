@@ -14,11 +14,30 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.app.model
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
-import org.threeten.bp.LocalDate
+kotlin { experimental { coroutines 'enable' } }
 
-data class Parameters(
-    val maxDate: LocalDate,
-    val minDate: LocalDate
-)
+android {
+
+    buildToolsVersion Android.buildToolsVersion
+    compileSdkVersion Android.compileSdkVersion
+
+    compileOptions {
+        sourceCompatibility Versions.java
+        targetCompatibility Versions.java
+    }
+
+    defaultConfig {
+        minSdkVersion Android.minSdkVersion
+        targetSdkVersion Android.targetSdkVersion
+        resConfigs "fr"
+    }
+}
+
+dependencies {
+    implementation Libs.kotlinStd
+    implementation Libs.koinAndroid
+    implementation Libs.coroutinesCore
+}

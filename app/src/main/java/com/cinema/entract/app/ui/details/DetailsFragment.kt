@@ -37,7 +37,9 @@ import com.cinema.entract.app.ext.find
 import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.ext.toSpanned
 import com.cinema.entract.app.model.Movie
+import com.cinema.entract.app.ui.COVER_ALPHA
 import com.cinema.entract.app.ui.base.BaseFragment
+import com.cinema.entract.app.ui.settings.SettingsViewModel
 import com.cinema.entract.data.ext.longFormatToUi
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -46,6 +48,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class DetailsFragment : BaseFragment() {
 
     private val detailsViewModel by viewModel<DetailsViewModel>()
+    private val prefsViewModel by viewModel<SettingsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,7 +71,12 @@ class DetailsFragment : BaseFragment() {
         )
         find<ImageView>(R.id.cover).apply {
             transitionName = arguments?.getString(TRANSITION_NAME)
-            load(movie.coverUrl)
+            if (prefsViewModel.canDisplayMedia()) {
+                load(movie.coverUrl)
+            } else {
+                setImageResource(R.drawable.ic_movie_black_24dp)
+                alpha = COVER_ALPHA
+            }
         }
         find<TextView>(R.id.title).text = movie.title
         find<TextView>(R.id.director).text =
@@ -90,7 +98,7 @@ class DetailsFragment : BaseFragment() {
         }
 
         val teaser = find<Button>(R.id.teaser)
-        if (movie.teaserId.isNotEmpty()) {
+        if (movie.teaserId.isNotEmpty() && prefsViewModel.canDisplayMedia()) {
             teaser.setOnClickListener { _ -> showTeaser(movie) }
         } else {
             teaser.isVisible = false

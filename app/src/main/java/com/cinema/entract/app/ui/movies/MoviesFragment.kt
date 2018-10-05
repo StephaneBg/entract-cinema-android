@@ -23,6 +23,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -32,12 +33,9 @@ import com.cinema.entract.app.ext.find
 import com.cinema.entract.app.ext.observe
 import com.cinema.entract.app.ext.replaceFragment
 import com.cinema.entract.app.model.Movie
-import com.cinema.entract.app.ui.base.BaseLceFragment
-import com.cinema.entract.app.ui.base.Error
-import com.cinema.entract.app.ui.base.Loading
-import com.cinema.entract.app.ui.base.State
-import com.cinema.entract.app.ui.base.Success
+import com.cinema.entract.app.ui.base.*
 import com.cinema.entract.app.ui.details.DetailsFragment
+import com.cinema.entract.app.ui.settings.SettingsViewModel
 import com.cinema.entract.app.widget.EmptynessLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
@@ -46,7 +44,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MoviesFragment : BaseLceFragment<EmptynessLayout>() {
 
     private val moviesViewModel by viewModel<MoviesViewModel>()
-    private val moviesAdapter = MoviesAdapter(::onMovieSelected)
+    private val prefsViewModel by viewModel<SettingsViewModel>()
+    private lateinit var moviesAdapter: MoviesAdapter
 
     private lateinit var datePicker: MaterialCalendarView
     private lateinit var alertDialog: AlertDialog
@@ -62,6 +61,7 @@ class MoviesFragment : BaseLceFragment<EmptynessLayout>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        moviesAdapter = MoviesAdapter(prefsViewModel.canDisplayMedia(), ::onMovieSelected)
         with(contentView) {
             recyclerView.layoutManager = LinearLayoutManager(activity)
             recyclerView.addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
@@ -92,25 +92,28 @@ class MoviesFragment : BaseLceFragment<EmptynessLayout>() {
     }
 
     private fun onMovieSelected(movie: Movie, cover: ImageView) {
+        val fragment = prepareTransition(movie, cover)
+        requireActivity().replaceFragment(
+            R.id.mainContainer,
+            fragment,
+            cover,
+            true
+        )
+    }
+
+    private fun prepareTransition(movie: Movie, cover: ImageView): Fragment {
         val context = requireContext()
         sharedElementReturnTransition =
                 TransitionInflater.from(context).inflateTransition(R.transition.cover_transition)
         exitTransition = TransitionInflater.from(context)
             .inflateTransition(android.R.transition.no_transition)
 
-        val detailFragment = DetailsFragment.newInstance(movie, cover.transitionName).apply {
+        return DetailsFragment.newInstance(movie, cover.transitionName).apply {
             sharedElementEnterTransition = TransitionInflater.from(context)
                 .inflateTransition(R.transition.cover_transition)
             enterTransition = TransitionInflater.from(context)
                 .inflateTransition(android.R.transition.no_transition)
         }
-
-        requireActivity().replaceFragment(
-            R.id.mainContainer,
-            detailFragment,
-            cover,
-            true
-        )
     }
 
     private fun displayDatePicker() {

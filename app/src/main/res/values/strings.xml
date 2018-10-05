@@ -18,9 +18,10 @@
     <string name="app_name"
         translatable="false">Entract Cinema</string>
 
-    <string name="menu_today">Séances du jour</string>
+    <string name="menu_today">Séances</string>
     <string name="menu_coming">Programme</string>
-    <string name="menu_information">Infos pratiques</string>
+    <string name="menu_information">Infos</string>
+    <string name="menu_settings">Paramètres</string>
 
     <string name="error_no_connectivity">Aucun réseau</string>
     <string name="error_server">Le serveur ne répond pas</string>

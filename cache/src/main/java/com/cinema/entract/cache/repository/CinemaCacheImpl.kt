@@ -14,10 +14,10 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.cache.repo
+package com.cinema.entract.cache.repository
 
 import android.content.Context
 import com.cinema.entract.data.repository.CinemaCache
 
 
-class DatabaseRepo(private val context: Context) : CinemaCache
+class CinemaCacheImpl(private val context: Context) : CinemaCache

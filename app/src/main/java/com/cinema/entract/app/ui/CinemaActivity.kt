@@ -25,6 +25,7 @@ import com.cinema.entract.app.ui.details.DetailsFragment
 import com.cinema.entract.app.ui.information.InformationFragment
 import com.cinema.entract.app.ui.movies.MoviesFragment
 import com.cinema.entract.app.ui.schedule.ScheduleFragment
+import com.cinema.entract.app.ui.settings.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.jetbrains.anko.find
 
@@ -54,7 +55,8 @@ class CinemaActivity : BaseActivity() {
             when (it.itemId) {
                 R.id.movies -> handleMovies()
                 R.id.schedule -> handleSchedule()
-                R.id.information -> handleDirection()
+                R.id.information -> handleInformation()
+                R.id.settings -> handleSettings()
                 else -> false
             }
         }
@@ -82,8 +84,15 @@ class CinemaActivity : BaseActivity() {
             }
         }
 
-    private fun handleDirection(): Boolean {
+    private fun handleInformation(): Boolean {
         replaceFragment(R.id.mainContainer, InformationFragment.newInstance())
         return true
     }
+
+    private fun handleSettings(): Boolean {
+        replaceFragment(R.id.mainContainer, SettingsFragment.newInstance())
+        return true
+    }
 }
+
+const val COVER_ALPHA = 0.4f

@@ -14,13 +14,12 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.remote.network
+package com.cinema.entract.core.di
 
-import android.content.Context
-import android.net.ConnectivityManager
+import com.cinema.entract.core.utils.NetworkUtils
+import org.koin.dsl.module.module
 
-fun isNetworkAvailable(context: Context): Boolean {
-    val connectivityManager =
-        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    return connectivityManager.activeNetworkInfo?.isConnected ?: false
+val coreModule = module {
+
+    single { NetworkUtils(get()) }
 }

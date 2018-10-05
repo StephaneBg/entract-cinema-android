@@ -21,7 +21,10 @@ import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
 import com.cinema.entract.data.source.CinemaDataStoreFactory
 
-class CinemaRepository(private val dataStoreFactory: CinemaDataStoreFactory) {
+class CinemaRepository(
+    private val dataStoreFactory: CinemaDataStoreFactory,
+    private val userPreferences: UserPreferences
+) {
 
     suspend fun getMovies(day: String): List<MovieData> =
         dataStoreFactory.retrieveDataStore().getMovies(day)
@@ -31,4 +34,6 @@ class CinemaRepository(private val dataStoreFactory: CinemaDataStoreFactory) {
 
     suspend fun getParameters(): DateRangeData =
         dataStoreFactory.retrieveDataStore().getParameters()
+
+    fun getUserPreferences(): UserPreferences = userPreferences
 }

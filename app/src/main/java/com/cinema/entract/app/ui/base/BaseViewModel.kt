@@ -16,7 +16,6 @@
 
 package com.cinema.entract.app.ui.base
 
-import androidx.annotation.CallSuper
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.experimental.CancellationException
 import kotlinx.coroutines.experimental.CoroutineScope
@@ -27,37 +26,22 @@ import kotlinx.coroutines.experimental.launch
 
 open class BaseViewModel : ViewModel() {
 
-    private val asyncJobs = mutableListOf<Job>()
+    private val job = Job()
 
     fun <T> launchAsync(
         tryBlock: suspend CoroutineScope.() -> T,
         catchBlock: (Throwable) -> T
     ) {
-        val job = launch(UI) {
+        launch(UI, parent = job) {
             try {
                 tryBlock()
             } catch (e: Throwable) {
                 if (e !is CancellationException) catchBlock(e)
             }
         }
-        job.invokeOnCompletion {
-            asyncJobs.remove(job)
-        }
-        asyncJobs.add(job)
-    }
-
-    @CallSuper
-    @Synchronized
-    protected fun cancelAllAsync() {
-        val asyncJobsSize = asyncJobs.size
-        if (asyncJobsSize > 0) {
-            for (i in asyncJobsSize - 1 downTo 0) {
-                asyncJobs[i].cancel()
-            }
-        }
     }
 
     override fun onCleared() {
-        cancelAllAsync()
+        job.cancel()
     }
 }

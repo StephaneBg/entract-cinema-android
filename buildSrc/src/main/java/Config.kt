@@ -22,6 +22,7 @@ object Versions {
     val kotlin = "1.2.71"
     val coroutines = "0.24.0"
     val appcompat = "1.0.0"
+    val vectorDrawable = "1.0.0"
     val recyclerView = "1.0.0"
     val material = "1.0.0"
     val constraintLayout = "1.1.0"
@@ -57,7 +58,7 @@ object Libs {
     val anko = "org.jetbrains.anko:anko-commons:${Versions.anko}"
 
     val appcompat = "androidx.appcompat:appcompat:${Versions.appcompat}"
-    val vectorDrawable = "androidx.vectordrawable:vectordrawable:${Versions.appcompat}"
+    val vectorDrawable = "androidx.vectordrawable:vectordrawable:${Versions.vectorDrawable}"
     val recyclerview = "androidx.recyclerview:recyclerview:${Versions.recyclerView}"
     val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
     val lifecycle = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecyle}"

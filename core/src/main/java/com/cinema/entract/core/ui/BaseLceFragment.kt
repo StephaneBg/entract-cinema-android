@@ -14,16 +14,16 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.app.ui.base
+package com.cinema.entract.core.ui
 
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.CallSuper
-import com.cinema.entract.app.R
-import com.cinema.entract.app.ext.find
-import com.cinema.entract.app.ext.hide
-import com.cinema.entract.app.ext.show
-import com.cinema.entract.app.widget.ErrorView
+import com.cinema.entract.core.R
+import com.cinema.entract.core.ext.find
+import com.cinema.entract.core.ext.hide
+import com.cinema.entract.core.ext.show
+import com.cinema.entract.core.widget.ErrorView
 
 @Suppress("UNCHECKED_CAST")
 open class BaseLceFragment<T : View> : BaseFragment() {

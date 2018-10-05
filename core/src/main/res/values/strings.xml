@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">My Library</string>
+    <string name="error_no_connectivity">Aucun réseau</string>
+    <string name="error_server">Le serveur ne répond pas</string>
+    <string name="error_general">Une erreur est survenue</string>
+    <string name="error_retry_action">Réessayer</string>
 </resources>

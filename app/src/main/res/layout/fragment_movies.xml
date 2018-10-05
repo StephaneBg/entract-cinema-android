@@ -36,7 +36,7 @@
             />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.cinema.entract.app.widget.EmptynessLayout
+    <com.cinema.entract.core.widget.EmptynessLayout
         android:id="@id/contentView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -86,7 +86,7 @@
             app:srcCompat="@drawable/ic_date_range_black_24dp"
             tools:ignore="RtlHardcoded"
             />
-    </com.cinema.entract.app.widget.EmptynessLayout>
+    </com.cinema.entract.core.widget.EmptynessLayout>
 
     <ProgressBar
         android:id="@id/loadingView"
@@ -98,7 +98,7 @@
         tools:visibility="visible"
         />
 
-    <com.cinema.entract.app.widget.ErrorView
+    <com.cinema.entract.core.widget.ErrorView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

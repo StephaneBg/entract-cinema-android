@@ -14,10 +14,9 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.app.ui.base
+package com.cinema.entract.core.ext
 
-sealed class State<out T>
+import android.view.View
+import androidx.fragment.app.Fragment
 
-class Success<out T>(val data: T?, val refresh: Boolean = false) : State<T>()
-class Loading(val refresh: Boolean = false) : State<Nothing>()
-class Error(val error: Throwable?) : State<Nothing>()
+inline fun <reified T : View> Fragment.find(id: Int): T = view?.findViewById(id) as T

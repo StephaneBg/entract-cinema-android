@@ -14,11 +14,24 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.remote.network
+package com.cinema.entract.core.ui
 
-import java.io.IOException
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 
-class NoConnectivityException : IOException() {
+open class BaseActivity : AppCompatActivity() {
 
-    override val message: String = "No connectivity exception"
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onUpPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    open fun onUpPressed() {
+        onBackPressed()
+    }
 }

@@ -25,10 +25,10 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.cinema.entract.app.R
-import com.cinema.entract.app.ext.inflate
-import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.COVER_ALPHA
+import com.cinema.entract.app.ui.load
+import com.cinema.entract.core.ext.inflate
 import org.jetbrains.anko.find
 
 class MoviesAdapter(

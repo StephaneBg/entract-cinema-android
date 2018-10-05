@@ -20,11 +20,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.cinema.entract.app.mapper.ScheduleMapper
 import com.cinema.entract.app.model.ScheduleEntry
-import com.cinema.entract.app.ui.base.BaseViewModel
-import com.cinema.entract.app.ui.base.Error
-import com.cinema.entract.app.ui.base.Loading
-import com.cinema.entract.app.ui.base.State
-import com.cinema.entract.app.ui.base.Success
+import com.cinema.entract.core.ui.*
 import com.cinema.entract.data.interactor.CinemaUseCase
 import org.threeten.bp.LocalDate
 import timber.log.Timber
@@ -46,7 +42,13 @@ class ScheduleViewModel(
         launchAsync(
             {
                 val schedule = useCase.getSchedule()
-                scheduleLiveData.postValue(Success(scheduleMapper.mapToUi(schedule)))
+                scheduleLiveData.postValue(
+                    Success(
+                        scheduleMapper.mapToUi(
+                            schedule
+                        )
+                    )
+                )
             },
             {
                 Timber.e(it)

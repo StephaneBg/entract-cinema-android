@@ -17,26 +17,27 @@
 package com.cinema.entract.app.ui
 
 import android.os.Bundle
+import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.cinema.entract.app.R
-import com.cinema.entract.app.ext.addFragment
-import com.cinema.entract.app.ext.replaceFragment
-import com.cinema.entract.app.ui.base.BaseActivity
 import com.cinema.entract.app.ui.details.DetailsFragment
 import com.cinema.entract.app.ui.information.InformationFragment
 import com.cinema.entract.app.ui.movies.MoviesFragment
 import com.cinema.entract.app.ui.schedule.ScheduleFragment
 import com.cinema.entract.app.ui.settings.SettingsFragment
+import com.cinema.entract.core.ext.addFragment
+import com.cinema.entract.core.ext.replaceFragment
+import com.cinema.entract.core.ui.BaseActivity
+import com.cinema.entract.core.views.bindView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import org.jetbrains.anko.find
 
 class CinemaActivity : BaseActivity() {
 
-    private lateinit var bottomNav: BottomNavigationView
+    private val bottomNav by bindView<BottomNavigationView>(R.id.bottomNavigation)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cinema)
-        initWidgets()
         initBottomNavigation()
 
         savedInstanceState ?: addFragment(R.id.mainContainer, MoviesFragment.newInstance())
@@ -44,10 +45,6 @@ class CinemaActivity : BaseActivity() {
 
     fun selectMovies() {
         bottomNav.selectedItemId = R.id.movies
-    }
-
-    private fun initWidgets() {
-        bottomNav = find(R.id.bottomNavigation)
     }
 
     private fun initBottomNavigation() {
@@ -96,3 +93,4 @@ class CinemaActivity : BaseActivity() {
 }
 
 const val COVER_ALPHA = 0.4f
+fun ImageView.load(url: String) = Glide.with(context).load(url).into(this)

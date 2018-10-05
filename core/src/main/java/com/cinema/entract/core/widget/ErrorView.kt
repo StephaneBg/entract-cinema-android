@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.app.widget
+package com.cinema.entract.core.widget
 
 import android.content.Context
 import android.util.AttributeSet
@@ -24,8 +24,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import com.cinema.entract.app.R
-import com.cinema.entract.app.ext.show
+import com.cinema.entract.core.R
+import com.cinema.entract.core.ext.show
 import org.jetbrains.anko.find
 
 class ErrorView @JvmOverloads constructor(

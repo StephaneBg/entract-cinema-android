@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.app.ui.base
+package com.cinema.entract.core.ui
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.experimental.CancellationException

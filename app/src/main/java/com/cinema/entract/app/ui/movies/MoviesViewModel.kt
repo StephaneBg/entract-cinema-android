@@ -21,7 +21,7 @@ import androidx.lifecycle.MutableLiveData
 import com.cinema.entract.app.mapper.MovieMapper
 import com.cinema.entract.app.model.DateRange
 import com.cinema.entract.app.model.Movie
-import com.cinema.entract.app.ui.base.*
+import com.cinema.entract.core.ui.*
 import com.cinema.entract.data.ext.longFormatToUi
 import com.cinema.entract.data.interactor.CinemaUseCase
 import org.threeten.bp.LocalDate

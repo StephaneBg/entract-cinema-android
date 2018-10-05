@@ -14,17 +14,21 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.app.ext
+package com.cinema.entract.core.utils
 
-import android.os.Build
-import android.text.Html
-import android.text.Spanned
+class Event<out T>(private val content: T) {
 
-fun String.toSpanned(): Spanned {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        return Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY)
-    } else {
-        @Suppress("DEPRECATION")
-        return Html.fromHtml(this)
+    var hasBeenHandled = false
+        private set
+
+    fun getContent(): T? {
+        return if (hasBeenHandled) {
+            null
+        } else {
+            hasBeenHandled = true
+            content
+        }
     }
+
+    fun peekContent(): T = content
 }

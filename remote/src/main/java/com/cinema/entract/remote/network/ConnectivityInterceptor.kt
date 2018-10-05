@@ -17,6 +17,7 @@
 package com.cinema.entract.remote.network
 
 import com.cinema.entract.core.utils.NetworkUtils
+import com.cinema.entract.core.utils.NoConnectivityException
 import okhttp3.Interceptor
 import okhttp3.Response
 

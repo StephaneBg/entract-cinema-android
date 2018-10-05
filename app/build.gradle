@@ -80,19 +80,6 @@ dependencies {
     implementation project(':remote')
     implementation project(':data')
 
-    implementation Libs.kotlinStd
-    implementation Libs.coroutinesCore
-    implementation Libs.coroutinesAndroid
-    implementation Libs.anko
-    implementation Libs.appcompat
-    implementation Libs.vectorDrawable
-    implementation Libs.recyclerview
-    implementation Libs.material
-    implementation Libs.constraintLayout
-    implementation Libs.ktx
-    implementation Libs.lifecycle
-    implementation Libs.timber
-    implementation Libs.koinAndroid
     implementation Libs.glide
     implementation Libs.datePicker
     implementation Libs.jsr310

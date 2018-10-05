@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.app.ext
+package com.cinema.entract.core.ext
 
 import android.view.View
 import androidx.fragment.app.Fragment

@@ -39,9 +39,7 @@ android {
 dependencies {
     implementation project(':core')
     implementation project(':data')
-    implementation Libs.kotlinStd
-    implementation Libs.koinAndroid
-    implementation Libs.timber
+
     implementation Libs.retrofit
     implementation Libs.retrofitConverterMoshi
     implementation Libs.retrofitAdapterCoroutines

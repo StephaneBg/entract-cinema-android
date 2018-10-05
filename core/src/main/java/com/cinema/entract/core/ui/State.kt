@@ -14,9 +14,10 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.app.ext
+package com.cinema.entract.core.ui
 
-import android.widget.ImageView
-import com.bumptech.glide.Glide
+sealed class State<out T>
 
-fun ImageView.load(url: String) = Glide.with(context).load(url).into(this)
+class Success<out T>(val data: T?, val refresh: Boolean = false) : State<T>()
+class Loading(val refresh: Boolean = false) : State<Nothing>()
+class Error(val error: Throwable?) : State<Nothing>()

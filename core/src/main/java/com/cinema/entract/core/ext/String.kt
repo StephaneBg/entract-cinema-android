@@ -14,9 +14,17 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.app.ext
+package com.cinema.entract.core.ext
 
-import android.view.View
-import androidx.fragment.app.Fragment
+import android.os.Build
+import android.text.Html
+import android.text.Spanned
 
-inline fun <reified T : View> Fragment.find(id: Int): T = view?.findViewById(id) as T
+fun String.toSpanned(): Spanned {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        return Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY)
+    } else {
+        @Suppress("DEPRECATION")
+        return Html.fromHtml(this)
+    }
+}

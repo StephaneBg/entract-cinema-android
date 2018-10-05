@@ -22,11 +22,11 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.cinema.entract.app.R
-import com.cinema.entract.app.ext.inflate
 import com.cinema.entract.app.model.DayHeader
 import com.cinema.entract.app.model.MovieEntry
 import com.cinema.entract.app.model.ScheduleEntry
 import com.cinema.entract.app.model.WeekHeader
+import com.cinema.entract.core.ext.inflate
 import com.cinema.entract.data.ext.isTodayOrLater
 import org.jetbrains.anko.find
 import org.threeten.bp.LocalDate

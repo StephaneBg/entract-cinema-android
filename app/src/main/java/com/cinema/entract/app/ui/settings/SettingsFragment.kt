@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Switch
 import com.cinema.entract.app.R
-import com.cinema.entract.app.ext.find
-import com.cinema.entract.app.ui.base.BaseFragment
+import com.cinema.entract.core.ext.find
+import com.cinema.entract.core.ui.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsFragment : BaseFragment() {

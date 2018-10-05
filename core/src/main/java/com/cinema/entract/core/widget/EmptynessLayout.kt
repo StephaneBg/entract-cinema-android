@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.app.widget
+package com.cinema.entract.core.widget
 
 import android.content.Context
 import android.util.AttributeSet
@@ -23,7 +23,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.cinema.entract.app.R
+import com.cinema.entract.core.R
 
 class EmptynessLayout @JvmOverloads constructor(
     context: Context,

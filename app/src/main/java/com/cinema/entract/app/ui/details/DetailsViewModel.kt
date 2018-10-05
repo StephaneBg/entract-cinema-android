@@ -17,7 +17,7 @@
 package com.cinema.entract.app.ui.details
 
 import com.cinema.entract.app.model.Movie
-import com.cinema.entract.app.ui.base.BaseViewModel
+import com.cinema.entract.core.ui.BaseViewModel
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
 import java.util.*

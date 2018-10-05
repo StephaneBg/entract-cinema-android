@@ -24,8 +24,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.net.toUri
 import com.cinema.entract.app.R
-import com.cinema.entract.app.ext.find
-import com.cinema.entract.app.ui.base.BaseFragment
+import com.cinema.entract.core.ext.find
+import com.cinema.entract.core.ui.BaseFragment
 
 
 class InformationFragment : BaseFragment() {

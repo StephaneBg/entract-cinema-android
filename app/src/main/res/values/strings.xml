@@ -23,11 +23,6 @@
     <string name="menu_information">Infos</string>
     <string name="menu_settings">Paramètres</string>
 
-    <string name="error_no_connectivity">Aucun réseau</string>
-    <string name="error_server">Le serveur ne répond pas</string>
-    <string name="error_general">Une erreur est survenue</string>
-    <string name="error_retry_action">Réessayer</string>
-
     <string name="movies_schedule">Horaire : %1$s</string>
     <string name="movies_duration">Durée : %1$s</string>
     <string name="movies_original_version">VOST</string>

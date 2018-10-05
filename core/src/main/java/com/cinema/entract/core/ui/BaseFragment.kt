@@ -14,13 +14,13 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.app.ui.base
+package com.cinema.entract.core.ui
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
-import com.cinema.entract.app.R
-import com.cinema.entract.remote.network.NoConnectivityException
+import com.cinema.entract.core.R
+import com.cinema.entract.core.utils.NoConnectivityException
 import java.net.SocketTimeoutException
 
 open class BaseFragment : Fragment() {

@@ -14,24 +14,7 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.app.ui.base
+package com.cinema.entract.core.ext
 
-import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
-
-open class BaseActivity : AppCompatActivity() {
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onUpPressed()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    open fun onUpPressed() {
-        onBackPressed()
-    }
-}
+infix fun <T> Collection<T>.sameContentWith(collection: Collection<T>)
+        = collection.let { this.size == it.size && this.containsAll(it) }

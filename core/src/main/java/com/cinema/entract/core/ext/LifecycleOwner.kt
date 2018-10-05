@@ -14,9 +14,12 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.app.ext
+package com.cinema.entract.core.ext
 
-import android.content.Context
-import androidx.core.content.ContextCompat
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 
-fun Context.color(id: Int): Int = ContextCompat.getColor(this, id)
+fun <T : Any, L : LiveData<T>> LifecycleOwner.observe(liveData: L, body: (T?) -> Unit) {
+    liveData.observe(this, Observer(body))
+}

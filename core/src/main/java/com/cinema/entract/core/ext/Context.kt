@@ -14,13 +14,9 @@
  *  limitations under the License.
  */
 
-package com.cinema.entract.app.ext
+package com.cinema.entract.core.ext
 
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
+import android.content.Context
+import androidx.core.content.ContextCompat
 
-inline fun FragmentManager.inTransaction(function: FragmentTransaction.() -> Unit) {
-    val fragmentTransaction = beginTransaction()
-    fragmentTransaction.function()
-    fragmentTransaction.commit()
-}
+fun Context.color(id: Int): Int = ContextCompat.getColor(this, id)

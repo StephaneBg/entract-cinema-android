@@ -37,7 +37,18 @@ android {
 }
 
 dependencies {
-    implementation Libs.kotlinStd
-    implementation Libs.koinAndroid
-    implementation Libs.coroutinesCore
+    api Libs.kotlinStd
+    api Libs.koinAndroid
+    api Libs.coroutinesCore
+    api Libs.coroutinesAndroid
+    api Libs.appcompat
+    api Libs.ktx
+    api Libs.recyclerview
+    api Libs.anko
+    api Libs.vectorDrawable
+    api Libs.material
+    api Libs.constraintLayout
+    api Libs.lifecycle
+    api Libs.timber
+    api Libs.koinAndroid
 }

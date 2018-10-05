@@ -33,13 +33,13 @@ import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import com.cinema.entract.app.R
-import com.cinema.entract.app.ext.find
-import com.cinema.entract.app.ext.load
-import com.cinema.entract.app.ext.toSpanned
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.COVER_ALPHA
-import com.cinema.entract.app.ui.base.BaseFragment
+import com.cinema.entract.app.ui.load
 import com.cinema.entract.app.ui.settings.SettingsViewModel
+import com.cinema.entract.core.ext.find
+import com.cinema.entract.core.ext.toSpanned
+import com.cinema.entract.core.ui.BaseFragment
 import com.cinema.entract.data.ext.longFormatToUi
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.koin.androidx.viewmodel.ext.android.viewModel

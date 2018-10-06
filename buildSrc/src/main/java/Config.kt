@@ -37,6 +37,7 @@ object Versions {
     val glide = "4.8.0"
     val datePicker = "2.0.0"
     val jsr310 = "1.1.0"
+    val firebase = "17.3.3"
 }
 
 object Build {
@@ -68,6 +69,7 @@ object Libs {
     val ktx = "androidx.core:core-ktx:${Versions.ktx}"
 
     val material = "com.google.android.material:material:${Versions.material}"
+    val firebase = "com.google.firebase:firebase-messaging:${Versions.firebase}"
 
     val timber = "com.jakewharton.timber:timber:${Versions.timber}"
     val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"

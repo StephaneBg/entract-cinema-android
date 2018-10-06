@@ -83,4 +83,5 @@ dependencies {
     implementation Libs.glide
     implementation Libs.datePicker
     implementation Libs.jsr310
+    implementation Libs.firebase
 }

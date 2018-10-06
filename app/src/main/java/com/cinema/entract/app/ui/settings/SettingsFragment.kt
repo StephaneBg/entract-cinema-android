@@ -30,9 +30,9 @@ class SettingsFragment : BaseFragment() {
         }
 
         val data = find<Switch>(R.id.data)
-        data.isChecked = !prefsViewModel.isDataEnabled()
+        data.isChecked = prefsViewModel.isOnlyOnWifi()
         data.setOnCheckedChangeListener { _, isChecked ->
-            prefsViewModel.setDataPreference(!isChecked)
+            prefsViewModel.setOnlyOnWifi(isChecked)
         }
     }
 

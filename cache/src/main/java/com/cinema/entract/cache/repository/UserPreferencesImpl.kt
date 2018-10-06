@@ -14,10 +14,10 @@ class UserPreferencesImpl(context: Context) : UserPreferences {
         putBoolean(USER_PREF_EVENT, enabled)
     }
 
-    override fun isDataEnabled(): Boolean = preferences.getBoolean(USER_PREF_DATA, true)
+    override fun isOnlyOnWifi(): Boolean = preferences.getBoolean(USER_PREF_DATA, false)
 
-    override fun setDataPreference(enabled: Boolean) = preferences.edit {
-        putBoolean(USER_PREF_DATA, enabled)
+    override fun setOnlyOnWifi(onlyOnWifi: Boolean) = preferences.edit {
+        putBoolean(USER_PREF_DATA, onlyOnWifi)
     }
 
     companion object {

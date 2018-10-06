@@ -5,6 +5,6 @@ interface UserPreferences {
     fun isEventEnabled(): Boolean
     fun setEventPreference(enabled: Boolean)
 
-    fun isDataEnabled(): Boolean
-    fun setDataPreference(enabled: Boolean)
+    fun isOnlyOnWifi(): Boolean
+    fun setOnlyOnWifi(onlyOnWifi: Boolean)
 }

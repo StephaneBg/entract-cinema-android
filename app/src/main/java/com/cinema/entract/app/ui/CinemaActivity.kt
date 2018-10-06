@@ -21,18 +21,22 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ui.details.DetailsFragment
+import com.cinema.entract.app.ui.event.EventDialogFragment
 import com.cinema.entract.app.ui.information.InformationFragment
 import com.cinema.entract.app.ui.movies.MoviesFragment
 import com.cinema.entract.app.ui.schedule.ScheduleFragment
 import com.cinema.entract.app.ui.settings.SettingsFragment
 import com.cinema.entract.core.ext.addFragment
+import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ext.replaceFragment
 import com.cinema.entract.core.ui.BaseActivity
 import com.cinema.entract.core.views.bindView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import org.koin.android.ext.android.inject
 
 class CinemaActivity : BaseActivity() {
 
+    private val viewModel by inject<CinemaViewModel>()
     private val bottomNav by bindView<BottomNavigationView>(R.id.bottomNavigation)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +44,7 @@ class CinemaActivity : BaseActivity() {
         setContentView(R.layout.activity_cinema)
         initBottomNavigation()
 
+        observe(viewModel.getEventUrl(), ::handleEvent)
         savedInstanceState ?: addFragment(R.id.mainContainer, MoviesFragment.newInstance())
     }
 
@@ -89,6 +94,10 @@ class CinemaActivity : BaseActivity() {
     private fun handleSettings(): Boolean {
         replaceFragment(R.id.mainContainer, SettingsFragment.newInstance())
         return true
+    }
+
+    private fun handleEvent(url: String?) {
+        url?.let { EventDialogFragment.show(supportFragmentManager, url) }
     }
 }
 

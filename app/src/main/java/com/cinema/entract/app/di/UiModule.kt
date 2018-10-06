@@ -18,6 +18,7 @@ package com.cinema.entract.app.di
 
 import com.cinema.entract.app.mapper.MovieMapper
 import com.cinema.entract.app.mapper.ScheduleMapper
+import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.app.ui.details.DetailsViewModel
 import com.cinema.entract.app.ui.movies.MoviesViewModel
 import com.cinema.entract.app.ui.schedule.ScheduleViewModel
@@ -34,4 +35,5 @@ val uiModule = module {
     viewModel { ScheduleViewModel(get(), get()) }
     viewModel { DetailsViewModel() }
     viewModel { SettingsViewModel(get()) }
+    viewModel { CinemaViewModel(get(), get()) }
 }

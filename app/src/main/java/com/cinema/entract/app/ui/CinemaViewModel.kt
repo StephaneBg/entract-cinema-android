@@ -11,9 +11,9 @@ class CinemaViewModel(
     private val prefsUseCase: PreferencesUseCase
 ) : BaseViewModel() {
 
-    private val eventUrl = MutableLiveData<String?>()
+    private val eventUrl = MutableLiveData<String>()
 
-    fun getEventUrl(): LiveData<String?> {
+    fun getEventUrl(): LiveData<String> {
         eventUrl.value ?: if (prefsUseCase.isEventEnabled()) loadEventUrl()
         return eventUrl
     }

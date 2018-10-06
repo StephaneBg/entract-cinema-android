@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+
+    <ImageView
+        android:id="@+id/cover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_padding_size_medium"
+        android:importantForAccessibility="no"
+        tools:srcCompat="@drawable/ic_movie_black_24dp"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/close"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="@dimen/margin_padding_size_small"
+        android:layout_marginEnd="@dimen/margin_padding_size_small"
+        android:text="@string/event_close"
+        app:icon="@drawable/ic_close_black_24dp"
+        />
+</FrameLayout>

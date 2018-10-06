@@ -13,9 +13,9 @@ class PreferencesUseCase(
     fun setEventPreference(enabled: Boolean) = repo.getUserPreferences().setEventPreference(enabled)
 
     fun canDisplayMedia(): Boolean =
-        repo.getUserPreferences().isDataEnabled() || networkUtils.isConnectedOnWifi()
+        !repo.getUserPreferences().isOnlyOnWifi() || networkUtils.isConnectedOnWifi()
 
-    fun isDataEnabled(): Boolean = repo.getUserPreferences().isDataEnabled()
+    fun isOnlyOnWifi(): Boolean = repo.getUserPreferences().isOnlyOnWifi()
 
-    fun setDataPreference(enabled: Boolean) = repo.getUserPreferences().setDataPreference(enabled)
+    fun setOnlyOnWifi(onlyOnWifi: Boolean) = repo.getUserPreferences().setOnlyOnWifi(onlyOnWifi)
 }

@@ -26,10 +26,11 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.cinema.entract.app.R
 import com.cinema.entract.app.model.Movie
-import com.cinema.entract.app.ui.COVER_ALPHA
+import com.cinema.entract.app.ui.DISABLED_ALPHA
 import com.cinema.entract.app.ui.load
+import com.cinema.entract.core.ext.color
 import com.cinema.entract.core.ext.inflate
-import org.jetbrains.anko.find
+import com.cinema.entract.core.views.bindView
 
 class MoviesAdapter(
     private val loadCover: Boolean,
@@ -52,12 +53,12 @@ class MoviesAdapter(
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val cover = itemView.find<ImageView>(R.id.cover)
-        private val title = itemView.find<TextView>(R.id.title)
-        private val schedule = itemView.find<TextView>(R.id.schedule)
-        private val duration = itemView.find<TextView>(R.id.duration)
-        private val originalVersion = itemView.find<TextView>(R.id.originalVersion)
-        private val threeDimension = itemView.find<TextView>(R.id.threeDimension)
+        private val cover by bindView<ImageView>(R.id.cover)
+        private val title by bindView<TextView>(R.id.title)
+        private val schedule by bindView<TextView>(R.id.schedule)
+        private val duration by bindView<TextView>(R.id.duration)
+        private val originalVersion by bindView<TextView>(R.id.originalVersion)
+        private val threeDimension by bindView<TextView>(R.id.threeDimension)
 
         @SuppressLint("SetTextI18n")
         fun bind(movie: Movie) {
@@ -65,8 +66,10 @@ class MoviesAdapter(
                 if (loadCover) {
                     cover.load(movie.coverUrl)
                 } else {
+                    cover.scaleType = ImageView.ScaleType.CENTER
                     cover.setImageResource(R.drawable.ic_movie_black_24dp)
-                    cover.alpha = COVER_ALPHA
+                    cover.alpha = DISABLED_ALPHA
+                    cover.setBackgroundColor(context.color(R.color.primary_50))
                 }
                 cover.transitionName = "cover_transition_$adapterPosition"
                 title.text = movie.title

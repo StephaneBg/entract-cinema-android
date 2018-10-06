@@ -92,5 +92,5 @@ class CinemaActivity : BaseActivity() {
     }
 }
 
-const val COVER_ALPHA = 0.4f
+const val DISABLED_ALPHA = 0.4f
 fun ImageView.load(url: String) = Glide.with(context).load(url).into(this)

@@ -25,6 +25,7 @@ import com.cinema.entract.remote.mapper.DateRangeRemoteMapper
 import com.cinema.entract.remote.mapper.EventRemoteMapper
 import com.cinema.entract.remote.mapper.MovieRemoteMapper
 import com.cinema.entract.remote.mapper.WeekRemoteMapper
+import timber.log.Timber
 
 class CinemaRemoteImpl(
     private val service: CinemaService,
@@ -35,21 +36,25 @@ class CinemaRemoteImpl(
 ) : CinemaRemote {
 
     override suspend fun getMovies(day: String): List<MovieData> {
+        Timber.d("Fetch movies")
         val movies = service.getMovies(day).await()
         return movies.map { movieMapper.mapToData(it) }
     }
 
     override suspend fun getSchedule(): List<WeekData> {
+        Timber.d("Fetch schedule")
         val schedule = service.getSchedule().await()
         return schedule.map { weekMapper.mapToData(it) }
     }
 
     override suspend fun getEventUrl(): EventData {
+        Timber.d("Fetch event")
         val event = service.getEvent().await()
         return eventMapper.mapToData(event)
     }
 
     override suspend fun getParameters(): DateRangeData {
+        Timber.d("Fetch parameters")
         val parameters = service.getParameters().await()
         return parameters.periode?.let { paramMapper.mapToData(it) }
             ?: error("Incorrect server response")

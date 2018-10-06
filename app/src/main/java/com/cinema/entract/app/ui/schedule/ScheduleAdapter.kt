@@ -26,9 +26,10 @@ import com.cinema.entract.app.model.DayHeader
 import com.cinema.entract.app.model.MovieEntry
 import com.cinema.entract.app.model.ScheduleEntry
 import com.cinema.entract.app.model.WeekHeader
+import com.cinema.entract.app.ui.DISABLED_ALPHA
 import com.cinema.entract.core.ext.inflate
+import com.cinema.entract.core.views.bindView
 import com.cinema.entract.data.ext.isTodayOrLater
-import org.jetbrains.anko.find
 import org.threeten.bp.LocalDate
 
 class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
@@ -79,10 +80,10 @@ class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
     inner class MovieHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         ScheduleViewHolder<MovieEntry> {
 
-        private val schedule = itemView.find<TextView>(R.id.schedule)
-        private val title = itemView.find<TextView>(R.id.title)
-        private val originalVersion = itemView.find<TextView>(R.id.originalVersion)
-        private val threeDimension = itemView.find<TextView>(R.id.threeDimension)
+        private val schedule by bindView<TextView>(R.id.schedule)
+        private val title by bindView<TextView>(R.id.title)
+        private val originalVersion by bindView<TextView>(R.id.originalVersion)
+        private val threeDimension by bindView<TextView>(R.id.threeDimension)
 
         override fun bind(model: MovieEntry) {
             schedule.text = model.movie.schedule
@@ -98,7 +99,7 @@ class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
             itemView.alpha = 1.0f
             itemView.setOnClickListener { selection(date) }
         } else {
-            itemView.alpha = PAST_ITEM_ALPHA
+            itemView.alpha = DISABLED_ALPHA
             itemView.setOnClickListener { }
         }
     }
@@ -108,7 +109,6 @@ class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
     }
 
     companion object {
-        private const val PAST_ITEM_ALPHA = 0.6f
         private const val TYPE_WEEK_HEADER = 0
         private const val TYPE_DAY_HEADER = 1
         private const val TYPE_MOVIE = 2

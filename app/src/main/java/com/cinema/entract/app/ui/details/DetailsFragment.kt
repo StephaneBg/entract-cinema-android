@@ -34,9 +34,10 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import com.cinema.entract.app.R
 import com.cinema.entract.app.model.Movie
-import com.cinema.entract.app.ui.COVER_ALPHA
+import com.cinema.entract.app.ui.DISABLED_ALPHA
 import com.cinema.entract.app.ui.load
 import com.cinema.entract.app.ui.settings.SettingsViewModel
+import com.cinema.entract.core.ext.color
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.toSpanned
 import com.cinema.entract.core.ui.BaseFragment
@@ -74,8 +75,10 @@ class DetailsFragment : BaseFragment() {
             if (prefsViewModel.canDisplayMedia()) {
                 load(movie.coverUrl)
             } else {
+                scaleType = ImageView.ScaleType.CENTER
                 setImageResource(R.drawable.ic_movie_black_24dp)
-                alpha = COVER_ALPHA
+                alpha = DISABLED_ALPHA
+                setBackgroundColor(context.color(R.color.primary_50))
             }
         }
         find<TextView>(R.id.title).text = movie.title

@@ -44,4 +44,8 @@ open class BaseViewModel : ViewModel() {
     override fun onCleared() {
         job.cancel()
     }
+
+    fun emptyCallback() {}
+
+    fun emptyCallback(throwable: Throwable) {}
 }

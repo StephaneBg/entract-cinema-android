@@ -32,10 +32,8 @@ import com.cinema.entract.core.ext.color
 import com.cinema.entract.core.ext.inflate
 import com.cinema.entract.core.views.bindView
 
-class MoviesAdapter(
-    private val loadCover: Boolean,
-    private val selection: (Movie, ImageView) -> Unit
-) : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
+class MoviesAdapter(private val selection: (Movie, ImageView) -> Unit) :
+    RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
 
     private var movies = emptyList<Movie>()
 
@@ -63,7 +61,7 @@ class MoviesAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(movie: Movie) {
             itemView.apply {
-                if (loadCover) {
+                if (movie.coverUrl.isNotEmpty()) {
                     cover.load(movie.coverUrl)
                 } else {
                     cover.scaleType = ImageView.ScaleType.CENTER

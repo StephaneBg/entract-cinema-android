@@ -31,7 +31,6 @@ import androidx.transition.TransitionInflater
 import com.cinema.entract.app.R
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.details.DetailsFragment
-import com.cinema.entract.app.ui.settings.SettingsViewModel
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ext.replaceFragment
@@ -44,7 +43,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MoviesFragment : BaseLceFragment<EmptynessLayout>() {
 
     private val moviesViewModel by viewModel<MoviesViewModel>()
-    private val prefsViewModel by viewModel<SettingsViewModel>()
     private lateinit var moviesAdapter: MoviesAdapter
 
     private lateinit var datePicker: MaterialCalendarView
@@ -61,7 +59,7 @@ class MoviesFragment : BaseLceFragment<EmptynessLayout>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        moviesAdapter = MoviesAdapter(prefsViewModel.canDisplayMedia(), ::onMovieSelected)
+        moviesAdapter = MoviesAdapter(::onMovieSelected)
         with(contentView) {
             recyclerView.layoutManager = LinearLayoutManager(activity)
             recyclerView.addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))

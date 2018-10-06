@@ -36,7 +36,6 @@ import com.cinema.entract.app.R
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.DISABLED_ALPHA
 import com.cinema.entract.app.ui.load
-import com.cinema.entract.app.ui.settings.SettingsViewModel
 import com.cinema.entract.core.ext.color
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.toSpanned
@@ -49,7 +48,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class DetailsFragment : BaseFragment() {
 
     private val detailsViewModel by viewModel<DetailsViewModel>()
-    private val prefsViewModel by viewModel<SettingsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,7 +70,7 @@ class DetailsFragment : BaseFragment() {
         )
         find<ImageView>(R.id.cover).apply {
             transitionName = arguments?.getString(TRANSITION_NAME)
-            if (prefsViewModel.canDisplayMedia()) {
+            if (movie.coverUrl.isNotEmpty()) {
                 load(movie.coverUrl)
             } else {
                 scaleType = ImageView.ScaleType.CENTER
@@ -101,7 +99,7 @@ class DetailsFragment : BaseFragment() {
         }
 
         val teaser = find<Button>(R.id.teaser)
-        if (movie.teaserId.isNotEmpty() && prefsViewModel.canDisplayMedia()) {
+        if (movie.teaserId.isNotEmpty()) {
             teaser.setOnClickListener { _ -> showTeaser(movie) }
         } else {
             teaser.isVisible = false

@@ -12,7 +12,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsFragment : BaseFragment() {
 
-    private val prefsViewModel by viewModel<SettingsViewModel>()
+    private val settingsViewModel by viewModel<SettingsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,15 +24,15 @@ class SettingsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val event = find<Switch>(R.id.event)
-        event.isChecked = prefsViewModel.isEventEnabled()
+        event.isChecked = settingsViewModel.isEventEnabled()
         event.setOnCheckedChangeListener { _, isChecked ->
-            prefsViewModel.setEventPreference(isChecked)
+            settingsViewModel.setEventPreference(isChecked)
         }
 
         val data = find<Switch>(R.id.data)
-        data.isChecked = prefsViewModel.isOnlyOnWifi()
+        data.isChecked = settingsViewModel.isOnlyOnWifi()
         data.setOnCheckedChangeListener { _, isChecked ->
-            prefsViewModel.setOnlyOnWifi(isChecked)
+            settingsViewModel.setOnlyOnWifi(isChecked)
         }
     }
 

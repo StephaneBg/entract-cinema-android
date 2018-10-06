@@ -9,8 +9,6 @@ class SettingsViewModel(private val prefsUseCase: PreferencesUseCase) : ViewMode
 
     fun setEventPreference(enabled: Boolean) = prefsUseCase.setEventPreference(enabled)
 
-    fun canDisplayMedia(): Boolean = prefsUseCase.canDisplayMedia()
-
     fun isOnlyOnWifi(): Boolean = prefsUseCase.isOnlyOnWifi()
 
     fun setOnlyOnWifi(onlyOnWifi: Boolean) = prefsUseCase.setOnlyOnWifi(onlyOnWifi)

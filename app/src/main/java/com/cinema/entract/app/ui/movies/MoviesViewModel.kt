@@ -24,11 +24,13 @@ import com.cinema.entract.app.model.Movie
 import com.cinema.entract.core.ui.*
 import com.cinema.entract.data.ext.longFormatToUi
 import com.cinema.entract.data.interactor.CinemaUseCase
+import com.cinema.entract.data.interactor.PreferencesUseCase
 import org.threeten.bp.LocalDate
 import timber.log.Timber
 
 class MoviesViewModel(
     private val useCase: CinemaUseCase,
+    private val prefsUseCase: PreferencesUseCase,
     private val movieMapper: MovieMapper
 ) : BaseViewModel() {
 
@@ -52,9 +54,19 @@ class MoviesViewModel(
         launchAsync(
             {
                 val (movies, range) = useCase.getMovies()
+                val uiMovies = movies.asSequence()
+                    .map { movieMapper.mapToUi(it) }
+                    .map {
+                        if (!prefsUseCase.canDisplayMedia()) it.copy(
+                            coverUrl = "",
+                            teaserId = ""
+                        ) else it
+                    }
+                    .toList()
+
                 state.postValue(
                     Success(
-                        movies.map { movieMapper.mapToUi(it) } to useCase.getDate().longFormatToUi()
+                        uiMovies to useCase.getDate().longFormatToUi()
                     )
                 )
                 dateRange = DateRange(range.minimumDate, range.maximumDate)

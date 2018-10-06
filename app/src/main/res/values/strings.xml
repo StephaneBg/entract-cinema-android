@@ -31,13 +31,16 @@
 
     <string name="details_date_with_time">%1$s à %2$s</string>
     <string name="details_duration">%1$s</string>
-    <string name="details_teaser">Bande annonce</string>
     <string name="details_production_year">Sortie en &lt;b>%1$s&lt;/b></string>
     <string name="details_director">De &lt;b>%1$s&lt;/b></string>
     <string name="details_cast">Avec &lt;b>%1$s&lt;/b></string>
+    <string name="details_teaser">Bande annonce</string>
+    <string name="details_add_agenda">Ajouter à l\'agenda</string>
 
+    <string name="schedule_title">Les horaires</string>
     <string name="schedule_no_movie_message">Pas de séances à venir</string>
 
+    <string name="information_title">Informations pratiques</string>
     <string name="information_place_name">Cinéma L\'Entract</string>
     <string name="information_address">Avenue Lazare Carnot\n31330 Grenade</string>
     <string name="information_navigate_to">M\'y rendre</string>

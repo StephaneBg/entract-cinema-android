@@ -41,7 +41,6 @@ import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.toSpanned
 import com.cinema.entract.core.ui.BaseFragment
 import com.cinema.entract.data.ext.longFormatToUi
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -104,7 +103,7 @@ class DetailsFragment : BaseFragment() {
         } else {
             teaser.isVisible = false
         }
-        find<FloatingActionButton>(R.id.fab).setOnClickListener { _ -> addCalendarEvent(movie) }
+        find<Button>(R.id.agenda).setOnClickListener { _ -> addCalendarEvent(movie) }
     }
 
     private fun showTeaser(movie: Movie) {

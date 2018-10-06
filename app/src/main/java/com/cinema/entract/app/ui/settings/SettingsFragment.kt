@@ -39,5 +39,4 @@ class SettingsFragment : BaseFragment() {
     companion object {
         fun newInstance(): SettingsFragment = SettingsFragment()
     }
-
 }

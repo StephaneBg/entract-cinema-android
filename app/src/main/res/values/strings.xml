@@ -43,7 +43,10 @@
     <string name="information_title">Informations pratiques</string>
     <string name="information_place_name">Cinéma L\'Entract</string>
     <string name="information_address">Avenue Lazare Carnot\n31330 Grenade</string>
-    <string name="information_navigate_to">M\'y rendre</string>
+    <string name="information_navigate">M\'y rendre</string>
+    <string name="information_call">Appeler</string>
+    <string name="information_website">Site web</string>
+    <string name="information_facebook">Facebook</string>
 
     <string name="settings_title">Paramètres</string>
     <string name="settings_event">Afficher les évènements</string>

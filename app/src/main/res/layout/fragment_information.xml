@@ -52,8 +52,21 @@
             android:layout_height="wrap_content"
             >
 
+            <TextView
+                android:id="@+id/place"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginEnd="@dimen/margin_padding_size_medium"
+                android:text="@string/information_place_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/map"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:importantForAccessibility="no"
@@ -61,21 +74,8 @@
                 android:src="@drawable/map"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
-
-            <TextView
-                android:id="@+id/place"
-                style="@style/TextAppearance.MaterialComponents.Headline6"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_padding_size_medium"
-                android:layout_marginTop="@dimen/margin_padding_size_large"
-                android:layout_marginEnd="@dimen/margin_padding_size_medium"
-                android:text="@string/information_place_name"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView"
+                android:layout_marginTop="@dimen/margin_padding_size_medium"
+                app:layout_constraintTop_toBottomOf="@id/place"
                 />
 
             <TextView
@@ -89,22 +89,67 @@
                 android:text="@string/information_address"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/place"
+                app:layout_constraintTop_toBottomOf="@+id/map"
                 />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/navigate_to"
+                android:id="@+id/navigate"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
                 android:layout_marginTop="@dimen/margin_padding_size_medium"
                 android:layout_marginEnd="@dimen/margin_padding_size_medium"
-                android:text="@string/information_navigate_to"
+                android:text="@string/information_navigate"
                 app:icon="@drawable/ic_directions_black_24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/address"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/call"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginTop="@dimen/margin_padding_size_small"
+                android:layout_marginEnd="@dimen/margin_padding_size_medium"
+                android:text="@string/information_call"
+                app:icon="@drawable/ic_call_black_24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/navigate"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/website"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginTop="@dimen/margin_padding_size_small"
+                android:layout_marginEnd="@dimen/margin_padding_size_medium"
+                android:text="@string/information_website"
+                app:icon="@drawable/ic_web_black_24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/call"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/facebook"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginTop="@dimen/margin_padding_size_small"
+                android:layout_marginEnd="@dimen/margin_padding_size_medium"
+                android:text="@string/information_facebook"
+                app:icon="@drawable/ic_facebook_black_24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/website"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

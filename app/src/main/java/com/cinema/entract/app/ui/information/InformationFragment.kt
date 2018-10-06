@@ -17,6 +17,7 @@
 package com.cinema.entract.app.ui.information
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +27,7 @@ import androidx.core.net.toUri
 import com.cinema.entract.app.R
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ui.BaseFragment
+import org.jetbrains.anko.browse
 
 
 class InformationFragment : BaseFragment() {
@@ -39,11 +41,24 @@ class InformationFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        find<Button>(R.id.navigate_to).setOnClickListener {
+        find<Button>(R.id.navigate).setOnClickListener {
             val gmmIntentUri = "geo:43.7700499,1.2948405?q=Grenade+Cinéma".toUri()
             val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
             mapIntent.setPackage("com.google.android.apps.maps")
             startActivity(mapIntent)
+        }
+        find<Button>(R.id.call).setOnClickListener {
+            try {
+                val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:+33561746234"))
+                startActivity(intent)
+            } catch (e: Exception) {
+            }
+        }
+        find<Button>(R.id.website).setOnClickListener {
+            requireContext().browse("http://www.grenadecinema.fr")
+        }
+        find<Button>(R.id.facebook).setOnClickListener {
+            requireContext().browse("https://www.facebook.com/profile.php?id=410990495629466")
         }
     }
 

@@ -1,0 +1,28 @@
+<!--
+  ~ Copyright 2018 Stéphane Baiget
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="269"
+    android:viewportHeight="269"
+    >
+    <path
+        android:fillColor="#000000"
+        android:pathData="M134.646,21.26A113.386,113.386 0,0 0,21.26 134.646A113.386,113.386 0,0 0,134.646 248.031A113.386,113.386 0,0 0,248.031 134.646A113.386,113.386 0,0 0,134.646 21.26zM87.369,67.146C108.539,67.146 120.512,80.681 120.512,101.33C120.512,113.824 117.042,127.185 104.375,132.217L104.375,132.564C118.951,136.208 124.504,149.57 124.504,163.625C124.504,187.571 109.755,202.146 85.809,202.146C63.771,202.146 50.41,187.571 51.451,165.707L75.744,165.707L75.57,169.35C75.57,173.688 78.346,179.588 85.287,179.588C95.872,179.588 96.566,168.83 96.566,161.021C96.566,146.446 91.533,142.28 76.957,142.801L76.957,120.244C91.012,120.244 96.74,117.467 96.74,103.064C96.74,97.165 95.526,89.703 87.891,89.703C80.429,89.703 79.213,97.512 79.213,103.238L79.213,105.842L56.83,105.842C55.789,84.846 63.25,67.146 87.369,67.146zM163.064,69.088C176.449,68.825 217.898,71.766 217.898,135.688C217.898,172.995 203.496,200.064 162.719,200.064L139.641,200.064L139.641,69.229L159.248,69.229C159.812,69.229 161.152,69.126 163.064,69.088zM165.494,92.48L165.494,176.813C186.317,177.854 192.043,151.825 192.043,135.514C192.043,118.856 186.837,92.48 165.494,92.48z"
+        />
+</vector>

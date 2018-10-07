@@ -69,12 +69,12 @@
                 android:id="@+id/map"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_padding_size_medium"
                 android:importantForAccessibility="no"
                 android:scaleType="centerCrop"
                 android:src="@drawable/map"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="@dimen/margin_padding_size_medium"
                 app:layout_constraintTop_toBottomOf="@id/place"
                 />
 
@@ -105,6 +105,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/address"
+                app:layout_constraintWidth_percent="0.6"
                 />
 
             <com.google.android.material.button.MaterialButton
@@ -120,6 +121,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/navigate"
+                app:layout_constraintWidth_percent="0.6"
                 />
 
             <com.google.android.material.button.MaterialButton
@@ -135,6 +137,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/call"
+                app:layout_constraintWidth_percent="0.6"
                 />
 
             <com.google.android.material.button.MaterialButton
@@ -150,6 +153,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/website"
+                app:layout_constraintWidth_percent="0.6"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -172,27 +172,31 @@
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
                 android:layout_marginTop="@dimen/margin_padding_size_large"
+                android:layout_marginEnd="@dimen/margin_padding_size_medium"
                 android:text="@string/details_teaser"
                 app:icon="@drawable/ic_youtube_black_24dp"
-                app:layout_constraintEnd_toEndOf="@+id/agenda"
-                app:layout_constraintStart_toStartOf="@+id/agenda"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/synopsis"
+                app:layout_constraintWidth_percent="0.6"
                 />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/agenda"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
-                android:layout_marginTop="@dimen/margin_padding_size_medium"
+                android:layout_marginTop="@dimen/margin_padding_size_small"
                 android:layout_marginEnd="@dimen/margin_padding_size_medium"
                 android:text="@string/details_add_agenda"
                 app:icon="@drawable/ic_calendar_add_black_24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/teaser"
+                app:layout_constraintWidth_percent="0.6"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

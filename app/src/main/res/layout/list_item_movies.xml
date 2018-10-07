@@ -46,7 +46,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cover"
+        app:layout_constraintStart_toEndOf="@id/cover"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Film avec un titre très long mais alors vraiment très long"
         />
@@ -62,8 +62,8 @@
         android:ellipsize="end"
         android:singleLine="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cover"
-        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintStart_toEndOf="@id/cover"
+        app:layout_constraintTop_toBottomOf="@id/title"
         tools:text="20:30"
         />
 
@@ -77,12 +77,12 @@
         android:layout_marginEnd="@dimen/margin_padding_size_medium"
         android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cover"
-        app:layout_constraintTop_toBottomOf="@+id/schedule"
+        app:layout_constraintStart_toEndOf="@id/cover"
+        app:layout_constraintTop_toBottomOf="@id/schedule"
         tools:text="1h34"
         />
 
-    <TextView
+    <ImageView
         android:id="@+id/originalVersion"
         style="@style/TextAppearance.MaterialComponents.Body1"
         android:layout_width="wrap_content"
@@ -90,14 +90,14 @@
         android:layout_marginStart="@dimen/margin_padding_size_medium"
         android:layout_marginTop="@dimen/margin_padding_size_small"
         android:layout_marginBottom="@dimen/margin_padding_size_medium"
-        android:text="@string/movies_original_version"
-        android:textColor="@color/primary_500"
+        android:tint="@color/primary_500"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cover"
-        app:layout_constraintTop_toBottomOf="@+id/duration"
+        app:layout_constraintStart_toEndOf="@id/cover"
+        app:layout_constraintTop_toBottomOf="@id/duration"
+        app:srcCompat="@drawable/ic_original_version_24dp"
         />
 
-    <TextView
+    <ImageView
         android:id="@+id/threeDimension"
         style="@style/TextAppearance.MaterialComponents.Body1"
         android:layout_width="wrap_content"
@@ -105,10 +105,25 @@
         android:layout_marginStart="@dimen/margin_padding_size_medium"
         android:layout_marginTop="@dimen/margin_padding_size_small"
         android:layout_marginBottom="@dimen/margin_padding_size_medium"
-        android:text="@string/movies_three_dimension"
-        android:textColor="@color/secondary"
+        android:tint="@color/primary_500"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/originalVersion"
-        app:layout_constraintTop_toBottomOf="@+id/duration"
+        app:layout_constraintStart_toEndOf="@id/originalVersion"
+        app:layout_constraintTop_toBottomOf="@id/duration"
+        app:srcCompat="@drawable/ic_3d_black_24dp"
+        />
+
+    <ImageView
+        android:id="@+id/underTwelve"
+        style="@style/TextAppearance.MaterialComponents.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_padding_size_medium"
+        android:layout_marginTop="@dimen/margin_padding_size_small"
+        android:layout_marginBottom="@dimen/margin_padding_size_medium"
+        android:tint="@color/primary_500"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/threeDimension"
+        app:layout_constraintTop_toBottomOf="@id/duration"
+        app:srcCompat="@drawable/ic_under_twelve_black_24dp"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

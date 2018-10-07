@@ -28,6 +28,7 @@ data class Movie(
     val schedule: String,
     val isThreeDimension: Boolean,
     val isOriginalVersion: Boolean,
+    val isUnderTwelve: Boolean,
     val coverUrl: String,
     val duration: String,
     val yearOfProduction: String,
@@ -42,6 +43,7 @@ data class Movie(
         parcel.readString(),
         parcel.readSerializable() as LocalDate,
         parcel.readString(),
+        parcel.readByte() != 0.toByte(),
         parcel.readByte() != 0.toByte(),
         parcel.readByte() != 0.toByte(),
         parcel.readString(),
@@ -61,6 +63,7 @@ data class Movie(
         parcel.writeString(schedule)
         parcel.writeByte(if (isThreeDimension) 1 else 0)
         parcel.writeByte(if (isOriginalVersion) 1 else 0)
+        parcel.writeByte(if (isUnderTwelve) 1 else 0)
         parcel.writeString(coverUrl)
         parcel.writeString(duration)
         parcel.writeString(yearOfProduction)

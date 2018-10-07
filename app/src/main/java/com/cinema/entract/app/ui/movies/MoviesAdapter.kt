@@ -26,7 +26,6 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.cinema.entract.app.R
 import com.cinema.entract.app.model.Movie
-import com.cinema.entract.app.ui.DISABLED_ALPHA
 import com.cinema.entract.app.ui.load
 import com.cinema.entract.core.ext.color
 import com.cinema.entract.core.ext.inflate
@@ -55,8 +54,9 @@ class MoviesAdapter(private val selection: (Movie, ImageView) -> Unit) :
         private val title by bindView<TextView>(R.id.title)
         private val schedule by bindView<TextView>(R.id.schedule)
         private val duration by bindView<TextView>(R.id.duration)
-        private val originalVersion by bindView<TextView>(R.id.originalVersion)
-        private val threeDimension by bindView<TextView>(R.id.threeDimension)
+        private val originalVersion by bindView<ImageView>(R.id.originalVersion)
+        private val threeDimension by bindView<ImageView>(R.id.threeDimension)
+        private val underTwelve by bindView<ImageView>(R.id.underTwelve)
 
         @SuppressLint("SetTextI18n")
         fun bind(movie: Movie) {
@@ -66,7 +66,7 @@ class MoviesAdapter(private val selection: (Movie, ImageView) -> Unit) :
                 } else {
                     cover.scaleType = ImageView.ScaleType.CENTER
                     cover.setImageResource(R.drawable.ic_movie_black_24dp)
-                    cover.alpha = DISABLED_ALPHA
+                    cover.setColorFilter(context.color(R.color.primary_500))
                     cover.setBackgroundColor(context.color(R.color.primary_50))
                 }
                 cover.transitionName = "cover_transition_$adapterPosition"
@@ -74,7 +74,8 @@ class MoviesAdapter(private val selection: (Movie, ImageView) -> Unit) :
                 schedule.text = context.getString(R.string.movies_schedule, movie.schedule)
                 duration.text = context.getString(R.string.movies_duration, movie.duration)
                 originalVersion.isVisible = movie.isOriginalVersion
-                threeDimension.isInvisible = !movie.isThreeDimension
+                threeDimension.isVisible = movie.isThreeDimension
+                underTwelve.isInvisible = !movie.isUnderTwelve
                 setOnClickListener { selection(movie, cover) }
             }
         }

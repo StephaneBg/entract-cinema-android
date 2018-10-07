@@ -16,10 +16,9 @@
 
 package com.cinema.entract.remote.mapper
 
-import com.cinema.entract.data.model.EventData
 import com.cinema.entract.remote.model.EventRemote
 
-class EventRemoteMapper : RemoteMapper<EventRemote, EventData> {
+class EventRemoteMapper : RemoteMapper<EventRemote, String> {
 
-    override fun mapToData(model: EventRemote) = EventData(model.lien)
+    override fun mapToData(model: EventRemote) = model.lien ?: ""
 }

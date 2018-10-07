@@ -52,7 +52,7 @@ class CinemaUseCase(private val repo: CinemaRepository) : BaseUseCase() {
 
     suspend fun getSchedule(): List<WeekData> = repo.getSchedule().filter { it.hasMovies }
 
-    suspend fun getEventUrl(): String? = repo.getEvent().url
+    suspend fun getEventUrl(): String = repo.getEvent()
 
     fun selectDate(selectedDate: LocalDate) {
         date = selectedDate

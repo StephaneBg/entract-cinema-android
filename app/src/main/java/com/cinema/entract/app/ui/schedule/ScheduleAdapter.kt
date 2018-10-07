@@ -18,6 +18,7 @@ package com.cinema.entract.app.ui.schedule
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
@@ -26,7 +27,6 @@ import com.cinema.entract.app.model.DayHeader
 import com.cinema.entract.app.model.MovieEntry
 import com.cinema.entract.app.model.ScheduleEntry
 import com.cinema.entract.app.model.WeekHeader
-import com.cinema.entract.app.ui.DISABLED_ALPHA
 import com.cinema.entract.core.ext.inflate
 import com.cinema.entract.core.views.bindView
 import com.cinema.entract.data.ext.isTodayOrLater
@@ -82,14 +82,16 @@ class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
 
         private val schedule by bindView<TextView>(R.id.schedule)
         private val title by bindView<TextView>(R.id.title)
-        private val originalVersion by bindView<TextView>(R.id.originalVersion)
-        private val threeDimension by bindView<TextView>(R.id.threeDimension)
+        private val originalVersion by bindView<ImageView>(R.id.originalVersion)
+        private val threeDimension by bindView<ImageView>(R.id.threeDimension)
+        private val underTwelve by bindView<ImageView>(R.id.underTwelve)
 
         override fun bind(model: MovieEntry) {
             schedule.text = model.movie.schedule
             title.text = model.movie.title
             originalVersion.isVisible = model.movie.isOriginalVersion
             threeDimension.isVisible = model.movie.isThreeDimension
+            underTwelve.isVisible = model.movie.isUnderTwelve
             manageSelection(itemView, model.date)
         }
     }
@@ -109,6 +111,7 @@ class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
     }
 
     companion object {
+        private const val DISABLED_ALPHA = 0.4f
         private const val TYPE_WEEK_HEADER = 0
         private const val TYPE_DAY_HEADER = 1
         private const val TYPE_MOVIE = 2

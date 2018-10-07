@@ -17,7 +17,6 @@
 package com.cinema.entract.remote
 
 import com.cinema.entract.data.model.DateRangeData
-import com.cinema.entract.data.model.EventData
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
 import com.cinema.entract.data.repository.CinemaRemote
@@ -47,7 +46,7 @@ class CinemaRemoteImpl(
         return schedule.map { weekMapper.mapToData(it) }
     }
 
-    override suspend fun getEventUrl(): EventData {
+    override suspend fun getEventUrl(): String {
         Timber.d("Fetch event")
         val event = service.getEvent().await()
         return eventMapper.mapToData(event)

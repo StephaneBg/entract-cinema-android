@@ -15,7 +15,6 @@
  */package com.cinema.entract.data.source
 
 import com.cinema.entract.data.model.DateRangeData
-import com.cinema.entract.data.model.EventData
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
 
@@ -27,5 +26,5 @@ interface CinemaDataStore {
 
     suspend fun getParameters(): DateRangeData
 
-    suspend fun getEventUrl(): EventData
+    suspend fun getEventUrl(): String
 }

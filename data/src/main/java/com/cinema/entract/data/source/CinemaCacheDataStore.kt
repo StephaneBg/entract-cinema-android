@@ -17,7 +17,6 @@
 package com.cinema.entract.data.source
 
 import com.cinema.entract.data.model.DateRangeData
-import com.cinema.entract.data.model.EventData
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
 import com.cinema.entract.data.repository.CinemaCache
@@ -36,7 +35,7 @@ class CinemaCacheDataStore(private val cinemaCache: CinemaCache) : CinemaDataSto
         TODO("not implemented")
     }
 
-    override suspend fun getEventUrl(): EventData {
+    override suspend fun getEventUrl(): String {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

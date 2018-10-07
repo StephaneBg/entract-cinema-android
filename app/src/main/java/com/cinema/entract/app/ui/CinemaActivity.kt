@@ -97,9 +97,8 @@ class CinemaActivity : BaseActivity() {
     }
 
     private fun handleEvent(url: String?) {
-        url?.let { EventDialogFragment.show(supportFragmentManager, url) }
+        if (!url.isNullOrEmpty()) EventDialogFragment.show(supportFragmentManager, url!!)
     }
 }
 
-const val DISABLED_ALPHA = 0.4f
 fun ImageView.load(url: String) = Glide.with(context).load(url).into(this)

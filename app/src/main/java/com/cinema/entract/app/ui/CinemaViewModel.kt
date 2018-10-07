@@ -37,8 +37,7 @@ class CinemaViewModel(
     private fun loadEventUrl() {
         launchAsync(
             {
-                val url = useCase.getEventUrl()
-                eventUrl.postValue(url)
+                eventUrl.postValue(useCase.getEventUrl())
             },
             ::emptyCallback
         )

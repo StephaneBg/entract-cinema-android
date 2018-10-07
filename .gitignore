@@ -29,3 +29,4 @@ build/
 key
 signing.gradle
 *.jks
+google-services.json

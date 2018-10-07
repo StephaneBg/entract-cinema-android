@@ -19,6 +19,7 @@ import org.gradle.api.JavaVersion
 object Versions {
     val java = JavaVersion.VERSION_1_8
     val androidGradle = "3.2.0"
+    val googleServices = "4.1.0"
     val kotlin = "1.2.71"
     val coroutines = "0.24.0"
     val appcompat = "1.0.0"
@@ -37,12 +38,14 @@ object Versions {
     val glide = "4.8.0"
     val datePicker = "2.0.0"
     val jsr310 = "1.1.0"
-    val firebase = "17.3.3"
+    val firebaseCore = "16.0.3"
+    val firebaseMessaging = "17.3.3"
 }
 
 object Build {
     val androidGradle = "com.android.tools.build:gradle:${Versions.androidGradle}"
     val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
+    val googleServices = "com.google.gms:google-services:${Versions.googleServices}"
 }
 
 object Android {
@@ -69,7 +72,8 @@ object Libs {
     val ktx = "androidx.core:core-ktx:${Versions.ktx}"
 
     val material = "com.google.android.material:material:${Versions.material}"
-    val firebase = "com.google.firebase:firebase-messaging:${Versions.firebase}"
+    val firebaseCore = "com.google.firebase:firebase-core:${Versions.firebaseCore}"
+    val firebaseMessaging = "com.google.firebase:firebase-messaging:${Versions.firebaseMessaging}"
 
     val timber = "com.jakewharton.timber:timber:${Versions.timber}"
     val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"

@@ -39,6 +39,10 @@ dependencies {
     implementation project(':core')
     implementation project(':data')
 
+    implementation Libs.kotlinStd
+    implementation Libs.koinAndroid
+    implementation Libs.ktx
     implementation Libs.room
+
     kapt Libs.roomCompiler
 }

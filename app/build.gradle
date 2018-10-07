@@ -60,7 +60,6 @@ android {
         debug {
             minifyEnabled false
             debuggable true
-            applicationIdSuffix '.debug'
         }
     }
 
@@ -80,8 +79,24 @@ dependencies {
     implementation project(':remote')
     implementation project(':data')
 
+    implementation Libs.kotlinStd
+    implementation Libs.coroutinesCore
+    implementation Libs.coroutinesAndroid
+    implementation Libs.appcompat
+    implementation Libs.ktx
+    implementation Libs.recyclerview
+    implementation Libs.vectorDrawable
+    implementation Libs.material
+    implementation Libs.constraintLayout
+    implementation Libs.lifecycle
+    implementation Libs.anko
+    implementation Libs.koinAndroid
     implementation Libs.glide
     implementation Libs.datePicker
     implementation Libs.jsr310
-    implementation Libs.firebase
+    implementation Libs.firebaseCore
+    implementation Libs.firebaseMessaging
+    implementation Libs.timber
 }
+
+apply plugin: 'com.google.gms.google-services'

@@ -30,7 +30,7 @@
         android:layout_height="96dp"
         android:layout_gravity="center"
         android:importantForAccessibility="no"
-        android:tint="@color/primary_50"
+        android:tint="?colorAccent"
         app:srcCompat="@drawable/ic_error_outline_black_24dp"
         />
 
@@ -43,7 +43,7 @@
         tools:text="@string/error_general"
         />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@id/errorAction"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"

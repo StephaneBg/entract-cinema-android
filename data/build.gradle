@@ -39,5 +39,9 @@ android {
 dependencies {
     implementation project(':core')
 
+    implementation Libs.kotlinStd
+    implementation Libs.coroutinesCore
+    implementation Libs.coroutinesAndroid
+    implementation Libs.koinAndroid
     implementation Libs.jsr310
 }

@@ -29,7 +29,7 @@
         android:layout_marginStart="@dimen/margin_padding_size_medium"
         android:layout_marginTop="@dimen/margin_padding_size_medium"
         android:layout_marginEnd="@dimen/margin_padding_size_medium"
-        android:paddingBottom="@dimen/margin_padding_size_large"
+        android:paddingBottom="@dimen/margin_padding_size_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -40,7 +40,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:clipToPadding="false"
-        android:paddingBottom="@dimen/margin_padding_size_medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +50,8 @@
             android:id="@id/contentView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_padding_size_medium"
+            android:paddingTop="@dimen/margin_padding_size_medium"
+            android:paddingBottom="@dimen/margin_padding_size_medium"
             >
 
             <TextView
@@ -75,10 +75,11 @@
                 android:layout_marginTop="@dimen/margin_padding_size_medium"
                 android:importantForAccessibility="no"
                 android:scaleType="fitCenter"
-                app:layout_constraintBottom_toBottomOf="@+id/duration"
+                app:layout_constraintBottom_toBottomOf="@+id/infoBarrier"
                 app:layout_constraintDimensionRatio="2:3"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title"
+                tools:background="@color/primary_50"
                 tools:srcCompat="@drawable/ic_movie_black_24dp"
                 />
 
@@ -153,6 +154,58 @@
                 tools:text="Durée : 1h30"
                 />
 
+            <ImageView
+                android:id="@+id/originalVersion"
+                style="@style/TextAppearance.MaterialComponents.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginTop="@dimen/margin_padding_size_medium"
+                android:layout_marginBottom="@dimen/margin_padding_size_medium"
+                android:tint="@color/primary_500"
+                app:layout_constraintStart_toEndOf="@id/cover"
+                app:layout_constraintTop_toBottomOf="@id/duration"
+                app:srcCompat="@drawable/ic_original_version_24dp"
+                />
+
+            <ImageView
+                android:id="@+id/threeDimension"
+                style="@style/TextAppearance.MaterialComponents.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginTop="@dimen/margin_padding_size_medium"
+                android:layout_marginBottom="@dimen/margin_padding_size_medium"
+                android:tint="@color/primary_500"
+                app:layout_constraintStart_toEndOf="@id/originalVersion"
+                app:layout_constraintTop_toBottomOf="@id/duration"
+                app:layout_goneMarginStart="@dimen/margin_padding_size_medium"
+                app:srcCompat="@drawable/ic_3d_black_24dp"
+                />
+
+            <ImageView
+                android:id="@+id/underTwelve"
+                style="@style/TextAppearance.MaterialComponents.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginTop="@dimen/margin_padding_size_medium"
+                android:layout_marginBottom="@dimen/margin_padding_size_medium"
+                android:tint="@color/primary_500"
+                app:layout_constraintStart_toEndOf="@id/threeDimension"
+                app:layout_constraintTop_toBottomOf="@id/duration"
+                app:layout_goneMarginStart="@dimen/margin_padding_size_medium"
+                app:srcCompat="@drawable/ic_under_twelve_black_24dp"
+                />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/infoBarrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="originalVersion,threeDimension,underTwelve"
+                />
+
             <TextView
                 android:id="@+id/synopsis"
                 style="@style/TextAppearance.MaterialComponents.Body1"
@@ -163,7 +216,7 @@
                 android:layout_marginEnd="@dimen/margin_padding_size_medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/duration"
+                app:layout_constraintTop_toBottomOf="@id/infoBarrier"
                 tools:text="Synopsis"
                 />
 

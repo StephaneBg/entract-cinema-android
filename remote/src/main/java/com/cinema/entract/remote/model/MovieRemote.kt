@@ -23,7 +23,7 @@ data class MovieRemote(
     val titre: String?,
     val date: String?,
     val horaire: String?,
-    @Json(name = "3d") val troisDimension: Boolean?,
+    @field:Json(name = "3d") val troisDimension: Boolean?,
     val vo: Boolean?,
     val moins_douze: Boolean?,
     val affiche: String?,

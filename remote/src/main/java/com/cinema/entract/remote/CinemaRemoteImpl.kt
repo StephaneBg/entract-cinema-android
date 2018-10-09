@@ -58,4 +58,8 @@ class CinemaRemoteImpl(
         return parameters.periode?.let { paramMapper.mapToData(it) }
             ?: error("Incorrect server response")
     }
+
+    override fun registerNotifications(token: String) {
+        service.registerNotifications(token = token)
+    }
 }

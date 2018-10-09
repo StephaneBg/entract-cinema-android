@@ -22,10 +22,20 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ui.CinemaActivity
+import com.cinema.entract.data.repository.CinemaRepository
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import org.koin.android.ext.android.inject
+import timber.log.Timber
 
 class CinemaFirebaseMessagingService : FirebaseMessagingService() {
+
+    private val cinemaRepository by inject<CinemaRepository>()
+
+    override fun onNewToken(token: String) {
+        Timber.d("New token is $token")
+        cinemaRepository.registerNotifications(token)
+    }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         remoteMessage.notification?.body?.let { manageNotification(it) }
@@ -47,6 +57,7 @@ class CinemaFirebaseMessagingService : FirebaseMessagingService() {
 
         NotificationManagerCompat.from(this).notify(0, builder.build())
     }
+
 
     companion object {
         private const val CHANNEL_ID = "Grenade Entract Cinema"

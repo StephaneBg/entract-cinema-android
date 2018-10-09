@@ -29,4 +29,6 @@ interface CinemaRemote {
     suspend fun getParameters(): DateRangeData
 
     suspend fun getEventUrl(): String
+
+    fun registerNotifications(token: String)
 }

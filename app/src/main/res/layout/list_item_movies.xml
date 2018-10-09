@@ -32,6 +32,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="2:3"
         app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/primary_50"
         tools:srcCompat="@drawable/ic_movie_black_24dp"
         />
 
@@ -109,6 +110,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/originalVersion"
         app:layout_constraintTop_toBottomOf="@id/duration"
+        app:layout_goneMarginStart="@dimen/margin_padding_size_medium"
         app:srcCompat="@drawable/ic_3d_black_24dp"
         />
 
@@ -124,6 +126,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/threeDimension"
         app:layout_constraintTop_toBottomOf="@id/duration"
+        app:layout_goneMarginStart="@dimen/margin_padding_size_medium"
         app:srcCompat="@drawable/ic_under_twelve_black_24dp"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

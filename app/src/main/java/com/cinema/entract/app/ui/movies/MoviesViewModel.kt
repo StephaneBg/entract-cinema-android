@@ -65,9 +65,7 @@ class MoviesViewModel(
                     .toList()
 
                 state.postValue(
-                    Success(
-                        uiMovies to useCase.getDate().longFormatToUi()
-                    )
+                    Success(uiMovies to useCase.getDate().longFormatToUi())
                 )
                 dateRange = DateRange(range.minimumDate, range.maximumDate)
             },

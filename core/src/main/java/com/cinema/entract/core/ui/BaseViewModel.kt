@@ -17,22 +17,22 @@
 package com.cinema.entract.core.ui
 
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.experimental.CancellationException
-import kotlinx.coroutines.experimental.CoroutineScope
-import kotlinx.coroutines.experimental.Job
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.*
+import kotlin.coroutines.experimental.CoroutineContext
 
 
-open class BaseViewModel : ViewModel() {
+open class BaseViewModel : ViewModel(), CoroutineScope {
 
     private val job = Job()
+
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Main
 
     fun <T> launchAsync(
         tryBlock: suspend CoroutineScope.() -> T,
         catchBlock: (Throwable) -> T
     ) {
-        launch(UI, parent = job) {
+        launch(context = coroutineContext) {
             try {
                 tryBlock()
             } catch (e: Throwable) {

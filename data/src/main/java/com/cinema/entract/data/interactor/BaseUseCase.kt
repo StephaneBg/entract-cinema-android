@@ -15,17 +15,15 @@
  */package com.cinema.entract.data.interactor
 
 import androidx.annotation.CallSuper
-import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.CoroutineScope
 import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.async
 
 open class BaseUseCase {
 
     @CallSuper
     @Synchronized
     protected suspend fun <T> async(block: suspend CoroutineScope.() -> T): Deferred<T> =
-        async(CommonPool) { block() }
+        async { block() }
 
     @CallSuper
     @Synchronized

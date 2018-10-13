@@ -28,5 +28,5 @@ interface CinemaDataStore {
 
     suspend fun getEventUrl(): String
 
-    fun registerNotifications(token: String)
+    suspend fun registerNotifications(token: String)
 }

@@ -24,6 +24,8 @@ import com.cinema.entract.remote.mapper.DateRangeRemoteMapper
 import com.cinema.entract.remote.mapper.EventRemoteMapper
 import com.cinema.entract.remote.mapper.MovieRemoteMapper
 import com.cinema.entract.remote.mapper.WeekRemoteMapper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class CinemaRemoteImpl(
@@ -34,32 +36,34 @@ class CinemaRemoteImpl(
     private val eventMapper: EventRemoteMapper
 ) : CinemaRemote {
 
-    override suspend fun getMovies(day: String): List<MovieData> {
+    override suspend fun getMovies(day: String): List<MovieData> = withContext(Dispatchers.IO) {
         Timber.d("Fetch movies")
         val movies = service.getMovies(day).await()
-        return movies.map { movieMapper.mapToData(it) }
+        movies.map { movieMapper.mapToData(it) }
     }
 
-    override suspend fun getSchedule(): List<WeekData> {
+    override suspend fun getSchedule(): List<WeekData> = withContext(Dispatchers.IO) {
         Timber.d("Fetch schedule")
         val schedule = service.getSchedule().await()
-        return schedule.map { weekMapper.mapToData(it) }
+        schedule.map { weekMapper.mapToData(it) }
     }
 
-    override suspend fun getEventUrl(): String {
+    override suspend fun getEventUrl(): String = withContext(Dispatchers.IO) {
         Timber.d("Fetch event")
         val event = service.getEvent().await()
-        return eventMapper.mapToData(event)
+        eventMapper.mapToData(event)
     }
 
-    override suspend fun getParameters(): DateRangeData {
+    override suspend fun getParameters(): DateRangeData = withContext(Dispatchers.IO) {
         Timber.d("Fetch parameters")
         val parameters = service.getParameters().await()
-        return parameters.periode?.let { paramMapper.mapToData(it) }
+        parameters.periode?.let { paramMapper.mapToData(it) }
             ?: error("Incorrect server response")
     }
 
-    override fun registerNotifications(token: String) {
-        service.registerNotifications(token = token)
+    override suspend fun registerNotifications(token: String) = withContext(Dispatchers.IO) {
+        Timber.d("Register notification")
+        service.registerNotifications(token = token).await()
+        Unit
     }
 }

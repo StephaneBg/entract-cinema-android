@@ -25,20 +25,34 @@ import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.data.repository.CinemaRepository
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import timber.log.Timber
+import kotlin.coroutines.CoroutineContext
 
-class CinemaFirebaseMessagingService : FirebaseMessagingService() {
+class CinemaFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
 
     private val cinemaRepository by inject<CinemaRepository>()
+    private val job = Job()
+
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Main
 
     override fun onNewToken(token: String) {
         Timber.d("New token is $token")
-        cinemaRepository.registerNotifications(token)
+        launch(context = coroutineContext) { cinemaRepository.registerNotifications(token) }
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         remoteMessage.notification?.body?.let { manageNotification(it) }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
     }
 
     private fun manageNotification(message: String) {

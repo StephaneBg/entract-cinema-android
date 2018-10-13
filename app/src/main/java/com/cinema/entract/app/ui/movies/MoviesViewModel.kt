@@ -21,7 +21,11 @@ import androidx.lifecycle.MutableLiveData
 import com.cinema.entract.app.mapper.MovieMapper
 import com.cinema.entract.app.model.DateRange
 import com.cinema.entract.app.model.Movie
-import com.cinema.entract.core.ui.*
+import com.cinema.entract.core.ui.Error
+import com.cinema.entract.core.ui.Loading
+import com.cinema.entract.core.ui.ScopedViewModel
+import com.cinema.entract.core.ui.State
+import com.cinema.entract.core.ui.Success
 import com.cinema.entract.data.ext.longFormatToUi
 import com.cinema.entract.data.interactor.CinemaUseCase
 import com.cinema.entract.data.interactor.PreferencesUseCase
@@ -32,7 +36,7 @@ class MoviesViewModel(
     private val useCase: CinemaUseCase,
     private val prefsUseCase: PreferencesUseCase,
     private val movieMapper: MovieMapper
-) : BaseViewModel() {
+) : ScopedViewModel() {
 
     private val state = MutableLiveData<State<OnScreen>>()
 

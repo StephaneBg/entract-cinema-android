@@ -18,14 +18,14 @@ package com.cinema.entract.app.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.cinema.entract.core.ui.BaseViewModel
+import com.cinema.entract.core.ui.ScopedViewModel
 import com.cinema.entract.data.interactor.CinemaUseCase
 import com.cinema.entract.data.interactor.PreferencesUseCase
 
 class CinemaViewModel(
     private val useCase: CinemaUseCase,
     private val prefsUseCase: PreferencesUseCase
-) : BaseViewModel() {
+) : ScopedViewModel() {
 
     private val eventUrl = MutableLiveData<String>()
 

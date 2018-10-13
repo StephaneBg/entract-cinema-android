@@ -17,12 +17,12 @@
 package com.cinema.entract.app.ui.details
 
 import com.cinema.entract.app.model.Movie
-import com.cinema.entract.core.ui.BaseViewModel
+import com.cinema.entract.core.ui.ScopedViewModel
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
 import java.util.*
 
-class DetailsViewModel : BaseViewModel() {
+class DetailsViewModel : ScopedViewModel() {
 
     fun getEventSchedule(movie: Movie): Pair<Long, Long> {
         val schedule = movie.schedule.split(":").map { Integer.parseInt(it) }

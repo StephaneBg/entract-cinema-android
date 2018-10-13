@@ -21,10 +21,10 @@ import com.cinema.entract.data.model.DateRangeData
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
 import com.cinema.entract.data.repository.CinemaRepository
-import kotlinx.coroutines.experimental.coroutineScope
+import kotlinx.coroutines.coroutineScope
 import org.threeten.bp.LocalDate
 
-class CinemaUseCase(private val repo: CinemaRepository) : BaseUseCase() {
+class CinemaUseCase(private val repo: CinemaRepository) {
 
     private var date: LocalDate? = null
     private var dateRange: DateRangeData? = null
@@ -38,7 +38,7 @@ class CinemaUseCase(private val repo: CinemaRepository) : BaseUseCase() {
     }
 
     suspend fun getMovies(): Pair<List<MovieData>, DateRangeData> = coroutineScope {
-        asyncAwait { fetchMovies() } to asyncAwait { fetchDateRange() }
+        fetchMovies() to fetchDateRange()
     }
 
     private suspend fun fetchMovies(): List<MovieData> = repo.getMovies(getDate().formatToUTC())

@@ -19,6 +19,7 @@ buildscript {
     repositories {
         jcenter()
         google()
+        maven { url "http://dl.bintray.com/kotlin/kotlin-eap" }
     }
 
     dependencies {
@@ -33,6 +34,7 @@ allprojects {
         jcenter()
         google()
         maven { url 'https://jitpack.io' }
+        maven { url "http://dl.bintray.com/kotlin/kotlin-eap" }
     }
 }
 

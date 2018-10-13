@@ -20,7 +20,7 @@ import com.cinema.entract.remote.model.EventRemote
 import com.cinema.entract.remote.model.MovieRemote
 import com.cinema.entract.remote.model.ParametersRemote
 import com.cinema.entract.remote.model.WeekRemote
-import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.PUT
 import retrofit2.http.Query
@@ -40,5 +40,5 @@ interface CinemaService {
     fun getEvent(): Deferred<EventRemote>
 
     @PUT("registerPushNotifications")
-    fun registerNotifications(@Query("type") type: String = "android", @Query("deviceToken") token: String)
+    fun registerNotifications(@Query("type") type: String = "android", @Query("deviceToken") token: String): Deferred<Void>
 }

@@ -17,8 +17,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
-kotlin { experimental { coroutines 'enable' } }
-
 android {
 
     buildToolsVersion Android.buildToolsVersion
@@ -30,8 +28,8 @@ android {
     }
 
     defaultConfig {
-        versionCode 6
-        versionName "0.6"
+        versionCode 7
+        versionName "0.6.1"
         minSdkVersion Android.minSdkVersion
         targetSdkVersion Android.targetSdkVersion
         vectorDrawables.useSupportLibrary = true

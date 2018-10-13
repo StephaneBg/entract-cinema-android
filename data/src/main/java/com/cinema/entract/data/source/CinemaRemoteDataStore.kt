@@ -31,5 +31,6 @@ class CinemaRemoteDataStore(private val cinemaRemote: CinemaRemote) : CinemaData
 
     override suspend fun getEventUrl(): String = cinemaRemote.getEventUrl()
 
-    override fun registerNotifications(token: String) = cinemaRemote.registerNotifications(token)
+    override suspend fun registerNotifications(token: String) =
+        cinemaRemote.registerNotifications(token)
 }

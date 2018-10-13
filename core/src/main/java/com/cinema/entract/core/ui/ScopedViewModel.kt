@@ -17,11 +17,15 @@
 package com.cinema.entract.core.ui
 
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.experimental.*
-import kotlin.coroutines.experimental.CoroutineContext
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 
-open class BaseViewModel : ViewModel(), CoroutineScope {
+open class ScopedViewModel : ViewModel(), CoroutineScope {
 
     private val job = Job()
 
@@ -42,6 +46,7 @@ open class BaseViewModel : ViewModel(), CoroutineScope {
     }
 
     override fun onCleared() {
+        super.onCleared()
         job.cancel()
     }
 

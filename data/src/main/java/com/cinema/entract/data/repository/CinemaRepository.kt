@@ -37,7 +37,7 @@ class CinemaRepository(
 
     suspend fun getEvent(): String = dataStoreFactory.retrieveDataStore().getEventUrl()
 
-    fun registerNotifications(token: String) =
+    suspend fun registerNotifications(token: String) =
         dataStoreFactory.retrieveDataStore().registerNotifications(token)
 
     fun getUserPreferences(): UserPreferences = userPreferences

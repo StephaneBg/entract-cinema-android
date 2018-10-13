@@ -18,7 +18,7 @@ package com.cinema.entract.remote
 
 import com.cinema.entract.core.utils.NetworkUtils
 import com.cinema.entract.remote.network.ConnectivityInterceptor
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory

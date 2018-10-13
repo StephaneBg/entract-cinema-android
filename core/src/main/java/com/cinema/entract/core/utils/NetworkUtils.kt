@@ -28,6 +28,7 @@ class NetworkUtils(context: Context) {
         return connectivityManager.activeNetworkInfo?.isConnected ?: false
     }
 
+    @Suppress("DEPRECATION")
     fun isConnectedOnWifi(): Boolean =
         connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected
 }

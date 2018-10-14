@@ -28,13 +28,11 @@ import com.cinema.entract.core.ui.State
 import com.cinema.entract.core.ui.Success
 import com.cinema.entract.data.ext.longFormatToUi
 import com.cinema.entract.data.interactor.CinemaUseCase
-import com.cinema.entract.data.interactor.PreferencesUseCase
 import org.threeten.bp.LocalDate
 import timber.log.Timber
 
 class MoviesViewModel(
     private val useCase: CinemaUseCase,
-    private val prefsUseCase: PreferencesUseCase,
     private val movieMapper: MovieMapper
 ) : ScopedViewModel() {
 
@@ -57,21 +55,13 @@ class MoviesViewModel(
         state.postValue(Loading())
         launchAsync(
             {
-                val (movies, range) = useCase.getMovies()
-                val uiMovies = movies.asSequence()
-                    .map { movieMapper.mapToUi(it) }
-                    .map {
-                        if (!prefsUseCase.canDisplayMedia()) it.copy(
-                            coverUrl = "",
-                            teaserId = ""
-                        ) else it
-                    }
-                    .toList()
+                val movies = useCase.getMovies().map { movieMapper.mapToUi(it) }
+                val range = useCase.getDateRange()
 
-                state.postValue(
-                    Success(uiMovies to useCase.getDate().longFormatToUi())
-                )
                 dateRange = DateRange(range.minimumDate, range.maximumDate)
+                state.postValue(
+                    Success(movies to useCase.getDate().longFormatToUi())
+                )
             },
             {
                 Timber.e(it)

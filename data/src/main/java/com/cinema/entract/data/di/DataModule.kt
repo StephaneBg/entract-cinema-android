@@ -26,8 +26,8 @@ import org.koin.dsl.module.module
 
 val dataModule = module {
 
-    single { CinemaUseCase(get()) }
-    single { PreferencesUseCase(get(), get()) }
+    single { CinemaUseCase(get(), get()) }
+    single { PreferencesUseCase(get()) }
 
     factory { CinemaRemoteDataStore(get()) }
     factory { CinemaCacheDataStore(get()) }

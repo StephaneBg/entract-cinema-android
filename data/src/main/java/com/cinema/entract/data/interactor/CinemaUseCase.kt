@@ -16,15 +16,18 @@
 
 package com.cinema.entract.data.interactor
 
+import com.cinema.entract.core.utils.NetworkUtils
 import com.cinema.entract.data.ext.formatToUTC
 import com.cinema.entract.data.model.DateRangeData
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
 import com.cinema.entract.data.repository.CinemaRepository
-import kotlinx.coroutines.coroutineScope
 import org.threeten.bp.LocalDate
 
-class CinemaUseCase(private val repo: CinemaRepository) {
+class CinemaUseCase(
+    private val repo: CinemaRepository,
+    private val networkUtils: NetworkUtils
+) {
 
     private var date: LocalDate? = null
     private var dateRange: DateRangeData? = null
@@ -37,13 +40,16 @@ class CinemaUseCase(private val repo: CinemaRepository) {
         return now
     }
 
-    suspend fun getMovies(): Pair<List<MovieData>, DateRangeData> = coroutineScope {
-        fetchMovies() to fetchDateRange()
-    }
+    suspend fun getMovies(): List<MovieData> = repo
+        .getMovies(getDate().formatToUTC())
+        .map {
+            if (!canDisplayMedia()) it.copy(
+                coverUrl = "",
+                teaserId = ""
+            ) else it
+        }
 
-    private suspend fun fetchMovies(): List<MovieData> = repo.getMovies(getDate().formatToUTC())
-
-    private suspend fun fetchDateRange(): DateRangeData = dateRange ?: initDateRange()
+    suspend fun getDateRange(): DateRangeData = dateRange ?: initDateRange()
 
     private suspend fun initDateRange(): DateRangeData {
         val range = repo.getParameters()
@@ -58,4 +64,8 @@ class CinemaUseCase(private val repo: CinemaRepository) {
     fun selectDate(selectedDate: LocalDate) {
         date = selectedDate
     }
+
+    private fun canDisplayMedia(): Boolean =
+        !repo.getUserPreferences().isOnlyOnWifi() || networkUtils.isConnectedOnWifi()
+
 }

@@ -36,6 +36,6 @@ class MovieMapper : Mapper<Movie, MovieData> {
         model.director,
         model.cast,
         model.synopsis,
-        model.teaserUrl
+        model.teaserId
     )
 }

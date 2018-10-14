@@ -97,7 +97,7 @@ class CinemaActivity : BaseActivity() {
     }
 
     private fun handleEvent(url: String?) {
-        if (!url.isNullOrEmpty()) EventDialogFragment.show(supportFragmentManager, url!!)
+        if (!url.isNullOrEmpty()) EventDialogFragment.show(supportFragmentManager, url)
     }
 }
 

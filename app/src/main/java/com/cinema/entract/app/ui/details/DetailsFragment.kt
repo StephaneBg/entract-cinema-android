@@ -101,11 +101,11 @@ class DetailsFragment : BaseFragment() {
 
         val teaser = find<Button>(R.id.teaser)
         if (movie.teaserId.isNotEmpty()) {
-            teaser.setOnClickListener { _ -> showTeaser(movie) }
+            teaser.setOnClickListener { showTeaser(movie) }
         } else {
             teaser.isVisible = false
         }
-        find<Button>(R.id.agenda).setOnClickListener { _ -> addCalendarEvent(movie) }
+        find<Button>(R.id.agenda).setOnClickListener { addCalendarEvent(movie) }
     }
 
     private fun showTeaser(movie: Movie) {

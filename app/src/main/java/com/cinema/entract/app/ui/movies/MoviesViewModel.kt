@@ -28,6 +28,7 @@ import com.cinema.entract.core.ui.State
 import com.cinema.entract.core.ui.Success
 import com.cinema.entract.data.ext.longFormatToUi
 import com.cinema.entract.data.interactor.CinemaUseCase
+import kotlinx.coroutines.coroutineScope
 import org.threeten.bp.LocalDate
 import timber.log.Timber
 
@@ -53,21 +54,19 @@ class MoviesViewModel(
 
     fun retrieveMovies() {
         state.postValue(Loading())
-        launchAsync(
-            {
-                val movies = useCase.getMovies().map { movieMapper.mapToUi(it) }
-                val range = useCase.getDateRange()
+        launchAsync(::onSuccess, ::onError)
+    }
 
-                dateRange = DateRange(range.minimumDate, range.maximumDate)
-                state.postValue(
-                    Success(movies to useCase.getDate().longFormatToUi())
-                )
-            },
-            {
-                Timber.e(it)
-                state.postValue(Error(it))
-            }
-        )
+    private suspend fun onSuccess() = coroutineScope {
+        val movies = useCase.getMovies().map { movieMapper.mapToUi(it) }
+        val range = useCase.getDateRange()
+        dateRange = DateRange(range.minimumDate, range.maximumDate)
+        state.postValue(Success(movies to useCase.getDate().longFormatToUi()))
+    }
+
+    private fun onError(throwable: Throwable) {
+        Timber.e(throwable)
+        state.postValue(Error(throwable))
     }
 }
 

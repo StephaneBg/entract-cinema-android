@@ -33,7 +33,7 @@ open class ScopedViewModel : ViewModel(), CoroutineScope {
         get() = job + Dispatchers.Main
 
     fun <T> launchAsync(
-        tryBlock: suspend CoroutineScope.() -> T,
+        tryBlock: suspend () -> T,
         catchBlock: (Throwable) -> T
     ) {
         launch(context = coroutineContext) {

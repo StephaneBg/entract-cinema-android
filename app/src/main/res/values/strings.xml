@@ -1,31 +1,27 @@
 <!--
   ~ Copyright 2018 Stéphane Baiget
   ~
-  ~  Licensed under the Apache License, Version 2.0 (the "License");
-  ~  you may not use this file except in compliance with the License.
-  ~  You may obtain a copy of the License at
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
   ~
-  ~  http://www.apache.org/licenses/LICENSE-2.0
+  ~ http://www.apache.org/licenses/LICENSE-2.0
   ~
-  ~  Unless required by applicable law or agreed to in writing, software
-  ~  distributed under the License is distributed on an "AS IS" BASIS,
-  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~  See the License for the specific language governing permissions and
-  ~  limitations under the License.
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
   -->
 <resources>
 
     <string name="app_name"
         translatable="false">Entract Cinema</string>
 
-    <string name="menu_today">Séances du jour</string>
+    <string name="menu_today">Séances</string>
     <string name="menu_coming">Programme</string>
-    <string name="menu_information">Infos pratiques</string>
-
-    <string name="error_no_connectivity">Aucun réseau</string>
-    <string name="error_server">Le serveur ne répond pas</string>
-    <string name="error_general">Une erreur est survenue</string>
-    <string name="error_retry_action">Réessayer</string>
+    <string name="menu_information">Infos</string>
+    <string name="menu_settings">Paramètres</string>
 
     <string name="movies_schedule">Horaire : %1$s</string>
     <string name="movies_duration">Durée : %1$s</string>
@@ -35,14 +31,27 @@
 
     <string name="details_date_with_time">%1$s à %2$s</string>
     <string name="details_duration">%1$s</string>
-    <string name="details_teaser">Bande annonce</string>
     <string name="details_production_year">Sortie en &lt;b>%1$s&lt;/b></string>
     <string name="details_director">De &lt;b>%1$s&lt;/b></string>
     <string name="details_cast">Avec &lt;b>%1$s&lt;/b></string>
+    <string name="details_teaser">Bande annonce</string>
+    <string name="details_add_agenda">Ajouter à l\'agenda</string>
 
+    <string name="schedule_title">Les horaires</string>
     <string name="schedule_no_movie_message">Pas de séances à venir</string>
 
+    <string name="information_title">Informations pratiques</string>
     <string name="information_place_name">Cinéma L\'Entract</string>
     <string name="information_address">Avenue Lazare Carnot\n31330 Grenade</string>
-    <string name="information_navigate_to">M\'y rendre</string>
+    <string name="information_navigate">M\'y rendre</string>
+    <string name="information_call">Appeler</string>
+    <string name="information_website">Site web</string>
+    <string name="information_facebook">Facebook</string>
+
+    <string name="settings_title">Paramètres</string>
+    <string name="settings_event">Afficher les évènements</string>
+    <string name="settings_media">Télécharger les images uniquement sur WiFi</string>
+    <string name="settings_developer">Application développée par Stéphane Baiget</string>
+
+    <string name="event_close">Fermer</string>
 </resources>

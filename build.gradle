@@ -19,11 +19,13 @@ buildscript {
     repositories {
         jcenter()
         google()
+        maven { url "http://dl.bintray.com/kotlin/kotlin-eap" }
     }
 
     dependencies {
         classpath Build.androidGradle
         classpath Build.kotlinGradlePlugin
+        classpath Build.googleServices
     }
 }
 
@@ -32,6 +34,7 @@ allprojects {
         jcenter()
         google()
         maven { url 'https://jitpack.io' }
+        maven { url "http://dl.bintray.com/kotlin/kotlin-eap" }
     }
 }
 

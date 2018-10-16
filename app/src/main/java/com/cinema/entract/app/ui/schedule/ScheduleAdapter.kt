@@ -1,34 +1,35 @@
 /*
  * Copyright 2018 Stéphane Baiget
  *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *  http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package com.cinema.entract.app.ui.schedule
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.cinema.entract.app.R
-import com.cinema.entract.app.ext.inflate
 import com.cinema.entract.app.model.DayHeader
 import com.cinema.entract.app.model.MovieEntry
 import com.cinema.entract.app.model.ScheduleEntry
 import com.cinema.entract.app.model.WeekHeader
+import com.cinema.entract.core.ext.inflate
+import com.cinema.entract.core.views.bindView
 import com.cinema.entract.data.ext.isTodayOrLater
-import org.jetbrains.anko.find
 import org.threeten.bp.LocalDate
 
 class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
@@ -79,16 +80,18 @@ class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
     inner class MovieHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         ScheduleViewHolder<MovieEntry> {
 
-        private val schedule = itemView.find<TextView>(R.id.schedule)
-        private val title = itemView.find<TextView>(R.id.title)
-        private val originalVersion = itemView.find<TextView>(R.id.originalVersion)
-        private val threeDimension = itemView.find<TextView>(R.id.threeDimension)
+        private val schedule by bindView<TextView>(R.id.schedule)
+        private val title by bindView<TextView>(R.id.title)
+        private val originalVersion by bindView<ImageView>(R.id.originalVersion)
+        private val threeDimension by bindView<ImageView>(R.id.threeDimension)
+        private val underTwelve by bindView<ImageView>(R.id.underTwelve)
 
         override fun bind(model: MovieEntry) {
             schedule.text = model.movie.schedule
             title.text = model.movie.title
             originalVersion.isVisible = model.movie.isOriginalVersion
             threeDimension.isVisible = model.movie.isThreeDimension
+            underTwelve.isVisible = model.movie.isUnderTwelve
             manageSelection(itemView, model.date)
         }
     }
@@ -98,7 +101,7 @@ class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
             itemView.alpha = 1.0f
             itemView.setOnClickListener { selection(date) }
         } else {
-            itemView.alpha = PAST_ITEM_ALPHA
+            itemView.alpha = DISABLED_ALPHA
             itemView.setOnClickListener { }
         }
     }
@@ -108,7 +111,7 @@ class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
     }
 
     companion object {
-        private const val PAST_ITEM_ALPHA = 0.6f
+        private const val DISABLED_ALPHA = 0.4f
         private const val TYPE_WEEK_HEADER = 0
         private const val TYPE_DAY_HEADER = 1
         private const val TYPE_MOVIE = 2

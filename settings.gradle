@@ -14,4 +14,4 @@
  *  limitations under the License.
  */
 
-include ':cache', ':remote', ':data', ':app'
+include ':cache', ':remote', ':data', ':app', ':core'

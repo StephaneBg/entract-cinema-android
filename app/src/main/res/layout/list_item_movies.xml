@@ -1,17 +1,17 @@
 <!--
   ~ Copyright 2018 Stéphane Baiget
   ~
-  ~  Licensed under the Apache License, Version 2.0 (the "License");
-  ~  you may not use this file except in compliance with the License.
-  ~  You may obtain a copy of the License at
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
   ~
-  ~  http://www.apache.org/licenses/LICENSE-2.0
+  ~ http://www.apache.org/licenses/LICENSE-2.0
   ~
-  ~  Unless required by applicable law or agreed to in writing, software
-  ~  distributed under the License is distributed on an "AS IS" BASIS,
-  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~  See the License for the specific language governing permissions and
-  ~  limitations under the License.
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
   -->
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,8 +32,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="2:3"
         app:layout_constraintTop_toTopOf="parent"
-        tools:scaleType="centerCrop"
-        tools:srcCompat="@tools:sample/avatars[3]"
+        tools:background="@color/primary_50"
+        tools:srcCompat="@drawable/ic_movie_black_24dp"
         />
 
     <TextView
@@ -47,7 +47,7 @@
         android:maxLines="1"
         android:ellipsize="end"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cover"
+        app:layout_constraintStart_toEndOf="@id/cover"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Film avec un titre très long mais alors vraiment très long"
         />
@@ -63,8 +63,8 @@
         android:singleLine="true"
         android:ellipsize="end"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cover"
-        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintStart_toEndOf="@id/cover"
+        app:layout_constraintTop_toBottomOf="@id/title"
         tools:text="20:30"
         />
 
@@ -78,12 +78,12 @@
         android:layout_marginEnd="@dimen/margin_padding_size_medium"
         android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cover"
-        app:layout_constraintTop_toBottomOf="@+id/schedule"
+        app:layout_constraintStart_toEndOf="@id/cover"
+        app:layout_constraintTop_toBottomOf="@id/schedule"
         tools:text="1h34"
         />
 
-    <TextView
+    <ImageView
         android:id="@+id/originalVersion"
         style="@style/TextAppearance.MaterialComponents.Body1"
         android:layout_width="wrap_content"
@@ -91,14 +91,14 @@
         android:layout_marginStart="@dimen/margin_padding_size_medium"
         android:layout_marginTop="@dimen/margin_padding_size_small"
         android:layout_marginBottom="@dimen/margin_padding_size_medium"
-        android:text="@string/movies_original_version"
-        android:textColor="@color/primary_500"
+        android:tint="@color/primary_500"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cover"
-        app:layout_constraintTop_toBottomOf="@+id/duration"
+        app:layout_constraintStart_toEndOf="@id/cover"
+        app:layout_constraintTop_toBottomOf="@id/duration"
+        app:srcCompat="@drawable/ic_original_version_24dp"
         />
 
-    <TextView
+    <ImageView
         android:id="@+id/threeDimension"
         style="@style/TextAppearance.MaterialComponents.Body1"
         android:layout_width="wrap_content"
@@ -106,10 +106,27 @@
         android:layout_marginStart="@dimen/margin_padding_size_medium"
         android:layout_marginTop="@dimen/margin_padding_size_small"
         android:layout_marginBottom="@dimen/margin_padding_size_medium"
-        android:text="@string/movies_three_dimension"
-        android:textColor="@color/secondary"
+        android:tint="@color/primary_500"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/originalVersion"
-        app:layout_constraintTop_toBottomOf="@+id/duration"
+        app:layout_constraintStart_toEndOf="@id/originalVersion"
+        app:layout_constraintTop_toBottomOf="@id/duration"
+        app:layout_goneMarginStart="@dimen/margin_padding_size_medium"
+        app:srcCompat="@drawable/ic_3d_black_24dp"
+        />
+
+    <ImageView
+        android:id="@+id/underTwelve"
+        style="@style/TextAppearance.MaterialComponents.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_padding_size_medium"
+        android:layout_marginTop="@dimen/margin_padding_size_small"
+        android:layout_marginBottom="@dimen/margin_padding_size_medium"
+        android:tint="@color/primary_500"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/threeDimension"
+        app:layout_constraintTop_toBottomOf="@id/duration"
+        app:layout_goneMarginStart="@dimen/margin_padding_size_medium"
+        app:srcCompat="@drawable/ic_under_twelve_black_24dp"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

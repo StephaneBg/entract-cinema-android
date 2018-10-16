@@ -1,59 +1,57 @@
 <!--
   ~ Copyright 2018 Stéphane Baiget
   ~
-  ~  Licensed under the Apache License, Version 2.0 (the "License");
-  ~  you may not use this file except in compliance with the License.
-  ~  You may obtain a copy of the License at
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
   ~
-  ~  http://www.apache.org/licenses/LICENSE-2.0
+  ~ http://www.apache.org/licenses/LICENSE-2.0
   ~
-  ~  Unless required by applicable law or agreed to in writing, software
-  ~  distributed under the License is distributed on an "AS IS" BASIS,
-  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~  See the License for the specific language governing permissions and
-  ~  limitations under the License.
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
   -->
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@id/contentView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+    <TextView
+        android:id="@+id/dateTime"
+        style="@style/TextAppearance.MaterialComponents.Headline5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.Cinema.AppBarOverlay"
+        android:layout_marginStart="@dimen/margin_padding_size_medium"
+        android:layout_marginTop="@dimen/margin_padding_size_medium"
+        android:layout_marginEnd="@dimen/margin_padding_size_medium"
+        android:paddingBottom="@dimen/margin_padding_size_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        >
+        tools:text="Jeudi 20 septembre à 16:30"
+        />
 
-        <TextView
-            android:id="@+id/dateTime"
-            style="@style/TextAppearance.Cinema.Appbar.Title"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:layout_marginStart="@dimen/margin_padding_size_medium"
-            android:layout_marginEnd="@dimen/margin_padding_size_medium"
-            tools:text="Jeudi 20 septembre à 16:30"
-            />
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dateTime"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@id/contentView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/margin_padding_size_extra_large"
+            android:paddingTop="@dimen/margin_padding_size_medium"
+            android:paddingBottom="@dimen/margin_padding_size_medium"
             >
 
             <TextView
@@ -61,7 +59,6 @@
                 style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_padding_size_medium"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
                 android:layout_marginEnd="@dimen/margin_padding_size_medium"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -77,12 +74,13 @@
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
                 android:layout_marginTop="@dimen/margin_padding_size_medium"
                 android:importantForAccessibility="no"
-                android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="@+id/duration"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="@+id/infoBarrier"
                 app:layout_constraintDimensionRatio="2:3"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title"
-                tools:srcCompat="@tools:sample/avatars[2]"
+                tools:background="@color/primary_50"
+                tools:srcCompat="@drawable/ic_movie_black_24dp"
                 />
 
             <TextView
@@ -94,7 +92,7 @@
                 android:layout_marginTop="@dimen/margin_padding_size_medium"
                 android:layout_marginEnd="@dimen/margin_padding_size_medium"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/cover"
+                app:layout_constraintStart_toEndOf="@id/cover"
                 app:layout_constraintTop_toBottomOf="@id/title"
                 tools:text="De Dog Bob"
                 />
@@ -108,8 +106,8 @@
                 android:layout_marginTop="@dimen/margin_padding_size_small"
                 android:layout_marginEnd="@dimen/margin_padding_size_medium"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/cover"
-                app:layout_constraintTop_toBottomOf="@+id/director"
+                app:layout_constraintStart_toEndOf="@id/cover"
+                app:layout_constraintTop_toBottomOf="@id/director"
                 tools:text="Avec Pepette, Pipitte, Papatte et Puputte"
                 />
 
@@ -122,8 +120,8 @@
                 android:layout_marginTop="@dimen/margin_padding_size_small"
                 android:layout_marginEnd="@dimen/margin_padding_size_medium"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/cover"
-                app:layout_constraintTop_toBottomOf="@+id/cast"
+                app:layout_constraintStart_toEndOf="@id/cover"
+                app:layout_constraintTop_toBottomOf="@id/cast"
                 tools:text="Sortie en 1985"
                 />
 
@@ -136,8 +134,8 @@
                 android:layout_marginTop="@dimen/margin_padding_size_small"
                 android:layout_marginEnd="@dimen/margin_padding_size_medium"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/cover"
-                app:layout_constraintTop_toBottomOf="@+id/year"
+                app:layout_constraintStart_toEndOf="@id/cover"
+                app:layout_constraintTop_toBottomOf="@id/year"
                 tools:text="Kung-fu"
                 />
 
@@ -151,9 +149,61 @@
                 android:layout_marginEnd="@dimen/margin_padding_size_medium"
                 android:maxLines="1"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/cover"
-                app:layout_constraintTop_toBottomOf="@+id/genre"
+                app:layout_constraintStart_toEndOf="@id/cover"
+                app:layout_constraintTop_toBottomOf="@id/genre"
                 tools:text="Durée : 1h30"
+                />
+
+            <ImageView
+                android:id="@+id/originalVersion"
+                style="@style/TextAppearance.MaterialComponents.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginTop="@dimen/margin_padding_size_medium"
+                android:layout_marginBottom="@dimen/margin_padding_size_medium"
+                android:tint="@color/primary_500"
+                app:layout_constraintStart_toEndOf="@id/cover"
+                app:layout_constraintTop_toBottomOf="@id/duration"
+                app:srcCompat="@drawable/ic_original_version_24dp"
+                />
+
+            <ImageView
+                android:id="@+id/threeDimension"
+                style="@style/TextAppearance.MaterialComponents.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginTop="@dimen/margin_padding_size_medium"
+                android:layout_marginBottom="@dimen/margin_padding_size_medium"
+                android:tint="@color/primary_500"
+                app:layout_constraintStart_toEndOf="@id/originalVersion"
+                app:layout_constraintTop_toBottomOf="@id/duration"
+                app:layout_goneMarginStart="@dimen/margin_padding_size_medium"
+                app:srcCompat="@drawable/ic_3d_black_24dp"
+                />
+
+            <ImageView
+                android:id="@+id/underTwelve"
+                style="@style/TextAppearance.MaterialComponents.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginTop="@dimen/margin_padding_size_medium"
+                android:layout_marginBottom="@dimen/margin_padding_size_medium"
+                android:tint="@color/primary_500"
+                app:layout_constraintStart_toEndOf="@id/threeDimension"
+                app:layout_constraintTop_toBottomOf="@id/duration"
+                app:layout_goneMarginStart="@dimen/margin_padding_size_medium"
+                app:srcCompat="@drawable/ic_under_twelve_black_24dp"
+                />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/infoBarrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="originalVersion,threeDimension,underTwelve"
                 />
 
             <TextView
@@ -166,35 +216,41 @@
                 android:layout_marginEnd="@dimen/margin_padding_size_medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/duration"
+                app:layout_constraintTop_toBottomOf="@id/infoBarrier"
                 tools:text="Synopsis"
                 />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/teaser"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
                 android:layout_marginTop="@dimen/margin_padding_size_large"
                 android:layout_marginEnd="@dimen/margin_padding_size_medium"
                 android:text="@string/details_teaser"
+                app:icon="@drawable/ic_youtube_black_24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/synopsis"
+                app:layout_constraintTop_toBottomOf="@id/synopsis"
+                app:layout_constraintWidth_percent="0.6"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/agenda"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginTop="@dimen/margin_padding_size_small"
+                android:layout_marginEnd="@dimen/margin_padding_size_medium"
+                android:text="@string/details_add_agenda"
+                app:icon="@drawable/ic_calendar_add_black_24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/teaser"
+                app:layout_constraintWidth_percent="0.6"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_marginRight="@dimen/margin_padding_size_medium"
-        android:layout_marginBottom="@dimen/margin_padding_size_medium"
-        android:tint="@color/white"
-        app:srcCompat="@drawable/ic_calendar_add_black_24dp"
-        tools:ignore="RtlHardcoded"
-        />
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,8 +17,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
-kotlin { experimental { coroutines 'enable' } }
-
 android {
 
     buildToolsVersion Android.buildToolsVersion
@@ -37,9 +35,11 @@ android {
 }
 
 dependencies {
+    implementation project(':core')
+
     implementation Libs.kotlinStd
     implementation Libs.coroutinesCore
+    implementation Libs.coroutinesAndroid
     implementation Libs.koinAndroid
-    implementation Libs.timber
     implementation Libs.jsr310
 }

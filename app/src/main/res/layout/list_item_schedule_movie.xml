@@ -1,17 +1,17 @@
 <!--
   ~ Copyright 2018 Stéphane Baiget
   ~
-  ~  Licensed under the Apache License, Version 2.0 (the "License");
-  ~  you may not use this file except in compliance with the License.
-  ~  You may obtain a copy of the License at
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
   ~
-  ~  http://www.apache.org/licenses/LICENSE-2.0
+  ~ http://www.apache.org/licenses/LICENSE-2.0
   ~
-  ~  Unless required by applicable law or agreed to in writing, software
-  ~  distributed under the License is distributed on an "AS IS" BASIS,
-  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~  See the License for the specific language governing permissions and
-  ~  limitations under the License.
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
   -->
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -42,34 +42,48 @@
         android:layout_marginStart="@dimen/margin_padding_size_medium"
         app:layout_constraintBaseline_toBaselineOf="@+id/schedule"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/schedule"
+        app:layout_constraintStart_toEndOf="@id/schedule"
         tools:text="Film avec un titre très long mais alors vraiment très long"
         />
 
-    <TextView
+    <ImageView
         android:id="@+id/originalVersion"
         style="@style/TextAppearance.MaterialComponents.Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_padding_size_small"
-        android:text="@string/movies_original_version"
-        android:textColor="@color/primary_500"
+        android:paddingEnd="@dimen/margin_padding_size_medium"
+        android:tint="@color/primary_500"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/title"
-        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintStart_toStartOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:srcCompat="@drawable/ic_original_version_24dp"
         />
 
-    <TextView
+    <ImageView
         android:id="@+id/threeDimension"
         style="@style/TextAppearance.MaterialComponents.Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_padding_size_medium"
-        android:layout_marginBottom="@dimen/margin_padding_size_medium"
-        android:text="@string/movies_three_dimension"
-        android:textColor="@color/secondary"
-        app:layout_constraintBaseline_toBaselineOf="@+id/originalVersion"
+        android:layout_marginTop="@dimen/margin_padding_size_small"
+        android:paddingEnd="@dimen/margin_padding_size_medium"
+        android:tint="@color/primary_500"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/originalVersion"
+        app:layout_constraintStart_toEndOf="@id/originalVersion"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:srcCompat="@drawable/ic_3d_black_24dp"
+        />
+
+    <ImageView
+        android:id="@+id/underTwelve"
+        style="@style/TextAppearance.MaterialComponents.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_padding_size_small"
+        android:tint="@color/primary_500"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/threeDimension"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:srcCompat="@drawable/ic_under_twelve_black_24dp"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

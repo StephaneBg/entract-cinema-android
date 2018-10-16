@@ -1,0 +1,29 @@
+<!--
+  ~ Copyright 2018 Stéphane Baiget
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="41dp"
+    android:height="24dp"
+    android:viewportWidth="460"
+    android:viewportHeight="270"
+    >
+    <path
+        android:fillColor="#000000"
+        android:pathData="M135,20C71.29,20 20,71.29 20,135C20,198.71 71.29,250 135,250L325,250C388.71,250 440,198.71 440,135C440,71.29 388.71,20 325,20L135,20zM205.531,67.5C228.61,67.5 251.514,85.893 251.514,135C251.514,184.107 228.61,202.5 205.531,202.5C182.453,202.5 159.547,184.107 159.547,135C159.547,85.893 182.453,67.5 205.531,67.5zM296.115,67.5C304.444,67.5 311.905,69.755 319.02,73.92L319.02,99.08C313.814,94.569 307.394,90.752 300.279,90.752C292.297,90.752 287.266,95.61 287.266,103.592C287.266,125.109 326.654,126.324 326.654,161.723C326.654,184.975 313.293,202.5 289,202.5C281.712,202.5 272.689,200.244 266.789,195.906L266.789,171.266C272.862,175.43 278.762,178.207 286.396,178.207C294.726,178.207 301.32,172.655 301.32,163.979C301.32,153.914 293.339,150.096 286.051,144.891C271.128,134.826 261.932,125.109 261.932,106.021C261.932,85.372 273.904,67.5 296.115,67.5zM58.479,69.582L86.242,69.582L101.859,132.396C104.115,139.858 104.983,147.32 106.545,154.781L106.893,154.781C108.281,147.146 108.801,139.686 110.883,132.051L126.674,69.582L153.742,69.582L117.477,200.418L96.307,200.418L58.479,69.582zM334.889,69.582L401.521,69.582L401.521,93.875L381.045,93.875L381.045,200.418L355.191,200.418L355.191,93.875L334.889,93.875L334.889,69.582zM205.531,91.445C188.353,91.445 187.137,123.374 187.137,135C187.137,145.411 188.353,178.555 205.531,178.555C222.71,178.555 223.924,145.411 223.924,135C223.924,123.374 222.71,91.445 205.531,91.445z"
+        android:strokeWidth="1.25143564"
+        />
+</vector>

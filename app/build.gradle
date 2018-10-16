@@ -17,8 +17,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
-kotlin { experimental { coroutines 'enable' } }
-
 android {
 
     buildToolsVersion Android.buildToolsVersion
@@ -30,8 +28,8 @@ android {
     }
 
     defaultConfig {
-        versionCode 2
-        versionName "0.2"
+        versionCode 8
+        versionName "0.6.2"
         minSdkVersion Android.minSdkVersion
         targetSdkVersion Android.targetSdkVersion
         vectorDrawables.useSupportLibrary = true
@@ -60,7 +58,6 @@ android {
         debug {
             minifyEnabled false
             debuggable true
-            applicationIdSuffix '.debug'
         }
     }
 
@@ -75,6 +72,7 @@ android {
 }
 
 dependencies {
+    implementation project(':core')
     implementation project(':cache')
     implementation project(':remote')
     implementation project(':data')
@@ -82,17 +80,21 @@ dependencies {
     implementation Libs.kotlinStd
     implementation Libs.coroutinesCore
     implementation Libs.coroutinesAndroid
-    implementation Libs.anko
     implementation Libs.appcompat
-    implementation Libs.vectorDrawable
+    implementation Libs.ktx
     implementation Libs.recyclerview
+    implementation Libs.vectorDrawable
     implementation Libs.material
     implementation Libs.constraintLayout
-    implementation Libs.ktx
     implementation Libs.lifecycle
-    implementation Libs.timber
+    implementation Libs.anko
     implementation Libs.koinAndroid
     implementation Libs.glide
     implementation Libs.datePicker
     implementation Libs.jsr310
+    implementation Libs.firebaseCore
+    implementation Libs.firebaseMessaging
+    implementation Libs.timber
 }
+
+apply plugin: 'com.google.gms.google-services'

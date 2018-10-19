@@ -33,7 +33,7 @@ val uiModule = module {
 
     viewModel { MoviesViewModel(get(), get()) }
     viewModel { ScheduleViewModel(get(), get()) }
-    viewModel { DetailsViewModel() }
+    viewModel { DetailsViewModel(get()) }
     viewModel { SettingsViewModel(get()) }
     viewModel { CinemaViewModel(get(), get()) }
 }

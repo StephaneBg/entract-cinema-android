@@ -28,18 +28,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import com.cinema.entract.app.R
 import com.cinema.entract.app.model.Movie
+import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.app.ui.load
 import com.cinema.entract.core.ext.color
 import com.cinema.entract.core.ext.find
+import com.cinema.entract.core.ext.inflate
 import com.cinema.entract.core.ext.toSpanned
 import com.cinema.entract.core.ui.BaseFragment
 import com.cinema.entract.data.ext.longFormatToUi
+import org.jetbrains.anko.find
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -60,7 +64,8 @@ class DetailsFragment : BaseFragment() {
     }
 
     private fun displayMovieDetails() {
-        val movie = arguments?.getParcelable<Movie>(MOVIE)!!
+        val movie = arguments?.getParcelable<Movie>(MOVIE) ?: error("Use newInstance()!")
+
         find<TextView>(R.id.dateTime).text = getString(
             R.string.details_date_with_time,
             movie.date.longFormatToUi(),
@@ -83,39 +88,74 @@ class DetailsFragment : BaseFragment() {
         find<ImageView>(R.id.underTwelve).isVisible = movie.isUnderTwelve
         find<TextView>(R.id.director).text =
                 getString(R.string.details_director, movie.director).toSpanned()
-        movie.cast.apply {
-            val view = find<TextView>(R.id.cast)
-            if (isEmpty()) view.isVisible = false
-            else view.text = getString(R.string.details_cast, this).toSpanned()
+        with(find<TextView>(R.id.cast)) {
+            if (movie.cast.isEmpty()) isVisible = false
+            else text = getString(R.string.details_cast, movie.cast).toSpanned()
         }
         find<TextView>(R.id.year).text =
                 getString(R.string.details_production_year, movie.yearOfProduction).toSpanned()
         find<TextView>(R.id.duration).text = getString(R.string.details_duration, movie.duration)
         find<TextView>(R.id.genre).text = movie.genre
 
-        val synopsis = find<TextView>(R.id.synopsis)
-        synopsis.text = movie.synopsis
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            synopsis.justificationMode = Layout.JUSTIFICATION_MODE_INTER_WORD
+        with(find<TextView>(R.id.synopsis)) {
+            text = movie.synopsis
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                justificationMode = Layout.JUSTIFICATION_MODE_INTER_WORD
+            }
         }
 
-        val teaser = find<Button>(R.id.teaser)
-        if (movie.teaserId.isNotEmpty()) {
-            teaser.setOnClickListener { showTeaser(movie) }
-        } else {
-            teaser.isVisible = false
+        manageNextMovies(movie.nextMovies)
+
+        with(find<Button>(R.id.teaser)) {
+            if (movie.teaserId.isNotEmpty()) {
+                setOnClickListener { showTeaser(movie) }
+            } else {
+                isVisible = false
+            }
         }
         find<Button>(R.id.agenda).setOnClickListener { addCalendarEvent(movie) }
     }
 
+    private fun manageNextMovies(movies: List<Movie>) {
+        val container = find<LinearLayout>(R.id.nextContainer)
+        if (movies.isEmpty()) {
+            container.inflate(R.layout.list_item_next_movie, true)
+                .find<TextView>(R.id.dateSchedule).setText(R.string.details_no_next_movies)
+        } else {
+            movies.forEach { movie ->
+                with(container.inflate(R.layout.list_item_next_movie, true)) {
+                    find<TextView>(R.id.dateSchedule).text = getString(
+                        R.string.details_date_with_time,
+                        movie.date.longFormatToUi(),
+                        movie.schedule
+                    )
+                    find<ImageView>(R.id.originalVersion).isVisible = movie.isOriginalVersion
+                    find<ImageView>(R.id.underTwelve).isVisible = movie.isUnderTwelve
+                    find<ImageView>(R.id.threeDimension).isVisible = movie.isThreeDimension
+                    setOnClickListener {
+                        detailsViewModel.selectDate(movie.date)
+                        (requireActivity() as CinemaActivity).selectMovies()
+                    }
+                }
+            }
+        }
+    }
+
     private fun showTeaser(movie: Movie) {
-        val appIntent = Intent(Intent.ACTION_VIEW, "vnd.youtube:${movie.teaserId}".toUri())
-        val webIntent =
-            Intent(Intent.ACTION_VIEW, "http://www.youtube.com/watch?v=${movie.teaserId}".toUri())
         try {
-            requireContext().startActivity(appIntent)
+            requireContext().startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    "vnd.youtube:${movie.teaserId}".toUri()
+                )
+            )
         } catch (ex: ActivityNotFoundException) {
-            requireContext().startActivity(webIntent)
+            requireContext().startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    "http://www.youtube.com/watch?v=${movie.teaserId}".toUri()
+                )
+            )
         }
     }
 

@@ -21,7 +21,7 @@ import com.cinema.entract.data.model.MovieData
 
 class MovieMapper : Mapper<Movie, MovieData> {
 
-    override fun mapToUi(model: MovieData) = Movie(
+    override fun mapToUi(model: MovieData): Movie = Movie(
         model.id,
         model.title,
         model.date,
@@ -36,6 +36,7 @@ class MovieMapper : Mapper<Movie, MovieData> {
         model.director,
         model.cast,
         model.synopsis,
-        model.teaserId
+        model.teaserId,
+        model.nextMovies.map { mapToUi(it) }
     )
 }

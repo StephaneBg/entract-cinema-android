@@ -36,8 +36,10 @@ data class Movie(
     val director: String,
     val cast: String,
     val synopsis: String,
-    val teaserId: String
+    val teaserId: String,
+    val nextMovies: List<Movie>
 ) : Parcelable {
+
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),
@@ -53,7 +55,8 @@ data class Movie(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readString()
+        parcel.readString(),
+        parcel.createTypedArrayList(Movie.CREATOR)
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -72,6 +75,7 @@ data class Movie(
         parcel.writeString(cast)
         parcel.writeString(synopsis)
         parcel.writeString(teaserId)
+        parcel.writeTypedList(nextMovies)
     }
 
     override fun describeContents(): Int {

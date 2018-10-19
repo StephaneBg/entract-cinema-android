@@ -18,11 +18,13 @@ package com.cinema.entract.app.ui.details
 
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.core.ui.ScopedViewModel
+import com.cinema.entract.data.interactor.CinemaUseCase
+import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
 import java.util.*
 
-class DetailsViewModel : ScopedViewModel() {
+class DetailsViewModel(private val useCase: CinemaUseCase) : ScopedViewModel() {
 
     fun getEventSchedule(movie: Movie): Pair<Long, Long> {
         val schedule = movie.schedule.split(":").map { Integer.parseInt(it) }
@@ -54,4 +56,6 @@ class DetailsViewModel : ScopedViewModel() {
         calendar.set(this.year, this.month.value, this.dayOfMonth, this.hour, this.minute)
         return calendar
     }
+
+    fun selectDate(date: LocalDate) = useCase.selectDate(date)
 }

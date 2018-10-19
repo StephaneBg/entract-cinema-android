@@ -46,7 +46,7 @@ class EventDialogFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         find<ImageView>(R.id.cover).load(
-            arguments?.getString(COVER_URL) ?: error("Use newInstance !")
+            arguments?.getString(COVER_URL) ?: error("Use show()!")
         )
 
         find<MaterialButton>(R.id.close).setOnClickListener {

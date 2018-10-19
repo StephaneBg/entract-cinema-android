@@ -162,6 +162,7 @@
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
                 android:layout_marginTop="@dimen/margin_padding_size_medium"
                 android:layout_marginBottom="@dimen/margin_padding_size_medium"
+                android:importantForAccessibility="no"
                 android:tint="@color/primary_500"
                 app:layout_constraintStart_toEndOf="@id/cover"
                 app:layout_constraintTop_toBottomOf="@id/duration"
@@ -176,10 +177,10 @@
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
                 android:layout_marginTop="@dimen/margin_padding_size_medium"
                 android:layout_marginBottom="@dimen/margin_padding_size_medium"
+                android:importantForAccessibility="no"
                 android:tint="@color/primary_500"
                 app:layout_constraintStart_toEndOf="@id/originalVersion"
                 app:layout_constraintTop_toBottomOf="@id/duration"
-                app:layout_goneMarginStart="@dimen/margin_padding_size_medium"
                 app:srcCompat="@drawable/ic_3d_black_24dp"
                 />
 
@@ -191,10 +192,10 @@
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
                 android:layout_marginTop="@dimen/margin_padding_size_medium"
                 android:layout_marginBottom="@dimen/margin_padding_size_medium"
+                android:importantForAccessibility="no"
                 android:tint="@color/primary_500"
                 app:layout_constraintStart_toEndOf="@id/threeDimension"
                 app:layout_constraintTop_toBottomOf="@id/duration"
-                app:layout_goneMarginStart="@dimen/margin_padding_size_medium"
                 app:srcCompat="@drawable/ic_under_twelve_black_24dp"
                 />
 
@@ -207,17 +208,58 @@
                 />
 
             <TextView
-                android:id="@+id/synopsis"
-                style="@style/TextAppearance.MaterialComponents.Body1"
+                android:id="@+id/synopsisTitle"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
                 android:layout_marginTop="@dimen/margin_padding_size_large"
                 android:layout_marginEnd="@dimen/margin_padding_size_medium"
+                android:maxLines="1"
+                android:text="@string/details_title_synopsis"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/infoBarrier"
-                tools:text="Synopsis"
+                />
+
+            <TextView
+                android:id="@+id/synopsis"
+                style="@style/TextAppearance.MaterialComponents.Body1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginTop="@dimen/margin_padding_size_medium"
+                android:layout_marginEnd="@dimen/margin_padding_size_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/synopsisTitle"
+                tools:text="@tools:sample/lorem/random"
+                />
+
+            <TextView
+                android:id="@+id/nextTitle"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginTop="@dimen/margin_padding_size_large"
+                android:text="@string/details_title_next_movies"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/synopsis"
+                />
+
+            <LinearLayout
+                android:id="@+id/nextContainer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_padding_size_medium"
+                android:layout_marginEnd="@dimen/margin_padding_size_medium"
+                android:orientation="vertical"
+                android:showDividers="middle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nextTitle"
                 />
 
             <com.google.android.material.button.MaterialButton
@@ -232,7 +274,7 @@
                 app:icon="@drawable/ic_youtube_black_24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/synopsis"
+                app:layout_constraintTop_toBottomOf="@id/nextContainer"
                 app:layout_constraintWidth_percent="0.6"
                 />
 
@@ -250,6 +292,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/teaser"
                 app:layout_constraintWidth_percent="0.6"
+                app:layout_goneMarginTop="@dimen/margin_padding_size_medium"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -33,5 +33,6 @@ data class MovieData(
     val director: String,
     val cast: String,
     val synopsis: String,
-    val teaserId: String
+    val teaserId: String,
+    val nextMovies: List<MovieData>
 )

@@ -34,5 +34,6 @@ data class MovieRemote(
     val de: String?,
     val avec: String?,
     val synopsis: String?,
-    val bande_annonce: String?
+    val bande_annonce: String?,
+    val autres_dates: List<MovieRemote>?
 )

@@ -36,6 +36,9 @@
     <string name="details_cast">Avec &lt;b>%1$s&lt;/b></string>
     <string name="details_teaser">Bande annonce</string>
     <string name="details_add_agenda">Ajouter à l\'agenda</string>
+    <string name="details_title_next_movies">Autres séances</string>
+    <string name="details_title_synopsis">Synopsis</string>
+    <string name="details_no_next_movies">Aucune</string>
 
     <string name="schedule_title">Les horaires</string>
     <string name="schedule_no_movie_message">Pas de séances à venir</string>

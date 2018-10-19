@@ -16,9 +16,16 @@
 
 package com.cinema.entract.app.ui
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ui.details.DetailsFragment
 import com.cinema.entract.app.ui.event.EventDialogFragment
@@ -97,7 +104,33 @@ class CinemaActivity : BaseActivity() {
     }
 
     private fun handleEvent(url: String?) {
-        if (!url.isNullOrEmpty()) EventDialogFragment.show(supportFragmentManager, url)
+        if (!url.isNullOrEmpty()) {
+            val requestOptions = RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL)
+            Glide.with(this)
+                .asBitmap()
+                .load(url)
+                .apply(requestOptions)
+                .addListener(object : RequestListener<Bitmap?> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Bitmap?>?,
+                        isFirstResource: Boolean
+                    ): Boolean = true
+
+                    override fun onResourceReady(
+                        resource: Bitmap?,
+                        model: Any?,
+                        target: Target<Bitmap?>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        EventDialogFragment.show(supportFragmentManager, url)
+                        return true
+                    }
+                })
+                .submit()
+        }
     }
 }
 

@@ -75,7 +75,6 @@ class DetailsFragment : BaseFragment() {
             movie.schedule
         )
         find<ImageView>(R.id.cover).apply {
-            transitionName = arguments?.getString(TRANSITION_NAME)
             if (movie.coverUrl.isNotEmpty()) {
                 load(movie.coverUrl)
             } else {
@@ -177,13 +176,9 @@ class DetailsFragment : BaseFragment() {
 
     companion object {
         private const val MOVIE = "MOVIE"
-        private const val TRANSITION_NAME = "TRANSITION_NAME"
 
-        fun newInstance(movie: Movie, transitionName: String) = DetailsFragment().apply {
-            arguments = bundleOf(
-                MOVIE to movie,
-                TRANSITION_NAME to transitionName
-            )
+        fun newInstance(movie: Movie) = DetailsFragment().apply {
+            arguments = bundleOf(MOVIE to movie)
         }
     }
 }

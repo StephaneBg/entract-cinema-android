@@ -31,7 +31,7 @@ import com.cinema.entract.core.ext.color
 import com.cinema.entract.core.ext.inflate
 import com.cinema.entract.core.views.bindView
 
-class OnScreenAdapter(private val selection: (Movie, ImageView) -> Unit) :
+class OnScreenAdapter(private val selection: (Movie) -> Unit) :
     RecyclerView.Adapter<OnScreenAdapter.ViewHolder>() {
 
     private var movies = emptyList<Movie>()
@@ -69,14 +69,13 @@ class OnScreenAdapter(private val selection: (Movie, ImageView) -> Unit) :
                     cover.setColorFilter(context.color(R.color.primary_500))
                     cover.setBackgroundColor(context.color(R.color.primary_50))
                 }
-                cover.transitionName = "cover_transition_$adapterPosition"
                 title.text = movie.title
                 schedule.text = context.getString(R.string.on_screen_schedule, movie.schedule)
                 duration.text = context.getString(R.string.on_screen_duration, movie.duration)
                 originalVersion.isVisible = movie.isOriginalVersion
                 threeDimension.isVisible = movie.isThreeDimension
                 underTwelve.isInvisible = !movie.isUnderTwelve
-                setOnClickListener { selection(movie, cover) }
+                setOnClickListener { selection(movie) }
             }
         }
     }

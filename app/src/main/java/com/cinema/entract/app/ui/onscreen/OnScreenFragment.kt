@@ -20,14 +20,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.TransitionInflater
 import com.cinema.entract.app.R
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.CinemaViewModel
@@ -97,24 +94,12 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
         }
     }
 
-    private fun onMovieSelected(movie: Movie, cover: ImageView) {
-        val fragment = prepareTransition(movie, cover)
-        requireActivity().replaceFragment(R.id.mainContainer, fragment, cover, true)
-    }
-
-    private fun prepareTransition(movie: Movie, cover: ImageView): Fragment {
-        val context = requireContext()
-        sharedElementReturnTransition =
-                TransitionInflater.from(context).inflateTransition(R.transition.cover_transition)
-        exitTransition = TransitionInflater.from(context)
-            .inflateTransition(android.R.transition.no_transition)
-
-        return DetailsFragment.newInstance(movie, cover.transitionName).apply {
-            sharedElementEnterTransition = TransitionInflater.from(context)
-                .inflateTransition(R.transition.cover_transition)
-            enterTransition = TransitionInflater.from(context)
-                .inflateTransition(android.R.transition.no_transition)
-        }
+    private fun onMovieSelected(movie: Movie) {
+        requireActivity().replaceFragment(
+            R.id.mainContainer,
+            DetailsFragment.newInstance(movie),
+            true
+        )
     }
 
     private fun displayDatePicker() {

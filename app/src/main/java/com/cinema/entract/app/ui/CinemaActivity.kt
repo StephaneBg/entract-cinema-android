@@ -23,7 +23,7 @@ import com.cinema.entract.app.R
 import com.cinema.entract.app.ui.details.DetailsFragment
 import com.cinema.entract.app.ui.event.EventDialogFragment
 import com.cinema.entract.app.ui.information.InformationFragment
-import com.cinema.entract.app.ui.movies.MoviesFragment
+import com.cinema.entract.app.ui.onscreen.OnScreenFragment
 import com.cinema.entract.app.ui.schedule.ScheduleFragment
 import com.cinema.entract.app.ui.settings.SettingsFragment
 import com.cinema.entract.core.ext.addFragment
@@ -36,7 +36,7 @@ import org.koin.android.ext.android.inject
 
 class CinemaActivity : BaseActivity() {
 
-    private val viewModel by inject<CinemaViewModel>()
+    private val cinemaViewModel by inject<CinemaViewModel>()
     private val bottomNav by bindView<BottomNavigationView>(R.id.bottomNavigation)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,8 +44,8 @@ class CinemaActivity : BaseActivity() {
         setContentView(R.layout.activity_cinema)
         initBottomNavigation()
 
-        observe(viewModel.getEventUrl(), ::handleEvent)
-        savedInstanceState ?: addFragment(R.id.mainContainer, MoviesFragment.newInstance())
+        observe(cinemaViewModel.getEventUrl(), ::handleEvent)
+        savedInstanceState ?: addFragment(R.id.mainContainer, OnScreenFragment.newInstance())
     }
 
     fun selectMovies() {
@@ -70,9 +70,9 @@ class CinemaActivity : BaseActivity() {
                 supportFragmentManager.popBackStack()
                 true
             }
-            is MoviesFragment -> false
+            is OnScreenFragment -> false
             else -> {
-                replaceFragment(R.id.mainContainer, MoviesFragment.newInstance())
+                replaceFragment(R.id.mainContainer, OnScreenFragment.newInstance())
                 true
             }
         }

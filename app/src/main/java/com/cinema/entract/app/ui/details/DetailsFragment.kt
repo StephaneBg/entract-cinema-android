@@ -36,6 +36,7 @@ import androidx.core.view.isVisible
 import com.cinema.entract.app.R
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.CinemaActivity
+import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.app.ui.load
 import com.cinema.entract.core.ext.color
 import com.cinema.entract.core.ext.find
@@ -44,12 +45,14 @@ import com.cinema.entract.core.ext.toSpanned
 import com.cinema.entract.core.ui.BaseFragment
 import com.cinema.entract.data.ext.longFormatToUi
 import org.jetbrains.anko.find
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class DetailsFragment : BaseFragment() {
 
     private val detailsViewModel by viewModel<DetailsViewModel>()
+    private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -119,11 +122,11 @@ class DetailsFragment : BaseFragment() {
     private fun manageNextMovies(movies: List<Movie>) {
         val container = find<LinearLayout>(R.id.nextContainer)
         if (movies.isEmpty()) {
-            container.inflate(R.layout.list_item_next_movie, true)
+            container.inflate(R.layout.list_item_details_movie, true)
                 .find<TextView>(R.id.dateSchedule).setText(R.string.details_no_next_movies)
         } else {
             movies.forEach { movie ->
-                with(container.inflate(R.layout.list_item_next_movie, true)) {
+                with(container.inflate(R.layout.list_item_details_movie, true)) {
                     find<TextView>(R.id.dateSchedule).text = getString(
                         R.string.details_date_with_time,
                         movie.date.longFormatToUi(),
@@ -133,7 +136,7 @@ class DetailsFragment : BaseFragment() {
                     find<ImageView>(R.id.underTwelve).isVisible = movie.isUnderTwelve
                     find<ImageView>(R.id.threeDimension).isVisible = movie.isThreeDimension
                     setOnClickListener {
-                        detailsViewModel.selectDate(movie.date)
+                        cinemaViewModel.selectDate(movie.date)
                         (requireActivity() as CinemaActivity).selectMovies()
                     }
                 }

@@ -21,6 +21,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?selectableItemBackground"
+    android:paddingStart="@dimen/margin_padding_size_medium"
+    android:paddingTop="@dimen/margin_padding_size_small"
+    android:paddingEnd="@dimen/margin_padding_size_medium"
+    android:paddingBottom="@dimen/margin_padding_size_small"
     >
 
     <TextView
@@ -28,7 +32,6 @@
         style="@style/TextAppearance.MaterialComponents.Body1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_padding_size_medium"
         android:ellipsize="end"
         android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"

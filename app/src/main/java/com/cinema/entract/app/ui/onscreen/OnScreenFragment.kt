@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.cinema.entract.app.ui.movies
+package com.cinema.entract.app.ui.onscreen
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -30,20 +30,28 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionInflater
 import com.cinema.entract.app.R
 import com.cinema.entract.app.model.Movie
+import com.cinema.entract.app.ui.CinemaViewModel
+import com.cinema.entract.app.ui.OnScreen
 import com.cinema.entract.app.ui.details.DetailsFragment
+import com.cinema.entract.app.ui.getDate
+import com.cinema.entract.app.ui.getMovies
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ext.replaceFragment
-import com.cinema.entract.core.ui.*
+import com.cinema.entract.core.ui.BaseLceFragment
+import com.cinema.entract.core.ui.Error
+import com.cinema.entract.core.ui.Loading
+import com.cinema.entract.core.ui.State
+import com.cinema.entract.core.ui.Success
 import com.cinema.entract.core.widget.EmptynessLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class MoviesFragment : BaseLceFragment<EmptynessLayout>() {
+class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
 
-    private val moviesViewModel by viewModel<MoviesViewModel>()
-    private lateinit var moviesAdapter: MoviesAdapter
+    private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
+    private lateinit var onScreenAdapter: OnScreenAdapter
 
     private lateinit var datePicker: MaterialCalendarView
     private lateinit var alertDialog: AlertDialog
@@ -54,36 +62,36 @@ class MoviesFragment : BaseLceFragment<EmptynessLayout>() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_movies, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_on_screen, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        moviesAdapter = MoviesAdapter(::onMovieSelected)
+        onScreenAdapter = OnScreenAdapter(::onMovieSelected)
         with(contentView) {
             recyclerView.layoutManager = LinearLayoutManager(activity)
             recyclerView.addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
             recyclerView.setHasFixedSize(true)
-            setAdapter(moviesAdapter)
+            setAdapter(onScreenAdapter)
         }
 
         date = find(R.id.date)
         fab = find(R.id.fab)
         fab.setOnClickListener { displayDatePicker() }
 
-        observe(moviesViewModel.getState(), ::manageResource)
+        observe(cinemaViewModel.getOnScreenState(), ::manageState)
     }
 
-    private fun manageResource(state: State<OnScreen>?) {
+    private fun manageState(state: State<OnScreen>?) {
         when (state) {
             is Loading -> showLoading()
             is Success -> {
-                moviesAdapter.updateMovies(state.data?.getMovies() ?: emptyList())
+                onScreenAdapter.updateMovies(state.data?.getMovies() ?: emptyList())
                 date.text = state.data?.getDate() ?: getString(R.string.app_name)
                 showContent()
             }
             is Error -> {
-                showError(state.error) { moviesViewModel.retrieveMovies() }
+                showError(state.error) { cinemaViewModel.retrieveMovies() }
                 date.text = getString(R.string.app_name)
             }
         }
@@ -91,12 +99,7 @@ class MoviesFragment : BaseLceFragment<EmptynessLayout>() {
 
     private fun onMovieSelected(movie: Movie, cover: ImageView) {
         val fragment = prepareTransition(movie, cover)
-        requireActivity().replaceFragment(
-            R.id.mainContainer,
-            fragment,
-            cover,
-            true
-        )
+        requireActivity().replaceFragment(R.id.mainContainer, fragment, cover, true)
     }
 
     private fun prepareTransition(movie: Movie, cover: ImageView): Fragment {
@@ -117,10 +120,10 @@ class MoviesFragment : BaseLceFragment<EmptynessLayout>() {
     private fun displayDatePicker() {
         datePicker = MaterialCalendarView(context)
         datePicker.setOnDateChangedListener { _, day, _ ->
-            moviesViewModel.retrieveMovies(day.date)
+            cinemaViewModel.retrieveMovies(day.date)
             alertDialog.dismiss()
         }
-        moviesViewModel.dateRange?.let {
+        cinemaViewModel.dateRange?.let {
             datePicker.state().edit()
                 .setMinimumDate(it.minimumDate)
                 .setMaximumDate(it.maximumDate)
@@ -135,6 +138,6 @@ class MoviesFragment : BaseLceFragment<EmptynessLayout>() {
     }
 
     companion object {
-        fun newInstance(): MoviesFragment = MoviesFragment()
+        fun newInstance(): OnScreenFragment = OnScreenFragment()
     }
 }

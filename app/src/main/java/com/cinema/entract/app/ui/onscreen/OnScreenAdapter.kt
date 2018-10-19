@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.cinema.entract.app.ui.movies
+package com.cinema.entract.app.ui.onscreen
 
 import android.annotation.SuppressLint
 import android.view.View
@@ -31,8 +31,8 @@ import com.cinema.entract.core.ext.color
 import com.cinema.entract.core.ext.inflate
 import com.cinema.entract.core.views.bindView
 
-class MoviesAdapter(private val selection: (Movie, ImageView) -> Unit) :
-    RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
+class OnScreenAdapter(private val selection: (Movie, ImageView) -> Unit) :
+    RecyclerView.Adapter<OnScreenAdapter.ViewHolder>() {
 
     private var movies = emptyList<Movie>()
 
@@ -42,7 +42,7 @@ class MoviesAdapter(private val selection: (Movie, ImageView) -> Unit) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        ViewHolder(parent.inflate(R.layout.list_item_movies))
+        ViewHolder(parent.inflate(R.layout.list_item_on_screen_movie))
 
     override fun getItemCount(): Int = movies.size
 
@@ -71,8 +71,8 @@ class MoviesAdapter(private val selection: (Movie, ImageView) -> Unit) :
                 }
                 cover.transitionName = "cover_transition_$adapterPosition"
                 title.text = movie.title
-                schedule.text = context.getString(R.string.movies_schedule, movie.schedule)
-                duration.text = context.getString(R.string.movies_duration, movie.duration)
+                schedule.text = context.getString(R.string.on_screen_schedule, movie.schedule)
+                duration.text = context.getString(R.string.on_screen_duration, movie.duration)
                 originalVersion.isVisible = movie.isOriginalVersion
                 threeDimension.isVisible = movie.isThreeDimension
                 underTwelve.isInvisible = !movie.isUnderTwelve

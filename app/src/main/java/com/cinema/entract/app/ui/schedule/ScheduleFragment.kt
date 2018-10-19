@@ -26,15 +26,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cinema.entract.app.R
 import com.cinema.entract.app.model.ScheduleEntry
 import com.cinema.entract.app.ui.CinemaActivity
+import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.core.ext.observe
-import com.cinema.entract.core.ui.*
+import com.cinema.entract.core.ui.BaseLceFragment
+import com.cinema.entract.core.ui.Error
+import com.cinema.entract.core.ui.Loading
+import com.cinema.entract.core.ui.State
+import com.cinema.entract.core.ui.Success
 import com.cinema.entract.core.widget.EmptynessLayout
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.threeten.bp.LocalDate
 
 class ScheduleFragment : BaseLceFragment<EmptynessLayout>() {
 
-    private val scheduleViewModel by viewModel<ScheduleViewModel>()
+    private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
     private val scheduleAdapter = ScheduleAdapter(::handleSelection)
 
     override fun onCreateView(
@@ -52,23 +57,23 @@ class ScheduleFragment : BaseLceFragment<EmptynessLayout>() {
             setAdapter(scheduleAdapter)
         }
 
-        observe(scheduleViewModel.getSchedule(), ::displaySchedule)
+        observe(cinemaViewModel.getScheduleState(), ::manageState)
     }
 
-    private fun displaySchedule(state: State<List<ScheduleEntry>>?) {
+    private fun manageState(state: State<List<ScheduleEntry>>?) {
         when (state) {
             is Loading -> showLoading()
             is Success -> {
                 scheduleAdapter.updateSchedule(state.data ?: emptyList())
                 showContent()
             }
-            is Error -> showError(state.error) { scheduleViewModel.retrieveSchedule() }
+            is Error -> showError(state.error) { cinemaViewModel.retrieveSchedule() }
         }
 
     }
 
     private fun handleSelection(date: LocalDate) {
-        scheduleViewModel.selectDate(date)
+        cinemaViewModel.selectDate(date)
         (requireActivity() as CinemaActivity).selectMovies()
     }
 

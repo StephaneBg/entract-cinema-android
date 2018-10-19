@@ -80,8 +80,8 @@ class DetailsFragment : BaseFragment() {
             } else {
                 scaleType = ImageView.ScaleType.CENTER
                 setImageResource(R.drawable.ic_movie_black_24dp)
-                setColorFilter(context.color(R.color.primary_500))
-                setBackgroundColor(context.color(R.color.primary_50))
+                setColorFilter(context.color(R.color.primary))
+                setBackgroundColor(context.color(R.color.primary_light))
             }
         }
         find<TextView>(R.id.title).text = movie.title

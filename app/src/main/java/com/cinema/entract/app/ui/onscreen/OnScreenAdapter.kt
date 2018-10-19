@@ -66,8 +66,8 @@ class OnScreenAdapter(private val selection: (Movie) -> Unit) :
                 } else {
                     cover.scaleType = ImageView.ScaleType.CENTER
                     cover.setImageResource(R.drawable.ic_movie_black_24dp)
-                    cover.setColorFilter(context.color(R.color.primary_500))
-                    cover.setBackgroundColor(context.color(R.color.primary_50))
+                    cover.setColorFilter(context.color(R.color.primary))
+                    cover.setBackgroundColor(context.color(R.color.primary_light))
                 }
                 title.text = movie.title
                 schedule.text = context.getString(R.string.on_screen_schedule, movie.schedule)

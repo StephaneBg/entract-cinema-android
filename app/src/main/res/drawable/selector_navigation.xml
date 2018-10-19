@@ -17,6 +17,6 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:color="@color/secondary"
         android:state_checked="true" />
-    <item android:color="@color/primary_500"
+    <item android:color="@color/primary"
         android:state_checked="false" />
 </selector>

@@ -16,8 +16,8 @@
 <resources>
 
     <color name="white">#FFFFFF</color>
-    <color name="primary_500">#666666</color>
-    <color name="primary_700">#535353</color>
-    <color name="primary_50">#EDEDED</color>
+    <color name="primary">#666666</color>
+    <color name="primary_dark">#535353</color>
+    <color name="primary_light">#EDEDED</color>
     <color name="secondary">#942102</color>
 </resources>

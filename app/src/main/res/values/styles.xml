@@ -18,8 +18,8 @@
 
     <style name="Theme.Cinema"
         parent="Theme.MaterialComponents.Light">
-        <item name="colorPrimary">@color/primary_500</item>
-        <item name="colorPrimaryDark">@color/primary_700</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/secondary</item>
         <item name="alertDialogTheme">@style/Theme.Cinema.AlertDialog</item>
         <item name="windowActionBar">false</item>
@@ -38,12 +38,12 @@
 
     <style name="Widget.Cinema.Button.Dialog.Positive"
         parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">@color/primary_500</item>
+        <item name="android:textColor">@color/primary</item>
     </style>
 
     <style name="Widget.Cinema.Button.Dialog.Neutral"
         parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">@color/primary_500</item>
+        <item name="android:textColor">@color/primary</item>
     </style>
 
     <style name="Widget.Cinema.Button.Dialog.Negative"
@@ -59,6 +59,6 @@
 
     <style name="TextAppearance.Cinema.Title"
         parent="TextAppearance.MaterialComponents.Headline5">
-        <item name="android:textColor">@color/primary_700</item>
+        <item name="android:textColor">@color/secondary</item>
     </style>
 </resources>

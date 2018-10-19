@@ -79,7 +79,12 @@ class CinemaActivity : BaseActivity() {
             }
             is OnScreenFragment -> false
             else -> {
-                replaceFragment(R.id.mainContainer, OnScreenFragment.newInstance())
+                replaceFragment(
+                    R.id.mainContainer, OnScreenFragment.newInstance(),
+                    false,
+                    R.anim.fade_in,
+                    R.anim.fade_out
+                )
                 true
             }
         }
@@ -88,18 +93,33 @@ class CinemaActivity : BaseActivity() {
         when (supportFragmentManager.findFragmentById(R.id.mainContainer)) {
             is ScheduleFragment -> false
             else -> {
-                replaceFragment(R.id.mainContainer, ScheduleFragment.newInstance())
+                replaceFragment(
+                    R.id.mainContainer, ScheduleFragment.newInstance(),
+                    false,
+                    R.anim.fade_in,
+                    R.anim.fade_out
+                )
                 true
             }
         }
 
     private fun handleInformation(): Boolean {
-        replaceFragment(R.id.mainContainer, InformationFragment.newInstance())
+        replaceFragment(
+            R.id.mainContainer, InformationFragment.newInstance(),
+            false,
+            R.anim.fade_in,
+            R.anim.fade_out
+        )
         return true
     }
 
     private fun handleSettings(): Boolean {
-        replaceFragment(R.id.mainContainer, SettingsFragment.newInstance())
+        replaceFragment(
+            R.id.mainContainer, SettingsFragment.newInstance(),
+            false,
+            R.anim.fade_in,
+            R.anim.fade_out
+        )
         return true
     }
 

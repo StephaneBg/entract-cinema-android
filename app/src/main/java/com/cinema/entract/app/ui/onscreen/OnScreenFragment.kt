@@ -98,7 +98,9 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
         requireActivity().replaceFragment(
             R.id.mainContainer,
             DetailsFragment.newInstance(movie),
-            true
+            true,
+            R.anim.fade_in,
+            R.anim.fade_out
         )
     }
 

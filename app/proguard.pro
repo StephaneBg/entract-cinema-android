@@ -7,13 +7,13 @@
   public *;
 }
 
-# Kotlin
+# Most of volatile fields are updated with AFU and should not be mangled
 -keepclassmembernames class kotlinx.** {
     volatile <fields>;
 }
--keep class kotlinx.coroutines.CoroutineExceptionHandler {}
--keep class kotlinx.coroutines.internal.MainDispatcherFactory {}
--keep class kotlinx.coroutines.android.AndroidDispatcherFactory {}
+# ServiceLoader support
+-keepnames class kotlinx.coroutines.internal.MainDispatcherFactory {}
+-keepnames class kotlinx.coroutines.CoroutineExceptionHandler {}
 
 # OkHttp
 -keepattributes Signature

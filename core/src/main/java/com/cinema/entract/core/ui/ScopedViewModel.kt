@@ -22,6 +22,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 
 
@@ -52,5 +53,7 @@ open class ScopedViewModel : ViewModel(), CoroutineScope {
 
     fun emptyCallback() {}
 
-    fun emptyCallback(throwable: Throwable) {}
+    fun emptyCallback(throwable: Throwable) {
+        Timber.e(throwable)
+    }
 }

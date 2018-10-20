@@ -21,7 +21,7 @@ object Versions {
     val androidGradle = "3.2.1"
     val googleServices = "4.1.0"
     val kotlin = "1.3.0-rc-190"
-    val coroutines = "0.30.2-eap13"
+    val coroutines = "1.0.0-RC1"
     val appcompat = "1.0.0"
     val vectorDrawable = "1.0.0"
     val recyclerView = "1.0.0"

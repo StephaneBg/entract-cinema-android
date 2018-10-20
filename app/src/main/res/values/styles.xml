@@ -24,7 +24,6 @@
         <item name="alertDialogTheme">@style/Theme.Cinema.AlertDialog</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="android:listDivider">@drawable/divider</item>
     </style>

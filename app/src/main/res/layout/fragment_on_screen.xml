@@ -21,20 +21,25 @@
     android:layout_height="match_parent"
     >
 
-    <TextView
-        android:id="@+id/date"
-        style="@style/TextAppearance.Cinema.Title"
-        android:layout_width="match_parent"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_padding_size_medium"
-        android:layout_marginTop="@dimen/margin_padding_size_medium"
-        android:layout_marginEnd="@dimen/margin_padding_size_medium"
-        android:paddingBottom="@dimen/margin_padding_size_large"
+        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Date"
-        />
+        >
+
+        <TextView
+            android:id="@+id/date"
+            style="@style/TextAppearance.Cinema.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_padding_size_medium"
+            tools:text="Date"
+            />
+    </com.google.android.material.appbar.AppBarLayout>
 
     <com.cinema.entract.core.widget.EmptynessLayout
         android:id="@id/contentView"
@@ -43,7 +48,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/date"
+        app:layout_constraintTop_toBottomOf="@id/appBar"
         >
 
         <androidx.recyclerview.widget.RecyclerView
@@ -101,7 +106,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/date"
+        app:layout_constraintTop_toBottomOf="@id/appBar"
         tools:visibility="visible"
         />
 
@@ -113,7 +118,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/date"
+        app:layout_constraintTop_toBottomOf="@id/appBar"
         tools:visibility="visible"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

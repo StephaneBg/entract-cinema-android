@@ -11,8 +11,9 @@
 -keepclassmembernames class kotlinx.** {
     volatile <fields>;
 }
--keepnames class kotlinx.coroutines.CoroutineExceptionHandler {}
--keepnames class kotlinx.coroutines.internal.MainDispatcherFactory {}
+-keep class kotlinx.coroutines.CoroutineExceptionHandler {}
+-keep class kotlinx.coroutines.internal.MainDispatcherFactory {}
+-keep class kotlinx.coroutines.android.AndroidDispatcherFactory {}
 
 # OkHttp
 -keepattributes Signature

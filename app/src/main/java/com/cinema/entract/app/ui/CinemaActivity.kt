@@ -93,6 +93,7 @@ class CinemaActivity : BaseActivity() {
         when (supportFragmentManager.findFragmentById(R.id.mainContainer)) {
             is ScheduleFragment -> false
             else -> {
+                supportFragmentManager.popBackStack()
                 replaceFragment(
                     R.id.mainContainer, ScheduleFragment.newInstance(),
                     false,
@@ -104,6 +105,7 @@ class CinemaActivity : BaseActivity() {
         }
 
     private fun handleInformation(): Boolean {
+        supportFragmentManager.popBackStack()
         replaceFragment(
             R.id.mainContainer, InformationFragment.newInstance(),
             false,
@@ -114,6 +116,7 @@ class CinemaActivity : BaseActivity() {
     }
 
     private fun handleSettings(): Boolean {
+        supportFragmentManager.popBackStack()
         replaceFragment(
             R.id.mainContainer, SettingsFragment.newInstance(),
             false,
@@ -125,11 +128,10 @@ class CinemaActivity : BaseActivity() {
 
     private fun handleEvent(url: String?) {
         if (!url.isNullOrEmpty()) {
-            val requestOptions = RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL)
             Glide.with(this)
                 .asBitmap()
                 .load(url)
-                .apply(requestOptions)
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL))
                 .addListener(object : RequestListener<Bitmap?> {
                     override fun onLoadFailed(
                         e: GlideException?,

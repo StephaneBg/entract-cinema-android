@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.cinema.entract.app.ui
+package com.cinema.entract.app.ui.cinema
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -30,7 +30,6 @@ import com.cinema.entract.core.ui.State
 import com.cinema.entract.core.ui.Success
 import com.cinema.entract.data.ext.longFormatToUi
 import com.cinema.entract.data.interactor.CinemaUseCase
-import com.cinema.entract.data.interactor.PreferencesUseCase
 import kotlinx.coroutines.coroutineScope
 import org.threeten.bp.LocalDate
 import timber.log.Timber
@@ -38,16 +37,17 @@ import timber.log.Timber
 class CinemaViewModel(
     private val useCase: CinemaUseCase,
     private val movieMapper: MovieMapper,
-    private val scheduleMapper: ScheduleMapper,
-    private val prefsUseCase: PreferencesUseCase
+    private val scheduleMapper: ScheduleMapper
 ) : ScopedViewModel() {
 
+    private val cinemaMenu = MutableLiveData<CinemaMenu>()
     private val onScreenState = MutableLiveData<State<OnScreen>>()
     private val scheduleState = MutableLiveData<State<List<ScheduleEntry>>>()
-    private val eventUrl = MutableLiveData<String>()
 
     var dateRange: DateRange? = null
         private set
+
+    fun getCinemaMenu(): LiveData<CinemaMenu> = cinemaMenu
 
     fun getOnScreenState(): LiveData<State<OnScreen>> {
         onScreenState.value ?: retrieveMovies()
@@ -98,18 +98,7 @@ class CinemaViewModel(
     fun selectDate(date: LocalDate) {
         useCase.selectDate(date)
         retrieveMovies(date)
-    }
-
-    fun getEventUrl(): LiveData<String> {
-        eventUrl.value ?: if (prefsUseCase.isEventEnabled()) loadEventUrl()
-        return eventUrl
-    }
-
-    private fun loadEventUrl() {
-        launchAsync(
-            { eventUrl.postValue(useCase.getEventUrl()) },
-            ::emptyCallback
-        )
+        cinemaMenu.postValue(CinemaMenu.OnScreenMenu())
     }
 }
 

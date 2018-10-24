@@ -27,7 +27,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.cinema.entract.app.R
-import com.cinema.entract.app.ui.load
+import com.cinema.entract.app.ext.load
 import com.cinema.entract.core.ext.find
 import com.google.android.material.button.MaterialButton
 

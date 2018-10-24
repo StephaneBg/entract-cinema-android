@@ -34,10 +34,9 @@ import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import com.cinema.entract.app.R
+import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.model.Movie
-import com.cinema.entract.app.ui.CinemaActivity
-import com.cinema.entract.app.ui.CinemaViewModel
-import com.cinema.entract.app.ui.load
+import com.cinema.entract.app.ui.cinema.CinemaViewModel
 import com.cinema.entract.core.ext.color
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.inflate
@@ -136,7 +135,6 @@ class DetailsFragment : BaseFragment() {
                     find<ImageView>(R.id.threeDimension).isVisible = movie.isThreeDimension
                     setOnClickListener {
                         cinemaViewModel.selectDate(movie.date)
-                        (requireActivity() as CinemaActivity).selectMovies()
                     }
                 }
             }

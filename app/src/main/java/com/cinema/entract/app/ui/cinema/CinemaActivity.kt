@@ -14,18 +14,9 @@
  * limitations under the License.
  */
 
-package com.cinema.entract.app.ui
+package com.cinema.entract.app.ui.cinema
 
-import android.graphics.Bitmap
 import android.os.Bundle
-import android.widget.ImageView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.Target
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ui.details.DetailsFragment
 import com.cinema.entract.app.ui.event.EventDialogFragment
@@ -51,18 +42,22 @@ class CinemaActivity : BaseActivity() {
         setContentView(R.layout.activity_cinema)
         initBottomNavigation()
 
-        observe(cinemaViewModel.getEventUrl(), ::handleEvent)
+        observe(cinemaViewModel.getCinemaMenu(), ::handleMenu)
         savedInstanceState ?: addFragment(R.id.mainContainer, OnScreenFragment.newInstance())
     }
 
-    fun selectMovies() {
-        bottomNav.selectedItemId = R.id.movies
+    override fun onStart() {
+        super.onStart()
+
+        intent?.getStringExtra(EXTRA_EVENT_URL)?.let {
+            EventDialogFragment.show(supportFragmentManager, it)
+        }
     }
 
     private fun initBottomNavigation() {
         bottomNav.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.movies -> handleMovies()
+                R.id.on_screen -> handleOnScreen()
                 R.id.schedule -> handleSchedule()
                 R.id.information -> handleInformation()
                 R.id.settings -> handleSettings()
@@ -71,7 +66,11 @@ class CinemaActivity : BaseActivity() {
         }
     }
 
-    private fun handleMovies(): Boolean =
+    private fun handleMenu(menu: CinemaMenu?) {
+        menu?.let { bottomNav.selectedItemId = it.menuId }
+    }
+
+    private fun handleOnScreen(): Boolean =
         when (supportFragmentManager.findFragmentById(R.id.mainContainer)) {
             is DetailsFragment -> {
                 supportFragmentManager.popBackStack()
@@ -126,34 +125,7 @@ class CinemaActivity : BaseActivity() {
         return true
     }
 
-    private fun handleEvent(url: String?) {
-        if (!url.isNullOrEmpty()) {
-            Glide.with(this)
-                .asBitmap()
-                .load(url)
-                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL))
-                .addListener(object : RequestListener<Bitmap?> {
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Bitmap?>?,
-                        isFirstResource: Boolean
-                    ): Boolean = true
-
-                    override fun onResourceReady(
-                        resource: Bitmap?,
-                        model: Any?,
-                        target: Target<Bitmap?>?,
-                        dataSource: DataSource?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        EventDialogFragment.show(supportFragmentManager, url)
-                        return true
-                    }
-                })
-                .submit()
-        }
+    companion object {
+        const val EXTRA_EVENT_URL = "EXTRA_EVENT_URL"
     }
 }
-
-fun ImageView.load(url: String) = Glide.with(context).load(url).into(this)

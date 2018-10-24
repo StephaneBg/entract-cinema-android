@@ -21,7 +21,7 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.cinema.entract.app.R
-import com.cinema.entract.app.ui.CinemaActivity
+import com.cinema.entract.app.ui.cinema.CinemaActivity
 import com.cinema.entract.data.repository.CinemaRepository
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage

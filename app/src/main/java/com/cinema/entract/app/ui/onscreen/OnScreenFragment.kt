@@ -27,11 +27,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cinema.entract.app.R
 import com.cinema.entract.app.model.Movie
-import com.cinema.entract.app.ui.CinemaViewModel
-import com.cinema.entract.app.ui.OnScreen
+import com.cinema.entract.app.ui.cinema.CinemaViewModel
+import com.cinema.entract.app.ui.cinema.OnScreen
+import com.cinema.entract.app.ui.cinema.getDate
+import com.cinema.entract.app.ui.cinema.getMovies
 import com.cinema.entract.app.ui.details.DetailsFragment
-import com.cinema.entract.app.ui.getDate
-import com.cinema.entract.app.ui.getMovies
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ext.replaceFragment

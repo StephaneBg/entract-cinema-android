@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cinema.entract.app.R
 import com.cinema.entract.app.model.ScheduleEntry
+import com.cinema.entract.app.ui.cinema.CinemaActivity
 import com.cinema.entract.app.ui.cinema.CinemaViewModel
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ui.BaseLceFragment
@@ -73,6 +74,7 @@ class ScheduleFragment : BaseLceFragment<EmptynessLayout>() {
 
     private fun handleSelection(date: LocalDate) {
         cinemaViewModel.selectDate(date)
+        (activity as CinemaActivity).selectOnScreen()
     }
 
     companion object {

@@ -25,16 +25,13 @@ import com.cinema.entract.app.ui.onscreen.OnScreenFragment
 import com.cinema.entract.app.ui.schedule.ScheduleFragment
 import com.cinema.entract.app.ui.settings.SettingsFragment
 import com.cinema.entract.core.ext.addFragment
-import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ext.replaceFragment
 import com.cinema.entract.core.ui.BaseActivity
 import com.cinema.entract.core.views.bindView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import org.koin.android.ext.android.inject
 
 class CinemaActivity : BaseActivity() {
 
-    private val cinemaViewModel by inject<CinemaViewModel>()
     private val bottomNav by bindView<BottomNavigationView>(R.id.bottomNavigation)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +39,6 @@ class CinemaActivity : BaseActivity() {
         setContentView(R.layout.activity_cinema)
         initBottomNavigation()
 
-        observe(cinemaViewModel.getCinemaMenu(), ::handleMenu)
         savedInstanceState ?: addFragment(R.id.mainContainer, OnScreenFragment.newInstance())
     }
 
@@ -52,6 +48,10 @@ class CinemaActivity : BaseActivity() {
         intent?.getStringExtra(EXTRA_EVENT_URL)?.let {
             EventDialogFragment.show(supportFragmentManager, it)
         }
+    }
+
+    fun selectOnScreen() {
+        bottomNav.selectedItemId = R.id.on_screen
     }
 
     private fun initBottomNavigation() {
@@ -64,10 +64,6 @@ class CinemaActivity : BaseActivity() {
                 else -> false
             }
         }
-    }
-
-    private fun handleMenu(menu: CinemaMenu?) {
-        menu?.let { bottomNav.selectedItemId = it.menuId }
     }
 
     private fun handleOnScreen(): Boolean =

@@ -40,14 +40,12 @@ class CinemaViewModel(
     private val scheduleMapper: ScheduleMapper
 ) : ScopedViewModel() {
 
-    private val cinemaMenu = MutableLiveData<CinemaMenu>()
     private val onScreenState = MutableLiveData<State<OnScreen>>()
     private val scheduleState = MutableLiveData<State<List<ScheduleEntry>>>()
+    private val detailedMovie = MutableLiveData<Movie>()
 
     var dateRange: DateRange? = null
         private set
-
-    fun getCinemaMenu(): LiveData<CinemaMenu> = cinemaMenu
 
     fun getOnScreenState(): LiveData<State<OnScreen>> {
         onScreenState.value ?: retrieveMovies()
@@ -98,8 +96,11 @@ class CinemaViewModel(
     fun selectDate(date: LocalDate) {
         useCase.selectDate(date)
         retrieveMovies(date)
-        cinemaMenu.postValue(CinemaMenu.OnScreenMenu())
     }
+
+    fun getDetailedMovie(): LiveData<Movie> = detailedMovie
+
+    fun selectMovie(movie: Movie) = detailedMovie.postValue(movie)
 }
 
 typealias OnScreen = Pair<List<Movie>, String>

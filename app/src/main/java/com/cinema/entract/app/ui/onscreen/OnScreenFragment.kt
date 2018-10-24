@@ -95,9 +95,10 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
     }
 
     private fun onMovieSelected(movie: Movie) {
+        cinemaViewModel.selectMovie(movie)
         requireActivity().replaceFragment(
             R.id.mainContainer,
-            DetailsFragment.newInstance(movie),
+            DetailsFragment.newInstance(),
             true,
             R.anim.fade_in,
             R.anim.fade_out

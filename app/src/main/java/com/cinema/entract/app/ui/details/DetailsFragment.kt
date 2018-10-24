@@ -31,15 +31,16 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.net.toUri
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.model.Movie
+import com.cinema.entract.app.ui.cinema.CinemaActivity
 import com.cinema.entract.app.ui.cinema.CinemaViewModel
 import com.cinema.entract.core.ext.color
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.inflate
+import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ext.toSpanned
 import com.cinema.entract.core.ui.BaseFragment
 import com.cinema.entract.data.ext.longFormatToUi
@@ -62,11 +63,12 @@ class DetailsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        displayMovieDetails()
+
+        observe(cinemaViewModel.getDetailedMovie(), ::displayMovieDetails)
     }
 
-    private fun displayMovieDetails() {
-        val movie = arguments?.getParcelable<Movie>(MOVIE) ?: error("Use newInstance()!")
+    private fun displayMovieDetails(movie: Movie?) {
+        movie ?: error("No selected movie")
 
         find<TextView>(R.id.dateTime).text = getString(
             R.string.details_date_with_time,
@@ -135,6 +137,7 @@ class DetailsFragment : BaseFragment() {
                     find<ImageView>(R.id.threeDimension).isVisible = movie.isThreeDimension
                     setOnClickListener {
                         cinemaViewModel.selectDate(movie.date)
+                        (activity as CinemaActivity).selectOnScreen()
                     }
                 }
             }
@@ -173,10 +176,6 @@ class DetailsFragment : BaseFragment() {
     }
 
     companion object {
-        private const val MOVIE = "MOVIE"
-
-        fun newInstance(movie: Movie) = DetailsFragment().apply {
-            arguments = bundleOf(MOVIE to movie)
-        }
+        fun newInstance() = DetailsFragment()
     }
 }

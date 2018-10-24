@@ -59,17 +59,17 @@ class CinemaViewModel(
 
     fun retrieveMovies() {
         onScreenState.postValue(Loading())
-        launchAsync(::onSuccess, ::onError)
+        launchAsync(::onRetrieveMoviesSuccess, ::onRetrieveMoviesError)
     }
 
-    private suspend fun onSuccess() = coroutineScope {
+    private suspend fun onRetrieveMoviesSuccess() = coroutineScope {
         val movies = useCase.getMovies().map { movieMapper.mapToUi(it) }
         val range = useCase.getDateRange()
         dateRange = DateRange(range.minimumDate, range.maximumDate)
         onScreenState.postValue(Success(movies to useCase.getDate().longFormatToUi()))
     }
 
-    private fun onError(throwable: Throwable) {
+    private fun onRetrieveMoviesError(throwable: Throwable) {
         Timber.e(throwable)
         onScreenState.postValue(Error(throwable))
     }
@@ -81,16 +81,17 @@ class CinemaViewModel(
 
     fun retrieveSchedule() {
         scheduleState.postValue(Loading())
-        launchAsync(
-            {
-                val schedule = useCase.getSchedule()
-                scheduleState.postValue(Success(scheduleMapper.mapToUi(schedule)))
-            },
-            {
-                Timber.e(it)
-                scheduleState.postValue(Error(it))
-            }
-        )
+        launchAsync(::onRetrieveScheduleSuccess, ::onRetrieveScheduleError)
+    }
+
+    private suspend fun onRetrieveScheduleSuccess() {
+        val schedule = useCase.getSchedule()
+        scheduleState.postValue(Success(scheduleMapper.mapToUi(schedule)))
+    }
+
+    private fun onRetrieveScheduleError(throwable: Throwable) {
+        Timber.e(throwable)
+        scheduleState.postValue(Error(throwable))
     }
 
     fun selectDate(date: LocalDate) {

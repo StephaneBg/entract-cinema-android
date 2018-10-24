@@ -17,6 +17,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
+def isDebug = false
+
 android {
 
     buildToolsVersion Android.buildToolsVersion
@@ -28,6 +30,7 @@ android {
     }
 
     defaultConfig {
+        applicationId "com.cinema.entract.app"
         versionCode 10
         versionName "0.7.1"
         minSdkVersion Android.minSdkVersion
@@ -36,18 +39,8 @@ android {
         resConfigs "fr"
     }
 
-    signingConfigs {
-        release {
-            storeFile file(appSigning.storeFilePath)
-            storePassword appSigning.storePassword
-            keyAlias appSigning.keyAlias
-            keyPassword appSigning.keyPassword
-        }
-    }
-
     buildTypes {
         release {
-            signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources true
             debuggable false
@@ -56,8 +49,10 @@ android {
         }
 
         debug {
+            isDebug = true
             minifyEnabled false
             debuggable true
+            applicationIdSuffix ".debug"
         }
     }
 
@@ -97,4 +92,6 @@ dependencies {
     implementation Libs.timber
 }
 
-apply plugin: 'com.google.gms.google-services'
+if (file("google-services.json").exists() && !isDebug) {
+    apply plugin: 'com.google.gms.google-services'
+}

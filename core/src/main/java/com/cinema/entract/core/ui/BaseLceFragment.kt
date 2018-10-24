@@ -19,6 +19,7 @@ package com.cinema.entract.core.ui
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.CallSuper
+import androidx.core.widget.ContentLoadingProgressBar
 import com.cinema.entract.core.R
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.hide
@@ -29,7 +30,7 @@ import com.cinema.entract.core.widget.ErrorView
 open class BaseLceFragment<T : View> : BaseFragment() {
 
     lateinit var contentView: T
-    lateinit var loadingView: View
+    lateinit var loadingView: ContentLoadingProgressBar
     lateinit var errorView: ErrorView
 
     @CallSuper

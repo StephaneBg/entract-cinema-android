@@ -67,5 +67,4 @@ class CinemaUseCase(
 
     private fun canDisplayMedia(): Boolean =
         !repo.getUserPreferences().isOnlyOnWifi() || networkUtils.isConnectedOnWifi()
-
 }

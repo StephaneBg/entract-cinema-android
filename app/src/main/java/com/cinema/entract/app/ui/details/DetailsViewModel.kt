@@ -20,7 +20,7 @@ import com.cinema.entract.app.model.Movie
 import com.cinema.entract.core.ui.ScopedViewModel
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
-import java.util.*
+import java.util.Calendar
 
 class DetailsViewModel : ScopedViewModel() {
 

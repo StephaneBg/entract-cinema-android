@@ -48,7 +48,6 @@ import org.jetbrains.anko.find
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 class DetailsFragment : BaseFragment() {
 
     private val detailsViewModel by viewModel<DetailsViewModel>()
@@ -59,7 +58,6 @@ class DetailsFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_details, container, false)
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

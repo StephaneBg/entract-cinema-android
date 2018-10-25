@@ -43,3 +43,5 @@ dependencies {
     implementation Libs.koinAndroid
     implementation Libs.jsr310
 }
+
+apply from: "../ktlint.gradle"

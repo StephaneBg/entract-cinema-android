@@ -48,3 +48,5 @@ dependencies {
     implementation Libs.jsr310
     implementation Libs.timber
 }
+
+apply from: "../ktlint.gradle"

@@ -69,7 +69,6 @@ class ScheduleFragment : BaseLceFragment<EmptynessLayout>() {
             }
             is Error -> showError(state.error) { cinemaViewModel.retrieveSchedule() }
         }
-
     }
 
     private fun handleSelection(date: LocalDate) {

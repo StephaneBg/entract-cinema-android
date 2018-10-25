@@ -40,6 +40,7 @@ object Versions {
     val jsr310 = "1.1.1"
     val firebaseCore = "16.0.3"
     val firebaseMessaging = "17.3.3"
+    val ktlint = "0.29.0"
 }
 
 object Build {
@@ -84,4 +85,5 @@ object Libs {
     val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
     val datePicker = "com.github.prolificinteractive:material-calendarview:${Versions.datePicker}"
     val jsr310 = "com.jakewharton.threetenabp:threetenabp:${Versions.jsr310}"
+    val ktlint = "com.github.shyiko:ktlint:${Versions.ktlint}"
 }

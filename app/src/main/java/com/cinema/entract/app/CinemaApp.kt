@@ -27,7 +27,6 @@ import org.koin.android.ext.android.startKoin
 import org.koin.log.EmptyLogger
 import timber.log.Timber
 
-
 class CinemaApp : Application() {
 
     override fun onCreate() {

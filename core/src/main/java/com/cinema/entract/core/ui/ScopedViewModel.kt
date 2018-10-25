@@ -25,7 +25,6 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 
-
 open class ScopedViewModel : ViewModel(), CoroutineScope {
 
     private val job = Job()

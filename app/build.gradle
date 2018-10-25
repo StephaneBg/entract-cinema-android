@@ -47,7 +47,7 @@ android {
             keyPassword appSigning.keyPassword
         }
     }
-    
+
     buildTypes {
         release {
             signingConfig signingConfigs.release
@@ -105,3 +105,5 @@ dependencies {
 if (file("google-services.json").exists() && !isDebug) {
     apply plugin: 'com.google.gms.google-services'
 }
+
+apply from: "../ktlint.gradle"

@@ -16,5 +16,5 @@
 
 package com.cinema.entract.core.ext
 
-infix fun <T> Collection<T>.sameContentWith(collection: Collection<T>)
-        = collection.let { this.size == it.size && this.containsAll(it) }
+infix fun <T> Collection<T>.sameContentWith(collection: Collection<T>) =
+    collection.let { this.size == it.size && this.containsAll(it) }

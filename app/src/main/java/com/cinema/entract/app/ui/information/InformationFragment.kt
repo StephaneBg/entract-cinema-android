@@ -29,7 +29,6 @@ import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ui.BaseFragment
 import org.jetbrains.anko.browse
 
-
 class InformationFragment : BaseFragment() {
 
     override fun onCreateView(

@@ -19,7 +19,11 @@ package com.cinema.entract.remote.di
 import com.cinema.entract.data.repository.CinemaRemote
 import com.cinema.entract.remote.CinemaRemoteImpl
 import com.cinema.entract.remote.createService
-import com.cinema.entract.remote.mapper.*
+import com.cinema.entract.remote.mapper.DateRangeRemoteMapper
+import com.cinema.entract.remote.mapper.DayRemoteMapper
+import com.cinema.entract.remote.mapper.EventRemoteMapper
+import com.cinema.entract.remote.mapper.MovieRemoteMapper
+import com.cinema.entract.remote.mapper.WeekRemoteMapper
 import org.koin.dsl.module.module
 
 val remoteModule = module {

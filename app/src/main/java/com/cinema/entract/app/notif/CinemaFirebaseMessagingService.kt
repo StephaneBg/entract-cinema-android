@@ -72,7 +72,6 @@ class CinemaFirebaseMessagingService : FirebaseMessagingService(), CoroutineScop
         NotificationManagerCompat.from(this).notify(0, builder.build())
     }
 
-
     companion object {
         private const val CHANNEL_ID = "Grenade Entract Cinema"
     }

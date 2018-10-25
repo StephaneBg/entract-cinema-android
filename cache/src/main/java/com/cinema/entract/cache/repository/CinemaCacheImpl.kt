@@ -19,5 +19,4 @@ package com.cinema.entract.cache.repository
 import android.content.Context
 import com.cinema.entract.data.repository.CinemaCache
 
-
 class CinemaCacheImpl(private val context: Context) : CinemaCache

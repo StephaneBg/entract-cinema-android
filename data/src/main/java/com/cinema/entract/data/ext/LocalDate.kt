@@ -18,7 +18,7 @@ package com.cinema.entract.data.ext
 
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
-import java.util.*
+import java.util.Locale
 
 private val longFormatter = DateTimeFormatter.ofPattern("EEEE d MMMM", Locale.FRANCE)
 private val shortFormatter = DateTimeFormatter.ofPattern("d MMMM", Locale.FRANCE)

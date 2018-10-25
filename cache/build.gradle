@@ -46,3 +46,5 @@ dependencies {
 
     kapt Libs.roomCompiler
 }
+
+apply from: "../ktlint.gradle"

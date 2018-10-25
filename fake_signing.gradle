@@ -1,0 +1,8 @@
+ext {
+    appSigning = [
+            storeFilePath: "keystore.jks",
+            storePassword: "",
+            keyAlias     : "",
+            keyPassword  : ""
+    ]
+}

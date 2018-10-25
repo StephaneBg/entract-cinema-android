@@ -29,4 +29,5 @@ build/
 # Keys
 key
 *.jks
+signing.gradle
 google-services.json

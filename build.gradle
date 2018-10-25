@@ -41,3 +41,10 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+if (file("signing.gradle").exists()) {
+    apply from: "./signing.gradle"
+}
+else {
+    apply from: "./fake_signing.gradle"
+}

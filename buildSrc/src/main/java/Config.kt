@@ -19,9 +19,9 @@ import org.gradle.api.JavaVersion
 object Versions {
     val java = JavaVersion.VERSION_1_8
     val androidGradle = "3.2.1"
-    val googleServices = "4.1.0"
-    val kotlin = "1.3.0-rc-190"
-    val coroutines = "1.0.0-RC1"
+    val googleServices = "4.2.0"
+    val kotlin = "1.3.0"
+    val coroutines = "1.0.0"
     val appcompat = "1.0.0"
     val vectorDrawable = "1.0.0"
     val recyclerView = "1.0.0"
@@ -38,8 +38,8 @@ object Versions {
     val glide = "4.8.0"
     val datePicker = "2.0.0"
     val jsr310 = "1.1.1"
-    val firebaseCore = "16.0.3"
-    val firebaseMessaging = "17.3.3"
+    val firebaseCore = "16.0.4"
+    val firebaseMessaging = "17.3.4"
     val ktlint = "0.29.0"
 }
 

@@ -25,13 +25,17 @@ import com.cinema.entract.app.ui.onscreen.OnScreenFragment
 import com.cinema.entract.app.ui.schedule.ScheduleFragment
 import com.cinema.entract.app.ui.settings.SettingsFragment
 import com.cinema.entract.core.ext.addFragment
+import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ext.replaceFragment
 import com.cinema.entract.core.ui.BaseActivity
+import com.cinema.entract.core.utils.Event
 import com.cinema.entract.core.views.bindView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CinemaActivity : BaseActivity() {
 
+    private val cinemaViewModel by viewModel<CinemaViewModel>()
     private val bottomNav by bindView<BottomNavigationView>(R.id.bottomNavigation)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,13 +44,13 @@ class CinemaActivity : BaseActivity() {
         initBottomNavigation()
 
         savedInstanceState ?: addFragment(R.id.mainContainer, OnScreenFragment.newInstance())
+        observe(cinemaViewModel.getEventUrl(), ::handleEvent)
     }
 
-    override fun onStart() {
-        super.onStart()
-
-        intent?.getStringExtra(EXTRA_EVENT_URL)?.let {
-            EventDialogFragment.show(supportFragmentManager, it)
+    private fun handleEvent(event: Event<String>?) {
+        when (val url = event?.getContent()) {
+            null, "" -> Unit
+            else -> EventDialogFragment.show(supportFragmentManager, url)
         }
     }
 
@@ -72,7 +76,10 @@ class CinemaActivity : BaseActivity() {
                 supportFragmentManager.popBackStack()
                 true
             }
-            is OnScreenFragment -> false
+            is OnScreenFragment -> {
+                cinemaViewModel.retrieveTodayMovies()
+                true
+            }
             else -> {
                 replaceFragment(
                     R.id.mainContainer, OnScreenFragment.newInstance(),
@@ -119,9 +126,5 @@ class CinemaActivity : BaseActivity() {
             R.anim.fade_out
         )
         return true
-    }
-
-    companion object {
-        const val EXTRA_EVENT_URL = "EXTRA_EVENT_URL"
     }
 }

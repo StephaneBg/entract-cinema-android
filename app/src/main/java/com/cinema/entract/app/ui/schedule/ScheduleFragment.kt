@@ -72,7 +72,7 @@ class ScheduleFragment : BaseLceFragment<EmptynessLayout>() {
     }
 
     private fun handleSelection(date: LocalDate) {
-        cinemaViewModel.selectDate(date)
+        cinemaViewModel.retrieveMovies(date)
         (activity as CinemaActivity).selectOnScreen()
     }
 

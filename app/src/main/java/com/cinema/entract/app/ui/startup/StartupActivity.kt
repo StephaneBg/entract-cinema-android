@@ -18,7 +18,6 @@ package com.cinema.entract.app.ui.startup
 
 import android.graphics.Bitmap
 import android.os.Bundle
-import androidx.core.widget.ContentLoadingProgressBar
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -28,31 +27,29 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ui.cinema.CinemaActivity
+import com.cinema.entract.app.ui.cinema.CinemaViewModel
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ui.BaseActivity
-import org.jetbrains.anko.find
-import org.jetbrains.anko.intentFor
+import com.cinema.entract.core.utils.Event
 import org.jetbrains.anko.startActivity
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class StartupActivity : BaseActivity() {
 
-    private val startupViewModel by inject<StartupViewModel>()
+    private val cinemaViewModel by viewModel<CinemaViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_startup)
-        find<ContentLoadingProgressBar>(R.id.progress).show()
-
-        observe(startupViewModel.getEventUrl(), ::handleEvent)
+        observe(cinemaViewModel.getEventUrl(), ::handleEvent)
     }
 
-    private fun handleEvent(url: String?) {
-        if (url.isNullOrEmpty()) {
-            startActivity<CinemaActivity>()
-        } else {
-            Glide.with(this)
+    private fun handleEvent(event: Event<String>?) {
+        when (val url = event?.peekContent()) {
+            null -> Unit
+            "" -> closeStartup()
+            else -> Glide.with(this)
                 .asBitmap()
                 .load(url)
                 .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL))
@@ -63,7 +60,7 @@ class StartupActivity : BaseActivity() {
                         target: Target<Bitmap?>?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        startActivity<CinemaActivity>()
+                        closeStartup()
                         return true
                     }
 
@@ -74,11 +71,16 @@ class StartupActivity : BaseActivity() {
                         dataSource: DataSource?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        startActivity(intentFor<CinemaActivity>(CinemaActivity.EXTRA_EVENT_URL to url))
+                        closeStartup()
                         return true
                     }
                 })
                 .submit()
         }
+    }
+
+    private fun closeStartup() {
+        startActivity<CinemaActivity>()
+        finish()
     }
 }

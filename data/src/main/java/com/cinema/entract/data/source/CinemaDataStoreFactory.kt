@@ -17,8 +17,8 @@
 package com.cinema.entract.data.source
 
 class CinemaDataStoreFactory(
-    private val cinemaCacheDataStore: CinemaCacheDataStore,
-    private val cinemaRemoteDataStore: CinemaRemoteDataStore
+    private val cinemaCacheDataStore: CinemaDataStore,
+    private val cinemaRemoteDataStore: CinemaDataStore
 ) {
 
     // TODO Add logic for cache management

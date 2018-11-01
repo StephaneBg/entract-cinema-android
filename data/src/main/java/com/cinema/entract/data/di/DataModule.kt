@@ -20,6 +20,7 @@ import com.cinema.entract.data.interactor.CinemaUseCase
 import com.cinema.entract.data.interactor.PreferencesUseCase
 import com.cinema.entract.data.repository.CinemaRepository
 import com.cinema.entract.data.source.CinemaCacheDataStore
+import com.cinema.entract.data.source.CinemaDataStore
 import com.cinema.entract.data.source.CinemaDataStoreFactory
 import com.cinema.entract.data.source.CinemaRemoteDataStore
 import org.koin.dsl.module.module
@@ -29,8 +30,8 @@ val dataModule = module {
     single { CinemaUseCase(get(), get()) }
     single { PreferencesUseCase(get()) }
 
-    factory { CinemaRemoteDataStore(get()) }
-    factory { CinemaCacheDataStore(get()) }
-    factory { CinemaDataStoreFactory(get(), get()) }
+    factory<CinemaDataStore>(name = "remote") { CinemaRemoteDataStore(get()) }
+    factory<CinemaDataStore>(name = "cache") { CinemaCacheDataStore(get()) }
+    factory { CinemaDataStoreFactory(get("cache"), get("remote")) }
     factory { CinemaRepository(get(), get()) }
 }

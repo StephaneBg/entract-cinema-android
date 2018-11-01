@@ -35,7 +35,7 @@ class CinemaRepository(
     suspend fun getParameters(): DateRangeData =
         dataStoreFactory.retrieveDataStore().getParameters()
 
-    suspend fun getEvent(): String = dataStoreFactory.retrieveDataStore().getEventUrl()
+    suspend fun getEventUrl(): String = dataStoreFactory.retrieveDataStore().getEventUrl()
 
     suspend fun registerNotifications(token: String) =
         dataStoreFactory.retrieveDataStore().registerNotifications(token)

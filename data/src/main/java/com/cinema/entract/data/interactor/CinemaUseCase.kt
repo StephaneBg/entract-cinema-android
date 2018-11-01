@@ -59,7 +59,7 @@ class CinemaUseCase(
 
     suspend fun getSchedule(): List<WeekData> = repo.getSchedule().filter { it.hasMovies }
 
-    suspend fun getEventUrl(): String = repo.getEvent()
+    suspend fun getEventUrl(): String = repo.getEventUrl()
 
     fun selectDate(selectedDate: LocalDate) {
         date = selectedDate

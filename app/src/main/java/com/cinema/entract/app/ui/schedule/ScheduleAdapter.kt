@@ -29,7 +29,6 @@ import com.cinema.entract.app.model.ScheduleEntry
 import com.cinema.entract.app.model.WeekHeader
 import com.cinema.entract.core.ext.inflate
 import com.cinema.entract.core.views.bindView
-import com.cinema.entract.data.ext.isTodayOrLater
 import org.threeten.bp.LocalDate
 
 class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
@@ -73,7 +72,7 @@ class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
         ScheduleViewHolder<DayHeader> {
         override fun bind(model: DayHeader) {
             (itemView as TextView).text = model.dateUi
-            manageSelection(itemView, model.date)
+            itemView.setOnClickListener { selection(model.date) }
         }
     }
 
@@ -92,17 +91,7 @@ class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
             originalVersion.isVisible = model.movie.isOriginalVersion
             threeDimension.isVisible = model.movie.isThreeDimension
             underTwelve.isVisible = model.movie.isUnderTwelve
-            manageSelection(itemView, model.date)
-        }
-    }
-
-    private fun manageSelection(itemView: View, date: LocalDate) {
-        if (date.isTodayOrLater()) {
-            itemView.alpha = 1.0f
-            itemView.setOnClickListener { selection(date) }
-        } else {
-            itemView.alpha = DISABLED_ALPHA
-            itemView.setOnClickListener { }
+            itemView.setOnClickListener { selection(model.date) }
         }
     }
 
@@ -111,7 +100,6 @@ class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
     }
 
     companion object {
-        private const val DISABLED_ALPHA = 0.4f
         private const val TYPE_WEEK_HEADER = 0
         private const val TYPE_DAY_HEADER = 1
         private const val TYPE_MOVIE = 2

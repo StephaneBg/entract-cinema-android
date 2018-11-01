@@ -20,6 +20,7 @@ import com.cinema.entract.app.model.DayHeader
 import com.cinema.entract.app.model.MovieEntry
 import com.cinema.entract.app.model.ScheduleEntry
 import com.cinema.entract.app.model.WeekHeader
+import com.cinema.entract.data.ext.isTodayOrLater
 import com.cinema.entract.data.ext.longFormatToUi
 import com.cinema.entract.data.ext.shortFormatToUi
 import com.cinema.entract.data.model.WeekData
@@ -32,7 +33,9 @@ class ScheduleMapper(private val mapper: MovieMapper) :
         model.forEach { week ->
             list.add(WeekHeader(formatWeekHeader(week)))
 
-            week.days.filter { it.movies.isNotEmpty() }
+            week.days
+                .filter { it.movies.isNotEmpty() }
+                .filter { it.date.isTodayOrLater() }
                 .forEach { day ->
                     list.add(DayHeader(day.date.longFormatToUi(), day.date))
 

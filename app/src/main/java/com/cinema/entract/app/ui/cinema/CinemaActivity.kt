@@ -58,6 +58,14 @@ class CinemaActivity : BaseActivity() {
         bottomNav.selectedItemId = R.id.on_screen
     }
 
+    override fun onBackPressed() {
+        if (supportFragmentManager.findFragmentById(R.id.mainContainer) is OnScreenFragment) {
+            super.onBackPressed()
+        } else {
+            selectOnScreen()
+        }
+    }
+
     private fun initBottomNavigation() {
         bottomNav.setOnNavigationItemSelectedListener {
             when (it.itemId) {

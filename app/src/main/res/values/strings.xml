@@ -15,8 +15,7 @@
   -->
 <resources>
 
-    <string name="app_name"
-        translatable="false">Entract Grenade Cinema</string>
+    <string name="app_name">Entract Grenade Cinema</string>
 
     <string name="menu_today">Séances</string>
     <string name="menu_coming">Programme</string>

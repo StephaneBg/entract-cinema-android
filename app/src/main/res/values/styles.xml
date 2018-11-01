@@ -26,6 +26,8 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="android:listDivider">@drawable/divider</item>
+        <item name="fontFamily">@font/raleway</item>
+        <item name="android:fontFamily">@font/raleway</item>
     </style>
 
     <style name="Theme.Cinema.AlertDialog"
@@ -59,6 +61,7 @@
     <style name="TextAppearance.Cinema.Title"
         parent="TextAppearance.MaterialComponents.Headline5">
         <item name="android:textColor">@color/secondary</item>
+        <item name="fontFamily">@font/patua_one</item>
     </style>
 
     <style name="Widget.Cinema.Button"

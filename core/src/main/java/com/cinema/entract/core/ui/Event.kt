@@ -14,11 +14,21 @@
  * limitations under the License.
  */
 
-package com.cinema.entract.core.utils
+package com.cinema.entract.core.ui
 
-import java.io.IOException
+class Event<out T>(private val content: T) {
 
-class NoConnectivityException : IOException() {
+    var hasBeenHandled = false
+        private set
 
-    override val message: String = "No connectivity exception"
+    fun getContent(): T? {
+        return if (hasBeenHandled) {
+            null
+        } else {
+            hasBeenHandled = true
+            content
+        }
+    }
+
+    fun peekContent(): T = content
 }

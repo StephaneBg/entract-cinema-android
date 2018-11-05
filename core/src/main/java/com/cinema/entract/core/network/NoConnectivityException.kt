@@ -14,21 +14,11 @@
  * limitations under the License.
  */
 
-package com.cinema.entract.core.utils
+package com.cinema.entract.core.network
 
-import android.content.Context
-import android.net.ConnectivityManager
+import java.io.IOException
 
-class NetworkUtils(context: Context) {
+class NoConnectivityException : IOException() {
 
-    private val connectivityManager =
-        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-    fun isNetworkAvailable(): Boolean {
-        return connectivityManager.activeNetworkInfo?.isConnected ?: false
-    }
-
-    @Suppress("DEPRECATION")
-    fun isConnectedOnWifi(): Boolean =
-        connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected
+    override val message: String = "No connectivity exception"
 }

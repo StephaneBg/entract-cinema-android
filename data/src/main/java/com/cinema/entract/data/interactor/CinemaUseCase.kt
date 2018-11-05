@@ -16,7 +16,7 @@
 
 package com.cinema.entract.data.interactor
 
-import com.cinema.entract.core.utils.NetworkUtils
+import com.cinema.entract.core.network.NetworkUtils
 import com.cinema.entract.data.ext.formatToUTC
 import com.cinema.entract.data.model.DateRangeData
 import com.cinema.entract.data.model.MovieData

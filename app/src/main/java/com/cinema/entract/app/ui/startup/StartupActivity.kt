@@ -30,7 +30,7 @@ import com.cinema.entract.app.ui.cinema.CinemaActivity
 import com.cinema.entract.app.ui.cinema.CinemaViewModel
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ui.BaseActivity
-import com.cinema.entract.core.utils.Event
+import com.cinema.entract.core.ui.Event
 import org.jetbrains.anko.startActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

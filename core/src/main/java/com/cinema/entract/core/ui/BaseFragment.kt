@@ -20,7 +20,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.cinema.entract.core.R
-import com.cinema.entract.core.utils.NoConnectivityException
+import com.cinema.entract.core.network.NoConnectivityException
 import java.net.SocketTimeoutException
 
 open class BaseFragment : Fragment() {

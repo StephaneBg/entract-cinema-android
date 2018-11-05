@@ -28,7 +28,7 @@ import com.cinema.entract.core.ext.addFragment
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ext.replaceFragment
 import com.cinema.entract.core.ui.BaseActivity
-import com.cinema.entract.core.utils.Event
+import com.cinema.entract.core.ui.Event
 import com.cinema.entract.core.views.bindView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.koin.androidx.viewmodel.ext.android.viewModel

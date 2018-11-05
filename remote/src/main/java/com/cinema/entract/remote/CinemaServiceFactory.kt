@@ -16,7 +16,7 @@
 
 package com.cinema.entract.remote
 
-import com.cinema.entract.core.utils.NetworkUtils
+import com.cinema.entract.core.network.NetworkUtils
 import com.cinema.entract.remote.network.ConnectivityInterceptor
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient

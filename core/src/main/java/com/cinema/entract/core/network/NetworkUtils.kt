@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-package com.cinema.entract.core.utils
+package com.cinema.entract.core.network
 
-class Event<out T>(private val content: T) {
+import android.content.Context
+import android.net.ConnectivityManager
 
-    var hasBeenHandled = false
-        private set
+class NetworkUtils(context: Context) {
 
-    fun getContent(): T? {
-        return if (hasBeenHandled) {
-            null
-        } else {
-            hasBeenHandled = true
-            content
-        }
+    private val connectivityManager =
+        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+    fun isNetworkAvailable(): Boolean {
+        return connectivityManager.activeNetworkInfo?.isConnected ?: false
     }
 
-    fun peekContent(): T = content
+    @Suppress("DEPRECATION")
+    fun isConnectedOnWifi(): Boolean =
+        connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected
 }

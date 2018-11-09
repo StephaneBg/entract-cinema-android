@@ -42,7 +42,7 @@ class OnScreenAdapter(private val selection: (Movie) -> Unit) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        ViewHolder(parent.inflate(R.layout.list_item_on_screen_movie))
+        ViewHolder(parent.inflate(R.layout.list_item_on_screen))
 
     override fun getItemCount(): Int = movies.size
 
@@ -57,6 +57,7 @@ class OnScreenAdapter(private val selection: (Movie) -> Unit) :
         private val originalVersion by bindView<ImageView>(R.id.originalVersion)
         private val threeDimension by bindView<ImageView>(R.id.threeDimension)
         private val underTwelve by bindView<ImageView>(R.id.underTwelve)
+        private val explicitContent by bindView<ImageView>(R.id.explicitContent)
 
         @SuppressLint("SetTextI18n")
         fun bind(movie: Movie) {
@@ -74,7 +75,8 @@ class OnScreenAdapter(private val selection: (Movie) -> Unit) :
                 duration.text = context.getString(R.string.on_screen_duration, movie.duration)
                 originalVersion.isVisible = movie.isOriginalVersion
                 threeDimension.isVisible = movie.isThreeDimension
-                underTwelve.isInvisible = !movie.isUnderTwelve
+                underTwelve.isVisible = movie.isUnderTwelve
+                explicitContent.isInvisible = !movie.isExplicitContent
                 setOnClickListener { selection(movie) }
             }
         }

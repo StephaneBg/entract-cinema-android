@@ -29,6 +29,7 @@ class MovieMapper : Mapper<Movie, MovieData> {
         model.isThreeDimension,
         model.isOriginalVersion,
         model.isUnderTwelve,
+        model.isExplicitContent,
         model.coverUrl,
         model.duration,
         model.yearOfProduction,

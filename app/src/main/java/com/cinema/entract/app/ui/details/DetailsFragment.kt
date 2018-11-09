@@ -133,6 +133,7 @@ class DetailsFragment : BaseFragment() {
                     find<ImageView>(R.id.originalVersion).isVisible = movie.isOriginalVersion
                     find<ImageView>(R.id.underTwelve).isVisible = movie.isUnderTwelve
                     find<ImageView>(R.id.threeDimension).isVisible = movie.isThreeDimension
+                    find<ImageView>(R.id.explicitContent).isVisible = movie.isExplicitContent
                     setOnClickListener {
                         cinemaViewModel.retrieveMovies(movie.date)
                         (activity as CinemaActivity).selectOnScreen()

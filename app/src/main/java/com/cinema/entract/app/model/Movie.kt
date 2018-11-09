@@ -26,6 +26,7 @@ data class Movie(
     val isThreeDimension: Boolean,
     val isOriginalVersion: Boolean,
     val isUnderTwelve: Boolean,
+    val isExplicitContent: Boolean,
     val coverUrl: String,
     val duration: String,
     val yearOfProduction: String,

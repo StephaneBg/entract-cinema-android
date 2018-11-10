@@ -31,6 +31,7 @@ class CinemaUseCase(
 
     private var date: LocalDate? = null
     private var dateRange: DateRangeData? = null
+    private var eventUrl: String? = null
 
     fun getDate(): LocalDate = date ?: initDate()
 
@@ -59,7 +60,13 @@ class CinemaUseCase(
 
     suspend fun getSchedule(): List<WeekData> = repo.getSchedule().filter { it.hasMovies }
 
-    suspend fun getEventUrl(): String = repo.getEventUrl()
+    suspend fun getEventUrl(): String = eventUrl ?: initEventUrl()
+
+    private suspend fun initEventUrl(): String {
+        val url = repo.getEventUrl()
+        eventUrl = url
+        return url
+    }
 
     fun selectDate(selectedDate: LocalDate) {
         date = selectedDate

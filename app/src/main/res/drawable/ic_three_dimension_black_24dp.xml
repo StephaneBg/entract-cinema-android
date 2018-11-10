@@ -1,0 +1,29 @@
+<!--
+  ~ Copyright 2018 Stéphane Baiget
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    >
+    <path
+        android:fillColor="#000000"
+        android:pathData="M12.0001,2C6.4772,2 2,6.4772 2,12.0001c0.0001,5.5228 4.4772,9.9999 10.0001,9.9999 5.5228,-0.0001 9.9999,-4.4771 9.9999,-9.9999 0,-5.5228 -4.4771,-10 -9.9999,-10.0001zM7.8305,6.047c1.867,0 2.923,1.1937 2.923,3.0148 0,1.1019 -0.306,2.2802 -1.4232,2.724v0.0307c1.2855,0.3214 1.7753,1.4998 1.7753,2.7394 0,2.1119 -1.3008,3.3974 -3.4127,3.3974 -1.9436,0 -3.122,-1.2855 -3.0301,-3.2138h2.1425l-0.0153,0.3213c0,0.3826 0.2448,0.903 0.857,0.903 0.9335,0 0.9948,-0.9488 0.9948,-1.6375 0,-1.2855 -0.4439,-1.6529 -1.7294,-1.607v-1.9894c1.2396,0 1.7448,-0.2449 1.7448,-1.5152 0,-0.5203 -0.1071,-1.1784 -0.7805,-1.1784 -0.6581,0 -0.7653,0.6887 -0.7653,1.1937v0.2296L5.1371,9.4597c-0.0918,-1.8517 0.5662,-3.4127 2.6934,-3.4127zM14.5064,6.2182c1.1805,-0.0232 4.8361,0.2362 4.8361,5.8737 0,3.2903 -1.2702,5.6777 -4.8665,5.6777h-2.0354v-11.539zM14.7207,8.2813v7.4376c1.8364,0.0918 2.3415,-2.2038 2.3415,-3.6423 0,-1.4692 -0.4591,-3.7953 -2.3415,-3.7953z"
+        android:strokeWidth="0.0881945"
+        />
+</vector>

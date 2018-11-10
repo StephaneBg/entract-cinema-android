@@ -57,7 +57,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/title"
         app:layout_constraintTop_toBottomOf="@id/title"
-        app:srcCompat="@drawable/ic_original_version_24dp"
+        app:srcCompat="@drawable/ic_original_version_black_24dp"
         />
 
     <ImageView
@@ -73,7 +73,7 @@
         app:layout_constraintStart_toEndOf="@id/originalVersion"
         app:layout_constraintTop_toBottomOf="@+id/title"
         app:layout_goneMarginStart="0dp"
-        app:srcCompat="@drawable/ic_3d_black_24dp"
+        app:srcCompat="@drawable/ic_three_dimension_black_24dp"
         />
 
     <ImageView
@@ -105,6 +105,6 @@
         app:layout_constraintStart_toEndOf="@id/underTwelve"
         app:layout_constraintTop_toBottomOf="@+id/title"
         app:layout_goneMarginStart="0dp"
-        app:srcCompat="@drawable/ic_explicit_content_24dp"
+        app:srcCompat="@drawable/ic_explicit_content_black_24dp"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -30,7 +30,7 @@ val uiModule = module {
     single { MovieMapper() }
     single { ScheduleMapper(get()) }
 
-    viewModel { CinemaViewModel(get(), get(), get(), get()) }
+    viewModel { CinemaViewModel(get(), get(), get()) }
     viewModel { DetailsViewModel() }
     viewModel { SettingsViewModel(get()) }
     viewModel { TagViewModel(get()) }

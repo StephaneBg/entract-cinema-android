@@ -52,7 +52,7 @@ class CinemaUseCase(
 
     suspend fun getSchedule(): List<WeekData> = repo.getSchedule().filter { it.hasMovies }
 
-    suspend fun getEventUrl(): String = repo.getEventUrl()
+    suspend fun getEventUrl(): String = if (isEventEnabled()) repo.getEventUrl() else ""
 
     fun selectDate(selectedDate: LocalDate) {
         currentDate = selectedDate
@@ -60,4 +60,12 @@ class CinemaUseCase(
 
     private fun canDisplayMedia(): Boolean =
         !repo.getUserPreferences().isOnlyOnWifi() || networkUtils.isConnectedOnWifi()
+
+    fun isEventEnabled(): Boolean = repo.getUserPreferences().isEventEnabled()
+
+    fun setEventPreference(enabled: Boolean) = repo.getUserPreferences().setEventPreference(enabled)
+
+    fun isOnlyOnWifi(): Boolean = repo.getUserPreferences().isOnlyOnWifi()
+
+    fun setOnlyOnWifi(onlyOnWifi: Boolean) = repo.getUserPreferences().setOnlyOnWifi(onlyOnWifi)
 }

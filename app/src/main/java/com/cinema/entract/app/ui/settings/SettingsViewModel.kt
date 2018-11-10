@@ -17,15 +17,15 @@
 package com.cinema.entract.app.ui.settings
 
 import androidx.lifecycle.ViewModel
-import com.cinema.entract.data.interactor.PreferencesUseCase
+import com.cinema.entract.data.interactor.CinemaUseCase
 
-class SettingsViewModel(private val prefsUseCase: PreferencesUseCase) : ViewModel() {
+class SettingsViewModel(private val useCase: CinemaUseCase) : ViewModel() {
 
-    fun isEventEnabled(): Boolean = prefsUseCase.isEventEnabled()
+    fun isEventEnabled(): Boolean = useCase.isEventEnabled()
 
-    fun setEventPreference(enabled: Boolean) = prefsUseCase.setEventPreference(enabled)
+    fun setEventPreference(enabled: Boolean) = useCase.setEventPreference(enabled)
 
-    fun isOnlyOnWifi(): Boolean = prefsUseCase.isOnlyOnWifi()
+    fun isOnlyOnWifi(): Boolean = useCase.isOnlyOnWifi()
 
-    fun setOnlyOnWifi(onlyOnWifi: Boolean) = prefsUseCase.setOnlyOnWifi(onlyOnWifi)
+    fun setOnlyOnWifi(onlyOnWifi: Boolean) = useCase.setOnlyOnWifi(onlyOnWifi)
 }

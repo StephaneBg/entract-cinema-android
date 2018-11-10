@@ -31,7 +31,6 @@ import com.cinema.entract.core.ui.State
 import com.cinema.entract.core.ui.Success
 import com.cinema.entract.data.ext.longFormatToUi
 import com.cinema.entract.data.interactor.CinemaUseCase
-import com.cinema.entract.data.interactor.PreferencesUseCase
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import org.threeten.bp.LocalDate
@@ -39,7 +38,6 @@ import timber.log.Timber
 
 class CinemaViewModel(
     private val useCase: CinemaUseCase,
-    private val prefsUseCase: PreferencesUseCase,
     private val movieMapper: MovieMapper,
     private val scheduleMapper: ScheduleMapper
 ) : ScopedViewModel() {
@@ -115,7 +113,7 @@ class CinemaViewModel(
     }
 
     private suspend fun loadEventUrl() = coroutineScope {
-        val url = if (prefsUseCase.isEventEnabled()) useCase.getEventUrl() else ""
+        val url = useCase.getEventUrl()
         delay(500)
         eventUrl.postValue(Event(url))
     }

@@ -17,7 +17,6 @@
 package com.cinema.entract.data.di
 
 import com.cinema.entract.data.interactor.CinemaUseCase
-import com.cinema.entract.data.interactor.PreferencesUseCase
 import com.cinema.entract.data.interactor.TagUseCase
 import com.cinema.entract.data.repository.CinemaRepo
 import com.cinema.entract.data.source.CacheDataStore
@@ -29,7 +28,6 @@ import org.koin.dsl.module.module
 val dataModule = module {
 
     single { CinemaUseCase(get(), get()) }
-    single { PreferencesUseCase(get()) }
     single { TagUseCase(get()) }
     single { RemoteDataStore(get()) }
     single { CacheDataStore(get()) }

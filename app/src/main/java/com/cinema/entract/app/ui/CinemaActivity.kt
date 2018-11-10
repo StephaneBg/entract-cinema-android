@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
-package com.cinema.entract.app.ui.cinema
+package com.cinema.entract.app.ui
 
 import android.os.Bundle
 import com.cinema.entract.app.R
-import com.cinema.entract.app.ui.CinemaViewModel
-import com.cinema.entract.app.ui.TagViewModel
 import com.cinema.entract.app.ui.details.DetailsFragment
 import com.cinema.entract.app.ui.event.EventDialogFragment
 import com.cinema.entract.app.ui.information.InformationFragment

@@ -32,7 +32,6 @@ import com.cinema.entract.app.ui.OnScreen
 import com.cinema.entract.app.ui.details.DetailsFragment
 import com.cinema.entract.app.ui.getDate
 import com.cinema.entract.app.ui.getMovies
-import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ext.replaceFragment
 import com.cinema.entract.core.ui.BaseLceFragment
@@ -40,6 +39,7 @@ import com.cinema.entract.core.ui.Error
 import com.cinema.entract.core.ui.Loading
 import com.cinema.entract.core.ui.State
 import com.cinema.entract.core.ui.Success
+import com.cinema.entract.core.views.bindView
 import com.cinema.entract.core.widget.EmptynessLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
@@ -50,10 +50,9 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
     private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
     private lateinit var onScreenAdapter: OnScreenAdapter
 
-    private lateinit var datePicker: MaterialCalendarView
     private lateinit var alertDialog: AlertDialog
-    private lateinit var fab: FloatingActionButton
-    private lateinit var date: TextView
+    private val fab by bindView<FloatingActionButton>(R.id.fab)
+    private val date by bindView<TextView>(R.id.date)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,8 +71,6 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
             setAdapter(onScreenAdapter)
         }
 
-        date = find(R.id.date)
-        fab = find(R.id.fab)
         fab.setOnClickListener { displayDatePicker() }
 
         observe(cinemaViewModel.getOnScreenState(), ::manageState)
@@ -106,23 +103,24 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
     }
 
     private fun displayDatePicker() {
-        datePicker = MaterialCalendarView(context)
+        val datePicker = MaterialCalendarView(context)
         datePicker.setOnDateChangedListener { _, day, _ ->
             cinemaViewModel.retrieveMovies(day.date)
             alertDialog.dismiss()
         }
-        cinemaViewModel.dateRange?.let {
-            datePicker.state().edit()
-                .setMinimumDate(it.minimumDate)
-                .setMaximumDate(it.maximumDate)
-                .commit()
+        observe(cinemaViewModel.getDateRange()) { range ->
+            range?.let {
+                datePicker.state().edit()
+                    .setMinimumDate(it.minimumDate)
+                    .setMaximumDate(it.maximumDate)
+                    .commit()
+            }
+            alertDialog = AlertDialog.Builder(requireContext())
+                .setView(datePicker)
+                .setNegativeButton(android.R.string.cancel, null)
+                .create()
+            alertDialog.show()
         }
-
-        alertDialog = AlertDialog.Builder(requireContext())
-            .setView(datePicker)
-            .setNegativeButton(android.R.string.cancel, null)
-            .create()
-        alertDialog.show()
     }
 
     companion object {

@@ -26,27 +26,25 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.cinema.entract.app.R
-import com.cinema.entract.app.ui.CinemaViewModel
-import com.cinema.entract.app.ui.cinema.CinemaActivity
+import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ui.BaseActivity
-import com.cinema.entract.core.ui.Event
 import org.jetbrains.anko.startActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class StartupActivity : BaseActivity() {
 
-    private val cinemaViewModel by viewModel<CinemaViewModel>()
+    private val viewModel by viewModel<StartupViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_startup)
-        observe(cinemaViewModel.getEventUrl(), ::handleEvent)
+        observe(viewModel.prefetch(), ::prefetchEventCover)
     }
 
-    private fun handleEvent(event: Event<String>?) {
-        when (val url = event?.peekContent()) {
+    private fun prefetchEventCover(url: String?) {
+        when (url) {
             null -> Unit
             "" -> closeStartup()
             else -> Glide.with(this)

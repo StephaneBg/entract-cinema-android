@@ -50,7 +50,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.cinema.CinemaActivity" />
+        <activity android:name=".ui.CinemaActivity" />
 
         <service android:name=".notif.CinemaFirebaseMessagingService">
             <intent-filter>

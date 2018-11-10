@@ -46,9 +46,7 @@ class CinemaViewModel(
     private val scheduleState = MutableLiveData<State<List<ScheduleEntry>>>()
     private val detailedMovie = MutableLiveData<Movie>()
     private val eventUrl = MutableLiveData<Event<String>>()
-
-    var dateRange: DateRange? = null
-        private set
+    private val dateRange = MutableLiveData<DateRange>()
 
     fun getOnScreenState(): LiveData<State<OnScreen>> {
         onScreenState.value ?: retrieveMovies()
@@ -56,10 +54,8 @@ class CinemaViewModel(
     }
 
     fun retrieveMovies(date: LocalDate) {
-        if (useCase.getDate() != date) {
-            useCase.selectDate(date)
-            retrieveMovies()
-        }
+        useCase.selectDate(date)
+        retrieveMovies()
     }
 
     fun retrieveMovies() {
@@ -71,10 +67,21 @@ class CinemaViewModel(
         retrieveMovies(LocalDate.now())
     }
 
+    fun getDateRange(): LiveData<DateRange> {
+        dateRange.value ?: retrieveDateRange()
+        return dateRange
+    }
+
+    private fun retrieveDateRange() = launchAsync(
+        {
+            val range = useCase.getDateRange()
+            dateRange.postValue(DateRange(range.minimumDate, range.maximumDate))
+        },
+        { dateRange.postValue(null) }
+    )
+
     private suspend fun loadOnScreen() = coroutineScope {
         val movies = useCase.getMovies().map { movieMapper.mapToUi(it) }
-        val range = useCase.getDateRange()
-        dateRange = DateRange(range.minimumDate, range.maximumDate)
         onScreenState.postValue(Success(movies to useCase.getDate().longFormatToUi()))
     }
 
@@ -119,6 +126,7 @@ class CinemaViewModel(
     }
 
     private fun onLoadEventUrlError(throwable: Throwable) {
+        Timber.e("Event URL cannot be loaded: ${throwable.message}")
         eventUrl.postValue(Event(""))
     }
 }

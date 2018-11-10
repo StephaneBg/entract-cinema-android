@@ -58,17 +58,21 @@ class RemoteRepoImpl(
 
     override suspend fun registerNotifications(token: String) = withContext(Dispatchers.IO) {
         service.registerNotifications(token = token).await()
+        Unit
     }
 
     override suspend fun tagSchedule() = withContext(Dispatchers.IO) {
         service.tagSchedule().await()
+        Unit
     }
 
     override suspend fun tagEvent() = withContext(Dispatchers.IO) {
         service.tagEvent().await()
+        Unit
     }
 
     override suspend fun tagDetails(date: String, id: String) = withContext(Dispatchers.IO) {
         service.tagDetails(date = date, id = id).await()
+        Unit
     }
 }

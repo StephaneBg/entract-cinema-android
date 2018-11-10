@@ -35,9 +35,9 @@ import androidx.core.view.isVisible
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.model.Movie
+import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.app.ui.TagViewModel
-import com.cinema.entract.app.ui.cinema.CinemaActivity
 import com.cinema.entract.core.ext.color
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.inflate

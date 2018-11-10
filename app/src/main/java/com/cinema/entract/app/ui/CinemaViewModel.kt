@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.cinema.entract.app.ui.cinema
+package com.cinema.entract.app.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -24,11 +24,11 @@ import com.cinema.entract.app.model.DateRange
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.model.ScheduleEntry
 import com.cinema.entract.core.ui.Error
+import com.cinema.entract.core.ui.Event
 import com.cinema.entract.core.ui.Loading
 import com.cinema.entract.core.ui.ScopedViewModel
 import com.cinema.entract.core.ui.State
 import com.cinema.entract.core.ui.Success
-import com.cinema.entract.core.ui.Event
 import com.cinema.entract.data.ext.longFormatToUi
 import com.cinema.entract.data.interactor.CinemaUseCase
 import com.cinema.entract.data.interactor.PreferencesUseCase

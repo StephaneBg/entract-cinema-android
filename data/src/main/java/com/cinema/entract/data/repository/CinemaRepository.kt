@@ -40,5 +40,12 @@ class CinemaRepository(
     suspend fun registerNotifications(token: String) =
         dataStoreFactory.retrieveDataStore().registerNotifications(token)
 
+    suspend fun tagSchedule() = dataStoreFactory.retrieveDataStore().tagSchedule()
+
+    suspend fun tagEvent() = dataStoreFactory.retrieveDataStore().tagEvent()
+
+    suspend fun tagDetails(date: String, id: String) =
+        dataStoreFactory.retrieveDataStore().tagDetails(date, id)
+
     fun getUserPreferences(): UserPreferences = userPreferences
 }

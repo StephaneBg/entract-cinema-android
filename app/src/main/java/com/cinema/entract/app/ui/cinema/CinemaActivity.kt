@@ -18,6 +18,8 @@ package com.cinema.entract.app.ui.cinema
 
 import android.os.Bundle
 import com.cinema.entract.app.R
+import com.cinema.entract.app.ui.CinemaViewModel
+import com.cinema.entract.app.ui.TagViewModel
 import com.cinema.entract.app.ui.details.DetailsFragment
 import com.cinema.entract.app.ui.event.EventDialogFragment
 import com.cinema.entract.app.ui.information.InformationFragment
@@ -36,6 +38,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class CinemaActivity : BaseActivity() {
 
     private val cinemaViewModel by viewModel<CinemaViewModel>()
+    private val tagViewModel by viewModel<TagViewModel>()
     private val bottomNav by bindView<BottomNavigationView>(R.id.bottomNavigation)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -110,6 +113,7 @@ class CinemaActivity : BaseActivity() {
                     R.anim.fade_in,
                     R.anim.fade_out
                 )
+                tagViewModel.tagSchedule()
                 true
             }
         }

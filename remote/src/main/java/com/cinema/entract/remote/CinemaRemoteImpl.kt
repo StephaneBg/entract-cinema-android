@@ -66,4 +66,22 @@ class CinemaRemoteImpl(
         service.registerNotifications(token = token).await()
         Unit
     }
+
+    override suspend fun tagSchedule() = withContext(Dispatchers.IO) {
+        Timber.d("Tag schedule")
+        service.tagSchedule().await()
+        Unit
+    }
+
+    override suspend fun tagEvent() = withContext(Dispatchers.IO) {
+        Timber.d("Tag event")
+        service.tagEvent().await()
+        Unit
+    }
+
+    override suspend fun tagDetails(date: String, id: String) = withContext(Dispatchers.IO) {
+        Timber.d("Tag details: $date / $id")
+        service.tagDetails(date = date, id = id).await()
+        Unit
+    }
 }

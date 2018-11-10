@@ -26,8 +26,8 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.cinema.entract.app.R
+import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.app.ui.cinema.CinemaActivity
-import com.cinema.entract.app.ui.cinema.CinemaViewModel
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ui.BaseActivity
 import com.cinema.entract.core.ui.Event

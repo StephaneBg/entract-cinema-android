@@ -78,13 +78,12 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
-                android:layout_marginTop="@dimen/margin_padding_size_medium"
                 android:importantForAccessibility="no"
                 android:scaleType="fitCenter"
-                app:layout_constraintBottom_toBottomOf="@+id/infoBarrier"
                 app:layout_constraintDimensionRatio="2:3"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title"
+                app:layout_constraintTop_toTopOf="@id/director"
+                app:layout_constraintWidth_percent="0.25"
                 tools:background="@color/primary_light"
                 tools:srcCompat="@drawable/ic_movie_black_24dp"
                 />
@@ -225,7 +224,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:barrierDirection="bottom"
-                app:constraint_referenced_ids="originalVersion,threeDimension,underTwelve,explicitContent"
+                app:constraint_referenced_ids="cover,originalVersion,threeDimension,underTwelve,explicitContent"
                 />
 
             <TextView

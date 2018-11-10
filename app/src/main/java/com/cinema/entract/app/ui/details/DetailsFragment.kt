@@ -35,14 +35,16 @@ import androidx.core.view.isVisible
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.model.Movie
+import com.cinema.entract.app.ui.CinemaViewModel
+import com.cinema.entract.app.ui.TagViewModel
 import com.cinema.entract.app.ui.cinema.CinemaActivity
-import com.cinema.entract.app.ui.cinema.CinemaViewModel
 import com.cinema.entract.core.ext.color
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.inflate
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ext.toSpanned
 import com.cinema.entract.core.ui.BaseFragment
+import com.cinema.entract.data.ext.formatToUTC
 import com.cinema.entract.data.ext.longFormatToUi
 import org.jetbrains.anko.find
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -52,6 +54,7 @@ class DetailsFragment : BaseFragment() {
 
     private val detailsViewModel by viewModel<DetailsViewModel>()
     private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
+    private val tagViewModel by sharedViewModel<TagViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,6 +70,8 @@ class DetailsFragment : BaseFragment() {
 
     private fun displayMovieDetails(movie: Movie?) {
         movie ?: error("No selected movie")
+
+        tagViewModel.tagDetails(movie.date.formatToUTC(), movie.id)
 
         find<TextView>(R.id.dateTime).text = getString(
             R.string.details_date_with_time,
@@ -87,6 +92,7 @@ class DetailsFragment : BaseFragment() {
         find<ImageView>(R.id.originalVersion).isVisible = movie.isOriginalVersion
         find<ImageView>(R.id.threeDimension).isVisible = movie.isThreeDimension
         find<ImageView>(R.id.underTwelve).isVisible = movie.isUnderTwelve
+        find<ImageView>(R.id.explicitContent).isVisible = movie.isExplicitContent
         find<TextView>(R.id.director).text =
                 getString(R.string.details_director, movie.director).toSpanned()
         with(find<TextView>(R.id.cast)) {
@@ -131,9 +137,7 @@ class DetailsFragment : BaseFragment() {
                         movie.schedule
                     )
                     find<ImageView>(R.id.originalVersion).isVisible = movie.isOriginalVersion
-                    find<ImageView>(R.id.underTwelve).isVisible = movie.isUnderTwelve
                     find<ImageView>(R.id.threeDimension).isVisible = movie.isThreeDimension
-                    find<ImageView>(R.id.explicitContent).isVisible = movie.isExplicitContent
                     setOnClickListener {
                         cinemaViewModel.retrieveMovies(movie.date)
                         (activity as CinemaActivity).selectOnScreen()

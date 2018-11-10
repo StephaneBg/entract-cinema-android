@@ -42,7 +42,7 @@ class OnScreenAdapter(private val selection: (Movie) -> Unit) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        ViewHolder(parent.inflate(R.layout.list_item_on_screen))
+        ViewHolder(parent.inflate(R.layout.list_item_on_screen_movie))
 
     override fun getItemCount(): Int = movies.size
 

@@ -31,6 +31,12 @@ class CinemaRemoteDataStore(private val cinemaRemote: CinemaRemote) : CinemaData
 
     override suspend fun getEventUrl(): String = cinemaRemote.getEventUrl()
 
+    override suspend fun tagSchedule() = cinemaRemote.tagSchedule()
+
+    override suspend fun tagEvent() = cinemaRemote.tagEvent()
+
+    override suspend fun tagDetails(date: String, id: String) = cinemaRemote.tagDetails(date, id)
+
     override suspend fun registerNotifications(token: String) =
         cinemaRemote.registerNotifications(token)
 }

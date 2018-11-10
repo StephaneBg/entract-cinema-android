@@ -12,27 +12,27 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */package com.cinema.entract.data.source
+ */
 
-import com.cinema.entract.data.model.DateRangeData
-import com.cinema.entract.data.model.MovieData
-import com.cinema.entract.data.model.WeekData
+package com.cinema.entract.app.ui
 
-interface CinemaDataStore {
+import com.cinema.entract.core.ui.ScopedViewModel
+import com.cinema.entract.data.interactor.TagUseCase
 
-    suspend fun getMovies(day: String): List<MovieData>
+class TagViewModel(private val useCase: TagUseCase) : ScopedViewModel() {
 
-    suspend fun getSchedule(): List<WeekData>
+    fun tagSchedule() = launchAsync(
+        { useCase.tagSchedule() },
+        {}
+    )
 
-    suspend fun getParameters(): DateRangeData
+    fun tagEvent() = launchAsync(
+        { useCase.tagEvent() },
+        {}
+    )
 
-    suspend fun getEventUrl(): String
-
-    suspend fun registerNotifications(token: String)
-
-    suspend fun tagSchedule()
-
-    suspend fun tagEvent()
-
-    suspend fun tagDetails(date: String, id: String)
+    fun tagDetails(date: String, id: String) = launchAsync(
+        { useCase.tagDetails(date, id) },
+        {}
+    )
 }

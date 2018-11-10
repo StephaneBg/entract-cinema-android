@@ -12,27 +12,17 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */package com.cinema.entract.data.source
+ */
 
-import com.cinema.entract.data.model.DateRangeData
-import com.cinema.entract.data.model.MovieData
-import com.cinema.entract.data.model.WeekData
+package com.cinema.entract.data.interactor
 
-interface CinemaDataStore {
+import com.cinema.entract.data.repository.CinemaRepository
 
-    suspend fun getMovies(day: String): List<MovieData>
+class TagUseCase(private val repo: CinemaRepository) {
 
-    suspend fun getSchedule(): List<WeekData>
+    suspend fun tagSchedule() = repo.tagSchedule()
 
-    suspend fun getParameters(): DateRangeData
+    suspend fun tagEvent() = repo.tagEvent()
 
-    suspend fun getEventUrl(): String
-
-    suspend fun registerNotifications(token: String)
-
-    suspend fun tagSchedule()
-
-    suspend fun tagEvent()
-
-    suspend fun tagDetails(date: String, id: String)
+    suspend fun tagDetails(date: String, id: String) = repo.tagDetails(date, id)
 }

@@ -91,4 +91,20 @@
         app:layout_goneMarginStart="0dp"
         app:srcCompat="@drawable/ic_under_twelve_black_24dp"
         />
+
+    <ImageView
+        android:id="@+id/explicitContent"
+        style="@style/TextAppearance.MaterialComponents.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_padding_size_medium"
+        android:layout_marginTop="@dimen/margin_padding_size_small"
+        android:importantForAccessibility="no"
+        android:tint="@color/primary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/underTwelve"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_goneMarginStart="0dp"
+        app:srcCompat="@drawable/ic_explicit_content_24dp"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

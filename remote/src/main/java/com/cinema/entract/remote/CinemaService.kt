@@ -41,4 +41,17 @@ interface CinemaService {
 
     @PUT("registerPushNotifications")
     fun registerNotifications(@Query("type") type: String = "android", @Query("deviceToken") token: String): Deferred<Void>
+
+    @PUT("updateStatistiques.php")
+    fun tagSchedule(@Query("page") type: String = "page_programme"): Deferred<Void>
+
+    @PUT("updateStatistiques.php")
+    fun tagEvent(@Query("page") type: String = "page_evt"): Deferred<Void>
+
+    @PUT("updateStatistiques.php")
+    fun tagDetails(
+        @Query("page") type: String = "page_detail", @Query("jour") date: String, @Query(
+            "film"
+        ) id: String
+    ): Deferred<Void>
 }

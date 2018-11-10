@@ -84,6 +84,7 @@ class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
         private val originalVersion by bindView<ImageView>(R.id.originalVersion)
         private val threeDimension by bindView<ImageView>(R.id.threeDimension)
         private val underTwelve by bindView<ImageView>(R.id.underTwelve)
+        private val explicitContent by bindView<ImageView>(R.id.explicitContent)
 
         override fun bind(model: MovieEntry) {
             schedule.text = model.movie.schedule
@@ -91,6 +92,7 @@ class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
             originalVersion.isVisible = model.movie.isOriginalVersion
             threeDimension.isVisible = model.movie.isThreeDimension
             underTwelve.isVisible = model.movie.isUnderTwelve
+            explicitContent.isVisible = model.movie.isExplicitContent
             itemView.setOnClickListener { selection(model.date) }
         }
     }

@@ -42,4 +42,16 @@ class CinemaCacheDataStore(private val cinemaCache: CinemaCache) : CinemaDataSto
     override suspend fun registerNotifications(token: String) {
         TODO("not implemented")
     }
+
+    override suspend fun tagSchedule() {
+        TODO("not implemented")
+    }
+
+    override suspend fun tagEvent() {
+        TODO("not implemented")
+    }
+
+    override suspend fun tagDetails(date: String, id: String) {
+        TODO("not implemented")
+    }
 }

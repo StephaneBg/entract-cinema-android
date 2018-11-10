@@ -18,6 +18,7 @@ package com.cinema.entract.data.di
 
 import com.cinema.entract.data.interactor.CinemaUseCase
 import com.cinema.entract.data.interactor.PreferencesUseCase
+import com.cinema.entract.data.interactor.TagUseCase
 import com.cinema.entract.data.repository.CinemaRepository
 import com.cinema.entract.data.source.CinemaCacheDataStore
 import com.cinema.entract.data.source.CinemaDataStore
@@ -29,6 +30,7 @@ val dataModule = module {
 
     single { CinemaUseCase(get(), get()) }
     single { PreferencesUseCase(get()) }
+    single { TagUseCase(get()) }
 
     factory<CinemaDataStore>(name = "remote") { CinemaRemoteDataStore(get()) }
     factory<CinemaDataStore>(name = "cache") { CinemaCacheDataStore(get()) }

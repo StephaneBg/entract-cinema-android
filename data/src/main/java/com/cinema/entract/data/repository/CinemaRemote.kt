@@ -31,4 +31,10 @@ interface CinemaRemote {
     suspend fun getEventUrl(): String
 
     suspend fun registerNotifications(token: String)
+
+    suspend fun tagSchedule()
+
+    suspend fun tagEvent()
+
+    suspend fun tagDetails(date: String, id: String)
 }

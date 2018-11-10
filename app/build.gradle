@@ -17,8 +17,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
-def isDebug = false
-
 android {
 
     buildToolsVersion Android.buildToolsVersion
@@ -59,10 +57,8 @@ android {
         }
 
         debug {
-            isDebug = true
             minifyEnabled false
             debuggable true
-            applicationIdSuffix ".debug"
         }
     }
 
@@ -102,7 +98,7 @@ dependencies {
     implementation Libs.timber
 }
 
-if (file("google-services.json").exists() && !isDebug) {
+if (file("google-services.json").exists()) {
     apply plugin: 'com.google.gms.google-services'
 }
 

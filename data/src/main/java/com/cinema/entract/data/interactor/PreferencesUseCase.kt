@@ -16,9 +16,9 @@
 
 package com.cinema.entract.data.interactor
 
-import com.cinema.entract.data.repository.CinemaRepository
+import com.cinema.entract.data.repository.CinemaRepo
 
-class PreferencesUseCase(private val repo: CinemaRepository) {
+class PreferencesUseCase(private val repo: CinemaRepo) {
 
     fun isEventEnabled(): Boolean = repo.getUserPreferences().isEventEnabled()
 

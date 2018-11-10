@@ -16,25 +16,25 @@
 
 package com.cinema.entract.remote.di
 
-import com.cinema.entract.data.repository.CinemaRemote
-import com.cinema.entract.remote.CinemaRemoteImpl
+import com.cinema.entract.data.repository.RemoteRepo
+import com.cinema.entract.remote.RemoteRepoImpl
 import com.cinema.entract.remote.createService
-import com.cinema.entract.remote.mapper.DateRangeRemoteMapper
-import com.cinema.entract.remote.mapper.DayRemoteMapper
-import com.cinema.entract.remote.mapper.EventRemoteMapper
-import com.cinema.entract.remote.mapper.MovieRemoteMapper
-import com.cinema.entract.remote.mapper.WeekRemoteMapper
+import com.cinema.entract.remote.mapper.DateRangeMapper
+import com.cinema.entract.remote.mapper.DayMapper
+import com.cinema.entract.remote.mapper.EventMapper
+import com.cinema.entract.remote.mapper.MovieMapper
+import com.cinema.entract.remote.mapper.WeekMapper
 import org.koin.dsl.module.module
 
 val remoteModule = module {
 
     single { createService(get()) }
 
-    single { MovieRemoteMapper() }
-    single { DayRemoteMapper(get()) }
-    single { WeekRemoteMapper(get()) }
-    single { DateRangeRemoteMapper() }
-    single { EventRemoteMapper() }
+    single { MovieMapper() }
+    single { DayMapper(get()) }
+    single { WeekMapper(get()) }
+    single { DateRangeMapper() }
+    single { EventMapper() }
 
-    factory<CinemaRemote> { CinemaRemoteImpl(get(), get(), get(), get(), get()) }
+    factory<RemoteRepo> { RemoteRepoImpl(get(), get(), get(), get(), get()) }
 }

@@ -14,16 +14,20 @@
  * limitations under the License.
  */
 
-package com.cinema.entract.remote.mapper
+package com.cinema.entract.data.source
 
-import com.cinema.entract.data.model.DayData
-import com.cinema.entract.remote.model.DayRemote
-import org.threeten.bp.LocalDate
+import com.cinema.entract.data.model.DateRangeData
+import com.cinema.entract.data.model.MovieData
+import com.cinema.entract.data.model.WeekData
+import com.cinema.entract.data.repository.CacheRepo
 
-class DayRemoteMapper(private val mapper: MovieRemoteMapper) : RemoteMapper<DayRemote, DayData> {
+class CacheDataStore(private val cacheRepo: CacheRepo) {
 
-    override fun mapToData(model: DayRemote) = DayData(
-        LocalDate.parse(model.jour) ?: LocalDate.now(),
-        model.films?.map { mapper.mapToData(it) } ?: emptyList()
-    )
+    suspend fun getMovies(date: String): List<MovieData>? = cacheRepo.getMovies(date)
+
+    suspend fun getSchedule(): List<WeekData>? = cacheRepo.getSchedule()
+
+    suspend fun getDateRange(): DateRangeData? = cacheRepo.getDateRange()
+
+    suspend fun getEventUrl(): String? = cacheRepo.getEventUrl()
 }

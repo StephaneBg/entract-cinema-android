@@ -21,11 +21,11 @@ import com.cinema.entract.data.ext.formatToUTC
 import com.cinema.entract.data.model.DateRangeData
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
-import com.cinema.entract.data.repository.CinemaRepository
+import com.cinema.entract.data.repository.CinemaRepo
 import org.threeten.bp.LocalDate
 
 class CinemaUseCase(
-    private val repo: CinemaRepository,
+    private val repo: CinemaRepo,
     private val networkUtils: NetworkUtils
 ) {
 

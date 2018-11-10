@@ -12,7 +12,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */package com.cinema.entract.data.source
+ */
+package com.cinema.entract.data.source
 
 import com.cinema.entract.data.model.DateRangeData
 import com.cinema.entract.data.model.MovieData
@@ -20,7 +21,7 @@ import com.cinema.entract.data.model.WeekData
 
 interface CinemaDataStore {
 
-    suspend fun getMovies(day: String): List<MovieData>
+    suspend fun getMovies(date: String): List<MovieData>
 
     suspend fun getSchedule(): List<WeekData>
 

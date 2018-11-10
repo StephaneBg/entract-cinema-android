@@ -20,7 +20,7 @@ import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.remote.model.MovieRemote
 import org.threeten.bp.LocalDate
 
-class MovieRemoteMapper : RemoteMapper<MovieRemote, MovieData> {
+class MovieMapper : Mapper<MovieRemote, MovieData> {
 
     override fun mapToData(model: MovieRemote): MovieData = MovieData(
         model.id_film ?: "",

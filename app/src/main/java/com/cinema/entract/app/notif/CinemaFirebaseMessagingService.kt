@@ -23,7 +23,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ui.cinema.CinemaActivity
 import com.cinema.entract.core.ext.color
-import com.cinema.entract.data.repository.CinemaRepository
+import com.cinema.entract.data.repository.CinemaRepo
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import kotlinx.coroutines.CoroutineScope
@@ -36,7 +36,7 @@ import kotlin.coroutines.CoroutineContext
 
 class CinemaFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
 
-    private val cinemaRepository by inject<CinemaRepository>()
+    private val cinemaRepository by inject<CinemaRepo>()
     private val job = Job()
 
     override val coroutineContext: CoroutineContext

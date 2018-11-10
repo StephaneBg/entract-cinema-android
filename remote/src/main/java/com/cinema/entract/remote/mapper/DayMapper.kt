@@ -14,6 +14,16 @@
  * limitations under the License.
  */
 
-package com.cinema.entract.data.repository
+package com.cinema.entract.remote.mapper
 
-interface CinemaCache
+import com.cinema.entract.data.model.DayData
+import com.cinema.entract.remote.model.DayRemote
+import org.threeten.bp.LocalDate
+
+class DayMapper(private val mapper: MovieMapper) : Mapper<DayRemote, DayData> {
+
+    override fun mapToData(model: DayRemote) = DayData(
+        LocalDate.parse(model.jour) ?: LocalDate.now(),
+        model.films?.map { mapper.mapToData(it) } ?: emptyList()
+    )
+}

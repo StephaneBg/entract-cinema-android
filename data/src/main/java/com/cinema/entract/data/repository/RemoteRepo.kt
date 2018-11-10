@@ -14,9 +14,27 @@
  * limitations under the License.
  */
 
-package com.cinema.entract.cache.repository
+package com.cinema.entract.data.repository
 
-import android.content.Context
-import com.cinema.entract.data.repository.CinemaCache
+import com.cinema.entract.data.model.DateRangeData
+import com.cinema.entract.data.model.MovieData
+import com.cinema.entract.data.model.WeekData
 
-class CinemaCacheImpl(private val context: Context) : CinemaCache
+interface RemoteRepo {
+
+    suspend fun getMovies(date: String): List<MovieData>
+
+    suspend fun getSchedule(): List<WeekData>
+
+    suspend fun getDateRange(): DateRangeData
+
+    suspend fun getEventUrl(): String
+
+    suspend fun registerNotifications(token: String)
+
+    suspend fun tagSchedule()
+
+    suspend fun tagEvent()
+
+    suspend fun tagDetails(date: String, id: String)
+}

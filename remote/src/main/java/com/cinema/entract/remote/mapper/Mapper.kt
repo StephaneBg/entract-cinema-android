@@ -14,17 +14,9 @@
  * limitations under the License.
  */
 
-package com.cinema.entract.data.source
+package com.cinema.entract.remote.mapper
 
-class CinemaDataStoreFactory(
-    private val cinemaCacheDataStore: CinemaDataStore,
-    private val cinemaRemoteDataStore: CinemaDataStore
-) {
+interface Mapper<Remote, Data> {
 
-    // TODO Add logic for cache management
-    fun retrieveDataStore(): CinemaDataStore = retrieveRemoteDataStore()
-
-    private fun retrieveCacheDataStore() = cinemaCacheDataStore
-
-    private fun retrieveRemoteDataStore() = cinemaRemoteDataStore
+    fun mapToData(model: Remote): Data
 }

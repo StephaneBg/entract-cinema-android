@@ -14,9 +14,21 @@
  * limitations under the License.
  */
 
-package com.cinema.entract.remote.mapper
+package com.cinema.entract.cache.repository
 
-interface RemoteMapper<Remote, Data> {
+import android.content.Context
+import com.cinema.entract.data.model.DateRangeData
+import com.cinema.entract.data.model.MovieData
+import com.cinema.entract.data.model.WeekData
+import com.cinema.entract.data.repository.CacheRepo
 
-    fun mapToData(model: Remote): Data
+class CacheRepoImpl(private val context: Context) : CacheRepo {
+
+    override suspend fun getMovies(date: String): List<MovieData>? = null
+
+    override suspend fun getSchedule(): List<WeekData>? = null
+
+    override suspend fun getDateRange(): DateRangeData? = null
+
+    override suspend fun getEventUrl(): String? = null
 }

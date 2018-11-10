@@ -14,27 +14,29 @@
  * limitations under the License.
  */
 
-package com.cinema.entract.data.repository
+package com.cinema.entract.data.source
 
 import com.cinema.entract.data.model.DateRangeData
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
+import com.cinema.entract.data.repository.RemoteRepo
 
-interface CinemaRemote {
+class RemoteDataStore(private val remoteRepo: RemoteRepo) {
 
-    suspend fun getMovies(day: String): List<MovieData>
+    suspend fun getMovies(date: String): List<MovieData> = remoteRepo.getMovies(date)
 
-    suspend fun getSchedule(): List<WeekData>
+    suspend fun getSchedule(): List<WeekData> = remoteRepo.getSchedule()
 
-    suspend fun getParameters(): DateRangeData
+    suspend fun getDateRange(): DateRangeData = remoteRepo.getDateRange()
 
-    suspend fun getEventUrl(): String
+    suspend fun getEventUrl(): String = remoteRepo.getEventUrl()
 
-    suspend fun registerNotifications(token: String)
+    suspend fun tagSchedule() = remoteRepo.tagSchedule()
 
-    suspend fun tagSchedule()
+    suspend fun tagEvent() = remoteRepo.tagEvent()
 
-    suspend fun tagEvent()
+    suspend fun tagDetails(date: String, id: String) = remoteRepo.tagDetails(date, id)
 
-    suspend fun tagDetails(date: String, id: String)
+    suspend fun registerNotifications(token: String) =
+        remoteRepo.registerNotifications(token)
 }

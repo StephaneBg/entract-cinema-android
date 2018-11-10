@@ -16,9 +16,9 @@
 
 package com.cinema.entract.data.interactor
 
-import com.cinema.entract.data.repository.CinemaRepository
+import com.cinema.entract.data.repository.CinemaRepo
 
-class TagUseCase(private val repo: CinemaRepository) {
+class TagUseCase(private val repo: CinemaRepo) {
 
     suspend fun tagSchedule() = repo.tagSchedule()
 

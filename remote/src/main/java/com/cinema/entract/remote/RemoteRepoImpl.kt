@@ -19,68 +19,59 @@ package com.cinema.entract.remote
 import com.cinema.entract.data.model.DateRangeData
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
-import com.cinema.entract.data.repository.CinemaRemote
-import com.cinema.entract.remote.mapper.DateRangeRemoteMapper
-import com.cinema.entract.remote.mapper.EventRemoteMapper
-import com.cinema.entract.remote.mapper.MovieRemoteMapper
-import com.cinema.entract.remote.mapper.WeekRemoteMapper
+import com.cinema.entract.data.repository.RemoteRepo
+import com.cinema.entract.remote.mapper.DateRangeMapper
+import com.cinema.entract.remote.mapper.EventMapper
+import com.cinema.entract.remote.mapper.MovieMapper
+import com.cinema.entract.remote.mapper.WeekMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 
-class CinemaRemoteImpl(
+class RemoteRepoImpl(
     private val service: CinemaService,
-    private val movieMapper: MovieRemoteMapper,
-    private val weekMapper: WeekRemoteMapper,
-    private val paramMapper: DateRangeRemoteMapper,
-    private val eventMapper: EventRemoteMapper
-) : CinemaRemote {
+    private val movieMapper: MovieMapper,
+    private val weekMapper: WeekMapper,
+    private val dateRangeMapper: DateRangeMapper,
+    private val eventMapper: EventMapper
+) : RemoteRepo {
 
-    override suspend fun getMovies(day: String): List<MovieData> = withContext(Dispatchers.IO) {
-        Timber.d("Fetch movies")
-        val movies = service.getMovies(day).await()
+    override suspend fun getMovies(date: String): List<MovieData> = withContext(Dispatchers.IO) {
+        val movies = service.getMovies(date).await()
         movies.map { movieMapper.mapToData(it) }
     }
 
     override suspend fun getSchedule(): List<WeekData> = withContext(Dispatchers.IO) {
-        Timber.d("Fetch schedule")
         val schedule = service.getSchedule().await()
         schedule.map { weekMapper.mapToData(it) }
     }
 
     override suspend fun getEventUrl(): String = withContext(Dispatchers.IO) {
-        Timber.d("Fetch event")
         val event = service.getEvent().await()
         eventMapper.mapToData(event)
     }
 
-    override suspend fun getParameters(): DateRangeData = withContext(Dispatchers.IO) {
-        Timber.d("Fetch parameters")
+    override suspend fun getDateRange(): DateRangeData = withContext(Dispatchers.IO) {
         val parameters = service.getParameters().await()
-        parameters.periode?.let { paramMapper.mapToData(it) }
+        parameters.periode?.let { dateRangeMapper.mapToData(it) }
             ?: error("Incorrect server response")
     }
 
     override suspend fun registerNotifications(token: String) = withContext(Dispatchers.IO) {
-        Timber.d("Register notification")
         service.registerNotifications(token = token).await()
         Unit
     }
 
     override suspend fun tagSchedule() = withContext(Dispatchers.IO) {
-        Timber.d("Tag schedule")
         service.tagSchedule().await()
         Unit
     }
 
     override suspend fun tagEvent() = withContext(Dispatchers.IO) {
-        Timber.d("Tag event")
         service.tagEvent().await()
         Unit
     }
 
     override suspend fun tagDetails(date: String, id: String) = withContext(Dispatchers.IO) {
-        Timber.d("Tag details: $date / $id")
         service.tagDetails(date = date, id = id).await()
         Unit
     }

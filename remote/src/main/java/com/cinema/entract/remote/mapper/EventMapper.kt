@@ -16,19 +16,9 @@
 
 package com.cinema.entract.remote.mapper
 
-import com.cinema.entract.data.model.DateRangeData
-import com.cinema.entract.remote.model.DateRangeRemote
-import org.threeten.bp.LocalDate
+import com.cinema.entract.remote.model.EventRemote
 
-class DateRangeRemoteMapper : RemoteMapper<DateRangeRemote, DateRangeData> {
+class EventMapper : Mapper<EventRemote, String> {
 
-    override fun mapToData(model: DateRangeRemote): DateRangeData =
-        if (null == model.date_minimum || null == model.date_maximum) {
-            error("Incorrect server response")
-        } else {
-            DateRangeData(
-                LocalDate.parse(model.date_minimum),
-                LocalDate.parse(model.date_maximum)
-            )
-        }
+    override fun mapToData(model: EventRemote) = model.lien ?: ""
 }

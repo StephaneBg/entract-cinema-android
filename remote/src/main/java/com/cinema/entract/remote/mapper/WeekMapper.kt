@@ -14,35 +14,18 @@
  * limitations under the License.
  */
 
-buildscript {
+package com.cinema.entract.remote.mapper
 
-    repositories {
-        jcenter()
-        google()
-    }
+import com.cinema.entract.data.model.WeekData
+import com.cinema.entract.remote.model.WeekRemote
+import org.threeten.bp.LocalDate
 
-    dependencies {
-        classpath Build.androidGradle
-        classpath Build.kotlinGradlePlugin
-        classpath Build.googleServices
-    }
-}
+class WeekMapper(private val mapper: DayMapper) : Mapper<WeekRemote, WeekData> {
 
-allprojects {
-    repositories {
-        jcenter()
-        google()
-        maven { url 'https://jitpack.io' }
-    }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
-
-if (file("signing.gradle").exists()) {
-    apply from: "./signing.gradle"
-}
-else {
-    apply from: "./fake_signing.gradle"
+    override fun mapToData(model: WeekRemote) = WeekData(
+        LocalDate.parse(model.debutsemaine) ?: error("Unknown date"),
+        LocalDate.parse(model.finsemaine) ?: error("Unknown date"),
+        model.jours?.map { mapper.mapToData(it) } ?: emptyList(),
+        model.filmsDisponibles ?: false
+    )
 }

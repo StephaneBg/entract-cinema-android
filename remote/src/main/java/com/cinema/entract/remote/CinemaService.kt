@@ -40,7 +40,10 @@ interface CinemaService {
     fun getEvent(): Deferred<EventRemote>
 
     @PUT("registerPushNotifications")
-    fun registerNotifications(@Query("type") type: String = "android", @Query("deviceToken") token: String): Deferred<Void>
+    fun registerNotifications(
+        @Query("type") type: String = "android",
+        @Query("deviceToken") token: String
+    ): Deferred<Void>
 
     @PUT("updateStatistiques.php")
     fun tagSchedule(@Query("page") type: String = "page_programme"): Deferred<Void>
@@ -50,8 +53,8 @@ interface CinemaService {
 
     @PUT("updateStatistiques.php")
     fun tagDetails(
-        @Query("page") type: String = "page_detail", @Query("jour") date: String, @Query(
-            "film"
-        ) id: String
+        @Query("page") type: String = "page_detail",
+        @Query("jour") date: String,
+        @Query("film") id: String
     ): Deferred<Void>
 }

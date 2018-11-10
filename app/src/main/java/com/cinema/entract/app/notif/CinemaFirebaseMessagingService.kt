@@ -22,6 +22,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ui.cinema.CinemaActivity
+import com.cinema.entract.core.ext.color
 import com.cinema.entract.data.repository.CinemaRepository
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -62,7 +63,8 @@ class CinemaFirebaseMessagingService : FirebaseMessagingService(), CoroutineScop
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
 
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.drawable.ic_notification_24dp)
+            .setColor(color(R.color.secondary))
             .setContentTitle(getString(R.string.app_name))
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -73,6 +75,6 @@ class CinemaFirebaseMessagingService : FirebaseMessagingService(), CoroutineScop
     }
 
     companion object {
-        private const val CHANNEL_ID = "Grenade Entract Cinema"
+        private const val CHANNEL_ID = "Entract Grenade Cinema"
     }
 }

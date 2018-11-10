@@ -1,0 +1,29 @@
+<!--
+  ~ Copyright 2018 Stéphane Baiget
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    >
+    <path
+        android:fillColor="#000000"
+        android:pathData="M2.9998,1.9999L2.9998,6.0002L10.9998,6.0002L10.9998,17.9999L2.9998,17.9999L2.9998,22.0002L15.0001,22.0002L15.0001,13.672L21.0003,17.0176L21.0003,6.9825L15.0001,10.3275L15.0001,1.9999L2.9998,1.9999z"
+        android:strokeWidth="0.9947353"
+        />
+</vector>

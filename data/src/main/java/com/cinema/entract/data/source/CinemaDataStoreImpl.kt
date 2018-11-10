@@ -28,16 +28,32 @@ class CinemaDataStoreImpl(
 ) : CinemaDataStore {
 
     override suspend fun getMovies(date: String): List<MovieData> =
-        cacheRepo.getMovies(date) ?: remoteRepo.getMovies(date)
+        cacheRepo.getMovies(date) ?: run {
+            val movies = remoteRepo.getMovies(date)
+            cacheRepo.cacheMovies(date, movies)
+            movies
+        }
 
     override suspend fun getSchedule(): List<WeekData> =
-        cacheRepo.getSchedule() ?: remoteRepo.getSchedule()
+        cacheRepo.getSchedule() ?: run {
+            val schedule = remoteRepo.getSchedule()
+            cacheRepo.cacheSchedule(schedule)
+            schedule
+        }
 
     override suspend fun getParameters(): DateRangeData =
-        cacheRepo.getDateRange() ?: remoteRepo.getDateRange()
+        cacheRepo.getDateRange() ?: run {
+            val dateRange = remoteRepo.getDateRange()
+            cacheRepo.cacheDateRange(dateRange)
+            dateRange
+        }
 
     override suspend fun getEventUrl(): String =
-        cacheRepo.getEventUrl() ?: remoteRepo.getEventUrl()
+        cacheRepo.getEventUrl() ?: run {
+            val url = remoteRepo.getEventUrl()
+            cacheRepo.cacheEventUrl(url)
+            url
+        }
 
     override suspend fun registerNotifications(token: String) =
         remoteRepo.registerNotifications(token)

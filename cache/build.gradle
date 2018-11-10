@@ -42,9 +42,7 @@ dependencies {
     implementation Libs.kotlinStd
     implementation Libs.koinAndroid
     implementation Libs.ktx
-    implementation Libs.room
-
-    kapt Libs.roomCompiler
+    implementation Libs.jsr310
 }
 
 apply from: "../ktlint.gradle"

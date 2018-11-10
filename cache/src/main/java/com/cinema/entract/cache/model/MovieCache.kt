@@ -14,27 +14,26 @@
  * limitations under the License.
  */
 
-package com.cinema.entract.data.repository
+package com.cinema.entract.cache.model
 
-import com.cinema.entract.data.model.DateRangeData
-import com.cinema.entract.data.model.MovieData
-import com.cinema.entract.data.model.WeekData
+import org.threeten.bp.LocalDate
 
-interface CacheRepo {
-
-    fun getMovies(date: String): List<MovieData>?
-
-    fun cacheMovies(date: String, movies: List<MovieData>)
-
-    fun getSchedule(): List<WeekData>?
-
-    fun cacheSchedule(weeks: List<WeekData>)
-
-    fun getDateRange(): DateRangeData?
-
-    fun cacheDateRange(range: DateRangeData)
-
-    fun getEventUrl(): String?
-
-    fun cacheEventUrl(url: String)
-}
+data class MovieCache(
+    val id: String,
+    val title: String,
+    val date: LocalDate,
+    val schedule: String,
+    val isThreeDimension: Boolean,
+    val isOriginalVersion: Boolean,
+    val isUnderTwelve: Boolean,
+    val isExplicitContent: Boolean,
+    val coverUrl: String,
+    val duration: String,
+    val yearOfProduction: String,
+    val genre: String,
+    val director: String,
+    val cast: String,
+    val synopsis: String,
+    val teaserId: String,
+    val nextMovies: List<MovieCache>
+)

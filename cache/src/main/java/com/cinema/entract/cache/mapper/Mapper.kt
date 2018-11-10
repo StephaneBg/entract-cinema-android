@@ -19,4 +19,6 @@ package com.cinema.entract.cache.mapper
 interface Mapper<Cache, Data> {
 
     fun mapToData(model: Cache): Data
+
+    fun mapFromData(model: Data): Cache
 }

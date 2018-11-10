@@ -16,19 +16,53 @@
 
 package com.cinema.entract.cache.repository
 
-import android.content.Context
+import com.cinema.entract.cache.mapper.DateRangeMapper
+import com.cinema.entract.cache.mapper.MovieMapper
+import com.cinema.entract.cache.mapper.WeekMapper
+import com.cinema.entract.cache.model.DateRangeCache
+import com.cinema.entract.cache.model.MovieCache
+import com.cinema.entract.cache.model.WeekCache
 import com.cinema.entract.data.model.DateRangeData
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
 import com.cinema.entract.data.repository.CacheRepo
 
-class CacheRepoImpl(private val context: Context) : CacheRepo {
+class CacheRepoImpl(
+    private val movieMapper: MovieMapper,
+    private val weekMapper: WeekMapper,
+    private val dateRangeMapper: DateRangeMapper
+) : CacheRepo {
 
-    override suspend fun getMovies(date: String): List<MovieData>? = null
+    private val moviesMap = mutableMapOf<String, List<MovieCache>>()
+    private var schedule: List<WeekCache>? = null
+    private var dateRange: DateRangeCache? = null
+    private var eventUrl: String? = null
 
-    override suspend fun getSchedule(): List<WeekData>? = null
+    override fun getMovies(date: String): List<MovieData>? = moviesMap[date]?.let {
+        it.map { movie -> movieMapper.mapToData(movie) }
+    }
 
-    override suspend fun getDateRange(): DateRangeData? = null
+    override fun cacheMovies(date: String, movies: List<MovieData>) {
+        moviesMap[date] = movies.map { movieMapper.mapFromData(it) }
+    }
 
-    override suspend fun getEventUrl(): String? = null
+    override fun getSchedule(): List<WeekData>? = schedule?.map { weekMapper.mapToData(it) }
+
+    override fun cacheSchedule(weeks: List<WeekData>) {
+        schedule = weeks.map { weekMapper.mapFromData(it) }
+    }
+
+    override fun getDateRange(): DateRangeData? = dateRange?.let {
+        dateRangeMapper.mapToData(it)
+    }
+
+    override fun cacheDateRange(range: DateRangeData) {
+        dateRange = dateRangeMapper.mapFromData(range)
+    }
+
+    override fun getEventUrl(): String? = eventUrl
+
+    override fun cacheEventUrl(url: String) {
+        eventUrl = url
+    }
 }

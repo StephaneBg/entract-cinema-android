@@ -29,15 +29,13 @@ class CinemaUseCase(
     private val networkUtils: NetworkUtils
 ) {
 
-    private var date: LocalDate? = null
-    private var dateRange: DateRangeData? = null
-    private var eventUrl: String? = null
+    private var currentDate: LocalDate? = null
 
-    fun getDate(): LocalDate = date ?: initDate()
+    fun getDate(): LocalDate = currentDate ?: initDate()
 
     private fun initDate(): LocalDate {
         val now = LocalDate.now()
-        date = now
+        currentDate = now
         return now
     }
 
@@ -50,26 +48,14 @@ class CinemaUseCase(
             ) else it
         }
 
-    suspend fun getDateRange(): DateRangeData = dateRange ?: initDateRange()
-
-    private suspend fun initDateRange(): DateRangeData {
-        val range = repo.getParameters()
-        dateRange = range
-        return range
-    }
+    suspend fun getDateRange(): DateRangeData = repo.getParameters()
 
     suspend fun getSchedule(): List<WeekData> = repo.getSchedule().filter { it.hasMovies }
 
-    suspend fun getEventUrl(): String = eventUrl ?: initEventUrl()
-
-    private suspend fun initEventUrl(): String {
-        val url = repo.getEventUrl()
-        eventUrl = url
-        return url
-    }
+    suspend fun getEventUrl(): String = repo.getEventUrl()
 
     fun selectDate(selectedDate: LocalDate) {
-        date = selectedDate
+        currentDate = selectedDate
     }
 
     private fun canDisplayMedia(): Boolean =

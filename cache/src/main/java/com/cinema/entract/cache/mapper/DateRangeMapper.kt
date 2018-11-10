@@ -14,27 +14,20 @@
  * limitations under the License.
  */
 
-package com.cinema.entract.data.repository
+package com.cinema.entract.cache.mapper
 
+import com.cinema.entract.cache.model.DateRangeCache
 import com.cinema.entract.data.model.DateRangeData
-import com.cinema.entract.data.model.MovieData
-import com.cinema.entract.data.model.WeekData
 
-interface CacheRepo {
+class DateRangeMapper : Mapper<DateRangeCache, DateRangeData> {
 
-    fun getMovies(date: String): List<MovieData>?
+    override fun mapToData(model: DateRangeCache) = DateRangeData(
+        model.minimumDate,
+        model.maximumDate
+    )
 
-    fun cacheMovies(date: String, movies: List<MovieData>)
-
-    fun getSchedule(): List<WeekData>?
-
-    fun cacheSchedule(weeks: List<WeekData>)
-
-    fun getDateRange(): DateRangeData?
-
-    fun cacheDateRange(range: DateRangeData)
-
-    fun getEventUrl(): String?
-
-    fun cacheEventUrl(url: String)
+    override fun mapFromData(model: DateRangeData) = DateRangeCache(
+        model.minimumDate,
+        model.maximumDate
+    )
 }

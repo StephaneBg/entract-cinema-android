@@ -16,6 +16,10 @@
 
 package com.cinema.entract.cache.di
 
+import com.cinema.entract.cache.mapper.DateRangeMapper
+import com.cinema.entract.cache.mapper.DayMapper
+import com.cinema.entract.cache.mapper.MovieMapper
+import com.cinema.entract.cache.mapper.WeekMapper
 import com.cinema.entract.cache.repository.CacheRepoImpl
 import com.cinema.entract.cache.repository.UserPreferencesImpl
 import com.cinema.entract.data.repository.CacheRepo
@@ -24,6 +28,10 @@ import org.koin.dsl.module.module
 
 val cacheModule = module {
 
-    single<CacheRepo> { CacheRepoImpl(get()) }
+    single { MovieMapper() }
+    single { WeekMapper(get()) }
+    single { DayMapper(get()) }
+    single { DateRangeMapper() }
+    single<CacheRepo> { CacheRepoImpl(get(), get(), get()) }
     single<UserPreferences> { UserPreferencesImpl(get()) }
 }

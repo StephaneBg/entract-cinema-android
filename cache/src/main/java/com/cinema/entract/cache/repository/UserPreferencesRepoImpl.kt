@@ -18,9 +18,9 @@ package com.cinema.entract.cache.repository
 
 import android.content.Context
 import androidx.core.content.edit
-import com.cinema.entract.data.repository.UserPreferences
+import com.cinema.entract.data.repository.UserPreferencesRepo
 
-class UserPreferencesImpl(context: Context) : UserPreferences {
+class UserPreferencesRepoImpl(context: Context) : UserPreferencesRepo {
 
     private val preferences = context.getSharedPreferences(USER_PREFS, Context.MODE_PRIVATE)
 

@@ -18,6 +18,7 @@ package com.cinema.entract.data.source
 import com.cinema.entract.data.model.DateRangeData
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
+import com.cinema.entract.data.repository.UserPreferencesRepo
 
 interface CinemaDataStore {
 
@@ -36,4 +37,6 @@ interface CinemaDataStore {
     suspend fun tagEvent()
 
     suspend fun tagDetails(date: String, id: String)
+
+    fun getUserPreferences(): UserPreferencesRepo
 }

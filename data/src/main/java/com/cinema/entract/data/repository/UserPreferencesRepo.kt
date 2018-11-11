@@ -16,25 +16,11 @@
 
 package com.cinema.entract.data.repository
 
-import com.cinema.entract.data.model.DateRangeData
-import com.cinema.entract.data.model.MovieData
-import com.cinema.entract.data.model.WeekData
+interface UserPreferencesRepo {
 
-interface CacheRepo {
+    fun isEventEnabled(): Boolean
+    fun setEventPreference(enabled: Boolean)
 
-    fun getMovies(date: String): List<MovieData>?
-
-    fun cacheMovies(date: String, movies: List<MovieData>): List<MovieData>
-
-    fun getSchedule(): List<WeekData>?
-
-    fun cacheSchedule(weeks: List<WeekData>): List<WeekData>
-
-    fun getDateRange(): DateRangeData?
-
-    fun cacheDateRange(range: DateRangeData): DateRangeData
-
-    fun getEventUrl(): String?
-
-    fun cacheEventUrl(url: String): String
+    fun isOnlyOnWifi(): Boolean
+    fun setOnlyOnWifi(onlyOnWifi: Boolean)
 }

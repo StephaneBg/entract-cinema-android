@@ -17,8 +17,8 @@
 package com.cinema.entract.data.di
 
 import com.cinema.entract.data.interactor.CinemaUseCase
+import com.cinema.entract.data.interactor.NotifUseCase
 import com.cinema.entract.data.interactor.TagUseCase
-import com.cinema.entract.data.repository.CinemaRepo
 import com.cinema.entract.data.source.CacheDataStore
 import com.cinema.entract.data.source.CinemaDataStore
 import com.cinema.entract.data.source.CinemaDataStoreImpl
@@ -29,8 +29,8 @@ val dataModule = module {
 
     single { CinemaUseCase(get(), get()) }
     single { TagUseCase(get()) }
+    single { NotifUseCase(get()) }
     single { RemoteDataStore(get()) }
     single { CacheDataStore(get()) }
-    single<CinemaDataStore> { CinemaDataStoreImpl(get(), get()) }
-    single { CinemaRepo(get(), get()) }
+    single<CinemaDataStore> { CinemaDataStoreImpl(get(), get(), get()) }
 }

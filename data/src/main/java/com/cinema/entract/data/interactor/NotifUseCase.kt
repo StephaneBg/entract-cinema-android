@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-package com.cinema.entract.data.repository
+package com.cinema.entract.data.interactor
 
-interface UserPreferences {
+import com.cinema.entract.data.source.CinemaDataStore
 
-    fun isEventEnabled(): Boolean
-    fun setEventPreference(enabled: Boolean)
+class NotifUseCase(private val dataStore: CinemaDataStore) {
 
-    fun isOnlyOnWifi(): Boolean
-    fun setOnlyOnWifi(onlyOnWifi: Boolean)
+    suspend fun registerNotifications(token: String) = dataStore.registerNotifications(token)
 }

@@ -21,9 +21,9 @@ import com.cinema.entract.cache.mapper.DayMapper
 import com.cinema.entract.cache.mapper.MovieMapper
 import com.cinema.entract.cache.mapper.WeekMapper
 import com.cinema.entract.cache.repository.CacheRepoImpl
-import com.cinema.entract.cache.repository.UserPreferencesImpl
+import com.cinema.entract.cache.repository.UserPreferencesRepoImpl
 import com.cinema.entract.data.repository.CacheRepo
-import com.cinema.entract.data.repository.UserPreferences
+import com.cinema.entract.data.repository.UserPreferencesRepo
 import org.koin.dsl.module.module
 
 val cacheModule = module {
@@ -33,5 +33,5 @@ val cacheModule = module {
     single { DayMapper(get()) }
     single { DateRangeMapper() }
     single<CacheRepo> { CacheRepoImpl(get(), get(), get()) }
-    single<UserPreferences> { UserPreferencesImpl(get()) }
+    single<UserPreferencesRepo> { UserPreferencesRepoImpl(get()) }
 }

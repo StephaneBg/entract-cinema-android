@@ -16,13 +16,13 @@
 
 package com.cinema.entract.data.interactor
 
-import com.cinema.entract.data.repository.CinemaRepo
+import com.cinema.entract.data.source.CinemaDataStore
 
-class TagUseCase(private val repo: CinemaRepo) {
+class TagUseCase(private val dataStore: CinemaDataStore) {
 
-    suspend fun tagSchedule() = repo.tagSchedule()
+    suspend fun tagSchedule() = dataStore.tagSchedule()
 
-    suspend fun tagEvent() = repo.tagEvent()
+    suspend fun tagEvent() = dataStore.tagEvent()
 
-    suspend fun tagDetails(date: String, id: String) = repo.tagDetails(date, id)
+    suspend fun tagDetails(date: String, id: String) = dataStore.tagDetails(date, id)
 }

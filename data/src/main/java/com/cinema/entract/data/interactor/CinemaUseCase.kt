@@ -21,11 +21,11 @@ import com.cinema.entract.data.ext.formatToUTC
 import com.cinema.entract.data.model.DateRangeData
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
-import com.cinema.entract.data.repository.CinemaRepo
+import com.cinema.entract.data.source.CinemaDataStore
 import org.threeten.bp.LocalDate
 
 class CinemaUseCase(
-    private val repo: CinemaRepo,
+    private val dataStore: CinemaDataStore,
     private val networkUtils: NetworkUtils
 ) {
 
@@ -39,7 +39,7 @@ class CinemaUseCase(
         return now
     }
 
-    suspend fun getMovies(): List<MovieData> = repo
+    suspend fun getMovies(): List<MovieData> = dataStore
         .getMovies(getDate().formatToUTC())
         .map {
             if (!canDisplayMedia()) it.copy(
@@ -48,24 +48,26 @@ class CinemaUseCase(
             ) else it
         }
 
-    suspend fun getDateRange(): DateRangeData = repo.getParameters()
+    suspend fun getDateRange(): DateRangeData = dataStore.getParameters()
 
-    suspend fun getSchedule(): List<WeekData> = repo.getSchedule().filter { it.hasMovies }
+    suspend fun getSchedule(): List<WeekData> = dataStore.getSchedule().filter { it.hasMovies }
 
-    suspend fun getEventUrl(): String = if (isEventEnabled()) repo.getEventUrl() else ""
+    suspend fun getEventUrl(): String = if (isEventEnabled()) dataStore.getEventUrl() else ""
 
     fun selectDate(selectedDate: LocalDate) {
         currentDate = selectedDate
     }
 
     private fun canDisplayMedia(): Boolean =
-        !repo.getUserPreferences().isOnlyOnWifi() || networkUtils.isConnectedOnWifi()
+        !dataStore.getUserPreferences().isOnlyOnWifi() || networkUtils.isConnectedOnWifi()
 
-    fun isEventEnabled(): Boolean = repo.getUserPreferences().isEventEnabled()
+    fun isEventEnabled(): Boolean = dataStore.getUserPreferences().isEventEnabled()
 
-    fun setEventPreference(enabled: Boolean) = repo.getUserPreferences().setEventPreference(enabled)
+    fun setEventPreference(enabled: Boolean) =
+        dataStore.getUserPreferences().setEventPreference(enabled)
 
-    fun isOnlyOnWifi(): Boolean = repo.getUserPreferences().isOnlyOnWifi()
+    fun isOnlyOnWifi(): Boolean = dataStore.getUserPreferences().isOnlyOnWifi()
 
-    fun setOnlyOnWifi(onlyOnWifi: Boolean) = repo.getUserPreferences().setOnlyOnWifi(onlyOnWifi)
+    fun setOnlyOnWifi(onlyOnWifi: Boolean) =
+        dataStore.getUserPreferences().setOnlyOnWifi(onlyOnWifi)
 }

@@ -21,39 +21,25 @@ import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
 import com.cinema.entract.data.repository.CacheRepo
 import com.cinema.entract.data.repository.RemoteRepo
+import com.cinema.entract.data.repository.UserPreferencesRepo
 
 class CinemaDataStoreImpl(
     private val cacheRepo: CacheRepo,
-    private val remoteRepo: RemoteRepo
+    private val remoteRepo: RemoteRepo,
+    private val userPreferencesRepo: UserPreferencesRepo
 ) : CinemaDataStore {
 
     override suspend fun getMovies(date: String): List<MovieData> =
-        cacheRepo.getMovies(date) ?: run {
-            val movies = remoteRepo.getMovies(date)
-            cacheRepo.cacheMovies(date, movies)
-            movies
-        }
+        cacheRepo.getMovies(date) ?: cacheRepo.cacheMovies(date, remoteRepo.getMovies(date))
 
     override suspend fun getSchedule(): List<WeekData> =
-        cacheRepo.getSchedule() ?: run {
-            val schedule = remoteRepo.getSchedule()
-            cacheRepo.cacheSchedule(schedule)
-            schedule
-        }
+        cacheRepo.getSchedule() ?: cacheRepo.cacheSchedule(remoteRepo.getSchedule())
 
     override suspend fun getParameters(): DateRangeData =
-        cacheRepo.getDateRange() ?: run {
-            val dateRange = remoteRepo.getDateRange()
-            cacheRepo.cacheDateRange(dateRange)
-            dateRange
-        }
+        cacheRepo.getDateRange() ?: cacheRepo.cacheDateRange(remoteRepo.getDateRange())
 
     override suspend fun getEventUrl(): String =
-        cacheRepo.getEventUrl() ?: run {
-            val url = remoteRepo.getEventUrl()
-            cacheRepo.cacheEventUrl(url)
-            url
-        }
+        cacheRepo.getEventUrl() ?: cacheRepo.cacheEventUrl(remoteRepo.getEventUrl())
 
     override suspend fun registerNotifications(token: String) =
         remoteRepo.registerNotifications(token)
@@ -63,4 +49,6 @@ class CinemaDataStoreImpl(
     override suspend fun tagEvent() = remoteRepo.tagEvent()
 
     override suspend fun tagDetails(date: String, id: String) = remoteRepo.tagDetails(date, id)
+
+    override fun getUserPreferences(): UserPreferencesRepo = userPreferencesRepo
 }

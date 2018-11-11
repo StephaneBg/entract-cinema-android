@@ -23,7 +23,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.core.ext.color
-import com.cinema.entract.data.repository.CinemaRepo
+import com.cinema.entract.data.interactor.NotifUseCase
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import kotlinx.coroutines.CoroutineScope
@@ -36,7 +36,7 @@ import kotlin.coroutines.CoroutineContext
 
 class CinemaFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
 
-    private val cinemaRepository by inject<CinemaRepo>()
+    private val useCase by inject<NotifUseCase>()
     private val job = Job()
 
     override val coroutineContext: CoroutineContext
@@ -44,7 +44,7 @@ class CinemaFirebaseMessagingService : FirebaseMessagingService(), CoroutineScop
 
     override fun onNewToken(token: String) {
         Timber.d("New token is $token")
-        launch(context = coroutineContext) { cinemaRepository.registerNotifications(token) }
+        launch(context = coroutineContext) { useCase.registerNotifications(token) }
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {

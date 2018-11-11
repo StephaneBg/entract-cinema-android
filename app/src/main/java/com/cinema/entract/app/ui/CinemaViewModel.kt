@@ -58,13 +58,13 @@ class CinemaViewModel(
         retrieveMovies()
     }
 
+    fun retrieveTodayMovies() {
+        retrieveMovies(LocalDate.now())
+    }
+
     fun retrieveMovies() {
         onScreenState.postValue(Loading())
         launchAsync(::loadOnScreen, ::onLoadOnScreenError)
-    }
-
-    fun retrieveTodayMovies() {
-        retrieveMovies(LocalDate.now())
     }
 
     fun getDateRange(): LiveData<DateRange> {

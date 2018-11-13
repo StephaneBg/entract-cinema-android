@@ -62,9 +62,10 @@ class ScheduleFragment : BaseLceFragment<EmptynessLayout>() {
 
     private fun manageState(state: State<List<ScheduleEntry>>?) {
         when (state) {
+            null -> Unit
             is Loading -> showLoading()
             is Success -> {
-                scheduleAdapter.updateSchedule(state.data ?: emptyList())
+                scheduleAdapter.updateSchedule(state.data)
                 showContent()
             }
             is Error -> showError(state.error) { cinemaViewModel.retrieveSchedule() }

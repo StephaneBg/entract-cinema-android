@@ -22,6 +22,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -69,6 +70,7 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
         }
 
         fab = find(R.id.fab)
+        fab.isVisible = null != cinemaViewModel.getDateRange()
         fab.setOnClickListener { displayDatePicker() }
 
         date = find(R.id.date)

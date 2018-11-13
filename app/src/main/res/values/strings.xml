@@ -37,6 +37,8 @@
     <string name="details_add_agenda">Ajouter à l\'agenda</string>
     <string name="details_title_next_movies">Autres séances</string>
     <string name="details_title_synopsis">Synopsis</string>
+    <string name="details_under_twelve_notice">Interdit aux moins de 12 ans</string>
+    <string name="details_explicit_content_notice">Des scènes, des propos ou des images peuvent heurter la sensibilité des spectateurs</string>
     <string name="details_no_next_movies">Aucune</string>
 
     <string name="schedule_title">Les horaires</string>

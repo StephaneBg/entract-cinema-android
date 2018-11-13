@@ -28,10 +28,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cinema.entract.app.R
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.CinemaViewModel
-import com.cinema.entract.app.ui.OnScreen
 import com.cinema.entract.app.ui.details.DetailsFragment
-import com.cinema.entract.app.ui.getDate
-import com.cinema.entract.app.ui.getMovies
+import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ext.replaceFragment
 import com.cinema.entract.core.ui.BaseLceFragment
@@ -39,7 +37,6 @@ import com.cinema.entract.core.ui.Error
 import com.cinema.entract.core.ui.Loading
 import com.cinema.entract.core.ui.State
 import com.cinema.entract.core.ui.Success
-import com.cinema.entract.core.views.bindView
 import com.cinema.entract.core.widget.EmptynessLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
@@ -51,8 +48,8 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
     private lateinit var onScreenAdapter: OnScreenAdapter
 
     private lateinit var alertDialog: AlertDialog
-    private val fab by bindView<FloatingActionButton>(R.id.fab)
-    private val date by bindView<TextView>(R.id.date)
+    private lateinit var fab: FloatingActionButton
+    private lateinit var date: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,17 +68,21 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
             setAdapter(onScreenAdapter)
         }
 
+        fab = find(R.id.fab)
         fab.setOnClickListener { displayDatePicker() }
+
+        date = find(R.id.date)
+        observe(cinemaViewModel.getCurrentDate()) { date.text = it }
 
         observe(cinemaViewModel.getOnScreenState(), ::manageState)
     }
 
-    private fun manageState(state: State<OnScreen>?) {
+    private fun manageState(state: State<List<Movie>>?) {
         when (state) {
+            null -> Unit
             is Loading -> showLoading()
             is Success -> {
-                onScreenAdapter.updateMovies(state.data?.getMovies() ?: emptyList())
-                date.text = state.data?.getDate() ?: getString(R.string.app_name)
+                onScreenAdapter.updateMovies(state.data)
                 showContent()
             }
             is Error -> {
@@ -108,19 +109,17 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
             cinemaViewModel.retrieveMovies(day.date)
             alertDialog.dismiss()
         }
-        observe(cinemaViewModel.getDateRange()) { range ->
-            range?.let {
-                datePicker.state().edit()
-                    .setMinimumDate(it.minimumDate)
-                    .setMaximumDate(it.maximumDate)
-                    .commit()
-            }
-            alertDialog = AlertDialog.Builder(requireContext())
-                .setView(datePicker)
-                .setNegativeButton(android.R.string.cancel, null)
-                .create()
-            alertDialog.show()
+        cinemaViewModel.getDateRange()?.let {
+            datePicker.state().edit()
+                .setMinimumDate(it.minimumDate)
+                .setMaximumDate(it.maximumDate)
+                .commit()
         }
+        alertDialog = AlertDialog.Builder(requireContext())
+            .setView(datePicker)
+            .setNegativeButton(android.R.string.cancel, null)
+            .create()
+        alertDialog.show()
     }
 
     companion object {

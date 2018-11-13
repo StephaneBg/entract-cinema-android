@@ -16,6 +16,7 @@
 
 package com.cinema.entract.app.di
 
+import com.cinema.entract.app.mapper.DateRangeMapper
 import com.cinema.entract.app.mapper.MovieMapper
 import com.cinema.entract.app.mapper.ScheduleMapper
 import com.cinema.entract.app.ui.CinemaViewModel
@@ -30,9 +31,10 @@ val uiModule = module {
 
     single { MovieMapper() }
     single { ScheduleMapper(get()) }
+    single { DateRangeMapper() }
 
     viewModel { StartupViewModel(get()) }
-    viewModel { CinemaViewModel(get(), get(), get()) }
+    viewModel { CinemaViewModel(get(), get(), get(), get()) }
     viewModel { DetailsViewModel() }
     viewModel { SettingsViewModel(get()) }
     viewModel { TagViewModel(get()) }

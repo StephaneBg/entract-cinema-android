@@ -14,10 +14,14 @@
  * limitations under the License.
  */
 
-package com.cinema.entract.core.ui
+package com.cinema.entract.app.mapper
 
-sealed class State<out T>
+import com.cinema.entract.app.model.DateRange
+import com.cinema.entract.data.model.DateRangeData
 
-class Success<out T>(val data: T, val refresh: Boolean = false) : State<T>()
-class Loading(val refresh: Boolean = false) : State<Nothing>()
-class Error(val error: Throwable?) : State<Nothing>()
+class DateRangeMapper : Mapper<DateRange?, DateRangeData?> {
+
+    override fun mapToUi(model: DateRangeData?) = model?.let {
+        DateRange(it.minimumDate, it.maximumDate)
+    }
+}

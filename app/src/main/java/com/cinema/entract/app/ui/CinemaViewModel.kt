@@ -18,6 +18,7 @@ package com.cinema.entract.app.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.cinema.entract.app.mapper.DateRangeMapper
 import com.cinema.entract.app.mapper.MovieMapper
 import com.cinema.entract.app.mapper.ScheduleMapper
 import com.cinema.entract.app.model.DateRange
@@ -32,23 +33,25 @@ import com.cinema.entract.core.ui.Success
 import com.cinema.entract.data.ext.longFormatToUi
 import com.cinema.entract.data.interactor.CinemaUseCase
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 import org.threeten.bp.LocalDate
 import timber.log.Timber
 
 class CinemaViewModel(
     private val useCase: CinemaUseCase,
     private val movieMapper: MovieMapper,
-    private val scheduleMapper: ScheduleMapper
+    private val scheduleMapper: ScheduleMapper,
+    private val dateRangeMapper: DateRangeMapper
 ) : ScopedViewModel() {
 
-    private val onScreenState = MutableLiveData<State<OnScreen>>()
+    private val onScreenState = MutableLiveData<State<List<Movie>>>()
     private val scheduleState = MutableLiveData<State<List<ScheduleEntry>>>()
     private val detailedMovie = MutableLiveData<Movie>()
     private val eventUrl = MutableLiveData<Event<String>>()
-    private val dateRange = MutableLiveData<DateRange>()
+    private val currentDate = MutableLiveData<String>()
 
-    fun getOnScreenState(): LiveData<State<OnScreen>> {
+    fun getCurrentDate(): LiveData<String> = currentDate
+
+    fun getOnScreenState(): LiveData<State<List<Movie>>> {
         onScreenState.value ?: retrieveMovies()
         return onScreenState
     }
@@ -63,26 +66,16 @@ class CinemaViewModel(
     }
 
     fun retrieveMovies() {
+        currentDate.postValue(useCase.getDate().longFormatToUi())
         onScreenState.postValue(Loading())
         launchAsync(::loadOnScreen, ::onLoadOnScreenError)
     }
 
-    fun getDateRange(): LiveData<DateRange> {
-        dateRange.value ?: retrieveDateRange()
-        return dateRange
-    }
-
-    private fun retrieveDateRange() = launchAsync(
-        {
-            val range = useCase.getDateRange()
-            dateRange.postValue(DateRange(range.minimumDate, range.maximumDate))
-        },
-        { dateRange.postValue(null) }
-    )
+    fun getDateRange(): DateRange? = dateRangeMapper.mapToUi(useCase.dateRange)
 
     private suspend fun loadOnScreen() = coroutineScope {
         val movies = useCase.getMovies().map { movieMapper.mapToUi(it) }
-        onScreenState.postValue(Success(movies to useCase.getDate().longFormatToUi()))
+        onScreenState.postValue(Success(movies))
     }
 
     private fun onLoadOnScreenError(throwable: Throwable) {
@@ -121,7 +114,6 @@ class CinemaViewModel(
 
     private suspend fun loadEventUrl() = coroutineScope {
         val url = useCase.getEventUrl()
-        delay(500)
         eventUrl.postValue(Event(url))
     }
 
@@ -130,8 +122,3 @@ class CinemaViewModel(
         eventUrl.postValue(Event(""))
     }
 }
-
-typealias OnScreen = Pair<List<Movie>, String>
-
-fun OnScreen.getMovies() = this.first
-fun OnScreen.getDate() = this.second

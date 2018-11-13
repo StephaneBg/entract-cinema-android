@@ -33,7 +33,7 @@ class StartupViewModel(private val useCase: CinemaUseCase) : ScopedViewModel() {
 
     private suspend fun prefetchData() = coroutineScope {
         useCase.getMovies()
-        useCase.getDateRange()
+        useCase.loadParameters()
         eventUrl.postValue(useCase.getEventUrl())
     }
 

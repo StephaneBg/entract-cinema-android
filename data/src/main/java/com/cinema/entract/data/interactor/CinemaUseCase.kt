@@ -30,6 +30,8 @@ class CinemaUseCase(
 ) {
 
     private var currentDate: LocalDate? = null
+    var dateRange: DateRangeData? = null
+        private set
 
     fun getDate(): LocalDate = currentDate ?: initDate()
 
@@ -48,7 +50,9 @@ class CinemaUseCase(
             ) else it
         }
 
-    suspend fun getDateRange(): DateRangeData = dataStore.getParameters()
+    suspend fun loadParameters() {
+        dateRange = dataStore.getParameters()
+    }
 
     suspend fun getSchedule(): List<WeekData> = dataStore.getSchedule().filter { it.hasMovies }
 

@@ -26,7 +26,7 @@
 
     <TextView
         android:id="@+id/schedule"
-        style="@style/TextAppearance.MaterialComponents.Headline6"
+        style="?textAppearanceHeadline6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,7 @@
 
     <TextView
         android:id="@+id/title"
-        style="@style/TextAppearance.MaterialComponents.Headline6"
+        style="?textAppearanceHeadline6"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -48,7 +48,7 @@
 
     <ImageView
         android:id="@+id/originalVersion"
-        style="@style/TextAppearance.MaterialComponents.Body1"
+        style="?textAppearanceBody1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_padding_size_small"
@@ -62,7 +62,7 @@
 
     <ImageView
         android:id="@+id/threeDimension"
-        style="@style/TextAppearance.MaterialComponents.Body1"
+        style="?textAppearanceBody1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -78,7 +78,7 @@
 
     <ImageView
         android:id="@+id/underTwelve"
-        style="@style/TextAppearance.MaterialComponents.Body1"
+        style="?textAppearanceBody1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -94,7 +94,7 @@
 
     <ImageView
         android:id="@+id/explicitContent"
-        style="@style/TextAppearance.MaterialComponents.Body1"
+        style="?textAppearanceBody1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_padding_size_medium"

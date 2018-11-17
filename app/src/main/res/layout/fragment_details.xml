@@ -33,7 +33,7 @@
 
         <TextView
             android:id="@+id/dateTime"
-            style="@style/TextAppearance.Cinema.Title"
+            style="?textAppearanceHeadline5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/margin_padding_size_medium"
@@ -61,7 +61,7 @@
 
             <TextView
                 android:id="@+id/title"
-                style="@style/TextAppearance.MaterialComponents.Headline6"
+                style="?textAppearanceHeadline6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -90,7 +90,7 @@
 
             <TextView
                 android:id="@+id/director"
-                style="@style/TextAppearance.MaterialComponents.Body2"
+                style="?textAppearanceBody2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -104,7 +104,7 @@
 
             <TextView
                 android:id="@+id/cast"
-                style="@style/TextAppearance.MaterialComponents.Body2"
+                style="?textAppearanceBody2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -118,7 +118,7 @@
 
             <TextView
                 android:id="@+id/year"
-                style="@style/TextAppearance.MaterialComponents.Body2"
+                style="?textAppearanceBody2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -132,7 +132,7 @@
 
             <TextView
                 android:id="@+id/genre"
-                style="@style/TextAppearance.MaterialComponents.Body2"
+                style="?textAppearanceBody2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -146,7 +146,7 @@
 
             <TextView
                 android:id="@+id/duration"
-                style="@style/TextAppearance.MaterialComponents.Body2"
+                style="?textAppearanceBody2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -161,7 +161,7 @@
 
             <ImageView
                 android:id="@+id/originalVersion"
-                style="@style/TextAppearance.MaterialComponents.Body1"
+                style="?textAppearanceBody1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -176,7 +176,7 @@
 
             <ImageView
                 android:id="@+id/threeDimension"
-                style="@style/TextAppearance.MaterialComponents.Body1"
+                style="?textAppearanceBody1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -191,7 +191,7 @@
 
             <ImageView
                 android:id="@+id/underTwelve"
-                style="@style/TextAppearance.MaterialComponents.Body1"
+                style="?textAppearanceBody1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -206,7 +206,7 @@
 
             <ImageView
                 android:id="@+id/explicitContent"
-                style="@style/TextAppearance.MaterialComponents.Body1"
+                style="?textAppearanceBody1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -229,7 +229,7 @@
 
             <TextView
                 android:id="@+id/synopsisTitle"
-                style="@style/TextAppearance.MaterialComponents.Headline6"
+                style="?textAppearanceHeadline6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -244,7 +244,7 @@
 
             <TextView
                 android:id="@+id/synopsis"
-                style="@style/TextAppearance.MaterialComponents.Body1"
+                style="?textAppearanceBody1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -258,7 +258,7 @@
 
             <TextView
                 android:id="@+id/underTwelveNotice"
-                style="@style/TextAppearance.MaterialComponents.Body1"
+                style="?textAppearanceBody1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -272,7 +272,7 @@
 
             <TextView
                 android:id="@+id/explicitContentNotice"
-                style="@style/TextAppearance.MaterialComponents.Body1"
+                style="?textAppearanceBody1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -286,7 +286,7 @@
 
             <TextView
                 android:id="@+id/nextTitle"
-                style="@style/TextAppearance.MaterialComponents.Headline6"
+                style="?textAppearanceHeadline6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -312,7 +312,6 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/teaser"
-                style="@style/Widget.Cinema.Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -328,7 +327,6 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/agenda"
-                style="@style/Widget.Cinema.Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"

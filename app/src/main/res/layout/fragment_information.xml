@@ -33,7 +33,7 @@
 
         <TextView
             android:id="@+id/title"
-            style="@style/TextAppearance.Cinema.Title"
+            style="?textAppearanceHeadline5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/margin_padding_size_medium"
@@ -60,7 +60,7 @@
 
             <TextView
                 android:id="@+id/place"
-                style="@style/TextAppearance.MaterialComponents.Headline6"
+                style="?textAppearanceHeadline6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -86,7 +86,7 @@
 
             <TextView
                 android:id="@+id/address"
-                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                style="?textAppearanceSubtitle1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -100,7 +100,6 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/navigate"
-                style="@style/Widget.Cinema.Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -116,7 +115,6 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/call"
-                style="@style/Widget.Cinema.Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -132,7 +130,6 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/website"
-                style="@style/Widget.Cinema.Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -148,7 +145,6 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/facebook"
-                style="@style/Widget.Cinema.Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"

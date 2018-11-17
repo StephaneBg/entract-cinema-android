@@ -17,16 +17,16 @@
 <resources>
 
     <style name="Theme.Cinema"
-        parent="Theme.MaterialComponents.Light">
+        parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/white</item>
         <item name="colorAccent">@color/secondary</item>
         <item name="alertDialogTheme">@style/Theme.Cinema.AlertDialog</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="android:listDivider">@drawable/divider</item>
         <item name="fontFamily">@font/raleway</item>
+        <item name="textAppearanceHeadline5">@style/TextAppearance.Cinema.Headline5</item>
+        <item name="materialButtonStyle">@style/Widget.Cinema.Button</item>
     </style>
 </resources>

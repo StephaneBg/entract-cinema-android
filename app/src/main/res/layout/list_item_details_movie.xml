@@ -29,7 +29,7 @@
 
     <TextView
         android:id="@+id/dateSchedule"
-        style="@style/TextAppearance.MaterialComponents.Body1"
+        style="?textAppearanceBody1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
@@ -42,7 +42,7 @@
 
     <ImageView
         android:id="@+id/originalVersion"
-        style="@style/TextAppearance.MaterialComponents.Body1"
+        style="?textAppearanceBody1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -58,7 +58,7 @@
 
     <ImageView
         android:id="@+id/threeDimension"
-        style="@style/TextAppearance.MaterialComponents.Body1"
+        style="?textAppearanceBody1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_padding_size_medium"

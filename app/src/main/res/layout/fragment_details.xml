@@ -82,8 +82,10 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/director"
                 app:layout_constraintWidth_percent="0.3"
+                tools:adjustViewBounds="true"
                 tools:background="@color/primary_light"
                 tools:srcCompat="@drawable/ic_movie_black_24dp"
+                tools:tint="@color/primary"
                 />
 
             <TextView
@@ -288,8 +290,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
-                android:layout_marginEnd="@dimen/margin_padding_size_medium"
                 android:layout_marginTop="@dimen/margin_padding_size_large"
+                android:layout_marginEnd="@dimen/margin_padding_size_medium"
                 android:text="@string/details_title_next_movies"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

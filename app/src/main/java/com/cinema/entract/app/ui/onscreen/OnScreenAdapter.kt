@@ -62,13 +62,12 @@ class OnScreenAdapter(private val selection: (Movie) -> Unit) :
         @SuppressLint("SetTextI18n")
         fun bind(movie: Movie) {
             itemView.apply {
-                if (movie.coverUrl.isNotEmpty()) {
-                    cover.load(movie.coverUrl)
-                } else {
-                    cover.scaleType = ImageView.ScaleType.CENTER
-                    cover.setImageResource(R.drawable.ic_movie_black_24dp)
-                    cover.setColorFilter(context.color(R.color.primary))
-                    cover.setBackgroundColor(context.color(R.color.primary_light))
+                with(cover) {
+                    if (movie.coverUrl.isNotEmpty()) {
+                        load(movie.coverUrl)
+                    } else {
+                        displayPlaceHolder(this)
+                    }
                 }
                 title.text = movie.title
                 schedule.text = context.getString(R.string.on_screen_schedule, movie.schedule)
@@ -80,5 +79,14 @@ class OnScreenAdapter(private val selection: (Movie) -> Unit) :
                 setOnClickListener { selection(movie) }
             }
         }
+    }
+}
+
+fun displayPlaceHolder(view: ImageView) {
+    with(view) {
+        adjustViewBounds = true
+        setImageResource(R.drawable.ic_movie_black_24dp)
+        setColorFilter(context.color(R.color.primary))
+        setBackgroundColor(context.color(R.color.primary_light))
     }
 }

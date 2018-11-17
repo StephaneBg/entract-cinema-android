@@ -28,6 +28,7 @@ import com.cinema.entract.app.R
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ui.BaseFragment
 import org.jetbrains.anko.browse
+import timber.log.Timber
 
 class InformationFragment : BaseFragment() {
 
@@ -51,6 +52,7 @@ class InformationFragment : BaseFragment() {
                 val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:+33561746234"))
                 startActivity(intent)
             } catch (e: Exception) {
+                Timber.e(e)
             }
         }
         find<Button>(R.id.website).setOnClickListener {

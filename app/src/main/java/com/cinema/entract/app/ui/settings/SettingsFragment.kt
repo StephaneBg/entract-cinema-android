@@ -22,13 +22,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Switch
 import com.cinema.entract.app.R
+import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ui.BaseFragment
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsFragment : BaseFragment() {
 
     private val settingsViewModel by viewModel<SettingsViewModel>()
+    private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,6 +52,7 @@ class SettingsFragment : BaseFragment() {
         data.isChecked = settingsViewModel.isOnlyOnWifi()
         data.setOnCheckedChangeListener { _, isChecked ->
             settingsViewModel.setOnlyOnWifi(isChecked)
+            cinemaViewModel.retrieveMovies()
         }
     }
 

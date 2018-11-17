@@ -38,7 +38,7 @@ import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.app.ui.TagViewModel
-import com.cinema.entract.core.ext.color
+import com.cinema.entract.app.ui.onscreen.displayPlaceHolder
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.inflate
 import com.cinema.entract.core.ext.observe
@@ -82,10 +82,7 @@ class DetailsFragment : BaseFragment() {
             if (movie.coverUrl.isNotEmpty()) {
                 load(movie.coverUrl)
             } else {
-                scaleType = ImageView.ScaleType.CENTER
-                setImageResource(R.drawable.ic_movie_black_24dp)
-                setColorFilter(context.color(R.color.primary))
-                setBackgroundColor(context.color(R.color.primary_light))
+                displayPlaceHolder(this)
             }
         }
         find<TextView>(R.id.title).text = movie.title

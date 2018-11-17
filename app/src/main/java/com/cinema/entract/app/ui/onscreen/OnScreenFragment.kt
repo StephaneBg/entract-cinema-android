@@ -106,22 +106,22 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
     }
 
     private fun displayDatePicker() {
-        val datePicker = MaterialCalendarView(context)
-        datePicker.setOnDateChangedListener { _, day, _ ->
-            cinemaViewModel.retrieveMovies(day.date)
-            alertDialog.dismiss()
-        }
         cinemaViewModel.getDateRange()?.let {
+            val datePicker = MaterialCalendarView(context)
+            datePicker.setOnDateChangedListener { _, day, _ ->
+                cinemaViewModel.retrieveMovies(day.date)
+                alertDialog.dismiss()
+            }
             datePicker.state().edit()
                 .setMinimumDate(it.minimumDate)
                 .setMaximumDate(it.maximumDate)
                 .commit()
+            alertDialog = AlertDialog.Builder(requireContext())
+                .setView(datePicker)
+                .setNegativeButton(android.R.string.cancel, null)
+                .create()
+            alertDialog.show()
         }
-        alertDialog = AlertDialog.Builder(requireContext())
-            .setView(datePicker)
-            .setNegativeButton(android.R.string.cancel, null)
-            .create()
-        alertDialog.show()
     }
 
     companion object {

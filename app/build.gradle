@@ -29,8 +29,8 @@ android {
 
     defaultConfig {
         applicationId "com.cinema.entract.app"
-        versionCode 14
-        versionName "0.9.1"
+        versionCode 15
+        versionName "1.0"
         minSdkVersion Android.minSdkVersion
         targetSdkVersion Android.targetSdkVersion
         vectorDrawables.useSupportLibrary = true

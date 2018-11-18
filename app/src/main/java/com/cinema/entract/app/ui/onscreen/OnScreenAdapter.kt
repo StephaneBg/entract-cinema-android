@@ -82,11 +82,9 @@ class OnScreenAdapter(private val selection: (Movie) -> Unit) :
     }
 }
 
-fun displayPlaceHolder(view: ImageView) {
-    with(view) {
-        adjustViewBounds = true
-        setImageResource(R.drawable.ic_movie_black_24dp)
-        setColorFilter(context.color(R.color.primary))
-        setBackgroundColor(context.color(R.color.primary_light))
-    }
+fun displayPlaceHolder(view: ImageView) = with(view) {
+    adjustViewBounds = true
+    setImageResource(R.drawable.ic_movie_black_24dp)
+    setColorFilter(context.color(R.color.gray_darker))
+    setBackgroundColor(context.color(R.color.gray_lighter))
 }

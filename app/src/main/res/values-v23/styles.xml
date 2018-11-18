@@ -18,15 +18,25 @@
 
     <style name="Theme.Cinema"
         parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/white</item>
-        <item name="colorAccent">@color/secondary</item>
-        <item name="alertDialogTheme">@style/Theme.Cinema.AlertDialog</item>
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:windowBackground">@color/white</item>
-        <item name="android:listDivider">@drawable/divider</item>
+        <item name="colorPrimary">@color/white_lighter</item>
+        <item name="colorPrimaryDark">@color/white_darker</item>
+        <item name="colorPrimaryVariant">@color/white_darker</item>
+        <item name="colorOnPrimary">@color/gray_darker</item>
+
+        <item name="colorSecondary">@color/red_darker</item>
+        <item name="colorSecondaryVariant">@color/red_lighter</item>
+        <item name="colorOnSecondary">@color/white_lighter</item>
+
+        <item name="android:colorBackground">@color/white_darker</item>
+        <item name="colorOnBackground">@color/gray_darker</item>
+        <item name="colorSurface">@color/white_lighter</item>
+        <item name="colorOnSurface">@color/gray_darker</item>
+
         <item name="fontFamily">@font/raleway</item>
         <item name="textAppearanceHeadline5">@style/TextAppearance.Cinema.Headline5</item>
+
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:listDivider">@drawable/divider</item>
         <item name="materialButtonStyle">@style/Widget.Cinema.Button</item>
     </style>
 </resources>

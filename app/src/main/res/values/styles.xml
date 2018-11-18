@@ -18,53 +18,69 @@
 
     <style name="Theme.Cinema"
         parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="colorAccent">@color/secondary</item>
-        <item name="alertDialogTheme">@style/Theme.Cinema.AlertDialog</item>
-        <item name="android:windowBackground">@color/white</item>
-        <item name="android:listDivider">@drawable/divider</item>
+        <item name="colorPrimary">@color/white_lighter</item>
+        <item name="colorPrimaryDark">@color/black_darker</item>
+        <item name="colorPrimaryVariant">@color/white_darker</item>
+        <item name="colorOnPrimary">@color/gray_darker</item>
+
+        <item name="colorSecondary">@color/red_darker</item>
+        <item name="colorSecondaryVariant">@color/red_lighter</item>
+        <item name="colorOnSecondary">@color/white_lighter</item>
+
+        <item name="android:colorBackground">@color/white_darker</item>
+        <item name="colorOnBackground">@color/gray_darker</item>
+        <item name="colorSurface">@color/white_lighter</item>
+        <item name="colorOnSurface">@color/gray_darker</item>
+
         <item name="fontFamily">@font/raleway</item>
         <item name="textAppearanceHeadline5">@style/TextAppearance.Cinema.Headline5</item>
+
+        <item name="android:listDivider">@drawable/divider</item>
         <item name="materialButtonStyle">@style/Widget.Cinema.Button</item>
     </style>
 
-    <style name="Theme.Cinema.AlertDialog"
-        parent="Theme.MaterialComponents.Light.Dialog.Alert">
-        <item name="buttonBarPositiveButtonStyle">@style/Widget.Cinema.Button.Dialog.Positive</item>
-        <item name="buttonBarNeutralButtonStyle">@style/Widget.Cinema.Button.Dialog.Neutral</item>
-        <item name="buttonBarNegativeButtonStyle">@style/Widget.Cinema.Button.Dialog.Negative</item>
+    <style name="Theme.Cinema.Dark"
+        parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">@color/black_lighter</item>
+        <item name="colorPrimaryDark">@color/black_darker</item>
+        <item name="colorPrimaryVariant">@color/black_darker</item>
+        <item name="colorOnPrimary">@color/white_lighter</item>
+
+        <item name="colorSecondary">@color/red_lighter</item>
+        <item name="colorSecondaryVariant">@color/red_darker</item>
+        <item name="colorOnSecondary">@color/white_lighter</item>
+
+        <item name="android:colorBackground">@color/black_darker</item>
+        <item name="colorOnBackground">@color/white_darker</item>
+        <item name="colorSurface">@color/black_darker</item>
+        <item name="colorOnSurface">@color/white_darker</item>
+
+        <item name="fontFamily">@font/raleway</item>
+        <item name="textAppearanceHeadline5">@style/TextAppearance.Cinema.Headline5</item>
+
+        <item name="android:listDivider">@drawable/divider</item>
+        <item name="materialButtonStyle">@style/Widget.Cinema.Button</item>
     </style>
 
-    <style name="Widget.Cinema.Button.Dialog.Positive"
-        parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">@color/primary</item>
-    </style>
-
-    <style name="Widget.Cinema.Button.Dialog.Neutral"
-        parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">@color/primary</item>
-    </style>
-
-    <style name="Widget.Cinema.Button.Dialog.Negative"
-        parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">@color/secondary</item>
-    </style>
-
+    <!-- ThemeOverlay -->
     <style name="ThemeOverlay.Cinema.AppBarOverlay"
         parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
 
     <style name="ThemeOverlay.Cinema.PopupOverlay"
         parent="ThemeOverlay.MaterialComponents.Light" />
 
+    <!-- TextAppearance -->
     <style name="TextAppearance.Cinema.Headline5"
         parent="TextAppearance.MaterialComponents.Headline5">
-        <item name="android:textColor">@color/secondary</item>
+        <item name="android:textColor">?colorSecondary</item>
         <item name="fontFamily">@font/patua_one</item>
     </style>
 
+    <!-- Widget -->
     <style name="Widget.Cinema.Button"
         parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="strokeColor">@color/primary_light</item>
+        <item name="android:textColor">?colorSecondary</item>
+        <item name="iconTint">?colorSecondary</item>
+        <item name="rippleColor">?colorSecondaryVariant</item>
     </style>
 </resources>

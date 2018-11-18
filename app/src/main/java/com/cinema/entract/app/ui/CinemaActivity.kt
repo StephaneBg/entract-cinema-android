@@ -17,6 +17,7 @@
 package com.cinema.entract.app.ui
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ui.details.DetailsFragment
 import com.cinema.entract.app.ui.event.EventDialogFragment
@@ -24,6 +25,7 @@ import com.cinema.entract.app.ui.information.InformationFragment
 import com.cinema.entract.app.ui.onscreen.OnScreenFragment
 import com.cinema.entract.app.ui.schedule.ScheduleFragment
 import com.cinema.entract.app.ui.settings.SettingsFragment
+import com.cinema.entract.app.ui.settings.SettingsViewModel
 import com.cinema.entract.core.ext.addFragment
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ext.replaceFragment
@@ -37,10 +39,13 @@ class CinemaActivity : BaseActivity() {
 
     private val cinemaViewModel by viewModel<CinemaViewModel>()
     private val tagViewModel by viewModel<TagViewModel>()
+    private val settingsViewModel by viewModel<SettingsViewModel>()
+
     private val bottomNav by bindView<BottomNavigationView>(R.id.bottomNavigation)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(if (settingsViewModel.isDarkMode()) R.style.Theme_Cinema_Dark else R.style.Theme_Cinema)
         setContentView(R.layout.activity_cinema)
         initBottomNavigation()
 
@@ -80,7 +85,7 @@ class CinemaActivity : BaseActivity() {
     }
 
     private fun handleOnScreen(): Boolean =
-        when (supportFragmentManager.findFragmentById(R.id.mainContainer)) {
+        when (displayedFragment()) {
             is DetailsFragment -> {
                 supportFragmentManager.popBackStack()
                 true
@@ -101,7 +106,7 @@ class CinemaActivity : BaseActivity() {
         }
 
     private fun handleSchedule(): Boolean =
-        when (supportFragmentManager.findFragmentById(R.id.mainContainer)) {
+        when (displayedFragment()) {
             is ScheduleFragment -> false
             else -> {
                 supportFragmentManager.popBackStack()
@@ -137,4 +142,7 @@ class CinemaActivity : BaseActivity() {
         )
         return true
     }
+
+    private fun displayedFragment(): Fragment? =
+        supportFragmentManager.findFragmentById(R.id.mainContainer)
 }

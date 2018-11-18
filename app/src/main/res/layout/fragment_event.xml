@@ -20,6 +20,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    tools:background="#44000000"
     >
 
     <ImageView
@@ -28,6 +29,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_padding_size_medium"
         android:importantForAccessibility="no"
+        tools:layout_height="192dp"
+        tools:layout_width="192dp"
         tools:srcCompat="@drawable/ic_movie_black_24dp"
         />
 
@@ -40,8 +43,8 @@
         android:layout_marginTop="@dimen/margin_padding_size_small"
         android:layout_marginEnd="@dimen/margin_padding_size_small"
         android:text="@string/event_close"
-        android:textColor="@color/white"
+        android:textColor="?colorPrimaryVariant"
         app:icon="@drawable/ic_close_black_24dp"
-        app:iconTint="@color/white"
+        app:iconTint="?colorPrimaryVariant"
         />
 </FrameLayout>

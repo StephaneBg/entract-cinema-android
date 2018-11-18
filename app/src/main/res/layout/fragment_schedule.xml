@@ -25,7 +25,7 @@
         android:id="@+id/appBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="?colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -71,7 +71,7 @@
                 android:layout_width="96dp"
                 android:layout_height="96dp"
                 android:importantForAccessibility="no"
-                android:tint="@color/primary_light"
+                android:tint="?colorPrimaryVariant"
                 app:srcCompat="@drawable/ic_movie_black_24dp"
                 />
 

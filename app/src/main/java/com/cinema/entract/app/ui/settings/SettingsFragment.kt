@@ -22,9 +22,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Switch
 import com.cinema.entract.app.R
+import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ui.BaseFragment
+import org.jetbrains.anko.startActivity
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -53,6 +55,16 @@ class SettingsFragment : BaseFragment() {
         data.setOnCheckedChangeListener { _, isChecked ->
             settingsViewModel.setOnlyOnWifi(isChecked)
             cinemaViewModel.retrieveMovies()
+        }
+
+        val dark = find<Switch>(R.id.dark)
+        dark.isChecked = settingsViewModel.isDarkMode()
+        dark.setOnCheckedChangeListener { _, isChecked ->
+            settingsViewModel.setDarkMode(isChecked)
+            requireActivity().run {
+                startActivity<CinemaActivity>()
+                finish()
+            }
         }
     }
 

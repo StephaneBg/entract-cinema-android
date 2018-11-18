@@ -37,10 +37,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:labelVisibilityMode="selected"
+        android:backgroundTint="?colorPrimary"
         app:elevation="8dp"
         app:itemIconTint="@drawable/selector_navigation"
         app:itemTextColor="@drawable/selector_navigation"
+        app:labelVisibilityMode="selected"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/menu_main"
         />

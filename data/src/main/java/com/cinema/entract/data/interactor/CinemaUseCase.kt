@@ -74,4 +74,9 @@ class CinemaUseCase(
 
     fun setOnlyOnWifi(onlyOnWifi: Boolean) =
         dataStore.getUserPreferences().setOnlyOnWifi(onlyOnWifi)
+
+    fun isDarkMode(): Boolean = dataStore.getUserPreferences().isDarkMode()
+
+    fun setDarkMode(dark: Boolean) =
+        dataStore.getUserPreferences().setDarkMode(dark)
 }

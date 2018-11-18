@@ -22,6 +22,7 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.create
 import java.util.concurrent.TimeUnit
 
 fun createService(networkUtils: NetworkUtils): CinemaService = Retrofit.Builder()
@@ -30,7 +31,7 @@ fun createService(networkUtils: NetworkUtils): CinemaService = Retrofit.Builder(
     .addCallAdapterFactory(CoroutineCallAdapterFactory())
     .addConverterFactory(MoshiConverterFactory.create())
     .build()
-    .create(CinemaService::class.java)
+    .create()
 
 private fun makeOkHttpClient(networkUtils: NetworkUtils): OkHttpClient {
     return OkHttpClient.Builder()

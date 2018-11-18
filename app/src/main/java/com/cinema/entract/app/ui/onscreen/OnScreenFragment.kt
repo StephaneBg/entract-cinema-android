@@ -118,7 +118,6 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
                 .commit()
             alertDialog = AlertDialog.Builder(requireContext())
                 .setView(datePicker)
-                .setNegativeButton(android.R.string.cancel, null)
                 .create()
             alertDialog.show()
         }

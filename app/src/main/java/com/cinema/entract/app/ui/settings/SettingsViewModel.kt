@@ -28,4 +28,8 @@ class SettingsViewModel(private val useCase: CinemaUseCase) : ViewModel() {
     fun isOnlyOnWifi(): Boolean = useCase.isOnlyOnWifi()
 
     fun setOnlyOnWifi(onlyOnWifi: Boolean) = useCase.setOnlyOnWifi(onlyOnWifi)
+
+    fun isDarkMode(): Boolean = useCase.isDarkMode()
+
+    fun setDarkMode(dark: Boolean) = useCase.setDarkMode(dark)
 }

@@ -14,10 +14,15 @@
   ~ limitations under the License.
   -->
 <resources>
+    <color name="white_lighter">#FFFFFF</color>
+    <color name="white_darker">#FAFAFA</color>
 
-    <color name="white">#FFFFFF</color>
-    <color name="primary">#666666</color>
-    <color name="primary_dark">#535353</color>
-    <color name="primary_light">#EDEDED</color>
-    <color name="secondary">#942102</color>
+    <color name="black_lighter">#262626</color>
+    <color name="black_darker">#222222</color>
+
+    <color name="gray_darker">#666666</color>
+    <color name="gray_lighter">#22666666</color>
+
+    <color name="red_lighter">#E53935</color>
+    <color name="red_darker">#942102</color>
 </resources>

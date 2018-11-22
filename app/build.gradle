@@ -98,8 +98,5 @@ dependencies {
     implementation Libs.timber
 }
 
-if (file("google-services.json").exists()) {
-    apply plugin: 'com.google.gms.google-services'
-}
-
+apply plugin: 'com.google.gms.google-services'
 apply from: "../ktlint.gradle"

@@ -62,6 +62,10 @@
         <item name="materialButtonStyle">@style/Widget.Cinema.Button</item>
     </style>
 
+    <style name="Theme.Cinema.Startup">
+        <item name="android:colorBackground">@color/white_lighter</item>
+    </style>
+
     <!-- ThemeOverlay -->
     <style name="ThemeOverlay.Cinema.AppBarOverlay"
         parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />

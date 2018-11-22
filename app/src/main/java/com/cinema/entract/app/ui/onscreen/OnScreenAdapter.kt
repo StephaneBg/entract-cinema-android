@@ -25,9 +25,9 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.cinema.entract.app.R
+import com.cinema.entract.app.ext.displayPlaceHolder
 import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.model.Movie
-import com.cinema.entract.core.ext.color
 import com.cinema.entract.core.ext.inflate
 import com.cinema.entract.core.views.bindView
 
@@ -63,12 +63,8 @@ class OnScreenAdapter(private val selection: (Movie) -> Unit) :
         @SuppressLint("SetTextI18n")
         fun bind(movie: Movie) {
             itemView.apply {
-                with(cover) {
-                    if (movie.coverUrl.isNotEmpty()) {
-                        load(movie.coverUrl)
-                    } else {
-                        displayPlaceHolder(this)
-                    }
+                cover.apply {
+                    if (movie.coverUrl.isNotEmpty()) load(movie.coverUrl) else displayPlaceHolder()
                 }
                 title.text = movie.title
                 schedule.text = context.getString(R.string.on_screen_schedule, movie.schedule)
@@ -82,11 +78,4 @@ class OnScreenAdapter(private val selection: (Movie) -> Unit) :
             }
         }
     }
-}
-
-fun displayPlaceHolder(view: ImageView) = with(view) {
-    adjustViewBounds = true
-    setImageResource(R.drawable.ic_movie_black_24dp)
-    setColorFilter(context.color(R.color.gray_darker))
-    setBackgroundColor(context.color(R.color.gray_lighter))
 }

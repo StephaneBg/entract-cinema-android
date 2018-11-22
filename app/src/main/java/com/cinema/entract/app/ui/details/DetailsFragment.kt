@@ -33,12 +33,12 @@ import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import com.cinema.entract.app.R
+import com.cinema.entract.app.ext.displayPlaceHolder
 import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.app.ui.TagViewModel
-import com.cinema.entract.app.ui.onscreen.displayPlaceHolder
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.inflate
 import com.cinema.entract.core.ext.observe
@@ -79,11 +79,7 @@ class DetailsFragment : BaseFragment() {
             movie.schedule
         )
         find<ImageView>(R.id.cover).apply {
-            if (movie.coverUrl.isNotEmpty()) {
-                load(movie.coverUrl)
-            } else {
-                displayPlaceHolder(this)
-            }
+            if (movie.coverUrl.isNotEmpty()) load(movie.coverUrl) else displayPlaceHolder()
         }
         find<TextView>(R.id.title).text = movie.title
         find<ImageView>(R.id.originalVersion).isVisible = movie.isOriginalVersion

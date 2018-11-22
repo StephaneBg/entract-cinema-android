@@ -25,6 +25,7 @@ data class MovieData(
     val schedule: String,
     val isThreeDimension: Boolean,
     val isOriginalVersion: Boolean,
+    val isArtMovie: Boolean,
     val isUnderTwelve: Boolean,
     val isExplicitContent: Boolean,
     val coverUrl: String,

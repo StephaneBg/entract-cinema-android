@@ -1,0 +1,52 @@
+<!--
+  ~ Copyright 2018 Stéphane Baiget
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="45dp"
+    android:height="24dp"
+    android:viewportWidth="556"
+    android:viewportHeight="297"
+    >
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M0,0h279.417v296.602h-279.417z"
+        />
+    <path
+        android:fillColor="#942102"
+        android:pathData="M276.71,0h279.414v296.602h-279.414z"
+        />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M131.119,43.523l119.364,209.563l-84.777,0l-72.566,-118.008z"
+        />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M71.436,170.006l48.832,84.778l-83.42,0z"
+        />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M326.442,54.256l69.176,0l0,91.558l35.266,-34.588l0,80.033l-35.266,-30.519l0,92.915l-69.176,0z"
+        />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M411.895,55.73l81.385,0l0,82.062z"
+        />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M493.28,199.28l0,54.935l-81.385,0z"
+        />
+</vector>

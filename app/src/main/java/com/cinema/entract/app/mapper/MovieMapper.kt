@@ -28,6 +28,7 @@ class MovieMapper : Mapper<Movie, MovieData> {
         model.schedule.replace("h", ":"),
         model.isThreeDimension,
         model.isOriginalVersion,
+        model.isArtMovie,
         model.isUnderTwelve,
         model.isExplicitContent,
         model.coverUrl,

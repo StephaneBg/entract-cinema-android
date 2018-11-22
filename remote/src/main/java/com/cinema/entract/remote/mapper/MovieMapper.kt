@@ -29,6 +29,7 @@ class MovieMapper : Mapper<MovieRemote, MovieData> {
         model.horaire ?: "",
         model.troisDimension ?: false,
         model.vo ?: false,
+        model.art_essai ?: false,
         model.moins_douze ?: false,
         model.avertissement ?: false,
         model.affiche ?: "",

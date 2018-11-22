@@ -58,6 +58,7 @@ class OnScreenAdapter(private val selection: (Movie) -> Unit) :
         private val threeDimension by bindView<ImageView>(R.id.threeDimension)
         private val underTwelve by bindView<ImageView>(R.id.underTwelve)
         private val explicitContent by bindView<ImageView>(R.id.explicitContent)
+        private val artMovie by bindView<ImageView>(R.id.artMovie)
 
         @SuppressLint("SetTextI18n")
         fun bind(movie: Movie) {
@@ -75,7 +76,8 @@ class OnScreenAdapter(private val selection: (Movie) -> Unit) :
                 originalVersion.isVisible = movie.isOriginalVersion
                 threeDimension.isVisible = movie.isThreeDimension
                 underTwelve.isVisible = movie.isUnderTwelve
-                explicitContent.isInvisible = !movie.isExplicitContent
+                explicitContent.isVisible = movie.isExplicitContent
+                artMovie.isInvisible = !movie.isArtMovie
                 setOnClickListener { selection(movie) }
             }
         }

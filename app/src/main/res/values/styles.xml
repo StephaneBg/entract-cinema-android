@@ -76,7 +76,6 @@
     <!-- TextAppearance -->
     <style name="TextAppearance.Cinema.Headline5"
         parent="TextAppearance.MaterialComponents.Headline5">
-        <item name="android:textColor">?colorSecondary</item>
         <item name="fontFamily">@font/patua_one</item>
     </style>
 
@@ -85,6 +84,6 @@
         parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:textColor">?colorSecondary</item>
         <item name="iconTint">?colorSecondary</item>
-        <item name="rippleColor">?colorSecondaryVariant</item>
+        <item name="rippleColor">@color/gray_darker</item>
     </style>
 </resources>

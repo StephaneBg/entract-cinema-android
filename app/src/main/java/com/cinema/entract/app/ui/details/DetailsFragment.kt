@@ -87,6 +87,7 @@ class DetailsFragment : BaseFragment() {
         find<ImageView>(R.id.underTwelve).isVisible = movie.isUnderTwelve
         find<TextView>(R.id.underTwelveNotice).isVisible = movie.isUnderTwelve
         find<ImageView>(R.id.explicitContent).isVisible = movie.isExplicitContent
+        find<ImageView>(R.id.artMovie).isVisible = movie.isArtMovie
         find<TextView>(R.id.explicitContentNotice).isVisible = movie.isExplicitContent
         find<TextView>(R.id.director).text =
                 getString(R.string.details_director, movie.director).toSpanned()

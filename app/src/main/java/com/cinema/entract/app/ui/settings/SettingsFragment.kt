@@ -20,12 +20,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Switch
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ui.BaseFragment
+import com.google.android.material.switchmaterial.SwitchMaterial
 import org.jetbrains.anko.startActivity
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -44,20 +44,20 @@ class SettingsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val event = find<Switch>(R.id.event)
+        val event = find<SwitchMaterial>(R.id.event)
         event.isChecked = settingsViewModel.isEventEnabled()
         event.setOnCheckedChangeListener { _, isChecked ->
             settingsViewModel.setEventPreference(isChecked)
         }
 
-        val data = find<Switch>(R.id.data)
+        val data = find<SwitchMaterial>(R.id.data)
         data.isChecked = settingsViewModel.isOnlyOnWifi()
         data.setOnCheckedChangeListener { _, isChecked ->
             settingsViewModel.setOnlyOnWifi(isChecked)
             cinemaViewModel.retrieveMovies()
         }
 
-        val dark = find<Switch>(R.id.dark)
+        val dark = find<SwitchMaterial>(R.id.dark)
         dark.isChecked = settingsViewModel.isDarkMode()
         dark.setOnCheckedChangeListener { _, isChecked ->
             settingsViewModel.setDarkMode(isChecked)

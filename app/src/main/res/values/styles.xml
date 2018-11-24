@@ -29,14 +29,15 @@
 
         <item name="android:colorBackground">@color/white_darker</item>
         <item name="colorOnBackground">@color/gray_darker</item>
-        <item name="colorSurface">@color/white_lighter</item>
+        <item name="colorSurface">@color/gray_lighter</item>
         <item name="colorOnSurface">@color/gray_darker</item>
 
         <item name="fontFamily">@font/raleway</item>
         <item name="textAppearanceHeadline5">@style/TextAppearance.Cinema.Headline5</item>
 
         <item name="android:listDivider">@drawable/divider</item>
-        <item name="materialButtonStyle">@style/Widget.Cinema.Button</item>
+        <item name="materialButtonStyle">@style/Widget.Cinema.Button.Light</item>
+        <item name="switchStyle">@style/Widget.Cinema.Switch</item>
     </style>
 
     <style name="Theme.Cinema.Dark"
@@ -52,14 +53,15 @@
 
         <item name="android:colorBackground">@color/black_darker</item>
         <item name="colorOnBackground">@color/white_darker</item>
-        <item name="colorSurface">@color/black_darker</item>
-        <item name="colorOnSurface">@color/white_darker</item>
+        <item name="colorSurface">@color/gray_lighter</item>
+        <item name="colorOnSurface">@color/gray_darker</item>
 
         <item name="fontFamily">@font/raleway</item>
         <item name="textAppearanceHeadline5">@style/TextAppearance.Cinema.Headline5</item>
 
         <item name="android:listDivider">@drawable/divider</item>
-        <item name="materialButtonStyle">@style/Widget.Cinema.Button</item>
+        <item name="materialButtonStyle">@style/Widget.Cinema.Button.Dark</item>
+        <item name="switchStyle">@style/Widget.Cinema.Switch</item>
     </style>
 
     <style name="Theme.Cinema.Startup">
@@ -80,10 +82,23 @@
     </style>
 
     <!-- Widget -->
-    <style name="Widget.Cinema.Button"
+    <style name="Widget.Cinema.Button.Light"
         parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:textColor">?colorSecondary</item>
         <item name="iconTint">?colorSecondary</item>
-        <item name="rippleColor">@color/gray_darker</item>
+        <item name="rippleColor">?colorSurface</item>
+    </style>
+
+    <style name="Widget.Cinema.Button.Dark"
+        parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor">?colorOnBackground</item>
+        <item name="iconTint">?colorOnBackground</item>
+        <item name="strokeColor">?colorSecondary</item>
+        <item name="rippleColor">?colorOnBackground</item>
+    </style>
+
+    <style name="Widget.Cinema.Switch"
+        parent="Widget.MaterialComponents.CompoundButton.Switch">
+        <item name="useMaterialThemeColors">false</item>
     </style>
 </resources>

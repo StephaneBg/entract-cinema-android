@@ -19,13 +19,13 @@ package com.cinema.entract.app.ext
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.cinema.entract.app.R
-import com.cinema.entract.core.ext.color
+import org.jetbrains.anko.colorAttr
 
 fun ImageView.load(url: String) = Glide.with(context).load(url).into(this)
 
 fun ImageView.displayPlaceHolder() = with(this) {
     adjustViewBounds = true
     setImageResource(R.drawable.ic_movie_black_24dp)
-    setColorFilter(context.color(R.color.gray_darker))
-    setBackgroundColor(context.color(R.color.gray_lighter))
+    setColorFilter(context.colorAttr(R.attr.colorOnSurface))
+    setBackgroundColor(context.colorAttr(R.attr.colorSurface))
 }

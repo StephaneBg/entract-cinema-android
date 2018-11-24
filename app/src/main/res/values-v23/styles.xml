@@ -29,7 +29,7 @@
 
         <item name="android:colorBackground">@color/white_darker</item>
         <item name="colorOnBackground">@color/gray_darker</item>
-        <item name="colorSurface">@color/white_lighter</item>
+        <item name="colorSurface">@color/gray_lighter</item>
         <item name="colorOnSurface">@color/gray_darker</item>
 
         <item name="fontFamily">@font/raleway</item>
@@ -37,6 +37,7 @@
 
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:listDivider">@drawable/divider</item>
-        <item name="materialButtonStyle">@style/Widget.Cinema.Button</item>
+        <item name="materialButtonStyle">@style/Widget.Cinema.Button.Light</item>
+        <item name="switchStyle">@style/Widget.Cinema.Switch</item>
     </style>
 </resources>

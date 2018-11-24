@@ -16,23 +16,14 @@
 
 package com.cinema.entract.core.ext
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.util.TypedValue
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import com.cinema.entract.core.R
+import org.jetbrains.anko.colorAttr
 
 fun Context.color(@ColorRes id: Int): Int = ContextCompat.getColor(this, id)
 
-@SuppressLint("Recycle")
-fun Context.styledColor(id: Int): Int {
-    val typedValue = TypedValue()
-    theme.resolveAttribute(id, typedValue, true)
-    return typedValue.data
-}
+fun Context.primaryColor(): Int = colorAttr(R.attr.colorPrimary)
 
-@SuppressLint("PrivateResource")
-fun Context.primaryColor(): Int = styledColor(R.attr.colorPrimary)
-
-fun Context.secondaryColor(): Int = styledColor(R.attr.colorSecondary)
+fun Context.secondaryColor(): Int = colorAttr(R.attr.colorSecondary)

@@ -18,10 +18,16 @@ package com.cinema.entract.app.mapper
 
 import com.cinema.entract.app.model.DateRange
 import com.cinema.entract.data.model.DateRangeData
+import org.threeten.bp.ZoneId
 
 class DateRangeMapper : Mapper<DateRange?, DateRangeData?> {
 
+    private val zoneId = ZoneId.systemDefault()
+
     override fun mapToUi(model: DateRangeData?) = model?.let {
-        DateRange(it.minimumDate, it.maximumDate)
+        DateRange(
+            it.minimumDate.atStartOfDay(zoneId).toEpochSecond() * 1000,
+            it.maximumDate.atStartOfDay(zoneId).toEpochSecond() * 1000
+        )
     }
 }

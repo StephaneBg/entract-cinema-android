@@ -55,7 +55,7 @@
     <string name="settings_title">Paramètres</string>
     <string name="settings_event">Afficher les évènements</string>
     <string name="settings_media">Télécharger les images uniquement sur WiFi</string>
-    <string name="settings_developer">Application développée par Stéphane Baiget</string>
+    <string name="settings_dark_mode">Utiliser le thème sombre</string>
 
     <string name="event_close">Fermer</string>
 </resources>

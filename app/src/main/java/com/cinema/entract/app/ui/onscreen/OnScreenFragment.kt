@@ -20,6 +20,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CalendarView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
@@ -40,8 +41,8 @@ import com.cinema.entract.core.ui.State
 import com.cinema.entract.core.ui.Success
 import com.cinema.entract.core.widget.EmptynessLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.threeten.bp.LocalDate
 
 class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
 
@@ -107,17 +108,18 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
 
     private fun displayDatePicker() {
         cinemaViewModel.getDateRange()?.let {
-            val datePicker = MaterialCalendarView(context)
-            datePicker.setOnDateChangedListener { _, day, _ ->
-                cinemaViewModel.retrieveMovies(day.date)
-                alertDialog.dismiss()
+            val calendarView = CalendarView(requireContext()).apply {
+                minDate = it.minimumDate
+                maxDate = it.maximumDate
+                setOnDateChangeListener { _, year, month, dayOfMonth ->
+                    val date = LocalDate.of(year, month + 1, dayOfMonth)
+                    cinemaViewModel.retrieveMovies(date)
+                    alertDialog.dismiss()
+                }
             }
-            datePicker.state().edit()
-                .setMinimumDate(it.minimumDate)
-                .setMaximumDate(it.maximumDate)
-                .commit()
+
             alertDialog = AlertDialog.Builder(requireContext())
-                .setView(datePicker)
+                .setView(calendarView)
                 .create()
             alertDialog.show()
         }

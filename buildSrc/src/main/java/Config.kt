@@ -36,7 +36,6 @@ object Versions {
     val koin = "1.0.1"
     val ktx = "1.0.0"
     val glide = "4.8.0"
-    val datePicker = "2.0.0"
     val jsr310 = "1.1.1"
     val firebaseCore = "16.0.4"
     val firebaseMessaging = "17.3.4"
@@ -83,7 +82,6 @@ object Libs {
         "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${Versions.retrofitCoroutines}"
     val koinAndroid = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
     val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
-    val datePicker = "com.github.prolificinteractive:material-calendarview:${Versions.datePicker}"
     val jsr310 = "com.jakewharton.threetenabp:threetenabp:${Versions.jsr310}"
     val ktlint = "com.github.shyiko:ktlint:${Versions.ktlint}"
 }

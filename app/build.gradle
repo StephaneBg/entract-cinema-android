@@ -29,7 +29,7 @@ android {
 
     defaultConfig {
         applicationId "com.cinema.entract.app"
-        versionCode 15
+        versionCode 16
         versionName "1.0"
         minSdkVersion Android.minSdkVersion
         targetSdkVersion Android.targetSdkVersion

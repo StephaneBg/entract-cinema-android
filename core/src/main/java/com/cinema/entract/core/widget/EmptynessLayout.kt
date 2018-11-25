@@ -35,18 +35,16 @@ class EmptynessLayout @JvmOverloads constructor(
         private set
     private lateinit var emptyView: View
 
-    override fun addView(child: View?, index: Int, params: ViewGroup.LayoutParams?) {
+    override fun addView(child: View, index: Int, params: ViewGroup.LayoutParams) {
         super.addView(child, index, params)
-
         when {
             child is RecyclerView -> recyclerView = child
-            R.id.emptyView == child?.id -> emptyView = child
+            R.id.emptyView == child.id -> emptyView = child
         }
     }
 
     fun setAdapter(adapter: RecyclerView.Adapter<*>?) {
-        val oldAdapter = recyclerView.adapter
-        oldAdapter?.unregisterAdapterDataObserver(observer)
+        recyclerView.adapter?.unregisterAdapterDataObserver(observer)
         recyclerView.adapter = adapter
         adapter?.registerAdapterDataObserver(observer)
         checkIfEmpty()

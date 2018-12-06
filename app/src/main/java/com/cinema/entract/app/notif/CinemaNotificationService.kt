@@ -22,7 +22,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ui.CinemaActivity
-import com.cinema.entract.core.ext.secondaryColor
+import com.cinema.entract.core.ext.color
 import com.cinema.entract.data.interactor.NotifUseCase
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -34,7 +34,7 @@ import org.koin.android.ext.android.inject
 import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 
-class CinemaFirebaseMessagingService : FirebaseMessagingService(), CoroutineScope {
+class CinemaNotificationService : FirebaseMessagingService(), CoroutineScope {
 
     private val useCase by inject<NotifUseCase>()
     private val job = Job()
@@ -64,7 +64,7 @@ class CinemaFirebaseMessagingService : FirebaseMessagingService(), CoroutineScop
 
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification_black_24dp)
-            .setColor(secondaryColor())
+            .setColor(color(R.color.red_darker))
             .setContentTitle(getString(R.string.app_name))
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)

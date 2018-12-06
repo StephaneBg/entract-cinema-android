@@ -53,7 +53,7 @@
 
         <activity android:name=".ui.CinemaActivity" />
 
-        <service android:name=".notif.CinemaFirebaseMessagingService">
+        <service android:name=".notif.CinemaNotificationService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

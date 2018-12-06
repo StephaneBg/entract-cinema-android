@@ -65,8 +65,12 @@ class CinemaActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.findFragmentById(R.id.mainContainer) is OnScreenFragment) {
-            super.onBackPressed()
+        if (displayedFragment() is OnScreenFragment) {
+            if (cinemaViewModel.isTodayDisplayed()) {
+                super.onBackPressed()
+            } else {
+                cinemaViewModel.retrieveTodayMovies()
+            }
         } else {
             selectOnScreen()
         }

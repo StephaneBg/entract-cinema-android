@@ -30,3 +30,5 @@ fun LocalDate.shortFormatToUi(): String = this.format(shortFormatter).capitalize
 fun LocalDate.formatToUTC(): String = this.format(DateTimeFormatter.ISO_LOCAL_DATE)
 
 fun LocalDate.isTodayOrLater(): Boolean = this.isAfter(LocalDate.now().minusDays(1))
+
+fun LocalDate.isToday(): Boolean = this == LocalDate.now()

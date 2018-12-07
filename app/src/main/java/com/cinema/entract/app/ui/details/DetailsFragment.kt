@@ -62,9 +62,8 @@ class DetailsFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_details, container, false)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun onStart() {
+        super.onStart()
         observe(cinemaViewModel.getDetailedMovie(), ::displayMovieDetails)
     }
 

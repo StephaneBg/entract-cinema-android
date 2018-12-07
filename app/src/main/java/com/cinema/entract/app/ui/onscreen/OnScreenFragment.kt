@@ -20,6 +20,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.CalendarView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -53,6 +54,10 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
     private lateinit var fab: FloatingActionButton
     private lateinit var date: TextView
 
+    private val animController by lazy {
+        AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.layout_animation_fall_down)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -70,13 +75,17 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
             setAdapter(onScreenAdapter)
         }
 
-        fab = find(R.id.fab)
-        fab.isVisible = null != cinemaViewModel.getDateRange()
-        fab.setOnClickListener { displayDatePicker() }
+        fab = find<FloatingActionButton>(R.id.fab).apply {
+            isVisible = null != cinemaViewModel.getDateRange()
+            setOnClickListener { displayDatePicker() }
+        }
 
         date = find(R.id.date)
-        observe(cinemaViewModel.getCurrentDate()) { date.text = it }
+    }
 
+    override fun onStart() {
+        super.onStart()
+        observe(cinemaViewModel.getCurrentDate()) { date.text = it }
         observe(cinemaViewModel.getOnScreenState(), ::manageState)
     }
 
@@ -84,15 +93,21 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
         when (state) {
             null -> Unit
             is Loading -> showLoading()
-            is Success -> {
-                onScreenAdapter.updateMovies(state.data)
-                showContent()
-            }
-            is Error -> {
-                showError(state.error) { cinemaViewModel.retrieveMovies() }
-                date.text = getString(R.string.app_name)
-            }
+            is Success -> updateMovies(state.data)
+            is Error -> manageError(state.error)
         }
+    }
+
+    private fun updateMovies(movies: List<Movie>) {
+        contentView.recyclerView.layoutAnimation = animController
+        onScreenAdapter.updateMovies(movies)
+        showContent()
+        contentView.recyclerView.scheduleLayoutAnimation()
+    }
+
+    private fun manageError(exception: Throwable?) {
+        showError(exception) { cinemaViewModel.retrieveMovies() }
+        date.text = getString(R.string.app_name)
     }
 
     private fun onMovieSelected(movie: Movie) {

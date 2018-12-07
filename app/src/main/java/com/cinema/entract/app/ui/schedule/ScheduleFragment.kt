@@ -56,7 +56,10 @@ class ScheduleFragment : BaseLceFragment<EmptynessLayout>() {
             recyclerView.addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
             setAdapter(scheduleAdapter)
         }
+    }
 
+    override fun onStart() {
+        super.onStart()
         observe(cinemaViewModel.getScheduleState(), ::manageState)
     }
 

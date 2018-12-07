@@ -35,7 +35,7 @@ open class ScopedViewModel : ViewModel(), CoroutineScope {
         tryBlock: suspend () -> T,
         catchBlock: (Throwable) -> T
     ) {
-        launch(context = coroutineContext) {
+        launch {
             try {
                 tryBlock()
             } catch (e: Throwable) {

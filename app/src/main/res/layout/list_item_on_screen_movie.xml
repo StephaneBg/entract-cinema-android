@@ -14,149 +14,160 @@
   ~ limitations under the License.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/margin_padding_size_medium"
+    android:layout_marginTop="@dimen/margin_padding_size_small"
+    android:layout_marginEnd="@dimen/margin_padding_size_medium"
+    android:layout_marginBottom="@dimen/margin_padding_size_small"
     android:background="?selectableItemBackground"
+    app:cardCornerRadius="8dp"
     >
 
-    <ImageView
-        android:id="@+id/cover"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:importantForAccessibility="no"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="2:3"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:background="@color/gray_lighter"
-        tools:scaleType="fitCenter"
-        tools:srcCompat="@drawable/ic_movie_black_24dp"
-        tools:tint="@color/gray_darker"
-        />
-
-    <TextView
-        android:id="@+id/title"
-        style="?textAppearanceHeadline6"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_padding_size_medium"
-        android:layout_marginTop="@dimen/margin_padding_size_medium"
-        android:layout_marginEnd="@dimen/margin_padding_size_medium"
-        android:ellipsize="end"
-        android:maxLines="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/cover"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Film avec un titre très long mais alors vraiment très long"
-        />
+        >
 
-    <TextView
-        android:id="@+id/schedule"
-        style="?textAppearanceBody1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_padding_size_medium"
-        android:layout_marginTop="@dimen/margin_padding_size_small"
-        android:layout_marginEnd="@dimen/margin_padding_size_medium"
-        android:ellipsize="end"
-        android:singleLine="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/cover"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        tools:text="20:30"
-        />
+        <ImageView
+            android:id="@+id/cover"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:importantForAccessibility="no"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="2:3"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@color/gray_lighter"
+            tools:scaleType="fitCenter"
+            tools:srcCompat="@drawable/ic_movie_black_24dp"
+            tools:tint="@color/gray_darker"
+            />
 
-    <TextView
-        android:id="@+id/duration"
-        style="?textAppearanceBody1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_padding_size_medium"
-        android:layout_marginTop="@dimen/margin_padding_size_small"
-        android:layout_marginEnd="@dimen/margin_padding_size_medium"
-        android:maxLines="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/cover"
-        app:layout_constraintTop_toBottomOf="@id/schedule"
-        tools:text="1h34"
-        />
+        <TextView
+            android:id="@+id/title"
+            style="?textAppearanceHeadline6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_padding_size_medium"
+            android:layout_marginTop="@dimen/margin_padding_size_medium"
+            android:layout_marginEnd="@dimen/margin_padding_size_medium"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cover"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Film avec un titre très long mais alors vraiment très long"
+            />
 
-    <ImageView
-        android:id="@+id/originalVersion"
-        style="?textAppearanceBody1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_padding_size_small"
-        android:layout_marginBottom="@dimen/margin_padding_size_medium"
-        android:importantForAccessibility="no"
-        android:tint="?colorOnBackground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/duration"
-        app:layout_constraintTop_toBottomOf="@id/duration"
-        app:srcCompat="@drawable/ic_original_version_black_24dp"
-        />
+        <TextView
+            android:id="@+id/schedule"
+            style="?textAppearanceBody1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_padding_size_medium"
+            android:layout_marginTop="@dimen/margin_padding_size_small"
+            android:layout_marginEnd="@dimen/margin_padding_size_medium"
+            android:ellipsize="end"
+            android:singleLine="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cover"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            tools:text="Horaire : 20:30"
+            />
 
-    <ImageView
-        android:id="@+id/threeDimension"
-        style="?textAppearanceBody1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_padding_size_small"
-        android:layout_marginBottom="@dimen/margin_padding_size_medium"
-        android:importantForAccessibility="no"
-        android:tint="?colorOnBackground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/originalVersion"
-        app:layout_constraintTop_toBottomOf="@id/duration"
-        app:srcCompat="@drawable/ic_three_dimension_black_24dp"
-        />
+        <TextView
+            android:id="@+id/duration"
+            style="?textAppearanceBody1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_padding_size_medium"
+            android:layout_marginTop="@dimen/margin_padding_size_small"
+            android:layout_marginEnd="@dimen/margin_padding_size_medium"
+            android:maxLines="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cover"
+            app:layout_constraintTop_toBottomOf="@id/schedule"
+            tools:text="Durée : 1h34"
+            />
 
-    <ImageView
-        android:id="@+id/underTwelve"
-        style="?textAppearanceBody1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_padding_size_small"
-        android:layout_marginBottom="@dimen/margin_padding_size_medium"
-        android:importantForAccessibility="no"
-        android:tint="?colorOnBackground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/threeDimension"
-        app:layout_constraintTop_toBottomOf="@id/duration"
-        app:srcCompat="@drawable/ic_under_twelve_black_24dp"
-        />
+        <ImageView
+            android:id="@+id/originalVersion"
+            style="?textAppearanceBody1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_padding_size_small"
+            android:layout_marginBottom="@dimen/margin_padding_size_medium"
+            android:importantForAccessibility="no"
+            android:tint="?colorOnBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/duration"
+            app:layout_constraintTop_toBottomOf="@id/duration"
+            app:srcCompat="@drawable/ic_original_version_black_24dp"
+            />
 
-    <ImageView
-        android:id="@+id/explicitContent"
-        style="?textAppearanceBody1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_padding_size_small"
-        android:layout_marginBottom="@dimen/margin_padding_size_medium"
-        android:importantForAccessibility="no"
-        android:tint="?colorOnBackground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/underTwelve"
-        app:layout_constraintTop_toBottomOf="@id/duration"
-        app:srcCompat="@drawable/ic_explicit_content_black_24dp"
-        />
+        <ImageView
+            android:id="@+id/threeDimension"
+            style="?textAppearanceBody1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_padding_size_small"
+            android:layout_marginBottom="@dimen/margin_padding_size_medium"
+            android:importantForAccessibility="no"
+            android:tint="?colorOnBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/originalVersion"
+            app:layout_constraintTop_toBottomOf="@id/duration"
+            app:srcCompat="@drawable/ic_three_dimension_black_24dp"
+            />
 
-    <ImageView
-        android:id="@+id/artMovie"
-        style="?textAppearanceBody1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_padding_size_small"
-        android:layout_marginBottom="@dimen/margin_padding_size_medium"
-        android:importantForAccessibility="no"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/explicitContent"
-        app:layout_constraintTop_toBottomOf="@id/duration"
-        android:tint="?colorOnBackground"
-        app:srcCompat="@drawable/ic_art_movie_24dp"
-        />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/underTwelve"
+            style="?textAppearanceBody1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_padding_size_small"
+            android:layout_marginBottom="@dimen/margin_padding_size_medium"
+            android:importantForAccessibility="no"
+            android:tint="?colorOnBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/threeDimension"
+            app:layout_constraintTop_toBottomOf="@id/duration"
+            app:srcCompat="@drawable/ic_under_twelve_black_24dp"
+            />
+
+        <ImageView
+            android:id="@+id/explicitContent"
+            style="?textAppearanceBody1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_padding_size_small"
+            android:layout_marginBottom="@dimen/margin_padding_size_medium"
+            android:importantForAccessibility="no"
+            android:tint="?colorOnBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/underTwelve"
+            app:layout_constraintTop_toBottomOf="@id/duration"
+            app:srcCompat="@drawable/ic_explicit_content_black_24dp"
+            />
+
+        <ImageView
+            android:id="@+id/artMovie"
+            style="?textAppearanceBody1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_padding_size_small"
+            android:layout_marginBottom="@dimen/margin_padding_size_medium"
+            android:importantForAccessibility="no"
+            android:tint="?colorOnBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/explicitContent"
+            app:layout_constraintTop_toBottomOf="@id/duration"
+            app:srcCompat="@drawable/ic_art_movie_24dp"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

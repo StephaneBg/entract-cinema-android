@@ -13,16 +13,8 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<resources>
-    <color name="white_lighter">#FFFFFF</color>
-    <color name="white_darker">#F8F8F8</color>
 
-    <color name="black_lighter">#303030</color>
-    <color name="black_darker">#262626</color>
-
-    <color name="gray_darker">#666666</color>
-    <color name="gray_lighter">#AAAAAA</color>
-
-    <color name="red_lighter">#EF5350</color>
-    <color name="red_darker">#942102</color>
-</resources>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_videocam_black_24dp" android:state_checked="true" />
+    <item android:drawable="@drawable/ic_outline_videocam_black_24dp" android:state_checked="false" />
+</selector>

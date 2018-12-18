@@ -17,10 +17,12 @@
 <TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="?textAppearanceOverline"
+    style="?textAppearanceBody2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/margin_padding_size_medium"
     android:background="?selectableItemBackground"
+    android:padding="@dimen/margin_padding_size_medium"
+    android:textColor="?colorSecondary"
+    android:textStyle="bold"
     tools:text="15 septembre 2018"
     />

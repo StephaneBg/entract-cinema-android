@@ -45,7 +45,7 @@ class CinemaActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(if (settingsViewModel.isDarkMode()) R.style.Theme_Cinema_Dark else R.style.Theme_Cinema)
+        setTheme(if (settingsViewModel.isDarkMode()) R.style.Theme_Cinema_Dark else R.style.Theme_Cinema_Light)
         setContentView(R.layout.activity_cinema)
         initBottomNavigation()
 

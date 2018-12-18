@@ -47,6 +47,7 @@
         app:backgroundTint="@color/white_lighter"
         app:icon="@drawable/ic_close_black_24dp"
         app:iconTint="@color/black_darker"
-        app:strokeColor="?colorSecondary"
+        app:rippleColor="@color/gray_darker"
+        app:strokeColor="@color/white_darker"
         />
 </FrameLayout>

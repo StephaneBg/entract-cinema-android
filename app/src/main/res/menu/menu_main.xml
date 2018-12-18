@@ -19,23 +19,23 @@
 
     <item
         android:id="@+id/on_screen"
-        android:icon="@drawable/ic_local_movies_black_24dp"
+        android:icon="@drawable/selector_nav_on_screen"
         android:title="@string/menu_today"
         />
 
     <item
         android:id="@+id/schedule"
-        android:icon="@drawable/ic_video_camera_black_24dp"
+        android:icon="@drawable/selector_nav_schedule"
         android:title="@string/menu_coming"
         />
     <item
         android:id="@+id/information"
-        android:icon="@drawable/ic_info_outline_black_24dp"
+        android:icon="@drawable/selector_nav_info"
         android:title="@string/menu_information"
         />
     <item
         android:id="@+id/settings"
-        android:icon="@drawable/ic_settings_black_24dp"
+        android:icon="@drawable/selector_nav_settings"
         android:title="@string/menu_settings"
         />
 </menu>

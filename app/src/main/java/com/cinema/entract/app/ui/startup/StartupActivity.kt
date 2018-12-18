@@ -18,6 +18,7 @@ package com.cinema.entract.app.ui.startup
 
 import android.graphics.Bitmap
 import android.os.Bundle
+import androidx.core.widget.ContentLoadingProgressBar
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -29,6 +30,7 @@ import com.cinema.entract.app.R
 import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ui.BaseActivity
+import org.jetbrains.anko.find
 import org.jetbrains.anko.startActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -41,6 +43,11 @@ class StartupActivity : BaseActivity() {
 
         setContentView(R.layout.activity_startup)
         observe(viewModel.prefetch(), ::prefetchEventCover)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        find<ContentLoadingProgressBar>(R.id.progress).show()
     }
 
     private fun prefetchEventCover(url: String?) {

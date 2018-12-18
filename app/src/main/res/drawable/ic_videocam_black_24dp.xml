@@ -13,16 +13,13 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<resources>
-    <color name="white_lighter">#FFFFFF</color>
-    <color name="white_darker">#F8F8F8</color>
 
-    <color name="black_lighter">#303030</color>
-    <color name="black_darker">#262626</color>
-
-    <color name="gray_darker">#666666</color>
-    <color name="gray_lighter">#AAAAAA</color>
-
-    <color name="red_lighter">#EF5350</color>
-    <color name="red_darker">#942102</color>
-</resources>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24.0"
+    android:viewportHeight="24.0">
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M17,10.5V7c0,-0.55 -0.45,-1 -1,-1H4c-0.55,0 -1,0.45 -1,1v10c0,0.55 0.45,1 1,1h12c0.55,0 1,-0.45 1,-1v-3.5l4,4v-11l-4,4z" />
+</vector>

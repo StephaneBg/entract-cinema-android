@@ -25,9 +25,7 @@ import android.widget.CalendarView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.cinema.entract.app.R
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.CinemaViewModel
@@ -35,11 +33,7 @@ import com.cinema.entract.app.ui.details.DetailsFragment
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ext.replaceFragment
-import com.cinema.entract.core.ui.BaseLceFragment
-import com.cinema.entract.core.ui.Error
-import com.cinema.entract.core.ui.Loading
-import com.cinema.entract.core.ui.State
-import com.cinema.entract.core.ui.Success
+import com.cinema.entract.core.ui.*
 import com.cinema.entract.core.widget.EmptynessLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -70,7 +64,6 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
         onScreenAdapter = OnScreenAdapter(::onMovieSelected)
         with(contentView) {
             recyclerView.layoutManager = LinearLayoutManager(activity)
-            recyclerView.addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
             recyclerView.setHasFixedSize(true)
             setAdapter(onScreenAdapter)
         }

@@ -39,10 +39,10 @@
         style="?textAppearanceHeadline6"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_padding_size_medium"
+        android:layout_marginStart="@dimen/keyline_list"
         app:layout_constraintBaseline_toBaselineOf="@+id/schedule"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/schedule"
+        app:layout_constraintStart_toStartOf="parent"
         tools:text="Film avec un titre très long mais alors vraiment très long"
         />
 

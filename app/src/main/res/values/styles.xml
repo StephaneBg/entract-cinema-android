@@ -16,89 +16,75 @@
 
 <resources>
 
-    <style name="Theme.Cinema"
-        parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/white_lighter</item>
-        <item name="colorPrimaryDark">@color/black_darker</item>
-        <item name="colorPrimaryVariant">@color/white_darker</item>
+    <style name="Theme.Cinema.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/white_darker</item>
+        <item name="colorPrimaryDark">@color/black_lighter</item>
         <item name="colorOnPrimary">@color/gray_darker</item>
 
         <item name="colorSecondary">@color/red_darker</item>
-        <item name="colorSecondaryVariant">@color/red_lighter</item>
-        <item name="colorOnSecondary">@color/white_lighter</item>
+        <item name="colorOnSecondary">@color/white_darker</item>
 
-        <item name="android:colorBackground">@color/white_darker</item>
-        <item name="colorOnBackground">@color/gray_darker</item>
-        <item name="colorSurface">@color/gray_lighter</item>
+        <item name="android:colorBackground">@color/white_lighter</item>
+        <item name="colorOnBackground">@color/gray_lighter</item>
+
+        <item name="colorSurface">@color/white_darker</item>
         <item name="colorOnSurface">@color/gray_darker</item>
 
         <item name="fontFamily">@font/raleway</item>
         <item name="textAppearanceHeadline5">@style/TextAppearance.Cinema.Headline5</item>
 
-        <item name="android:listDivider">@drawable/divider</item>
-        <item name="materialButtonStyle">@style/Widget.Cinema.Button.Light</item>
         <item name="switchStyle">@style/Widget.Cinema.Switch</item>
+        <item name="materialButtonStyle">@style/Widget.Cinema.Button.Light</item>
     </style>
 
-    <style name="Theme.Cinema.Dark"
-        parent="Theme.MaterialComponents.NoActionBar">
+    <style name="Theme.Cinema.Dark" parent="Theme.MaterialComponents.NoActionBar">
         <item name="colorPrimary">@color/black_lighter</item>
-        <item name="colorPrimaryDark">@color/black_darker</item>
-        <item name="colorPrimaryVariant">@color/black_darker</item>
+        <item name="colorPrimaryDark">@color/black_lighter</item>
         <item name="colorOnPrimary">@color/white_lighter</item>
 
         <item name="colorSecondary">@color/red_lighter</item>
-        <item name="colorSecondaryVariant">@color/red_darker</item>
         <item name="colorOnSecondary">@color/white_lighter</item>
 
         <item name="android:colorBackground">@color/black_darker</item>
         <item name="colorOnBackground">@color/white_darker</item>
-        <item name="colorSurface">@color/gray_lighter</item>
-        <item name="colorOnSurface">@color/gray_darker</item>
+
+        <item name="colorSurface">@color/black_lighter</item>
+        <item name="colorOnSurface">@color/white_lighter</item>
 
         <item name="fontFamily">@font/raleway</item>
         <item name="textAppearanceHeadline5">@style/TextAppearance.Cinema.Headline5</item>
 
-        <item name="android:listDivider">@drawable/divider</item>
-        <item name="materialButtonStyle">@style/Widget.Cinema.Button.Dark</item>
         <item name="switchStyle">@style/Widget.Cinema.Switch</item>
+        <item name="materialButtonStyle">@style/Widget.Cinema.Button.Dark</item>
     </style>
 
-    <style name="Theme.Cinema.Startup">
-        <item name="android:colorBackground">@color/white_lighter</item>
+    <style name="Theme.Cinema.Light.Startup">
+        <item name="colorPrimaryDark">@color/white_lighter</item>
     </style>
-
-    <!-- ThemeOverlay -->
-    <style name="ThemeOverlay.Cinema.AppBarOverlay"
-        parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
-
-    <style name="ThemeOverlay.Cinema.PopupOverlay"
-        parent="ThemeOverlay.MaterialComponents.Light" />
 
     <!-- TextAppearance -->
-    <style name="TextAppearance.Cinema.Headline5"
-        parent="TextAppearance.MaterialComponents.Headline5">
+    <style name="TextAppearance.Cinema.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
         <item name="fontFamily">@font/patua_one</item>
     </style>
 
     <!-- Widget -->
-    <style name="Widget.Cinema.Button.Light"
-        parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="android:textColor">?colorSecondary</item>
-        <item name="iconTint">?colorSecondary</item>
-        <item name="rippleColor">?colorSurface</item>
-    </style>
-
-    <style name="Widget.Cinema.Button.Dark"
-        parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="android:textColor">?colorOnBackground</item>
-        <item name="iconTint">?colorOnBackground</item>
-        <item name="strokeColor">?colorSecondary</item>
+    <style name="Widget.Cinema.Button" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">16dp</item>
         <item name="rippleColor">?colorOnBackground</item>
     </style>
 
-    <style name="Widget.Cinema.Switch"
-        parent="Widget.MaterialComponents.CompoundButton.Switch">
+    <style name="Widget.Cinema.Button.Light">
+        <item name="android:textColor">?colorSecondary</item>
+        <item name="iconTint">?colorSecondary</item>
+    </style>
+
+    <style name="Widget.Cinema.Button.Dark">
+        <item name="android:textColor">?colorOnBackground</item>
+        <item name="iconTint">?colorOnBackground</item>
+        <item name="strokeColor">?colorSecondary</item>
+    </style>
+
+    <style name="Widget.Cinema.Switch" parent="Widget.MaterialComponents.CompoundButton.Switch">
         <item name="useMaterialThemeColors">false</item>
     </style>
 </resources>

@@ -16,28 +16,47 @@
 
 <resources>
 
-    <style name="Theme.Cinema"
-        parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/white_lighter</item>
+    <style name="Theme.Cinema.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/white_darker</item>
         <item name="colorPrimaryDark">@color/white_darker</item>
-        <item name="colorPrimaryVariant">@color/white_darker</item>
         <item name="colorOnPrimary">@color/gray_darker</item>
 
         <item name="colorSecondary">@color/red_darker</item>
-        <item name="colorSecondaryVariant">@color/red_lighter</item>
-        <item name="colorOnSecondary">@color/white_lighter</item>
+        <item name="colorOnSecondary">@color/white_darker</item>
 
-        <item name="android:colorBackground">@color/white_darker</item>
-        <item name="colorOnBackground">@color/gray_darker</item>
-        <item name="colorSurface">@color/gray_lighter</item>
+        <item name="android:colorBackground">@color/white_lighter</item>
+        <item name="colorOnBackground">@color/gray_lighter</item>
+
+        <item name="colorSurface">@color/white_darker</item>
         <item name="colorOnSurface">@color/gray_darker</item>
 
         <item name="fontFamily">@font/raleway</item>
         <item name="textAppearanceHeadline5">@style/TextAppearance.Cinema.Headline5</item>
 
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:listDivider">@drawable/divider</item>
-        <item name="materialButtonStyle">@style/Widget.Cinema.Button.Light</item>
         <item name="switchStyle">@style/Widget.Cinema.Switch</item>
+        <item name="materialButtonStyle">@style/Widget.Cinema.Button.Light</item>
+    </style>
+
+    <style name="Theme.Cinema.Dark" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">@color/black_lighter</item>
+        <item name="colorPrimaryDark">@color/black_lighter</item>
+        <item name="colorOnPrimary">@color/white_lighter</item>
+
+        <item name="colorSecondary">@color/red_lighter</item>
+        <item name="colorOnSecondary">@color/white_lighter</item>
+
+        <item name="android:colorBackground">@color/black_darker</item>
+        <item name="colorOnBackground">@color/white_darker</item>
+
+        <item name="colorSurface">@color/black_lighter</item>
+        <item name="colorOnSurface">@color/white_lighter</item>
+
+        <item name="fontFamily">@font/raleway</item>
+        <item name="textAppearanceHeadline5">@style/TextAppearance.Cinema.Headline5</item>
+
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="switchStyle">@style/Widget.Cinema.Switch</item>
+        <item name="materialButtonStyle">@style/Widget.Cinema.Button.Dark</item>
     </style>
 </resources>

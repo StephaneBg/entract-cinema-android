@@ -20,8 +20,8 @@ object Versions {
     val java = JavaVersion.VERSION_1_8
     val androidGradle = "3.2.1"
     val googleServices = "4.2.0"
-    val kotlin = "1.3.10"
-    val coroutines = "1.0.1"
+    val kotlin = "1.3.11"
+    val coroutines = "1.1.0"
     val appcompat = "1.0.2"
     val vectorDrawable = "1.0.0"
     val recyclerView = "1.0.0"

@@ -20,19 +20,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.cinema.entract.app.R
 import com.cinema.entract.app.model.ScheduleEntry
 import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.core.ext.observe
-import com.cinema.entract.core.ui.BaseLceFragment
-import com.cinema.entract.core.ui.Error
-import com.cinema.entract.core.ui.Loading
-import com.cinema.entract.core.ui.State
-import com.cinema.entract.core.ui.Success
+import com.cinema.entract.core.ui.*
 import com.cinema.entract.core.widget.EmptynessLayout
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.threeten.bp.LocalDate
@@ -53,7 +47,7 @@ class ScheduleFragment : BaseLceFragment<EmptynessLayout>() {
 
         with(contentView) {
             recyclerView.layoutManager = LinearLayoutManager(context)
-            recyclerView.addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
+            recyclerView.addItemDecoration(ScheduleItemDecorator(context))
             setAdapter(scheduleAdapter)
         }
     }

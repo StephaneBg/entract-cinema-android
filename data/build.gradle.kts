@@ -14,35 +14,32 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+plugins {
+    id("com.android.library")
+    kotlin("android")
+}
 
 android {
-
-    buildToolsVersion Android.buildToolsVersion
-    compileSdkVersion Android.compileSdkVersion
+    compileSdkVersion(Android.compileSdkVersion)
 
     compileOptions {
-        sourceCompatibility Versions.java
-        targetCompatibility Versions.java
+        sourceCompatibility = Versions.java
+        targetCompatibility = Versions.java
     }
 
     defaultConfig {
-        minSdkVersion Android.minSdkVersion
-        targetSdkVersion Android.targetSdkVersion
-        resConfigs "fr"
+        minSdkVersion(Android.minSdkVersion)
+        targetSdkVersion(Android.targetSdkVersion)
+        resConfigs("fr")
     }
 }
 
 dependencies {
-    implementation project(':core')
-    implementation project(':data')
+    implementation(project(":core"))
 
-    implementation Libs.kotlinStd
-    implementation Libs.koinAndroid
-    implementation Libs.ktx
-    implementation Libs.jsr310
+    implementation(kotlin("stdlib"))
+    implementation(Libs.coroutinesCore)
+    implementation(Libs.coroutinesAndroid)
+    implementation(Libs.koinAndroid)
+    implementation(Libs.jsr310)
 }
-
-apply from: "../ktlint.gradle"

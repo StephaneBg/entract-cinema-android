@@ -14,35 +14,33 @@
  * limitations under the License.
  */
 
-buildscript {
+plugins {
+    id("com.android.library")
+    kotlin("android")
+    kotlin("kapt")
+}
 
-    repositories {
-        jcenter()
-        google()
+android {
+    compileSdkVersion(Android.compileSdkVersion)
+
+    compileOptions {
+        sourceCompatibility = Versions.java
+        targetCompatibility = Versions.java
     }
 
-    dependencies {
-        classpath Build.androidGradle
-        classpath Build.kotlinGradlePlugin
-        classpath Build.googleServices
+    defaultConfig {
+        minSdkVersion(Android.minSdkVersion)
+        targetSdkVersion(Android.targetSdkVersion)
+        resConfigs("fr")
     }
 }
 
-allprojects {
-    repositories {
-        jcenter()
-        google()
-        maven { url 'https://jitpack.io' }
-    }
-}
+dependencies {
+    implementation(project(":core"))
+    implementation(project(":data"))
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
-
-if (file("signing.gradle").exists()) {
-    apply from: "./signing.gradle"
-}
-else {
-    apply from: "./fake_signing.gradle"
+    implementation(kotlin("stdlib"))
+    implementation(Libs.koinAndroid)
+    implementation(Libs.ktx)
+    implementation(Libs.jsr310)
 }

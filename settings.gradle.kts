@@ -14,11 +14,4 @@
  * limitations under the License.
  */
 
-ext {
-    appSigning = [
-            storeFilePath: "keystore.jks",
-            storePassword: "",
-            keyAlias     : "",
-            keyPassword  : ""
-    ]
-}
+include(":cache", ":remote", ":data", ":app", ":core")

@@ -18,14 +18,15 @@ import org.gradle.api.JavaVersion
 
 object Versions {
     val java = JavaVersion.VERSION_1_8
-    val androidGradle = "3.2.1"
-    val googleServices = "4.2.0"
+    val androidGradle = "3.3.0-rc03"
     val kotlin = "1.3.11"
+    val googleServices = "4.2.0"
+    val ktlint = "6.3.1"
     val coroutines = "1.1.0"
     val appcompat = "1.0.2"
     val vectorDrawable = "1.0.0"
     val recyclerView = "1.0.0"
-    val material = "1.1.0-alpha01"
+    val material = "1.1.0-alpha02"
     val constraintLayout = "1.1.3"
     val lifecyle = "2.0.0"
     val room = "2.0.0"
@@ -39,24 +40,22 @@ object Versions {
     val jsr310 = "1.1.1"
     val firebaseCore = "16.0.4"
     val firebaseMessaging = "17.3.4"
-    val ktlint = "0.29.0"
 }
 
 object Build {
     val androidGradle = "com.android.tools.build:gradle:${Versions.androidGradle}"
     val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
     val googleServices = "com.google.gms:google-services:${Versions.googleServices}"
+    val ktlintGradle = "org.jlleitschuh.gradle:ktlint-gradle:${Versions.ktlint}"
 }
 
 object Android {
-    val buildToolsVersion = "28.0.3"
     val minSdkVersion = 21
     val targetSdkVersion = 28
     val compileSdkVersion = targetSdkVersion
 }
 
 object Libs {
-    val kotlinStd = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}"
     val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
     val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
     val anko = "org.jetbrains.anko:anko-commons:${Versions.anko}"
@@ -83,5 +82,4 @@ object Libs {
     val koinAndroid = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
     val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
     val jsr310 = "com.jakewharton.threetenabp:threetenabp:${Versions.jsr310}"
-    val ktlint = "com.github.shyiko:ktlint:${Versions.ktlint}"
 }

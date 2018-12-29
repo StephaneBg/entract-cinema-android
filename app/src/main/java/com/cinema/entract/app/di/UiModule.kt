@@ -24,8 +24,8 @@ import com.cinema.entract.app.ui.TagViewModel
 import com.cinema.entract.app.ui.details.DetailsViewModel
 import com.cinema.entract.app.ui.settings.SettingsViewModel
 import com.cinema.entract.app.ui.startup.StartupViewModel
-import org.koin.androidx.viewmodel.ext.koin.viewModel
-import org.koin.dsl.module.module
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
 val uiModule = module {
 

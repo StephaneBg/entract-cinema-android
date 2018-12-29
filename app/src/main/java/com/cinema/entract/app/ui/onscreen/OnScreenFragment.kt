@@ -36,7 +36,7 @@ import com.cinema.entract.core.ext.replaceFragment
 import com.cinema.entract.core.ui.*
 import com.cinema.entract.core.widget.EmptynessLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.sharedViewModel
 import org.threeten.bp.LocalDate
 
 class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {

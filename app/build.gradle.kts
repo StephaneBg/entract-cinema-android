@@ -17,7 +17,6 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-
 }
 
 val versionMajor = 1
@@ -34,7 +33,7 @@ android {
 
     defaultConfig {
         applicationId = "com.cinema.entract.app"
-        versionCode = versionMajor * 1000 + versionMinor * 100 + versionPatch
+        versionCode = 18
         versionName = "$versionMajor.$versionMinor.$versionPatch"
         vectorDrawables.useSupportLibrary = true
         minSdkVersion(Android.minSdkVersion)
@@ -80,7 +79,7 @@ dependencies {
     implementation(project(":remote"))
     implementation(project(":data"))
 
-    implementation(kotlin("stdlib"))
+    implementation(kotlin("stdlib", Versions.kotlin))
     implementation(Libs.coroutinesCore)
     implementation(Libs.coroutinesAndroid)
     implementation(Libs.appcompat)

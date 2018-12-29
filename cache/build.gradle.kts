@@ -39,7 +39,7 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":data"))
 
-    implementation(kotlin("stdlib"))
+    implementation(kotlin("stdlib", Versions.kotlin))
     implementation(Libs.koinAndroid)
     implementation(Libs.ktx)
     implementation(Libs.jsr310)

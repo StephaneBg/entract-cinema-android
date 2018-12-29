@@ -32,7 +32,7 @@ import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ui.BaseActivity
 import org.jetbrains.anko.find
 import org.jetbrains.anko.startActivity
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.viewModel
 
 class StartupActivity : BaseActivity() {
 

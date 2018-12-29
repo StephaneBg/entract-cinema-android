@@ -33,7 +33,7 @@ import com.cinema.entract.core.ui.BaseActivity
 import com.cinema.entract.core.ui.Event
 import com.cinema.entract.core.views.bindView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.viewModel
 
 class CinemaActivity : BaseActivity() {
 

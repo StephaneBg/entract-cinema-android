@@ -37,7 +37,7 @@ android {
 dependencies {
     implementation(project(":core"))
 
-    implementation(kotlin("stdlib"))
+    implementation(kotlin("stdlib", Versions.kotlin))
     implementation(Libs.coroutinesCore)
     implementation(Libs.coroutinesAndroid)
     implementation(Libs.koinAndroid)

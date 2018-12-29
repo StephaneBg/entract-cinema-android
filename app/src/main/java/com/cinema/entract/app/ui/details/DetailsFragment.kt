@@ -47,8 +47,8 @@ import com.cinema.entract.core.ui.BaseFragment
 import com.cinema.entract.data.ext.formatToUTC
 import com.cinema.entract.data.ext.longFormatToUi
 import org.jetbrains.anko.find
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.sharedViewModel
+import org.koin.androidx.viewmodel.ext.viewModel
 
 class DetailsFragment : BaseFragment() {
 

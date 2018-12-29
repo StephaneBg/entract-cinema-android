@@ -27,8 +27,8 @@ import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ui.BaseFragment
 import com.google.android.material.switchmaterial.SwitchMaterial
 import org.jetbrains.anko.startActivity
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.sharedViewModel
+import org.koin.androidx.viewmodel.ext.viewModel
 
 class SettingsFragment : BaseFragment() {
 

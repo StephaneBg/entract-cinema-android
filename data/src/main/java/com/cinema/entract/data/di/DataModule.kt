@@ -21,7 +21,7 @@ import com.cinema.entract.data.interactor.NotifUseCase
 import com.cinema.entract.data.interactor.TagUseCase
 import com.cinema.entract.data.source.CinemaDataStore
 import com.cinema.entract.data.source.CinemaDataStoreImpl
-import org.koin.dsl.module.module
+import org.koin.dsl.module
 
 val dataModule = module {
 

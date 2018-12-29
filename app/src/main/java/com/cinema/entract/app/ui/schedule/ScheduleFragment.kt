@@ -28,7 +28,7 @@ import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ui.*
 import com.cinema.entract.core.widget.EmptynessLayout
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.sharedViewModel
 import org.threeten.bp.LocalDate
 
 class ScheduleFragment : BaseLceFragment<EmptynessLayout>() {

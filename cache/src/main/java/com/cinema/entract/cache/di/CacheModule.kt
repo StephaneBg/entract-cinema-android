@@ -24,7 +24,7 @@ import com.cinema.entract.cache.repository.CacheRepoImpl
 import com.cinema.entract.cache.repository.UserPreferencesRepoImpl
 import com.cinema.entract.data.repository.CacheRepo
 import com.cinema.entract.data.repository.UserPreferencesRepo
-import org.koin.dsl.module.module
+import org.koin.dsl.module
 
 val cacheModule = module {
 

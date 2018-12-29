@@ -16,6 +16,11 @@ import org.jlleitschuh.gradle.ktlint.KtlintExtension
  * limitations under the License.
  */
 
+plugins {
+    id("com.github.ben-manes.versions") version "0.20.0"
+    id("org.jlleitschuh.gradle.ktlint") version "6.3.1"
+}
+
 buildscript {
     repositories {
         jcenter()
@@ -24,10 +29,9 @@ buildscript {
     }
 
     dependencies {
+        classpath(kotlin("gradle-plugin", Versions.kotlin))
         classpath(Build.androidGradle)
-        classpath(Build.kotlinGradlePlugin)
         classpath(Build.googleServices)
-        classpath(Build.ktlintGradle)
     }
 }
 

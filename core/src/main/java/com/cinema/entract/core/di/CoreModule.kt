@@ -17,7 +17,7 @@
 package com.cinema.entract.core.di
 
 import com.cinema.entract.core.network.NetworkUtils
-import org.koin.dsl.module.module
+import org.koin.dsl.module
 
 val coreModule = module {
 

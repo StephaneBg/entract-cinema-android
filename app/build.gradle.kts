@@ -21,7 +21,7 @@ plugins {
 
 val versionMajor = 1
 val versionMinor = 1
-val versionPatch = 0
+val versionPatch = 1
 
 android {
     compileSdkVersion(Android.compileSdkVersion)
@@ -33,7 +33,7 @@ android {
 
     defaultConfig {
         applicationId = "com.cinema.entract.app"
-        versionCode = 18
+        versionCode = 19
         versionName = "$versionMajor.$versionMinor.$versionPatch"
         vectorDrawables.useSupportLibrary = true
         minSdkVersion(Android.minSdkVersion)

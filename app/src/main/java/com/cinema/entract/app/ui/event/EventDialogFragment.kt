@@ -42,7 +42,7 @@ class EventDialogFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         return inflater.inflate(R.layout.fragment_event, container, false)
     }
 
@@ -56,7 +56,7 @@ class EventDialogFragment : DialogFragment() {
         )
 
         find<MaterialButton>(R.id.close).setOnClickListener {
-            dialog.dismiss()
+            dialog?.dismiss()
         }
     }
 

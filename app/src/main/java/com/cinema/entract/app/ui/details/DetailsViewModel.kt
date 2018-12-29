@@ -20,7 +20,7 @@ import com.cinema.entract.app.model.Movie
 import com.cinema.entract.core.ui.ScopedViewModel
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
-import java.util.Calendar
+import org.threeten.bp.ZoneOffset
 
 class DetailsViewModel : ScopedViewModel() {
 
@@ -29,7 +29,7 @@ class DetailsViewModel : ScopedViewModel() {
         var time = LocalTime.of(schedule[0], schedule[1])
         val beginTime = LocalDateTime.of(
             movie.date.year,
-            movie.date.month.value - 1,
+            movie.date.month.value,
             movie.date.dayOfMonth,
             time.hour,
             time.minute
@@ -40,18 +40,13 @@ class DetailsViewModel : ScopedViewModel() {
         time = time.plusMinutes(duration[1].toLong())
         val endTime = LocalDateTime.of(
             movie.date.year,
-            movie.date.month.value - 1,
+            movie.date.month.value,
             movie.date.dayOfMonth,
             time.hour,
             time.minute
         )
 
-        return beginTime.toCalendar().timeInMillis to endTime.toCalendar().timeInMillis
-    }
-
-    private fun LocalDateTime.toCalendar(): Calendar {
-        val calendar = Calendar.getInstance()
-        calendar.set(this.year, this.month.value, this.dayOfMonth, this.hour, this.minute)
-        return calendar
+        return beginTime.toEpochSecond(ZoneOffset.ofHours(1)) * 1000 to
+                endTime.toEpochSecond(ZoneOffset.ofHours(1)) * 1000
     }
 }

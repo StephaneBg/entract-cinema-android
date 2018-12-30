@@ -63,6 +63,7 @@ class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
 
     inner class WeekHeaderHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         ScheduleViewHolder<WeekHeader> {
+
         override fun bind(model: WeekHeader) {
             (itemView as TextView).text = model.dateUi
         }
@@ -70,6 +71,7 @@ class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
 
     inner class DayHeaderHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         ScheduleViewHolder<DayHeader> {
+
         override fun bind(model: DayHeader) {
             (itemView as TextView).text = model.dateUi
             itemView.setOnClickListener { selection(model.date) }

@@ -27,7 +27,7 @@ object Versions {
     val recyclerView = "1.1.0-alpha01"
     val material = "1.1.0-alpha02"
     val constraintLayout = "2.0.0-alpha3"
-    val lifecyle = "2.0.0"
+    val lifecyle = "2.1.0-alpha01"
     val timber = "4.7.1"
     val retrofit = "2.5.0"
     val retrofitCoroutines = "0.9.2"

@@ -57,6 +57,8 @@ class ScheduleFragment : BaseLceFragment<EmptynessLayout>() {
         observe(cinemaViewModel.getScheduleState(), ::manageState)
     }
 
+    fun scrollToTop() = contentView.recyclerView.smoothScrollToPosition(0)
+
     private fun manageState(state: State<List<ScheduleEntry>>?) {
         when (state) {
             null -> Unit

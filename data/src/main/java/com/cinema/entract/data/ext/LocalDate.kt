@@ -18,7 +18,7 @@ package com.cinema.entract.data.ext
 
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
-import java.util.Locale
+import java.util.*
 
 private val longFormatter = DateTimeFormatter.ofPattern("EEEE d MMMM", Locale.FRANCE)
 private val shortFormatter = DateTimeFormatter.ofPattern("d MMMM", Locale.FRANCE)
@@ -32,3 +32,5 @@ fun LocalDate.formatToUTC(): String = this.format(DateTimeFormatter.ISO_LOCAL_DA
 fun LocalDate.isTodayOrLater(): Boolean = this.isAfter(LocalDate.now().minusDays(1))
 
 fun LocalDate.isToday(): Boolean = this == LocalDate.now()
+
+fun LocalDate.isTomorrow(): Boolean = this == LocalDate.now().plusDays(1)

@@ -82,20 +82,28 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
         observe(cinemaViewModel.getOnScreenState(), ::manageState)
     }
 
+    fun scrollToTop() = contentView.recyclerView.smoothScrollToPosition(0)
+
+    fun isScrolled(): Boolean =
+        (contentView.recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() != 0
+
     private fun manageState(state: State<List<Movie>>?) {
         when (state) {
             null -> Unit
             is Loading -> showLoading()
-            is Success -> updateMovies(state.data)
+            is Success -> {
+                updateMovies(state.data, !state.peaked)
+                state.peaked = true
+            }
             is Error -> manageError(state.error)
         }
     }
 
-    private fun updateMovies(movies: List<Movie>) {
-        contentView.recyclerView.layoutAnimation = animController
+    private fun updateMovies(movies: List<Movie>, withAnim: Boolean) {
+        if (withAnim) contentView.recyclerView.layoutAnimation = animController
         onScreenAdapter.updateMovies(movies)
         showContent()
-        contentView.recyclerView.scheduleLayoutAnimation()
+        if (withAnim) contentView.recyclerView.scheduleLayoutAnimation()
     }
 
     private fun manageError(exception: Throwable?) {

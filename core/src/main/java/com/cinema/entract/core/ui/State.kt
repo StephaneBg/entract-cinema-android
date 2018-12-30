@@ -18,6 +18,6 @@ package com.cinema.entract.core.ui
 
 sealed class State<out T>
 
-class Success<out T>(val data: T, val refresh: Boolean = false) : State<T>()
+class Success<out T>(val data: T, var peaked: Boolean = false) : State<T>()
 class Loading(val refresh: Boolean = false) : State<Nothing>()
 class Error(val error: Throwable?) : State<Nothing>()

@@ -89,13 +89,14 @@ class CinemaActivity : BaseActivity() {
     }
 
     private fun handleOnScreen(): Boolean =
-        when (displayedFragment()) {
+        when (val fragment = displayedFragment()) {
             is DetailsFragment -> {
                 supportFragmentManager.popBackStack()
                 true
             }
             is OnScreenFragment -> {
-                cinemaViewModel.retrieveTodayMovies()
+                if (fragment.isScrolled()) fragment.scrollToTop()
+                else if (!cinemaViewModel.isTodayDisplayed()) cinemaViewModel.retrieveTodayMovies()
                 true
             }
             else -> {
@@ -110,8 +111,11 @@ class CinemaActivity : BaseActivity() {
         }
 
     private fun handleSchedule(): Boolean =
-        when (displayedFragment()) {
-            is ScheduleFragment -> false
+        when (val fragment = displayedFragment()) {
+            is ScheduleFragment -> {
+                fragment.scrollToTop()
+                false
+            }
             else -> {
                 supportFragmentManager.popBackStack()
                 replaceFragment(

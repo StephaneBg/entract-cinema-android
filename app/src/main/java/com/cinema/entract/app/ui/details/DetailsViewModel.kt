@@ -46,7 +46,9 @@ class DetailsViewModel : ScopedViewModel() {
             time.minute
         )
 
-        return beginTime.toEpochSecond(ZoneOffset.ofHours(1)) * 1000 to
-                endTime.toEpochSecond(ZoneOffset.ofHours(1)) * 1000
+        return beginTime.toEpochMilliSecond() to endTime.toEpochMilliSecond()
     }
+
+    private fun LocalDateTime.toEpochMilliSecond() =
+        this.toEpochSecond(ZoneOffset.ofHours(1)) * 1000
 }

@@ -20,8 +20,10 @@ import com.cinema.entract.app.model.DayHeader
 import com.cinema.entract.app.model.MovieEntry
 import com.cinema.entract.app.model.ScheduleEntry
 import com.cinema.entract.app.model.WeekHeader
-import com.cinema.entract.data.ext.*
-import com.cinema.entract.data.model.DayData
+import com.cinema.entract.data.ext.isTodayOrLater
+import com.cinema.entract.data.ext.longFormatToUi
+import com.cinema.entract.data.ext.sameMonth
+import com.cinema.entract.data.ext.shortFormatToUi
 import com.cinema.entract.data.model.WeekData
 
 class ScheduleMapper(private val mapper: MovieMapper) :
@@ -36,7 +38,7 @@ class ScheduleMapper(private val mapper: MovieMapper) :
                 .filter { it.movies.isNotEmpty() }
                 .filter { it.date.isTodayOrLater() }
                 .forEach { day ->
-                    list.add(DayHeader(formatDayHeader(day), day.date))
+                    list.add(DayHeader(day.date.longFormatToUi(), day.date))
 
                     day.movies.forEach { movie ->
                         list.add(MovieEntry(mapper.mapToUi(movie), day.date))
@@ -46,14 +48,10 @@ class ScheduleMapper(private val mapper: MovieMapper) :
         return list
     }
 
-    private fun formatWeekHeader(week: WeekData): String = when {
-        week.beginDay.monthValue == week.endDay.monthValue -> "Du ${week.beginDay.dayOfMonth} au ${week.endDay.shortFormatToUi()}"
-        else -> "Du ${week.beginDay.shortFormatToUi()} au ${week.endDay.shortFormatToUi()}"
-    }
-
-    private fun formatDayHeader(day: DayData): String = when {
-        day.date.isToday() -> "Aujourd'hui"
-        day.date.isTomorrow() -> "Demain"
-        else -> day.date.longFormatToUi()
-    }
+    private fun formatWeekHeader(week: WeekData): String =
+        if (week.beginDay sameMonth week.endDay) {
+            "Du ${week.beginDay.dayOfMonth} au ${week.endDay.shortFormatToUi()}"
+        } else {
+            "Du ${week.beginDay.shortFormatToUi()} au ${week.endDay.shortFormatToUi()}"
+        }
 }

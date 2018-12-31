@@ -34,7 +34,8 @@ open class BaseFragment : Fragment() {
 
     @DrawableRes
     open fun getErrorDrawable(throwable: Throwable?): Int = when (throwable) {
-        is NoConnectivityException -> R.drawable.ic_signal_cellular_connected_no_internet_0_bar_black_24dp
+        is NoConnectivityException ->
+            R.drawable.ic_signal_cellular_connected_no_internet_0_bar_black_24dp
         is SocketTimeoutException -> R.drawable.ic_error_outline_black_24dp
         else -> R.drawable.ic_error_outline_black_24dp
     }

@@ -18,12 +18,16 @@ package com.cinema.entract.data.ext
 
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
-import java.util.*
+import java.util.Locale
 
 private val longFormatter = DateTimeFormatter.ofPattern("EEEE d MMMM", Locale.FRANCE)
 private val shortFormatter = DateTimeFormatter.ofPattern("d MMMM", Locale.FRANCE)
 
-fun LocalDate.longFormatToUi(): String = this.format(longFormatter).capitalize()
+fun LocalDate.longFormatToUi(): String = when {
+    this.isToday() -> "Aujourd'hui"
+    this.isTomorrow() -> "Demain"
+    else -> this.format(longFormatter).capitalize()
+}
 
 fun LocalDate.shortFormatToUi(): String = this.format(shortFormatter).capitalize()
 
@@ -34,3 +38,7 @@ fun LocalDate.isTodayOrLater(): Boolean = this.isAfter(LocalDate.now().minusDays
 fun LocalDate.isToday(): Boolean = this == LocalDate.now()
 
 fun LocalDate.isTomorrow(): Boolean = this == LocalDate.now().plusDays(1)
+
+infix fun LocalDate.sameMonth(other: LocalDate): Boolean = this.monthValue == other.monthValue
+
+fun LocalDate.toEpochMilliSecond() = this.toEpochDay() * 24 * 60 * 60 * 1000

@@ -31,8 +31,8 @@ import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ext.replaceFragment
 import com.cinema.entract.core.ui.BaseActivity
 import com.cinema.entract.core.ui.Event
-import com.cinema.entract.core.views.bindView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import org.jetbrains.anko.find
 import org.koin.androidx.viewmodel.ext.viewModel
 
 class CinemaActivity : BaseActivity() {
@@ -41,11 +41,14 @@ class CinemaActivity : BaseActivity() {
     private val tagViewModel by viewModel<TagViewModel>()
     private val settingsViewModel by viewModel<SettingsViewModel>()
 
-    private val bottomNav by bindView<BottomNavigationView>(R.id.bottomNavigation)
+    private lateinit var bottomNav: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(if (settingsViewModel.isDarkMode()) R.style.Theme_Cinema_Dark else R.style.Theme_Cinema_Light)
+        setTheme(
+            if (settingsViewModel.isDarkMode()) R.style.Theme_Cinema_Dark
+            else R.style.Theme_Cinema_Light
+        )
         setContentView(R.layout.activity_cinema)
         initBottomNavigation()
 
@@ -77,6 +80,7 @@ class CinemaActivity : BaseActivity() {
     }
 
     private fun initBottomNavigation() {
+        bottomNav = find(R.id.bottomNavigation)
         bottomNav.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.on_screen -> handleOnScreen()

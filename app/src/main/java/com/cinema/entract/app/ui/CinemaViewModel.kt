@@ -32,6 +32,7 @@ import com.cinema.entract.core.ui.State
 import com.cinema.entract.core.ui.Success
 import com.cinema.entract.data.ext.isToday
 import com.cinema.entract.data.ext.longFormatToUi
+import com.cinema.entract.data.ext.toEpochMilliSecond
 import com.cinema.entract.data.interactor.CinemaUseCase
 import kotlinx.coroutines.coroutineScope
 import org.threeten.bp.LocalDate
@@ -50,7 +51,9 @@ class CinemaViewModel(
     private val eventUrl = MutableLiveData<Event<String>>()
     private val currentDate = MutableLiveData<String>()
 
-    fun getCurrentDate(): LiveData<String> = currentDate
+    fun getDisplayDate(): LiveData<String> = currentDate
+
+    fun getDate() = useCase.getDate().toEpochMilliSecond()
 
     fun getOnScreenState(): LiveData<State<List<Movie>>> {
         onScreenState.value ?: retrieveMovies()

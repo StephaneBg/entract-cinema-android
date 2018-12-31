@@ -42,7 +42,11 @@
 # Top-level functions that can only be used by Kotlin.
 -dontwarn retrofit2.-KotlinExtensions
 
+# ThreeTen ABP
+-keep class org.threeten.bp.** { *; }
+-keep interface org.threeten.bp.** { *; }
 
+# Application models
 -keep class com.cinema.entract.app.model.** { *; }
 -keep class com.cinema.entract.data.model.** { *; }
 -keep class com.cinema.entract.remote.model.** { *; }

@@ -18,9 +18,9 @@ package com.cinema.entract.app.ui.details
 
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.core.ui.ScopedViewModel
+import com.cinema.entract.data.ext.toEpochMilliSecond
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
-import org.threeten.bp.ZoneOffset
 
 class DetailsViewModel : ScopedViewModel() {
 
@@ -48,7 +48,4 @@ class DetailsViewModel : ScopedViewModel() {
 
         return beginTime.toEpochMilliSecond() to endTime.toEpochMilliSecond()
     }
-
-    private fun LocalDateTime.toEpochMilliSecond() =
-        this.toEpochSecond(ZoneOffset.ofHours(1)) * 1000
 }

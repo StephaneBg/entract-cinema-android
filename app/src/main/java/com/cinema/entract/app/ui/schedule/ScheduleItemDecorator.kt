@@ -26,7 +26,6 @@ import com.cinema.entract.app.R
 import org.jetbrains.anko.colorAttr
 import org.jetbrains.anko.dip
 
-
 class ScheduleItemDecorator(val context: Context) : RecyclerView.ItemDecoration() {
 
     private val keyline = context.resources.getDimension(R.dimen.keyline_list)

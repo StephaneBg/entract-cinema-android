@@ -33,7 +33,11 @@ import com.cinema.entract.app.ui.details.DetailsFragment
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ext.replaceFragment
-import com.cinema.entract.core.ui.*
+import com.cinema.entract.core.ui.BaseLceFragment
+import com.cinema.entract.core.ui.Error
+import com.cinema.entract.core.ui.Loading
+import com.cinema.entract.core.ui.State
+import com.cinema.entract.core.ui.Success
 import com.cinema.entract.core.widget.EmptynessLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.koin.androidx.viewmodel.ext.sharedViewModel
@@ -78,14 +82,14 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
 
     override fun onStart() {
         super.onStart()
-        observe(cinemaViewModel.getCurrentDate()) { date.text = it }
+        observe(cinemaViewModel.getDisplayDate()) { date.text = it }
         observe(cinemaViewModel.getOnScreenState(), ::manageState)
     }
 
     fun scrollToTop() = contentView.recyclerView.smoothScrollToPosition(0)
 
-    fun isScrolled(): Boolean =
-        (contentView.recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() != 0
+    fun isScrolled(): Boolean = (contentView.recyclerView.layoutManager as LinearLayoutManager)
+        .findFirstVisibleItemPosition() != 0
 
     private fun manageState(state: State<List<Movie>>?) {
         when (state) {
@@ -127,6 +131,7 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
             val calendarView = CalendarView(requireContext()).apply {
                 minDate = it.minimumDate
                 maxDate = it.maximumDate
+                date = cinemaViewModel.getDate()
                 setOnDateChangeListener { _, year, month, dayOfMonth ->
                     val date = LocalDate.of(year, month + 1, dayOfMonth)
                     cinemaViewModel.retrieveMovies(date)

@@ -14,10 +14,21 @@
  * limitations under the License.
  */
 
-include(
-    ":cache",
-    ":remote",
-    ":data",
-    ":app",
-    ":core"
-)
+package com.cinema.entract.core.widget
+
+import androidx.core.widget.NestedScrollView
+import com.google.android.material.appbar.AppBarLayout
+
+class AppBarNestedScrollViewOnScrollListener(private val appBar: AppBarLayout) :
+    NestedScrollView.OnScrollChangeListener {
+
+    override fun onScrollChange(
+        v: NestedScrollView,
+        scrollX: Int,
+        scrollY: Int,
+        oldScrollX: Int,
+        oldScrollY: Int
+    ) {
+        appBar.isSelected = v.canScrollVertically(-1)
+    }
+}

@@ -16,14 +16,13 @@
 
 package com.cinema.entract.app.ui.onscreen
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.CalendarView
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cinema.entract.app.R
@@ -38,6 +37,7 @@ import com.cinema.entract.core.ui.Error
 import com.cinema.entract.core.ui.Loading
 import com.cinema.entract.core.ui.State
 import com.cinema.entract.core.ui.Success
+import com.cinema.entract.core.widget.AppBarRecyclerViewOnScrollListener
 import com.cinema.entract.core.widget.EmptynessLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.koin.androidx.viewmodel.ext.sharedViewModel
@@ -48,7 +48,7 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
     private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
     private lateinit var onScreenAdapter: OnScreenAdapter
 
-    private lateinit var alertDialog: AlertDialog
+    private lateinit var datePickerDialog: DatePickerDialog
     private lateinit var fab: FloatingActionButton
     private lateinit var date: TextView
 
@@ -69,6 +69,7 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
         with(contentView) {
             recyclerView.layoutManager = LinearLayoutManager(activity)
             recyclerView.setHasFixedSize(true)
+            recyclerView.addOnScrollListener(AppBarRecyclerViewOnScrollListener(find(R.id.appBar)))
             setAdapter(onScreenAdapter)
         }
 
@@ -128,21 +129,24 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
 
     private fun displayDatePicker() {
         cinemaViewModel.getDateRange()?.let {
-            val calendarView = CalendarView(requireContext()).apply {
-                minDate = it.minimumDate
-                maxDate = it.maximumDate
-                date = cinemaViewModel.getDate()
-                setOnDateChangeListener { _, year, month, dayOfMonth ->
-                    val date = LocalDate.of(year, month + 1, dayOfMonth)
-                    cinemaViewModel.retrieveMovies(date)
-                    alertDialog.dismiss()
-                }
+            val date = cinemaViewModel.getDate()
+            datePickerDialog = DatePickerDialog(
+                requireContext(),
+                R.style.Theme_Cinema_Dialog,
+                { _, year, month, dayOfMonth ->
+                    cinemaViewModel.retrieveMovies(
+                        LocalDate.of(year, month + 1, dayOfMonth)
+                    )
+                    datePickerDialog.dismiss()
+                },
+                date.year,
+                date.monthValue - 1,
+                date.dayOfMonth
+            ).apply {
+                datePicker.minDate = it.minimumDate
+                datePicker.maxDate = it.maximumDate
+                show()
             }
-
-            alertDialog = AlertDialog.Builder(requireContext())
-                .setView(calendarView)
-                .create()
-            alertDialog.show()
         }
     }
 

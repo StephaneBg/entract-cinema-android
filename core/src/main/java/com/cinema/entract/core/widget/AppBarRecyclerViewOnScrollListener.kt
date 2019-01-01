@@ -14,10 +14,15 @@
  * limitations under the License.
  */
 
-include(
-    ":cache",
-    ":remote",
-    ":data",
-    ":app",
-    ":core"
-)
+package com.cinema.entract.core.widget
+
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.AppBarLayout
+
+class AppBarRecyclerViewOnScrollListener(private val appBar: AppBarLayout) :
+    RecyclerView.OnScrollListener() {
+
+    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+        appBar.isSelected = recyclerView.canScrollVertically(-1)
+    }
+}

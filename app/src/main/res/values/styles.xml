@@ -14,20 +14,20 @@
   ~ limitations under the License.
   -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Theme.Cinema.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorPrimaryDark">@color/black_darker</item>
         <item name="colorOnPrimary">@color/gray_darker</item>
 
         <item name="colorSecondary">@color/red_darker</item>
         <item name="colorOnSecondary">@color/white</item>
 
-        <item name="android:colorBackground">@color/gray_lighter</item>
+        <item name="android:colorBackground">@color/white</item>
         <item name="colorOnBackground">@color/gray_darker</item>
 
-        <item name="colorSurface">@color/white</item>
+        <item name="colorSurface">@color/gray_lighter</item>
         <item name="colorOnSurface">@color/gray_darker</item>
 
         <item name="fontFamily">@font/raleway</item>
@@ -45,21 +45,18 @@
         <item name="colorSecondary">@color/red_lighter</item>
         <item name="colorOnSecondary">@color/white</item>
 
-        <item name="android:colorBackground">@color/black_darker</item>
+        <item name="android:colorBackground">@color/black_lighter</item>
         <item name="colorOnBackground">@color/gray_lighter</item>
 
-        <item name="colorSurface">@color/black_lighter</item>
+        <item name="colorSurface">@color/black_darker</item>
         <item name="colorOnSurface">@color/white</item>
 
         <item name="fontFamily">@font/raleway</item>
         <item name="textAppearanceHeadline5">@style/TextAppearance.Cinema.Headline5</item>
 
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
         <item name="switchStyle">@style/Widget.Cinema.Switch</item>
         <item name="materialButtonStyle">@style/Widget.Cinema.Button.Dark</item>
-    </style>
-
-    <style name="Theme.Cinema.Light.Startup">
-        <item name="android:colorBackground">@color/white</item>
     </style>
 
     <!-- TextAppearance -->
@@ -86,5 +83,20 @@
 
     <style name="Widget.Cinema.Switch" parent="Widget.MaterialComponents.CompoundButton.Switch">
         <item name="useMaterialThemeColors">false</item>
+    </style>
+
+    <style name="Theme.Cinema.Dialog" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorSecondary">@color/red_darker</item>
+        <item name="android:colorBackground">@color/white</item>
+        <item name="colorOnBackground">@color/gray_darker</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/Widget.Cinema.Button.Dialog</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/Widget.Cinema.Button.Dialog</item>
+        <item name="android:buttonBarNeutralButtonStyle">@style/Widget.Cinema.Button.Dialog</item>
+    </style>
+
+    <style name="Widget.Cinema.Button.Dialog" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">?colorSecondary</item>
+        <item name="rippleColor">?colorOnBackground</item>
     </style>
 </resources>

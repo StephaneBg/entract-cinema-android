@@ -24,9 +24,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.net.toUri
+import androidx.core.widget.NestedScrollView
 import com.cinema.entract.app.R
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ui.BaseFragment
+import com.cinema.entract.core.widget.AppBarNestedScrollViewOnScrollListener
 import org.jetbrains.anko.browse
 import timber.log.Timber
 
@@ -41,6 +43,9 @@ class InformationFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        find<NestedScrollView>(R.id.scrollView).setOnScrollChangeListener(
+            AppBarNestedScrollViewOnScrollListener(find(R.id.appBar))
+        )
         find<Button>(R.id.navigate).setOnClickListener {
             val gmmIntentUri = "geo:43.7700499,1.2948405?q=Grenade+Cinéma".toUri()
             val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)

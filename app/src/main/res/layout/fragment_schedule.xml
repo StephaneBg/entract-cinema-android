@@ -26,6 +26,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="?colorPrimary"
+        android:stateListAnimator="@animator/appbar_animator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -55,6 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layoutAnimation="@anim/layout_animation_fall_down"
+            tools:listitem="@layout/list_item_schedule_movie"
             />
 
         <LinearLayout
@@ -71,7 +73,7 @@
                 android:layout_width="96dp"
                 android:layout_height="96dp"
                 android:importantForAccessibility="no"
-                android:tint="?colorPrimaryVariant"
+                android:tint="?colorOnBackground"
                 app:srcCompat="@drawable/ic_movie_black_24dp"
                 />
 

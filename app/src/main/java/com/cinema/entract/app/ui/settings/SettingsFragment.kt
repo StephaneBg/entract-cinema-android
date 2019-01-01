@@ -20,11 +20,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.NestedScrollView
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ui.BaseFragment
+import com.cinema.entract.core.widget.AppBarNestedScrollViewOnScrollListener
 import com.google.android.material.switchmaterial.SwitchMaterial
 import org.jetbrains.anko.startActivity
 import org.koin.androidx.viewmodel.ext.sharedViewModel
@@ -44,26 +46,33 @@ class SettingsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val event = find<SwitchMaterial>(R.id.event)
-        event.isChecked = settingsViewModel.isEventEnabled()
-        event.setOnCheckedChangeListener { _, isChecked ->
-            settingsViewModel.setEventPreference(isChecked)
+        find<NestedScrollView>(R.id.scrollView).setOnScrollChangeListener(
+            AppBarNestedScrollViewOnScrollListener(find(R.id.appBar))
+        )
+
+        find<SwitchMaterial>(R.id.event).apply {
+            isChecked = settingsViewModel.isEventEnabled()
+            setOnCheckedChangeListener { _, isChecked ->
+                settingsViewModel.setEventPreference(isChecked)
+            }
         }
 
-        val data = find<SwitchMaterial>(R.id.data)
-        data.isChecked = settingsViewModel.isOnlyOnWifi()
-        data.setOnCheckedChangeListener { _, isChecked ->
-            settingsViewModel.setOnlyOnWifi(isChecked)
-            cinemaViewModel.retrieveMovies()
+        find<SwitchMaterial>(R.id.data).apply {
+            isChecked = settingsViewModel.isOnlyOnWifi()
+            setOnCheckedChangeListener { _, isChecked ->
+                settingsViewModel.setOnlyOnWifi(isChecked)
+                cinemaViewModel.retrieveMovies()
+            }
         }
 
-        val dark = find<SwitchMaterial>(R.id.dark)
-        dark.isChecked = settingsViewModel.isDarkMode()
-        dark.setOnCheckedChangeListener { _, isChecked ->
-            settingsViewModel.setDarkMode(isChecked)
-            requireActivity().run {
-                startActivity<CinemaActivity>()
-                finish()
+        find<SwitchMaterial>(R.id.dark).apply {
+            isChecked = settingsViewModel.isDarkMode()
+            setOnCheckedChangeListener { _, isChecked ->
+                settingsViewModel.setDarkMode(isChecked)
+                requireActivity().run {
+                    startActivity<CinemaActivity>()
+                    finish()
+                }
             }
         }
     }

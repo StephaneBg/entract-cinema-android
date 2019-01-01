@@ -53,7 +53,7 @@ class CinemaViewModel(
 
     fun getDisplayDate(): LiveData<String> = currentDate
 
-    fun getDate() = useCase.getDate().toEpochMilliSecond()
+    fun getDate() = useCase.getDate()
 
     fun getOnScreenState(): LiveData<State<List<Movie>>> {
         onScreenState.value ?: retrieveMovies()

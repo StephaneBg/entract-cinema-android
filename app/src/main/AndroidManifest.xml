@@ -41,7 +41,6 @@
 
         <activity
             android:name=".ui.startup.StartupActivity"
-            android:theme="@style/Theme.Cinema.Light.Startup"
             android:label="@string/app_name"
             >
             <intent-filter>

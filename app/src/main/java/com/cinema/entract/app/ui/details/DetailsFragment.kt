@@ -32,6 +32,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
+import androidx.core.widget.NestedScrollView
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ext.displayPlaceHolder
 import com.cinema.entract.app.ext.load
@@ -44,6 +45,7 @@ import com.cinema.entract.core.ext.inflate
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ext.toSpanned
 import com.cinema.entract.core.ui.BaseFragment
+import com.cinema.entract.core.widget.AppBarNestedScrollViewOnScrollListener
 import com.cinema.entract.data.ext.formatToUTC
 import com.cinema.entract.data.ext.longFormatToUi
 import org.jetbrains.anko.find
@@ -61,6 +63,12 @@ class DetailsFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_details, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        find<NestedScrollView>(R.id.scrollView).setOnScrollChangeListener(
+            AppBarNestedScrollViewOnScrollListener(find(R.id.appBar))
+        )
+    }
 
     override fun onStart() {
         super.onStart()

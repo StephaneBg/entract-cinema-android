@@ -17,17 +17,17 @@
 <resources>
 
     <style name="Theme.Cinema.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/white_darker</item>
-        <item name="colorPrimaryDark">@color/black_lighter</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
         <item name="colorOnPrimary">@color/gray_darker</item>
 
         <item name="colorSecondary">@color/red_darker</item>
-        <item name="colorOnSecondary">@color/white_darker</item>
+        <item name="colorOnSecondary">@color/white</item>
 
-        <item name="android:colorBackground">@color/white_lighter</item>
-        <item name="colorOnBackground">@color/gray_lighter</item>
+        <item name="android:colorBackground">@color/gray_lighter</item>
+        <item name="colorOnBackground">@color/gray_darker</item>
 
-        <item name="colorSurface">@color/white_darker</item>
+        <item name="colorSurface">@color/white</item>
         <item name="colorOnSurface">@color/gray_darker</item>
 
         <item name="fontFamily">@font/raleway</item>
@@ -40,16 +40,16 @@
     <style name="Theme.Cinema.Dark" parent="Theme.MaterialComponents.NoActionBar">
         <item name="colorPrimary">@color/black_lighter</item>
         <item name="colorPrimaryDark">@color/black_lighter</item>
-        <item name="colorOnPrimary">@color/white_lighter</item>
+        <item name="colorOnPrimary">@color/white</item>
 
         <item name="colorSecondary">@color/red_lighter</item>
-        <item name="colorOnSecondary">@color/white_lighter</item>
+        <item name="colorOnSecondary">@color/white</item>
 
         <item name="android:colorBackground">@color/black_darker</item>
-        <item name="colorOnBackground">@color/white_darker</item>
+        <item name="colorOnBackground">@color/gray_lighter</item>
 
         <item name="colorSurface">@color/black_lighter</item>
-        <item name="colorOnSurface">@color/white_lighter</item>
+        <item name="colorOnSurface">@color/white</item>
 
         <item name="fontFamily">@font/raleway</item>
         <item name="textAppearanceHeadline5">@style/TextAppearance.Cinema.Headline5</item>
@@ -59,7 +59,7 @@
     </style>
 
     <style name="Theme.Cinema.Light.Startup">
-        <item name="colorPrimaryDark">@color/white_lighter</item>
+        <item name="android:colorBackground">@color/white</item>
     </style>
 
     <!-- TextAppearance -->

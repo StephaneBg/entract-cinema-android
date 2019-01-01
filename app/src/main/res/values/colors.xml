@@ -14,14 +14,13 @@
   ~ limitations under the License.
   -->
 <resources>
-    <color name="white_lighter">#FFFFFF</color>
-    <color name="white_darker">#F8F8F8</color>
+    <color name="white">#FFFFFF</color>
 
     <color name="black_lighter">#303030</color>
     <color name="black_darker">#262626</color>
 
+    <color name="gray_lighter">#F8F8F8</color>
     <color name="gray_darker">#666666</color>
-    <color name="gray_lighter">#AAAAAA</color>
 
     <color name="red_lighter">#EF5350</color>
     <color name="red_darker">#942102</color>

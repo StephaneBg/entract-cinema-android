@@ -83,7 +83,6 @@
                 app:layout_constraintTop_toTopOf="@id/director"
                 app:layout_constraintWidth_percent="0.3"
                 tools:adjustViewBounds="true"
-                tools:background="@color/gray_lighter"
                 tools:scaleType="fitCenter"
                 tools:srcCompat="@drawable/ic_movie_black_24dp"
                 tools:tint="@color/gray_darker"

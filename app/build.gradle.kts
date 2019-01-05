@@ -20,8 +20,8 @@ plugins {
 }
 
 val versionMajor = 1
-val versionMinor = 1
-val versionPatch = 1
+val versionMinor = 2
+val versionPatch = 0
 
 android {
     compileSdkVersion(Android.compileSdkVersion)
@@ -33,7 +33,7 @@ android {
 
     defaultConfig {
         applicationId = "com.cinema.entract.app"
-        versionCode = 19
+        versionCode = versionMajor * 100 + versionMinor * 10 + versionPatch
         versionName = "$versionMajor.$versionMinor.$versionPatch"
         vectorDrawables.useSupportLibrary = true
         minSdkVersion(Android.minSdkVersion)
@@ -47,7 +47,7 @@ android {
             isMinifyEnabled = true
             isDebuggable = false
             isJniDebuggable = false
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard.pro")
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard.pro")
         }
     }
 

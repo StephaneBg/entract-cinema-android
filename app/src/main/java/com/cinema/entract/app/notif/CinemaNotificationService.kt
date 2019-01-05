@@ -16,8 +16,12 @@
 
 package com.cinema.entract.app.notif
 
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
+import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.cinema.entract.app.R
@@ -57,6 +61,23 @@ class CinemaNotificationService : FirebaseMessagingService(), CoroutineScope {
     }
 
     private fun manageNotification(message: String) {
+        val appName = getString(R.string.app_name)
+        val notificationManager = NotificationManagerCompat.from(this)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel(
+                CHANNEL_ID,
+                appName,
+                NotificationManager.IMPORTANCE_MIN
+            ).apply {
+                description = appName
+                setShowBadge(true)
+                lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+            }.also {
+                notificationManager.createNotificationChannel(it)
+            }
+        }
+
         val intent = Intent(this, CinemaActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
@@ -65,16 +86,15 @@ class CinemaNotificationService : FirebaseMessagingService(), CoroutineScope {
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification_white_24dp)
             .setColor(color(R.color.red_darker))
-            .setContentTitle(getString(R.string.app_name))
+            .setContentTitle(appName)
             .setContentText(message)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
-        NotificationManagerCompat.from(this).notify(0, builder.build())
+        notificationManager.notify(0, builder.build())
     }
 
     companion object {
-        private const val CHANNEL_ID = "Entract Grenade Cinema"
+        private const val CHANNEL_ID = "Entract Cinema"
     }
 }

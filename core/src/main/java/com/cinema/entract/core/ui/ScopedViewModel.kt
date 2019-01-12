@@ -21,15 +21,24 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-open class ScopedViewModel : ViewModel(), CoroutineScope {
+open class ScopedViewModel<Action> : ViewModel(), CoroutineScope {
 
+    private val actions = Channel<Action>()
     private val job = Job()
-
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
+
+    init {
+        launch { actions.consumeEach { manageAction(it) } }
+    }
 
     fun <T> launchAsync(
         tryBlock: suspend () -> T,
@@ -44,8 +53,13 @@ open class ScopedViewModel : ViewModel(), CoroutineScope {
         }
     }
 
+    fun perform(action: Action) = launch { actions.send(action) }
+
+    open fun manageAction(action: Action) = Unit
+
     override fun onCleared() {
         super.onCleared()
         job.cancel()
+        actions.close()
     }
 }

@@ -28,6 +28,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ext.load
+import com.cinema.entract.app.ui.TagAction
 import com.cinema.entract.app.ui.TagViewModel
 import com.cinema.entract.core.ext.find
 import com.google.android.material.button.MaterialButton
@@ -49,7 +50,7 @@ class EventDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        tagViewModel.tagEvent()
+        tagViewModel.perform(TagAction.Event)
 
         find<ImageView>(R.id.cover).load(
             arguments?.getString(COVER_URL) ?: error("Use show()!")

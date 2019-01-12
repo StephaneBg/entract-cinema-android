@@ -23,6 +23,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cinema.entract.app.R
 import com.cinema.entract.app.model.ScheduleEntry
+import com.cinema.entract.app.ui.CinemaAction
 import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.core.ext.find
@@ -74,12 +75,12 @@ class ScheduleFragment : BaseLceFragment<EmptynessLayout>() {
                 scheduleAdapter.updateSchedule(state.data)
                 showContent()
             }
-            is Error -> showError(state.error) { cinemaViewModel.retrieveSchedule() }
+            is Error -> showError(state.error) { cinemaViewModel.perform(CinemaAction.LoadSchedule) }
         }
     }
 
     private fun handleSelection(date: LocalDate) {
-        cinemaViewModel.retrieveMovies(date)
+        cinemaViewModel.perform(CinemaAction.LoadMovies(date))
         (activity as CinemaActivity).selectOnScreen()
     }
 

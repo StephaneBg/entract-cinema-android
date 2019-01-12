@@ -19,20 +19,22 @@ package com.cinema.entract.app.ui
 import com.cinema.entract.core.ui.ScopedViewModel
 import com.cinema.entract.data.interactor.TagUseCase
 
-class TagViewModel(private val useCase: TagUseCase) : ScopedViewModel() {
+class TagViewModel(private val useCase: TagUseCase) : ScopedViewModel<TagAction>() {
 
-    fun tagSchedule() = launchAsync(
-        { useCase.tagSchedule() },
+    override fun manageAction(action: TagAction) = launchAsync(
+        {
+            when (action) {
+                TagAction.Schedule -> useCase.tagSchedule()
+                TagAction.Event -> useCase.tagEvent()
+                is TagAction.Details -> useCase.tagDetails(action.date, action.id)
+            }
+        },
         {}
     )
+}
 
-    fun tagEvent() = launchAsync(
-        { useCase.tagEvent() },
-        {}
-    )
-
-    fun tagDetails(date: String, id: String) = launchAsync(
-        { useCase.tagDetails(date, id) },
-        {}
-    )
+sealed class TagAction {
+    object Schedule : TagAction()
+    object Event : TagAction()
+    data class Details(val date: String, val id: String) : TagAction()
 }

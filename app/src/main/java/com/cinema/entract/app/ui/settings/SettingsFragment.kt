@@ -22,6 +22,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.NestedScrollView
 import com.cinema.entract.app.R
+import com.cinema.entract.app.ui.CinemaAction
 import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.core.ext.find
@@ -61,7 +62,7 @@ class SettingsFragment : BaseFragment() {
             isChecked = settingsViewModel.isOnlyOnWifi()
             setOnCheckedChangeListener { _, isChecked ->
                 settingsViewModel.setOnlyOnWifi(isChecked)
-                cinemaViewModel.retrieveMovies()
+                cinemaViewModel.perform(CinemaAction.LoadMovies())
             }
         }
 

@@ -32,7 +32,6 @@ import com.cinema.entract.core.ui.State
 import com.cinema.entract.core.ui.Success
 import com.cinema.entract.data.ext.isToday
 import com.cinema.entract.data.ext.longFormatToUi
-import com.cinema.entract.data.ext.toEpochMilliSecond
 import com.cinema.entract.data.interactor.CinemaUseCase
 import kotlinx.coroutines.coroutineScope
 import org.threeten.bp.LocalDate
@@ -43,7 +42,7 @@ class CinemaViewModel(
     private val movieMapper: MovieMapper,
     private val scheduleMapper: ScheduleMapper,
     private val dateRangeMapper: DateRangeMapper
-) : ScopedViewModel() {
+) : ScopedViewModel<CinemaAction>() {
 
     private val onScreenState = MutableLiveData<State<List<Movie>>>()
     private val scheduleState = MutableLiveData<State<List<ScheduleEntry>>>()
@@ -60,17 +59,15 @@ class CinemaViewModel(
         return onScreenState
     }
 
-    fun retrieveMovies(date: LocalDate) {
-        useCase.selectDate(date)
-        retrieveMovies()
+    override fun manageAction(action: CinemaAction) = when (action) {
+        is CinemaAction.LoadMovies -> retrieveMovies(action.date)
+        is CinemaAction.SelectMovie -> detailedMovie.postValue(action.movie)
+        is CinemaAction.LoadSchedule -> retrieveSchedule()
     }
 
-    fun retrieveTodayMovies() {
-        retrieveMovies(LocalDate.now())
-    }
-
-    fun retrieveMovies() {
-        currentDate.postValue(useCase.getDate().longFormatToUi())
+    private fun retrieveMovies(date: LocalDate? = null) {
+        date?.let { useCase.selectDate(it) }
+        currentDate.postValue(getDate().longFormatToUi())
         onScreenState.postValue(Loading())
         launchAsync(::loadOnScreen, ::onLoadOnScreenError)
     }
@@ -92,7 +89,7 @@ class CinemaViewModel(
         return scheduleState
     }
 
-    fun retrieveSchedule() {
+    private fun retrieveSchedule() {
         scheduleState.postValue(Loading())
         launchAsync(::loadSchedule, ::onLoadScheduleError)
     }
@@ -109,14 +106,10 @@ class CinemaViewModel(
 
     fun getDetailedMovie(): LiveData<Movie> = detailedMovie
 
-    fun selectMovie(movie: Movie) = detailedMovie.postValue(movie)
-
     fun getEventUrl(): LiveData<Event<String>> {
         eventUrl.value ?: launchAsync(::loadEventUrl, ::onLoadEventUrlError)
         return eventUrl
     }
-
-    fun isTodayDisplayed(): Boolean = useCase.getDate().isToday()
 
     private suspend fun loadEventUrl() = coroutineScope {
         val url = useCase.getEventUrl()
@@ -127,4 +120,10 @@ class CinemaViewModel(
         Timber.e("Event URL cannot be loaded: ${throwable.message}")
         eventUrl.postValue(Event(""))
     }
+}
+
+sealed class CinemaAction {
+    data class LoadMovies(val date: LocalDate? = null) : CinemaAction()
+    data class SelectMovie(val movie: Movie): CinemaAction()
+    object LoadSchedule: CinemaAction()
 }

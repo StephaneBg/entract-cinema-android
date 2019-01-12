@@ -27,6 +27,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cinema.entract.app.R
 import com.cinema.entract.app.model.Movie
+import com.cinema.entract.app.ui.CinemaAction
 import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.app.ui.details.DetailsFragment
 import com.cinema.entract.core.ext.find
@@ -47,7 +48,6 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
 
     private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
     private lateinit var onScreenAdapter: OnScreenAdapter
-
     private lateinit var datePickerDialog: DatePickerDialog
     private lateinit var fab: FloatingActionButton
     private lateinit var date: TextView
@@ -112,12 +112,12 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
     }
 
     private fun manageError(exception: Throwable?) {
-        showError(exception) { cinemaViewModel.retrieveMovies() }
+        showError(exception) { cinemaViewModel.perform(CinemaAction.LoadMovies()) }
         date.text = getString(R.string.app_name)
     }
 
     private fun onMovieSelected(movie: Movie) {
-        cinemaViewModel.selectMovie(movie)
+        cinemaViewModel.perform(CinemaAction.SelectMovie(movie))
         requireActivity().replaceFragment(
             R.id.mainContainer,
             DetailsFragment.newInstance(),
@@ -134,9 +134,8 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
                 requireContext(),
                 R.style.Theme_Cinema_Dialog,
                 { _, year, month, dayOfMonth ->
-                    cinemaViewModel.retrieveMovies(
-                        LocalDate.of(year, month + 1, dayOfMonth)
-                    )
+                    val pickedDate = LocalDate.of(year, month + 1, dayOfMonth)
+                    cinemaViewModel.perform(CinemaAction.LoadMovies(pickedDate))
                     datePickerDialog.dismiss()
                 },
                 date.year,

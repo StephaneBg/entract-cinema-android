@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.cinema.entract.app.notif
+package com.cinema.entract.app.ui.notif
 
 import android.app.Notification
 import android.app.NotificationChannel

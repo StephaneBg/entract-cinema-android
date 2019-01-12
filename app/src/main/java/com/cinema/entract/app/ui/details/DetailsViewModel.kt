@@ -16,13 +16,13 @@
 
 package com.cinema.entract.app.ui.details
 
+import androidx.lifecycle.ViewModel
 import com.cinema.entract.app.model.Movie
-import com.cinema.entract.core.ui.ScopedViewModel
 import com.cinema.entract.data.ext.toEpochMilliSecond
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
 
-class DetailsViewModel : ScopedViewModel() {
+class DetailsViewModel : ViewModel() {
 
     fun getEventSchedule(movie: Movie): Pair<Long, Long> {
         val schedule = movie.schedule.split(":").map { Integer.parseInt(it) }

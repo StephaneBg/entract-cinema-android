@@ -21,8 +21,9 @@ import androidx.lifecycle.MutableLiveData
 import com.cinema.entract.core.ui.ScopedViewModel
 import com.cinema.entract.data.interactor.CinemaUseCase
 import kotlinx.coroutines.coroutineScope
+import timber.log.Timber
 
-class StartupViewModel(private val useCase: CinemaUseCase) : ScopedViewModel() {
+class StartupViewModel(private val useCase: CinemaUseCase) : ScopedViewModel<Nothing>() {
 
     private val eventUrl = MutableLiveData<String>()
 
@@ -38,6 +39,7 @@ class StartupViewModel(private val useCase: CinemaUseCase) : ScopedViewModel() {
     }
 
     private fun onPrefetchDataError(throwable: Throwable) {
+        Timber.e(throwable)
         eventUrl.postValue("")
     }
 }

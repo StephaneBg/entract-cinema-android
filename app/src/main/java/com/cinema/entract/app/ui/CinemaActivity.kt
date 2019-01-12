@@ -31,9 +31,11 @@ import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ext.replaceFragment
 import com.cinema.entract.core.ui.BaseActivity
 import com.cinema.entract.core.ui.Event
+import com.cinema.entract.data.ext.isToday
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.jetbrains.anko.find
 import org.koin.androidx.viewmodel.ext.viewModel
+import org.threeten.bp.LocalDate
 
 class CinemaActivity : BaseActivity() {
 
@@ -69,10 +71,10 @@ class CinemaActivity : BaseActivity() {
 
     override fun onBackPressed() {
         if (displayedFragment() is OnScreenFragment) {
-            if (cinemaViewModel.isTodayDisplayed()) {
+            if (isTodayDisplayed()) {
                 super.onBackPressed()
             } else {
-                cinemaViewModel.retrieveTodayMovies()
+                loadTodayMovies()
             }
         } else {
             selectOnScreen()
@@ -100,7 +102,7 @@ class CinemaActivity : BaseActivity() {
             }
             is OnScreenFragment -> {
                 if (fragment.isScrolled()) fragment.scrollToTop()
-                else if (!cinemaViewModel.isTodayDisplayed()) cinemaViewModel.retrieveTodayMovies()
+                else if (!isTodayDisplayed()) loadTodayMovies()
                 true
             }
             else -> {
@@ -128,7 +130,7 @@ class CinemaActivity : BaseActivity() {
                     R.anim.fade_in,
                     R.anim.fade_out
                 )
-                tagViewModel.tagSchedule()
+                tagViewModel.perform(TagAction.Schedule)
                 true
             }
         }
@@ -154,6 +156,11 @@ class CinemaActivity : BaseActivity() {
         )
         return true
     }
+
+    private fun loadTodayMovies() =
+        cinemaViewModel.perform(CinemaAction.LoadMovies(LocalDate.now()))
+
+    private fun isTodayDisplayed(): Boolean = cinemaViewModel.getDate().isToday()
 
     private fun displayedFragment(): Fragment? =
         supportFragmentManager.findFragmentById(R.id.mainContainer)

@@ -37,8 +37,10 @@ import com.cinema.entract.app.R
 import com.cinema.entract.app.ext.displayPlaceHolder
 import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.model.Movie
+import com.cinema.entract.app.ui.CinemaAction
 import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.app.ui.CinemaViewModel
+import com.cinema.entract.app.ui.TagAction
 import com.cinema.entract.app.ui.TagViewModel
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.inflate
@@ -78,7 +80,7 @@ class DetailsFragment : BaseFragment() {
     private fun displayMovieDetails(movie: Movie?) {
         movie ?: error("No selected movie")
 
-        tagViewModel.tagDetails(movie.date.formatToUTC(), movie.id)
+        tagViewModel.perform(TagAction.Details(movie.date.formatToUTC(), movie.id))
 
         find<TextView>(R.id.dateTime).text = getString(
             R.string.details_date_with_time,
@@ -142,7 +144,7 @@ class DetailsFragment : BaseFragment() {
                     find<ImageView>(R.id.originalVersion).isVisible = movie.isOriginalVersion
                     find<ImageView>(R.id.threeDimension).isVisible = movie.isThreeDimension
                     setOnClickListener {
-                        cinemaViewModel.retrieveMovies(movie.date)
+                        cinemaViewModel.perform(CinemaAction.LoadMovies(movie.date))
                         (activity as CinemaActivity).selectOnScreen()
                     }
                 }

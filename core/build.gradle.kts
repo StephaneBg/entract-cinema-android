@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.Coroutines
+
 /*
  * Copyright 2018 Stéphane Baiget
  *
@@ -17,6 +19,10 @@
 plugins {
     id("com.android.library")
     kotlin("android")
+}
+
+kotlin {
+    experimental { coroutines = Coroutines.ENABLE }
 }
 
 android {

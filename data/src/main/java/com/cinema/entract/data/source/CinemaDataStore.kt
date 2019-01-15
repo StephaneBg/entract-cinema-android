@@ -36,7 +36,9 @@ interface CinemaDataStore {
 
     suspend fun tagEvent()
 
-    suspend fun tagDetails(date: String, id: String)
+    suspend fun tagDetails(sessionId: String)
+
+    suspend fun tagCalendar(sessionId: String)
 
     fun getUserPreferences(): UserPreferencesRepo
 }

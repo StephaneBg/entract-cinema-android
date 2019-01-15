@@ -18,7 +18,7 @@ import org.gradle.api.JavaVersion
 
 object Versions {
     val java = JavaVersion.VERSION_1_8
-    val androidGradle = "3.3.0-rc03"
+    val androidGradle = "3.3.0"
     val kotlin = "1.3.11"
     val googleServices = "4.2.0"
     val coroutines = "1.1.0"

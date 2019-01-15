@@ -27,11 +27,11 @@ import com.cinema.entract.app.model.DayHeader
 import com.cinema.entract.app.model.MovieEntry
 import com.cinema.entract.app.model.ScheduleEntry
 import com.cinema.entract.app.model.WeekHeader
+import com.cinema.entract.app.ui.CinemaAction
 import com.cinema.entract.core.ext.inflate
 import org.jetbrains.anko.find
-import org.threeten.bp.LocalDate
 
-class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
+class ScheduleAdapter(private val selection: (CinemaAction) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var schedule = emptyList<ScheduleEntry>()
@@ -78,7 +78,7 @@ class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
 
         override fun bind(model: DayHeader) {
             (itemView as TextView).text = model.dateUi
-            itemView.setOnClickListener { selection(model.date) }
+            itemView.setOnClickListener { selection(CinemaAction.LoadMovies(model.date)) }
         }
     }
 
@@ -101,7 +101,7 @@ class ScheduleAdapter(private val selection: (LocalDate) -> Unit) :
             underTwelve.isVisible = model.movie.isUnderTwelve
             explicitContent.isVisible = model.movie.isExplicitContent
             artMovie.isVisible = model.movie.isArtMovie
-            itemView.setOnClickListener { selection(model.date) }
+            itemView.setOnClickListener { selection(CinemaAction.LoadMovies(model.date)) }
         }
     }
 

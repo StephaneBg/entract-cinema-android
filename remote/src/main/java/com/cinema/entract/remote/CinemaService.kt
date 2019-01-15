@@ -54,7 +54,12 @@ interface CinemaService {
     @PUT("updateStatistiques.php")
     fun tagDetails(
         @Query("page") type: String = "page_detail",
-        @Query("jour") date: String,
-        @Query("film") id: String
+        @Query("seance") sessionId: String
+    ): Deferred<Unit>
+
+    @PUT("updateStatistiques.php")
+    fun tagCalendar(
+        @Query("page") type: String = "ajout_cal",
+        @Query("seance") sessionId: String
     ): Deferred<Unit>
 }

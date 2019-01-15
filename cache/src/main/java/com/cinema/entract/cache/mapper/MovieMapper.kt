@@ -22,7 +22,8 @@ import com.cinema.entract.data.model.MovieData
 class MovieMapper : Mapper<MovieCache, MovieData> {
 
     override fun mapToData(model: MovieCache): MovieData = MovieData(
-        model.id,
+        model.sessionId,
+        model.movieId,
         model.title,
         model.date,
         model.schedule,
@@ -43,7 +44,8 @@ class MovieMapper : Mapper<MovieCache, MovieData> {
     )
 
     override fun mapFromData(model: MovieData): MovieCache = MovieCache(
-        model.id,
+        model.sessionId,
+        model.movieId,
         model.title,
         model.date,
         model.schedule,

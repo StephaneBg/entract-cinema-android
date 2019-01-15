@@ -68,7 +68,11 @@ class RemoteRepoImpl(
         service.tagEvent().await()
     }
 
-    override suspend fun tagDetails(date: String, id: String) = withContext(Dispatchers.IO) {
-        service.tagDetails(date = date, id = id).await()
+    override suspend fun tagDetails(sessionId: String) = withContext(Dispatchers.IO) {
+        service.tagDetails(sessionId = sessionId).await()
+    }
+
+    override suspend fun tagCalendar(sessionId: String) = withContext(Dispatchers.IO) {
+        service.tagCalendar(sessionId = sessionId).await()
     }
 }

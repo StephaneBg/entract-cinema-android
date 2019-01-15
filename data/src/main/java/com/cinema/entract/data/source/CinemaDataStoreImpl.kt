@@ -48,7 +48,9 @@ class CinemaDataStoreImpl(
 
     override suspend fun tagEvent() = remoteRepo.tagEvent()
 
-    override suspend fun tagDetails(date: String, id: String) = remoteRepo.tagDetails(date, id)
+    override suspend fun tagDetails(sessionId: String) = remoteRepo.tagDetails(sessionId)
+
+    override suspend fun tagCalendar(sessionId: String) = remoteRepo.tagCalendar(sessionId)
 
     override fun getUserPreferences(): UserPreferencesRepo = userPreferencesRepo
 }

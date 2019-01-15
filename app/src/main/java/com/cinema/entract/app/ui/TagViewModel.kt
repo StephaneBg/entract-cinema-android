@@ -26,7 +26,8 @@ class TagViewModel(private val useCase: TagUseCase) : ScopedViewModel<TagAction>
             when (action) {
                 TagAction.Schedule -> useCase.tagSchedule()
                 TagAction.Event -> useCase.tagEvent()
-                is TagAction.Details -> useCase.tagDetails(action.date, action.id)
+                is TagAction.Details -> useCase.tagDetails(action.sessionId)
+                is TagAction.Calendar -> useCase.tagCalendar(action.sessionId)
             }
         },
         {}
@@ -36,5 +37,6 @@ class TagViewModel(private val useCase: TagUseCase) : ScopedViewModel<TagAction>
 sealed class TagAction {
     object Schedule : TagAction()
     object Event : TagAction()
-    data class Details(val date: String, val id: String) : TagAction()
+    data class Details(val sessionId: String) : TagAction()
+    data class Calendar(val sessionId: String) : TagAction()
 }

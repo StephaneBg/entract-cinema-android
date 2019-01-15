@@ -48,7 +48,6 @@ import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ext.toSpanned
 import com.cinema.entract.core.ui.BaseFragment
 import com.cinema.entract.core.widget.AppBarNestedScrollViewOnScrollListener
-import com.cinema.entract.data.ext.formatToUTC
 import com.cinema.entract.data.ext.longFormatToUi
 import org.jetbrains.anko.find
 import org.koin.androidx.viewmodel.ext.sharedViewModel
@@ -80,7 +79,7 @@ class DetailsFragment : BaseFragment() {
     private fun displayMovieDetails(movie: Movie?) {
         movie ?: error("No selected movie")
 
-        tagViewModel.perform(TagAction.Details(movie.date.formatToUTC(), movie.id))
+        tagViewModel.perform(TagAction.Details(movie.sessionId))
 
         find<TextView>(R.id.dateTime).text = getString(
             R.string.details_date_with_time,
@@ -180,6 +179,7 @@ class DetailsFragment : BaseFragment() {
             .putExtra(Events.DESCRIPTION, getString(R.string.app_name))
             .putExtra(Events.EVENT_LOCATION, getString(R.string.information_address))
             .putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY)
+        tagViewModel.perform(TagAction.Calendar(movie.sessionId))
         startActivity(intent)
     }
 

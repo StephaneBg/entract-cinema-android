@@ -24,5 +24,7 @@ class TagUseCase(private val dataStore: CinemaDataStore) {
 
     suspend fun tagEvent() = dataStore.tagEvent()
 
-    suspend fun tagDetails(date: String, id: String) = dataStore.tagDetails(date, id)
+    suspend fun tagDetails(sessionId: String) = dataStore.tagDetails(sessionId)
+
+    suspend fun tagCalendar(sessionId: String) = dataStore.tagCalendar(sessionId)
 }

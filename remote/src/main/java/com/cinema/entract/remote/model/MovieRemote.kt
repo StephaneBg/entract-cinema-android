@@ -19,6 +19,7 @@ package com.cinema.entract.remote.model
 import com.squareup.moshi.Json
 
 data class MovieRemote(
+    val id_seance: String?,
     val id_film: String?,
     val titre: String?,
     val date: String?,

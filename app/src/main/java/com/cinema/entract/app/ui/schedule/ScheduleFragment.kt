@@ -36,7 +36,6 @@ import com.cinema.entract.core.ui.Success
 import com.cinema.entract.core.widget.AppBarRecyclerViewOnScrollListener
 import com.cinema.entract.core.widget.EmptynessLayout
 import org.koin.androidx.viewmodel.ext.sharedViewModel
-import org.threeten.bp.LocalDate
 
 class ScheduleFragment : BaseLceFragment<EmptynessLayout>() {
 
@@ -79,8 +78,11 @@ class ScheduleFragment : BaseLceFragment<EmptynessLayout>() {
         }
     }
 
-    private fun handleSelection(date: LocalDate) {
-        cinemaViewModel.perform(CinemaAction.LoadMovies(date))
+    private fun handleSelection(action: CinemaAction) {
+        when (action) {
+            is CinemaAction.LoadMovies -> cinemaViewModel.perform(CinemaAction.LoadMovies(action.date))
+            is CinemaAction.SelectMovie -> cinemaViewModel.perform(CinemaAction.LoadMovies(action.movie.date))
+        }
         (activity as CinemaActivity).selectOnScreen()
     }
 

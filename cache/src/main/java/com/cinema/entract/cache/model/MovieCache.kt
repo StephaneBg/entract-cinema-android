@@ -19,7 +19,8 @@ package com.cinema.entract.cache.model
 import org.threeten.bp.LocalDate
 
 data class MovieCache(
-    val id: String,
+    val sessionId: String,
+    val movieId: String,
     val title: String,
     val date: LocalDate,
     val schedule: String,

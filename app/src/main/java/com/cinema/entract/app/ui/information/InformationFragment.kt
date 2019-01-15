@@ -64,7 +64,7 @@ class InformationFragment : BaseFragment() {
             requireContext().browse("http://www.grenadecinema.fr")
         }
         find<Button>(R.id.facebook).setOnClickListener {
-            requireContext().browse("https://www.facebook.com/profile.php?id=410990495629466")
+            requireContext().browse("https://www.facebook.com/profile.php?movieId=410990495629466")
         }
     }
 

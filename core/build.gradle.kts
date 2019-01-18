@@ -38,6 +38,10 @@ android {
         targetSdkVersion(Android.targetSdkVersion)
         resConfigs("fr")
     }
+
+    sourceSets {
+        getByName("main").java.srcDirs("src/main/kotlin")
+    }
 }
 
 dependencies {

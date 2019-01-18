@@ -63,6 +63,10 @@ android {
         }
     }
 
+    sourceSets {
+        getByName("main").java.srcDirs("src/main/kotlin")
+    }
+
     packagingOptions {
         exclude("**/*.kotlin_module")
         exclude("**/*.version")

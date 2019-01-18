@@ -30,7 +30,6 @@ import com.cinema.entract.core.ui.Loading
 import com.cinema.entract.core.ui.ScopedViewModel
 import com.cinema.entract.core.ui.State
 import com.cinema.entract.core.ui.Success
-import com.cinema.entract.data.ext.isToday
 import com.cinema.entract.data.ext.longFormatToUi
 import com.cinema.entract.data.interactor.CinemaUseCase
 import kotlinx.coroutines.coroutineScope

@@ -25,21 +25,20 @@ import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.cinema.entract.app.NavAction
+import com.cinema.entract.app.NavState
+import com.cinema.entract.app.NavigationViewModel
 import com.cinema.entract.app.R
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.CinemaAction
+import com.cinema.entract.app.ui.CinemaState
 import com.cinema.entract.app.ui.CinemaViewModel
-import com.cinema.entract.app.ui.details.DetailsFragment
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.observe
-import com.cinema.entract.core.ext.replaceFragment
 import com.cinema.entract.core.ui.BaseLceFragment
-import com.cinema.entract.core.ui.Error
-import com.cinema.entract.core.ui.Loading
-import com.cinema.entract.core.ui.State
-import com.cinema.entract.core.ui.Success
 import com.cinema.entract.core.widget.AppBarRecyclerViewOnScrollListener
 import com.cinema.entract.core.widget.EmptynessLayout
+import com.cinema.entract.data.ext.longFormatToUi
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.koin.androidx.viewmodel.ext.sharedViewModel
 import org.threeten.bp.LocalDate
@@ -47,11 +46,13 @@ import org.threeten.bp.LocalDate
 class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
 
     private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
+    private val navViewModel by sharedViewModel<NavigationViewModel>()
     private lateinit var onScreenAdapter: OnScreenAdapter
     private lateinit var datePickerDialog: DatePickerDialog
     private lateinit var fab: FloatingActionButton
     private lateinit var date: TextView
 
+    private var currentState: CinemaState.OnScreen? = null
     private val animController by lazy {
         AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.layout_animation_fall_down)
     }
@@ -74,34 +75,36 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
         }
 
         fab = find<FloatingActionButton>(R.id.fab).apply {
-            isVisible = null != cinemaViewModel.getDateRange()
             setOnClickListener { displayDatePicker() }
         }
-
         date = find(R.id.date)
+
+        observe(cinemaViewModel.state, ::renderState)
+        observe(navViewModel.state, ::manageNavigation)
+
+        savedInstanceState ?: cinemaViewModel.dispatch(CinemaAction.LoadMovies())
     }
 
-    override fun onStart() {
-        super.onStart()
-        observe(cinemaViewModel.getDisplayDate()) { date.text = it }
-        observe(cinemaViewModel.getOnScreenState(), ::manageState)
-    }
-
-    fun scrollToTop() = contentView.recyclerView.smoothScrollToPosition(0)
-
-    fun isScrolled(): Boolean = (contentView.recyclerView.layoutManager as LinearLayoutManager)
-        .findFirstVisibleItemPosition() != 0
-
-    private fun manageState(state: State<List<Movie>>?) {
+    private fun renderState(state: CinemaState?) {
+        currentState = null
         when (state) {
-            null -> Unit
-            is Loading -> showLoading()
-            is Success -> {
-                updateMovies(state.data, !state.peaked)
-                state.peaked = true
+            is CinemaState.Loading -> showLoading()
+            is CinemaState.OnScreen -> {
+                currentState = state
+                date.text = state.date.longFormatToUi()
+                fab.isVisible = null != state.dateRange
+                updateMovies(state.movies, true)
+                showContent()
             }
-            is Error -> manageError(state.error)
+            is CinemaState.Error -> {
+                date.text = getString(R.string.app_name)
+                manageError(state.error)
+            }
         }
+    }
+
+    private fun manageNavigation(state: NavState?) {
+        if (state is NavState.ScrollToTop) scrollToTop()
     }
 
     private fun updateMovies(movies: List<Movie>, withAnim: Boolean) {
@@ -112,30 +115,25 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
     }
 
     private fun manageError(exception: Throwable?) {
-        showError(exception) { cinemaViewModel.perform(CinemaAction.LoadMovies()) }
+        showError(exception) { cinemaViewModel.dispatch(CinemaAction.LoadMovies()) }
         date.text = getString(R.string.app_name)
     }
 
     private fun onMovieSelected(movie: Movie) {
-        cinemaViewModel.perform(CinemaAction.SelectMovie(movie))
-        requireActivity().replaceFragment(
-            R.id.mainContainer,
-            DetailsFragment.newInstance(),
-            true,
-            R.anim.fade_in,
-            R.anim.fade_out
-        )
+        cinemaViewModel.dispatch(CinemaAction.LoadDetails(movie))
+        navViewModel.dispatch(NavAction.Details)
     }
 
     private fun displayDatePicker() {
-        cinemaViewModel.getDateRange()?.let {
-            val date = cinemaViewModel.getDate()
+        val state = currentState
+        state?.dateRange?.let {
+            val date = state.date
             datePickerDialog = DatePickerDialog(
                 requireContext(),
                 R.style.Theme_Cinema_Dialog,
                 { _, year, month, dayOfMonth ->
                     val pickedDate = LocalDate.of(year, month + 1, dayOfMonth)
-                    cinemaViewModel.perform(CinemaAction.LoadMovies(pickedDate))
+                    cinemaViewModel.dispatch(CinemaAction.LoadMovies(pickedDate))
                     datePickerDialog.dismiss()
                 },
                 date.year,
@@ -148,6 +146,8 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
             }
         }
     }
+
+    private fun scrollToTop() = contentView.recyclerView.smoothScrollToPosition(0)
 
     companion object {
         fun newInstance(): OnScreenFragment = OnScreenFragment()

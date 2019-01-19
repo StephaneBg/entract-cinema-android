@@ -62,7 +62,7 @@ class SettingsFragment : BaseFragment() {
             isChecked = settingsViewModel.isOnlyOnWifi()
             setOnCheckedChangeListener { _, isChecked ->
                 settingsViewModel.setOnlyOnWifi(isChecked)
-                cinemaViewModel.perform(CinemaAction.LoadMovies())
+                cinemaViewModel.dispatch(CinemaAction.LoadMovies())
             }
         }
 

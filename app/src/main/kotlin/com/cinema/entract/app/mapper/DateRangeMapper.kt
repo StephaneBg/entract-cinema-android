@@ -30,4 +30,6 @@ class DateRangeMapper : Mapper<DateRange?, DateRangeData?> {
             it.maximumDate.atStartOfDay(zoneId).toEpochSecond() * 1000
         )
     }
+
+    override fun mapToData(model: DateRange?): DateRangeData = error(NotImplementedError())
 }

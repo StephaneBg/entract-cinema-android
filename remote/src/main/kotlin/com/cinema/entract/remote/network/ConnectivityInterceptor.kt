@@ -23,11 +23,10 @@ import okhttp3.Response
 
 class ConnectivityInterceptor(private val networkUtils: NetworkUtils) : Interceptor {
 
-    override fun intercept(chain: Interceptor.Chain): Response {
+    override fun intercept(chain: Interceptor.Chain): Response =
         if (networkUtils.isNetworkAvailable()) {
-            return chain.proceed(chain.request())
+            chain.proceed(chain.request())
         } else {
             throw NoConnectivityException()
         }
-    }
 }

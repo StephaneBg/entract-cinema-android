@@ -42,7 +42,8 @@ class StartupActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_startup)
-        observe(viewModel.prefetch(), ::prefetchEventCover)
+        observe(viewModel.state, ::renderState)
+        viewModel.prefetch()
     }
 
     override fun onStart() {
@@ -50,38 +51,40 @@ class StartupActivity : BaseActivity() {
         find<ContentLoadingProgressBar>(R.id.progress).show()
     }
 
-    private fun prefetchEventCover(url: String?) {
-        when (url) {
-            null -> Unit
-            "" -> closeStartup()
-            else -> Glide.with(this)
-                .asBitmap()
-                .load(url)
-                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL))
-                .addListener(object : RequestListener<Bitmap?> {
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Bitmap?>?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        closeStartup()
-                        return true
-                    }
+    private fun renderState(state: StartupState?) = when {
+        null == state || state.isLoading -> Unit
+        state.isIdle -> prefetchCover(state.eventUrl)
+        else -> closeStartup()
+    }
 
-                    override fun onResourceReady(
-                        resource: Bitmap?,
-                        model: Any?,
-                        target: Target<Bitmap?>?,
-                        dataSource: DataSource?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        closeStartup()
-                        return true
-                    }
-                })
-                .submit()
-        }
+    private fun prefetchCover(url: String?) {
+        Glide.with(this)
+            .asBitmap()
+            .load(url)
+            .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL))
+            .addListener(object : RequestListener<Bitmap?> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Bitmap?>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    closeStartup()
+                    return true
+                }
+
+                override fun onResourceReady(
+                    resource: Bitmap?,
+                    model: Any?,
+                    target: Target<Bitmap?>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    closeStartup()
+                    return true
+                }
+            })
+            .submit()
     }
 
     private fun closeStartup() {

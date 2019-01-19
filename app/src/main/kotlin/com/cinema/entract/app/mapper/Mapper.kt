@@ -19,4 +19,6 @@ package com.cinema.entract.app.mapper
 interface Mapper<Ui, Data> {
 
     fun mapToUi(model: Data): Ui
+
+    fun mapToData(model: Ui): Data
 }

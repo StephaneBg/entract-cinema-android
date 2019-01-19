@@ -93,8 +93,10 @@
             android:layout_marginRight="@dimen/margin_padding_size_medium"
             android:layout_marginBottom="@dimen/margin_padding_size_medium"
             android:tint="?colorPrimaryVariant"
+            android:visibility="gone"
             app:srcCompat="@drawable/ic_date_range_black_24dp"
             tools:ignore="RtlHardcoded"
+            tools:visibility="visible"
             />
     </com.cinema.entract.core.widget.EmptynessLayout>
 

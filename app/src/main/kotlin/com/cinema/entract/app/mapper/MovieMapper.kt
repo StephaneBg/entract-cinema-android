@@ -42,4 +42,26 @@ class MovieMapper : Mapper<Movie, MovieData> {
         model.teaserId,
         model.nextMovies.map { mapToUi(it) }
     )
+
+    override fun mapToData(model: Movie): MovieData = MovieData(
+        model.sessionId,
+        model.movieId,
+        model.title,
+        model.date,
+        model.schedule.replace(":", "h"),
+        model.isThreeDimension,
+        model.isOriginalVersion,
+        model.isArtMovie,
+        model.isUnderTwelve,
+        model.isExplicitContent,
+        model.coverUrl,
+        model.duration,
+        model.yearOfProduction,
+        model.genre,
+        model.director,
+        model.cast,
+        model.synopsis,
+        model.teaserId,
+        model.nextMovies.map { mapToData(it) }
+    )
 }

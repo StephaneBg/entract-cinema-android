@@ -16,31 +16,37 @@
 
 package com.cinema.entract.core.ui
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.consumeEach
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-open class ScopedViewModel<Action> : ViewModel(), CoroutineScope {
+open class ScopedViewModel<Action, State> : ViewModel(), CoroutineScope {
 
-    private val actions = Channel<Action>()
     private val job = Job()
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
 
+    private val actions = Channel<Action>()
+    protected val innerState = MutableLiveData<State>()
+    val state: LiveData<State> = innerState
+
     init {
-        launch { actions.consumeEach { manageAction(it) } }
+        launch {
+            actions.consumeEach {
+                bindActions(it)
+            }
+        }
     }
 
-    fun <T> launchAsync(
+    protected fun <T> launchAsync(
         tryBlock: suspend () -> T,
         catchBlock: (Throwable) -> T
     ) {
@@ -53,9 +59,11 @@ open class ScopedViewModel<Action> : ViewModel(), CoroutineScope {
         }
     }
 
-    fun perform(action: Action) = launch { actions.send(action) }
+    fun dispatch(action: Action) {
+        launch { actions.send(action) }
+    }
 
-    open fun manageAction(action: Action) = Unit
+    protected open suspend fun bindActions(action: Action) = Unit
 
     override fun onCleared() {
         super.onCleared()

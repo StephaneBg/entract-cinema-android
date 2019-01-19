@@ -16,24 +16,19 @@
 
 package com.cinema.entract.app.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.cinema.entract.app.mapper.DateRangeMapper
 import com.cinema.entract.app.mapper.MovieMapper
 import com.cinema.entract.app.mapper.ScheduleMapper
 import com.cinema.entract.app.model.DateRange
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.model.ScheduleEntry
-import com.cinema.entract.core.ui.Error
 import com.cinema.entract.core.ui.Event
-import com.cinema.entract.core.ui.Loading
 import com.cinema.entract.core.ui.ScopedViewModel
-import com.cinema.entract.core.ui.State
-import com.cinema.entract.core.ui.Success
-import com.cinema.entract.data.ext.longFormatToUi
+import com.cinema.entract.data.ext.toEpochMilliSecond
 import com.cinema.entract.data.interactor.CinemaUseCase
-import kotlinx.coroutines.coroutineScope
 import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.LocalTime
 import timber.log.Timber
 
 class CinemaViewModel(
@@ -41,88 +36,123 @@ class CinemaViewModel(
     private val movieMapper: MovieMapper,
     private val scheduleMapper: ScheduleMapper,
     private val dateRangeMapper: DateRangeMapper
-) : ScopedViewModel<CinemaAction>() {
+) : ScopedViewModel<CinemaAction, CinemaState>() {
 
-    private val onScreenState = MutableLiveData<State<List<Movie>>>()
-    private val scheduleState = MutableLiveData<State<List<ScheduleEntry>>>()
-    private val detailedMovie = MutableLiveData<Movie>()
-    private val eventUrl = MutableLiveData<Event<String>>()
-    private val currentDate = MutableLiveData<String>()
+    private var eventUrl: Event<String?>? = null
 
-    fun getDisplayDate(): LiveData<String> = currentDate
-
-    fun getDate() = useCase.getDate()
-
-    fun getOnScreenState(): LiveData<State<List<Movie>>> {
-        onScreenState.value ?: retrieveMovies()
-        return onScreenState
-    }
-
-    override fun manageAction(action: CinemaAction) = when (action) {
+    override suspend fun bindActions(action: CinemaAction) = when (action) {
         is CinemaAction.LoadMovies -> retrieveMovies(action.date)
-        is CinemaAction.SelectMovie -> detailedMovie.postValue(action.movie)
-        is CinemaAction.LoadSchedule -> retrieveSchedule()
+        CinemaAction.LoadSchedule -> retrieveSchedule()
+        is CinemaAction.LoadDetails -> retrieveDetails(action.movie)
     }
 
     private fun retrieveMovies(date: LocalDate? = null) {
-        date?.let { useCase.selectDate(it) }
-        currentDate.postValue(getDate().longFormatToUi())
-        onScreenState.postValue(Loading())
-        launchAsync(::loadOnScreen, ::onLoadOnScreenError)
+        innerState.postValue(CinemaState.Loading())
+        launchAsync(
+            {
+                val movies = useCase.getMovies(date)
+                val dateRange = useCase.getDateRange()
+                eventUrl ?: getEventUrl()
+                innerState.postValue(
+                    CinemaState.OnScreen(
+                        movies.map { movieMapper.mapToUi(it) },
+                        useCase.getDate(),
+                        dateRangeMapper.mapToUi(dateRange),
+                        eventUrl ?: Event(null)
+                    )
+                )
+            },
+            {
+                Timber.e(it)
+                innerState.postValue(CinemaState.Error(it))
+            }
+        )
     }
 
-    fun getDateRange(): DateRange? = dateRangeMapper.mapToUi(useCase.dateRange)
-
-    private suspend fun loadOnScreen() = coroutineScope {
-        val movies = useCase.getMovies().map { movieMapper.mapToUi(it) }
-        onScreenState.postValue(Success(movies))
-    }
-
-    private fun onLoadOnScreenError(throwable: Throwable) {
-        Timber.e(throwable)
-        onScreenState.postValue(Error(throwable))
-    }
-
-    fun getScheduleState(): LiveData<State<List<ScheduleEntry>>> {
-        scheduleState.value ?: retrieveSchedule()
-        return scheduleState
-    }
-
-    private fun retrieveSchedule() {
-        scheduleState.postValue(Loading())
-        launchAsync(::loadSchedule, ::onLoadScheduleError)
-    }
-
-    private suspend fun loadSchedule() {
-        val schedule = useCase.getSchedule()
-        scheduleState.postValue(Success(scheduleMapper.mapToUi(schedule)))
-    }
-
-    private fun onLoadScheduleError(throwable: Throwable) {
-        Timber.e(throwable)
-        scheduleState.postValue(Error(throwable))
-    }
-
-    fun getDetailedMovie(): LiveData<Movie> = detailedMovie
-
-    fun getEventUrl(): LiveData<Event<String>> {
-        eventUrl.value ?: launchAsync(::loadEventUrl, ::onLoadEventUrlError)
+    private suspend fun getEventUrl(): Event<String?>? {
+        val url = useCase.getEventUrl()
+        eventUrl = Event(if (url.isNotEmpty()) url else null)
         return eventUrl
     }
 
-    private suspend fun loadEventUrl() = coroutineScope {
-        val url = useCase.getEventUrl()
-        eventUrl.postValue(Event(url))
+    private fun retrieveDetails(movie: Movie) {
+        innerState.postValue(CinemaState.Loading())
+        launchAsync(
+            {
+                val retrievedMovie = useCase.getMovie(movieMapper.mapToData(movie))
+                innerState.postValue(
+                    CinemaState.Details(useCase.getDate(), movieMapper.mapToUi(retrievedMovie))
+                )
+            },
+            {
+                Timber.e(it)
+                innerState.postValue(CinemaState.Error(it, movie))
+            }
+        )
     }
 
-    private fun onLoadEventUrlError(throwable: Throwable) {
-        Timber.e("Event URL cannot be loaded: ${throwable.message}")
-        eventUrl.postValue(Event(""))
+    private fun retrieveSchedule() {
+        innerState.postValue(CinemaState.Loading())
+        launchAsync(
+            {
+                val schedule = useCase.getSchedule()
+                innerState.postValue(
+                    CinemaState.Schedule(useCase.getDate(), scheduleMapper.mapToUi(schedule))
+                )
+            },
+            {
+                Timber.e(it)
+                innerState.postValue(CinemaState.Error(it))
+            }
+        )
+    }
+
+    fun getSessionSchedule(movie: Movie): Pair<Long, Long> {
+        val schedule = movie.schedule.split(":").map { Integer.parseInt(it) }
+        var time = LocalTime.of(schedule[0], schedule[1])
+        val beginTime = LocalDateTime.of(
+            movie.date.year,
+            movie.date.month.value,
+            movie.date.dayOfMonth,
+            time.hour,
+            time.minute
+        )
+
+        val duration = movie.duration.split("h").map { Integer.parseInt(it) }
+        time = time.plusHours(duration[0].toLong())
+        time = time.plusMinutes(duration[1].toLong())
+        val endTime = LocalDateTime.of(
+            movie.date.year,
+            movie.date.month.value,
+            movie.date.dayOfMonth,
+            time.hour,
+            time.minute
+        )
+
+        return beginTime.toEpochMilliSecond() to endTime.toEpochMilliSecond()
     }
 }
 
 sealed class CinemaAction {
     data class LoadMovies(val date: LocalDate? = null) : CinemaAction()
-    data class SelectMovie(val movie: Movie): CinemaAction()
-    object LoadSchedule: CinemaAction()
+    object LoadSchedule : CinemaAction()
+    data class LoadDetails(val movie: Movie) : CinemaAction()
+}
+
+sealed class CinemaState {
+
+    data class OnScreen(
+        val movies: List<Movie>,
+        val date: LocalDate,
+        val dateRange: DateRange? = null,
+        val eventUrl: Event<String?>
+    ) : CinemaState()
+
+    data class Schedule(val date: LocalDate, val schedule: List<ScheduleEntry>) : CinemaState()
+
+    data class Details(val date: LocalDate, val movie: Movie) : CinemaState()
+
+    data class Loading(val refresh: Boolean = false) : CinemaState()
+
+    data class Error(val error: Throwable? = null, val movie: Movie? = null) : CinemaState()
 }

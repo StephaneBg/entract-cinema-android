@@ -22,6 +22,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.cinema.entract.app.NavAction
+import com.cinema.entract.app.NavOrigin
 import com.cinema.entract.app.R
 import com.cinema.entract.app.model.DayHeader
 import com.cinema.entract.app.model.MovieEntry
@@ -31,7 +33,7 @@ import com.cinema.entract.app.ui.CinemaAction
 import com.cinema.entract.core.ext.inflate
 import org.jetbrains.anko.find
 
-class ScheduleAdapter(private val selection: (CinemaAction) -> Unit) :
+class ScheduleAdapter(private val selection: (CinemaAction, NavAction) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var schedule = emptyList<ScheduleEntry>()
@@ -78,7 +80,12 @@ class ScheduleAdapter(private val selection: (CinemaAction) -> Unit) :
 
         override fun bind(model: DayHeader) {
             (itemView as TextView).text = model.dateUi
-            itemView.setOnClickListener { selection(CinemaAction.LoadMovies(model.date)) }
+            itemView.setOnClickListener {
+                selection(
+                    CinemaAction.LoadMovies(model.date),
+                    NavAction.OnScreen(NavOrigin.SCHEDULE)
+                )
+            }
         }
     }
 
@@ -101,7 +108,9 @@ class ScheduleAdapter(private val selection: (CinemaAction) -> Unit) :
             underTwelve.isVisible = model.movie.isUnderTwelve
             explicitContent.isVisible = model.movie.isExplicitContent
             artMovie.isVisible = model.movie.isArtMovie
-            itemView.setOnClickListener { selection(CinemaAction.LoadMovies(model.date)) }
+            itemView.setOnClickListener {
+                selection(CinemaAction.LoadDetails(model.movie), NavAction.Details)
+            }
         }
     }
 

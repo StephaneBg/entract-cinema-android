@@ -16,15 +16,20 @@
 
 package com.cinema.entract.data.interactor
 
+import com.cinema.entract.data.BuildConfig
 import com.cinema.entract.data.source.CinemaDataStore
 
 class TagUseCase(private val dataStore: CinemaDataStore) {
 
-    suspend fun tagSchedule() = dataStore.tagSchedule()
+    suspend fun tagSchedule() = performTag { dataStore.tagSchedule() }
 
-    suspend fun tagEvent() = dataStore.tagEvent()
+    suspend fun tagEvent() = performTag { dataStore.tagEvent() }
 
-    suspend fun tagDetails(sessionId: String) = dataStore.tagDetails(sessionId)
+    suspend fun tagDetails(sessionId: String) = performTag { dataStore.tagDetails(sessionId) }
 
-    suspend fun tagCalendar(sessionId: String) = dataStore.tagCalendar(sessionId)
+    suspend fun tagCalendar(sessionId: String) = performTag { dataStore.tagCalendar(sessionId) }
+
+    private inline fun performTag(tag: () -> Unit) {
+        if (!BuildConfig.DEBUG) tag()
+    }
 }

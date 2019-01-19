@@ -33,12 +33,15 @@ import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
+import com.cinema.entract.app.NavAction
+import com.cinema.entract.app.NavOrigin
+import com.cinema.entract.app.NavigationViewModel
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ext.displayPlaceHolder
 import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.CinemaAction
-import com.cinema.entract.app.ui.CinemaActivity
+import com.cinema.entract.app.ui.CinemaState
 import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.app.ui.TagAction
 import com.cinema.entract.app.ui.TagViewModel
@@ -46,17 +49,16 @@ import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.inflate
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ext.toSpanned
-import com.cinema.entract.core.ui.BaseFragment
+import com.cinema.entract.core.ui.BaseLceFragment
 import com.cinema.entract.core.widget.AppBarNestedScrollViewOnScrollListener
 import com.cinema.entract.data.ext.longFormatToUi
 import org.jetbrains.anko.find
 import org.koin.androidx.viewmodel.ext.sharedViewModel
-import org.koin.androidx.viewmodel.ext.viewModel
 
-class DetailsFragment : BaseFragment() {
+class DetailsFragment : BaseLceFragment<NestedScrollView>() {
 
-    private val detailsViewModel by viewModel<DetailsViewModel>()
     private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
+    private val navViewModel by sharedViewModel<NavigationViewModel>()
     private val tagViewModel by sharedViewModel<TagViewModel>()
 
     override fun onCreateView(
@@ -66,65 +68,78 @@ class DetailsFragment : BaseFragment() {
     ): View? = inflater.inflate(R.layout.fragment_details, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        find<NestedScrollView>(R.id.scrollView).setOnScrollChangeListener(
+        super.onViewCreated(view, savedInstanceState)
+        contentView.setOnScrollChangeListener(
             AppBarNestedScrollViewOnScrollListener(find(R.id.appBar))
         )
     }
 
     override fun onStart() {
         super.onStart()
-        observe(cinemaViewModel.getDetailedMovie(), ::displayMovieDetails)
+        observe(cinemaViewModel.state, ::renderState)
     }
 
-    private fun displayMovieDetails(movie: Movie?) {
-        movie ?: error("No selected movie")
+    private fun renderState(state: CinemaState?) {
+        when (state) {
+            is CinemaState.Loading -> showLoading()
+            is CinemaState.Error -> showError(state.error) {
+                state.movie?.let { cinemaViewModel.dispatch(CinemaAction.LoadDetails(it)) }
+            }
+            is CinemaState.Details -> {
+                val movie = state.movie
+                tagViewModel.dispatch(TagAction.Details(movie.sessionId))
 
-        tagViewModel.perform(TagAction.Details(movie.sessionId))
+                find<TextView>(R.id.dateTime).text = getString(
+                    R.string.details_date_with_time,
+                    movie.date.longFormatToUi(),
+                    movie.schedule
+                )
+                find<ImageView>(R.id.cover).apply {
+                    if (movie.coverUrl.isNotEmpty()) load(movie.coverUrl) else displayPlaceHolder()
+                }
+                find<TextView>(R.id.title).text = movie.title
+                find<ImageView>(R.id.originalVersion).isVisible = movie.isOriginalVersion
+                find<ImageView>(R.id.threeDimension).isVisible = movie.isThreeDimension
+                find<ImageView>(R.id.underTwelve).isVisible = movie.isUnderTwelve
+                find<TextView>(R.id.underTwelveNotice).isVisible = movie.isUnderTwelve
+                find<ImageView>(R.id.explicitContent).isVisible = movie.isExplicitContent
+                find<ImageView>(R.id.artMovie).isVisible = movie.isArtMovie
+                find<TextView>(R.id.explicitContentNotice).isVisible = movie.isExplicitContent
+                find<TextView>(R.id.director).text =
+                        getString(R.string.details_director, movie.director).toSpanned()
+                with(find<TextView>(R.id.cast)) {
+                    if (movie.cast.isEmpty()) isVisible = false
+                    else text = getString(R.string.details_cast, movie.cast).toSpanned()
+                }
+                find<TextView>(R.id.year).text =
+                        getString(
+                            R.string.details_production_year,
+                            movie.yearOfProduction
+                        ).toSpanned()
+                find<TextView>(R.id.duration).text =
+                        getString(R.string.details_duration, movie.duration)
+                find<TextView>(R.id.genre).text = movie.genre
 
-        find<TextView>(R.id.dateTime).text = getString(
-            R.string.details_date_with_time,
-            movie.date.longFormatToUi(),
-            movie.schedule
-        )
-        find<ImageView>(R.id.cover).apply {
-            if (movie.coverUrl.isNotEmpty()) load(movie.coverUrl) else displayPlaceHolder()
-        }
-        find<TextView>(R.id.title).text = movie.title
-        find<ImageView>(R.id.originalVersion).isVisible = movie.isOriginalVersion
-        find<ImageView>(R.id.threeDimension).isVisible = movie.isThreeDimension
-        find<ImageView>(R.id.underTwelve).isVisible = movie.isUnderTwelve
-        find<TextView>(R.id.underTwelveNotice).isVisible = movie.isUnderTwelve
-        find<ImageView>(R.id.explicitContent).isVisible = movie.isExplicitContent
-        find<ImageView>(R.id.artMovie).isVisible = movie.isArtMovie
-        find<TextView>(R.id.explicitContentNotice).isVisible = movie.isExplicitContent
-        find<TextView>(R.id.director).text =
-                getString(R.string.details_director, movie.director).toSpanned()
-        with(find<TextView>(R.id.cast)) {
-            if (movie.cast.isEmpty()) isVisible = false
-            else text = getString(R.string.details_cast, movie.cast).toSpanned()
-        }
-        find<TextView>(R.id.year).text =
-                getString(R.string.details_production_year, movie.yearOfProduction).toSpanned()
-        find<TextView>(R.id.duration).text = getString(R.string.details_duration, movie.duration)
-        find<TextView>(R.id.genre).text = movie.genre
+                with(find<TextView>(R.id.synopsis)) {
+                    text = movie.synopsis
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        justificationMode = Layout.JUSTIFICATION_MODE_INTER_WORD
+                    }
+                }
 
-        with(find<TextView>(R.id.synopsis)) {
-            text = movie.synopsis
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                justificationMode = Layout.JUSTIFICATION_MODE_INTER_WORD
+                manageNextMovies(movie.nextMovies)
+
+                with(find<Button>(R.id.teaser)) {
+                    if (movie.teaserId.isNotEmpty()) {
+                        setOnClickListener { showTeaser(movie) }
+                    } else {
+                        isVisible = false
+                    }
+                }
+                find<Button>(R.id.agenda).setOnClickListener { addCalendarEvent(movie) }
+                showContent()
             }
         }
-
-        manageNextMovies(movie.nextMovies)
-
-        with(find<Button>(R.id.teaser)) {
-            if (movie.teaserId.isNotEmpty()) {
-                setOnClickListener { showTeaser(movie) }
-            } else {
-                isVisible = false
-            }
-        }
-        find<Button>(R.id.agenda).setOnClickListener { addCalendarEvent(movie) }
     }
 
     private fun manageNextMovies(movies: List<Movie>) {
@@ -143,8 +158,8 @@ class DetailsFragment : BaseFragment() {
                     find<ImageView>(R.id.originalVersion).isVisible = movie.isOriginalVersion
                     find<ImageView>(R.id.threeDimension).isVisible = movie.isThreeDimension
                     setOnClickListener {
-                        cinemaViewModel.perform(CinemaAction.LoadMovies(movie.date))
-                        (activity as CinemaActivity).selectOnScreen()
+                        cinemaViewModel.dispatch(CinemaAction.LoadMovies(movie.date))
+                        navViewModel.dispatch(NavAction.OnScreen(NavOrigin.DETAILS))
                     }
                 }
             }
@@ -170,7 +185,7 @@ class DetailsFragment : BaseFragment() {
     }
 
     private fun addCalendarEvent(movie: Movie) {
-        val (beginTime, endTime) = detailsViewModel.getEventSchedule(movie)
+        val (beginTime, endTime) = cinemaViewModel.getSessionSchedule(movie)
         val intent = Intent(Intent.ACTION_INSERT)
             .setData(Events.CONTENT_URI)
             .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime)
@@ -179,7 +194,7 @@ class DetailsFragment : BaseFragment() {
             .putExtra(Events.DESCRIPTION, getString(R.string.app_name))
             .putExtra(Events.EVENT_LOCATION, getString(R.string.information_address))
             .putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY)
-        tagViewModel.perform(TagAction.Calendar(movie.sessionId))
+        tagViewModel.dispatch(TagAction.Calendar(movie.sessionId))
         startActivity(intent)
     }
 

@@ -19,9 +19,9 @@ package com.cinema.entract.app.ui
 import com.cinema.entract.core.ui.ScopedViewModel
 import com.cinema.entract.data.interactor.TagUseCase
 
-class TagViewModel(private val useCase: TagUseCase) : ScopedViewModel<TagAction>() {
+class TagViewModel(private val useCase: TagUseCase) : ScopedViewModel<TagAction, Nothing>() {
 
-    override fun manageAction(action: TagAction) = launchAsync(
+    override suspend fun bindActions(action: TagAction) = launchAsync(
         {
             when (action) {
                 TagAction.Schedule -> useCase.tagSchedule()

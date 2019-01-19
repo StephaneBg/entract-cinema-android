@@ -18,7 +18,6 @@ package com.cinema.entract.data.interactor
 
 import com.cinema.entract.core.network.NetworkUtils
 import com.cinema.entract.data.ext.formatToUTC
-import com.cinema.entract.data.model.DateRangeData
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
 import com.cinema.entract.data.source.CinemaDataStore
@@ -30,37 +29,29 @@ class CinemaUseCase(
 ) {
 
     private var currentDate: LocalDate? = null
-    var dateRange: DateRangeData? = null
-        private set
 
-    fun getDate(): LocalDate = currentDate ?: initDate()
+    fun getDate(): LocalDate = currentDate ?: LocalDate.now()
 
-    private fun initDate(): LocalDate {
-        val now = LocalDate.now()
-        currentDate = now
-        return now
+    suspend fun getMovies(date: LocalDate? = null): List<MovieData> {
+        currentDate = date ?: getDate()
+        return dataStore
+            .getMovies(getDate().formatToUTC())
+            .map {
+                if (!canDisplayMedia()) it.copy(
+                    coverUrl = "",
+                    teaserId = ""
+                ) else it
+            }
     }
 
-    suspend fun getMovies(): List<MovieData> = dataStore
-        .getMovies(getDate().formatToUTC())
-        .map {
-            if (!canDisplayMedia()) it.copy(
-                coverUrl = "",
-                teaserId = ""
-            ) else it
-        }
+    suspend fun getMovie(movie: MovieData): MovieData =
+        getMovies(movie.date).first { it.movieId == movie.movieId }
 
-    suspend fun loadParameters() {
-        dateRange = dataStore.getParameters()
-    }
+    suspend fun getDateRange() = dataStore.getDateRange()
 
     suspend fun getSchedule(): List<WeekData> = dataStore.getSchedule().filter { it.hasMovies }
 
     suspend fun getEventUrl(): String = if (isEventEnabled()) dataStore.getEventUrl() else ""
-
-    fun selectDate(selectedDate: LocalDate) {
-        currentDate = selectedDate
-    }
 
     private fun canDisplayMedia(): Boolean =
         !dataStore.getUserPreferences().isOnlyOnWifi() || networkUtils.isConnectedOnWifi()

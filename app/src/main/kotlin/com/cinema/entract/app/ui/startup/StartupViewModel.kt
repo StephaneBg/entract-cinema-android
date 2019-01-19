@@ -16,30 +16,31 @@
 
 package com.cinema.entract.app.ui.startup
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.cinema.entract.core.ui.ScopedViewModel
 import com.cinema.entract.data.interactor.CinemaUseCase
-import kotlinx.coroutines.coroutineScope
 import timber.log.Timber
 
-class StartupViewModel(private val useCase: CinemaUseCase) : ScopedViewModel<Nothing>() {
+class StartupViewModel(private val useCase: CinemaUseCase) :
+    ScopedViewModel<Nothing, StartupState>() {
 
-    private val eventUrl = MutableLiveData<String>()
-
-    fun prefetch(): LiveData<String> {
-        eventUrl.value ?: launchAsync(::prefetchData, ::onPrefetchDataError)
-        return eventUrl
-    }
-
-    private suspend fun prefetchData() = coroutineScope {
-        useCase.getMovies()
-        useCase.loadParameters()
-        eventUrl.postValue(useCase.getEventUrl())
-    }
-
-    private fun onPrefetchDataError(throwable: Throwable) {
-        Timber.e(throwable)
-        eventUrl.postValue("")
-    }
+    fun prefetch() = launchAsync(
+        {
+            innerState.postValue(StartupState(isLoading = true))
+            useCase.getMovies()
+            useCase.getDateRange()
+            val eventUrl = useCase.getEventUrl()
+            innerState.postValue(StartupState(isIdle = true, eventUrl = eventUrl))
+        },
+        {
+            Timber.e(it)
+            innerState.postValue(StartupState(isLoadError = true))
+        }
+    )
 }
+
+data class StartupState(
+    val isIdle: Boolean = false,
+    val isLoading: Boolean = false,
+    val isLoadError: Boolean = false,
+    val eventUrl: String? = null
+)

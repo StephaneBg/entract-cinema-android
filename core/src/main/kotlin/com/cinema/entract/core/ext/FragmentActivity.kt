@@ -19,48 +19,44 @@ package com.cinema.entract.core.ext
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 
-fun FragmentActivity.addFragment(frameId: Int, fragment: Fragment, addBackStack: Boolean = false) {
-    supportFragmentManager.inTransaction {
-        add(frameId, fragment)
-        if (addBackStack) addToBackStack(null)
-    }
+fun FragmentActivity.addFragment(
+    frameId: Int,
+    fragment: Fragment,
+    addToBackStack: Boolean = false
+) = supportFragmentManager.inTransaction {
+    add(frameId, fragment)
+    if (addToBackStack) addToBackStack(null)
 }
 
 fun FragmentActivity.addFragment(
     frameId: Int,
     fragment: Fragment,
-    addBackStack: Boolean = false,
+    addToBackStack: Boolean = false,
     animIn: Int,
     animOut: Int
-) {
-    supportFragmentManager.inTransaction {
-        setCustomAnimations(animIn, animOut, animIn, animOut)
-        add(frameId, fragment)
-        if (addBackStack) addToBackStack(null)
-    }
+) = supportFragmentManager.inTransaction {
+    setCustomAnimations(animIn, animOut, animIn, animOut)
+    add(frameId, fragment)
+    if (addToBackStack) addToBackStack(null)
 }
 
 fun FragmentActivity.replaceFragment(
     frameId: Int,
     fragment: Fragment,
-    addBackStack: Boolean = false
-) {
-    supportFragmentManager.inTransaction {
-        replace(frameId, fragment)
-        if (addBackStack) addToBackStack(null)
-    }
+    addToBackStack: Boolean = false
+) = supportFragmentManager.inTransaction {
+    replace(frameId, fragment)
+    if (addToBackStack) addToBackStack(null)
 }
 
 fun FragmentActivity.replaceFragment(
     frameId: Int,
     fragment: Fragment,
-    addBackStack: Boolean = false,
+    addToBackStack: Boolean = false,
     animIn: Int,
     animOut: Int
-) {
-    supportFragmentManager.inTransaction {
-        setCustomAnimations(animIn, animOut, animIn, animOut)
-        replace(frameId, fragment)
-        if (addBackStack) addToBackStack(null)
-    }
+) = supportFragmentManager.inTransaction {
+    setCustomAnimations(animIn, animOut, animIn, animOut)
+    replace(frameId, fragment)
+    if (addToBackStack) addToBackStack(null)
 }

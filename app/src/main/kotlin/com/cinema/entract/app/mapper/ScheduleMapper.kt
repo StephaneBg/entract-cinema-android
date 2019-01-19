@@ -51,6 +51,9 @@ class ScheduleMapper(private val mapper: MovieMapper) :
         return list
     }
 
+    override fun mapToData(model: List<ScheduleEntry>): List<WeekData> =
+        error(NotImplementedError())
+
     private fun formatWeekHeader(week: WeekData): String =
         if (week.beginDay sameMonth week.endDay) {
             "Du ${week.beginDay.dayOfMonth} au ${week.endDay.shortFormatToUi()}"

@@ -22,14 +22,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.cinema.entract.app.NavAction
-import com.cinema.entract.app.NavOrigin
 import com.cinema.entract.app.R
 import com.cinema.entract.app.model.DayHeader
 import com.cinema.entract.app.model.MovieEntry
 import com.cinema.entract.app.model.ScheduleEntry
 import com.cinema.entract.app.model.WeekHeader
 import com.cinema.entract.app.ui.CinemaAction
+import com.cinema.entract.app.ui.NavAction
+import com.cinema.entract.app.ui.NavOrigin
 import com.cinema.entract.core.ext.inflate
 import org.jetbrains.anko.find
 

@@ -14,47 +14,38 @@
  * limitations under the License.
  */
 
-package com.cinema.entract.app
+package com.cinema.entract.app.ui
 
 import com.cinema.entract.core.ui.ScopedViewModel
 
 class NavigationViewModel : ScopedViewModel<NavAction, NavState>() {
 
-    private var currentState: NavState? = null
-
     override suspend fun bindActions(action: NavAction) {
-        currentState = when (action) {
+        val newState = when (action) {
             is NavAction.OnScreen -> {
                 when (action.origin) {
-                    NavOrigin.BOTTOM_NAV -> NavState.OnScreen
-                    NavOrigin.ON_SCREEN -> NavState.ScrollToTop
+                    NavOrigin.ON_SCREEN -> NavState.OnScreen
                     NavOrigin.SCHEDULE,
                     NavOrigin.DETAILS -> NavState.Home
                     NavOrigin.INFO,
                     NavOrigin.SETTINGS -> error("No hook from settings")
                 }
             }
-            is NavAction.Details -> NavState.Details
-            is NavAction.Schedule -> {
-                when (action.origin) {
-                    NavOrigin.SCHEDULE -> NavState.ScrollToTop
-                    else -> NavState.Schedule
-                }
-            }
-            is NavAction.Info -> NavState.Info
-            is NavAction.Settings -> NavState.Settings
+            is NavAction.Schedule -> NavState.Schedule
             is NavAction.Back -> {
                 when (action.origin) {
-                    NavOrigin.BOTTOM_NAV -> NavState.ScrollToTop
                     NavOrigin.ON_SCREEN,
                     NavOrigin.DETAILS -> NavState.Back
-                    NavOrigin.SCHEDULE,
+                    NavOrigin.SCHEDULE -> NavState.Home
                     NavOrigin.INFO,
                     NavOrigin.SETTINGS -> NavState.Home
                 }
             }
+            is NavAction.Details -> NavState.Details
+            is NavAction.Info -> NavState.Info
+            is NavAction.Settings -> NavState.Settings
         }
-        innerState.postValue(currentState)
+        innerState.postValue(newState)
     }
 }
 
@@ -65,21 +56,19 @@ sealed class NavState {
     object Schedule : NavState()
     object Info : NavState()
     object Settings : NavState()
-    object ScrollToTop : NavState()
     object Back : NavState()
 }
 
 sealed class NavAction {
     data class OnScreen(val origin: NavOrigin) : NavAction()
-    object Details : NavAction()
     data class Schedule(val origin: NavOrigin) : NavAction()
+    data class Back(val origin: NavOrigin) : NavAction()
+    object Details : NavAction()
     object Info : NavAction()
     object Settings : NavAction()
-    data class Back(val origin: NavOrigin) : NavAction()
 }
 
 enum class NavOrigin {
-    BOTTOM_NAV,
     ON_SCREEN,
     SCHEDULE,
     DETAILS,

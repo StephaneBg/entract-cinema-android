@@ -21,21 +21,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.cinema.entract.app.NavAction
-import com.cinema.entract.app.NavState
-import com.cinema.entract.app.NavigationViewModel
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ui.CinemaAction
 import com.cinema.entract.app.ui.CinemaState
 import com.cinema.entract.app.ui.CinemaViewModel
+import com.cinema.entract.app.ui.NavAction
+import com.cinema.entract.app.ui.NavigationViewModel
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ui.BaseLceFragment
 import com.cinema.entract.core.widget.AppBarRecyclerViewOnScrollListener
-import com.cinema.entract.core.widget.EmptynessLayout
+import com.cinema.entract.core.widget.EmptinessLayout
 import org.koin.androidx.viewmodel.ext.sharedViewModel
 
-class ScheduleFragment : BaseLceFragment<EmptynessLayout>() {
+class ScheduleFragment : BaseLceFragment<EmptinessLayout>() {
 
     private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
     private val navViewModel by sharedViewModel<NavigationViewModel>()
@@ -58,7 +57,6 @@ class ScheduleFragment : BaseLceFragment<EmptynessLayout>() {
         }
 
         observe(cinemaViewModel.state, ::renderState)
-        observe(navViewModel.state, ::manageNavigation)
 
         savedInstanceState ?: cinemaViewModel.dispatch(CinemaAction.LoadSchedule)
     }
@@ -71,21 +69,16 @@ class ScheduleFragment : BaseLceFragment<EmptynessLayout>() {
                 showContent()
             }
             is CinemaState.Error -> showError(state.error) {
+
                 cinemaViewModel.dispatch(CinemaAction.LoadSchedule)
             }
         }
-    }
-
-    private fun manageNavigation(state: NavState?) {
-        if (state is NavState.ScrollToTop) scrollToTop()
     }
 
     private fun handleSelection(cinemaAction: CinemaAction, navAction: NavAction) {
         cinemaViewModel.dispatch(cinemaAction)
         navViewModel.dispatch(navAction)
     }
-
-    private fun scrollToTop() = contentView.recyclerView.smoothScrollToPosition(0)
 
     companion object {
         fun newInstance(): ScheduleFragment = ScheduleFragment()

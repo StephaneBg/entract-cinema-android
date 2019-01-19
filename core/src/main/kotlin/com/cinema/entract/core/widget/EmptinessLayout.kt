@@ -22,10 +22,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cinema.entract.core.R
 
-class EmptynessLayout @JvmOverloads constructor(
+class EmptinessLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -69,4 +70,9 @@ class EmptynessLayout @JvmOverloads constructor(
         emptyView.isVisible = isEmptyVisible
         isVisible = !isEmptyVisible
     }
+
+    fun scrollToTop() = recyclerView.smoothScrollToPosition(0)
+
+    fun isScrolled(): Boolean = (recyclerView.layoutManager as LinearLayoutManager)
+        .findFirstVisibleItemPosition() != 0
 }

@@ -33,9 +33,6 @@ import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
-import com.cinema.entract.app.NavAction
-import com.cinema.entract.app.NavOrigin
-import com.cinema.entract.app.NavigationViewModel
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ext.displayPlaceHolder
 import com.cinema.entract.app.ext.load
@@ -43,6 +40,9 @@ import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.CinemaAction
 import com.cinema.entract.app.ui.CinemaState
 import com.cinema.entract.app.ui.CinemaViewModel
+import com.cinema.entract.app.ui.NavAction
+import com.cinema.entract.app.ui.NavOrigin
+import com.cinema.entract.app.ui.NavigationViewModel
 import com.cinema.entract.app.ui.TagAction
 import com.cinema.entract.app.ui.TagViewModel
 import com.cinema.entract.core.ext.find
@@ -82,8 +82,11 @@ class DetailsFragment : BaseLceFragment<NestedScrollView>() {
     private fun renderState(state: CinemaState?) {
         when (state) {
             is CinemaState.Loading -> showLoading()
-            is CinemaState.Error -> showError(state.error) {
-                state.movie?.let { cinemaViewModel.dispatch(CinemaAction.LoadDetails(it)) }
+            is CinemaState.Error -> {
+                find<TextView>(R.id.dateTime).text = getString(R.string.app_name)
+                showError(state.error) {
+                    state.movie?.let { cinemaViewModel.dispatch(CinemaAction.LoadDetails(it)) }
+                }
             }
             is CinemaState.Details -> {
                 val movie = state.movie

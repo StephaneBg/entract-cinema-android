@@ -24,6 +24,7 @@ import com.cinema.entract.core.R
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.hide
 import com.cinema.entract.core.ext.show
+import com.cinema.entract.core.widget.EmptinessLayout
 import com.cinema.entract.core.widget.ErrorView
 
 @Suppress("UNCHECKED_CAST")
@@ -41,23 +42,30 @@ open class BaseLceFragment<T : View> : BaseFragment() {
     }
 
     @CallSuper
-    open fun showContent() {
+    protected open fun showContent() {
         errorView.hide()
         loadingView.hide()
         contentView.show()
     }
 
     @CallSuper
-    open fun showLoading() {
+    protected open fun showLoading() {
         contentView.hide()
         errorView.hide()
         loadingView.show()
     }
 
     @CallSuper
-    open fun showError(throwable: Throwable?, action: () -> Unit) {
+    protected open fun showError(throwable: Throwable?, action: () -> Unit) {
         contentView.hide()
         loadingView.hide()
         errorView.show(getErrorDrawable(throwable), getErrorMessage(throwable), action)
     }
+}
+
+fun BaseLceFragment<EmptinessLayout>.scrollToTop(): Boolean = if (contentView.isScrolled()) {
+    contentView.scrollToTop()
+    true
+} else {
+    false
 }

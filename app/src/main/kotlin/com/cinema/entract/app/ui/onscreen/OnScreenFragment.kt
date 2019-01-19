@@ -25,25 +25,25 @@ import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.cinema.entract.app.NavAction
-import com.cinema.entract.app.NavState
-import com.cinema.entract.app.NavigationViewModel
 import com.cinema.entract.app.R
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.CinemaAction
 import com.cinema.entract.app.ui.CinemaState
 import com.cinema.entract.app.ui.CinemaViewModel
+import com.cinema.entract.app.ui.NavAction
+import com.cinema.entract.app.ui.NavigationViewModel
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ui.BaseLceFragment
 import com.cinema.entract.core.widget.AppBarRecyclerViewOnScrollListener
-import com.cinema.entract.core.widget.EmptynessLayout
+import com.cinema.entract.core.widget.EmptinessLayout
+import com.cinema.entract.data.ext.isToday
 import com.cinema.entract.data.ext.longFormatToUi
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.koin.androidx.viewmodel.ext.sharedViewModel
 import org.threeten.bp.LocalDate
 
-class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
+class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
 
     private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
     private val navViewModel by sharedViewModel<NavigationViewModel>()
@@ -80,7 +80,6 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
         date = find(R.id.date)
 
         observe(cinemaViewModel.state, ::renderState)
-        observe(navViewModel.state, ::manageNavigation)
 
         savedInstanceState ?: cinemaViewModel.dispatch(CinemaAction.LoadMovies())
     }
@@ -93,7 +92,7 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
                 currentState = state
                 date.text = state.date.longFormatToUi()
                 fab.isVisible = null != state.dateRange
-                updateMovies(state.movies, true)
+                updateMovies(state.movies)
                 showContent()
             }
             is CinemaState.Error -> {
@@ -103,15 +102,11 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
         }
     }
 
-    private fun manageNavigation(state: NavState?) {
-        if (state is NavState.ScrollToTop) scrollToTop()
-    }
-
-    private fun updateMovies(movies: List<Movie>, withAnim: Boolean) {
-        if (withAnim) contentView.recyclerView.layoutAnimation = animController
+    private fun updateMovies(movies: List<Movie>) {
+        contentView.recyclerView.layoutAnimation = animController
         onScreenAdapter.updateMovies(movies)
         showContent()
-        if (withAnim) contentView.recyclerView.scheduleLayoutAnimation()
+        contentView.recyclerView.scheduleLayoutAnimation()
     }
 
     private fun manageError(exception: Throwable?) {
@@ -147,7 +142,7 @@ class OnScreenFragment : BaseLceFragment<EmptynessLayout>() {
         }
     }
 
-    private fun scrollToTop() = contentView.recyclerView.smoothScrollToPosition(0)
+    fun isTodayDisplayed(): Boolean = currentState?.date?.isToday() == true
 
     companion object {
         fun newInstance(): OnScreenFragment = OnScreenFragment()

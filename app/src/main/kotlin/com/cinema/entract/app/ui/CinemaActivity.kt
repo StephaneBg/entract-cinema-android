@@ -18,10 +18,6 @@ package com.cinema.entract.app.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import com.cinema.entract.app.NavAction
-import com.cinema.entract.app.NavOrigin
-import com.cinema.entract.app.NavState
-import com.cinema.entract.app.NavigationViewModel
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ui.details.DetailsFragment
 import com.cinema.entract.app.ui.event.EventDialogFragment
@@ -33,9 +29,11 @@ import com.cinema.entract.app.ui.settings.SettingsViewModel
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ext.replaceFragment
 import com.cinema.entract.core.ui.BaseActivity
+import com.cinema.entract.core.ui.scrollToTop
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.jetbrains.anko.find
 import org.koin.androidx.viewmodel.ext.viewModel
+import org.threeten.bp.LocalDate
 
 class CinemaActivity : BaseActivity() {
 
@@ -76,19 +74,37 @@ class CinemaActivity : BaseActivity() {
     private fun manageNavigation(state: NavState?) {
         when (state) {
             is NavState.Home -> bottomNav.selectedItemId = R.id.on_screen
-            is NavState.OnScreen -> {
-                supportFragmentManager.popBackStack()
-                showFragment(OnScreenFragment.newInstance())
+            is NavState.OnScreen -> when (val fragment = displayedFragment()) {
+                is OnScreenFragment -> {
+                    if (!fragment.scrollToTop() && !fragment.isTodayDisplayed())
+                        cinemaViewModel.dispatch(CinemaAction.LoadMovies(LocalDate.now()))
+                }
+                else -> {
+                    supportFragmentManager.popBackStack()
+                    showFragment(OnScreenFragment.newInstance())
+                }
             }
-            NavState.Schedule -> {
-                supportFragmentManager.popBackStack()
-                showFragment(ScheduleFragment.newInstance())
-                tagViewModel.dispatch(TagAction.Schedule)
+            NavState.Schedule -> when (val fragment = displayedFragment()) {
+                is ScheduleFragment -> fragment.scrollToTop()
+                else -> {
+                    supportFragmentManager.popBackStack()
+                    showFragment(ScheduleFragment.newInstance())
+                    tagViewModel.dispatch(TagAction.Schedule)
+                }
             }
             is NavState.Details -> showFragment(DetailsFragment.newInstance(), true)
             NavState.Info -> showFragment(InformationFragment.newInstance())
             NavState.Settings -> showFragment(SettingsFragment.newInstance())
-            NavState.Back -> super.onBackPressed()
+            NavState.Back -> when (val fragment = displayedFragment()) {
+                is OnScreenFragment -> {
+                    if (fragment.isTodayDisplayed()) super.onBackPressed()
+                    else cinemaViewModel.dispatch(CinemaAction.LoadMovies(LocalDate.now()))
+                }
+                else -> {
+                    supportFragmentManager.popBackStack()
+                    showFragment(OnScreenFragment.newInstance())
+                }
+            }
         }
     }
 
@@ -109,21 +125,11 @@ class CinemaActivity : BaseActivity() {
         bottomNav.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.on_screen -> {
-                    navViewModel.dispatch(
-                        NavAction.OnScreen(
-                            if (displayedFragment() is OnScreenFragment) NavOrigin.ON_SCREEN
-                            else NavOrigin.BOTTOM_NAV
-                        )
-                    )
+                    navViewModel.dispatch(NavAction.OnScreen(NavOrigin.ON_SCREEN))
                     true
                 }
                 R.id.schedule -> {
-                    navViewModel.dispatch(
-                        NavAction.Schedule(
-                            if (displayedFragment() is ScheduleFragment) NavOrigin.SCHEDULE
-                            else NavOrigin.BOTTOM_NAV
-                        )
-                    )
+                    navViewModel.dispatch(NavAction.Schedule(NavOrigin.SCHEDULE))
                     true
                 }
                 R.id.information -> {

@@ -16,11 +16,11 @@
 
 package com.cinema.entract.app.di
 
-import com.cinema.entract.app.NavigationViewModel
 import com.cinema.entract.app.mapper.DateRangeMapper
 import com.cinema.entract.app.mapper.MovieMapper
 import com.cinema.entract.app.mapper.ScheduleMapper
 import com.cinema.entract.app.ui.CinemaViewModel
+import com.cinema.entract.app.ui.NavigationViewModel
 import com.cinema.entract.app.ui.TagViewModel
 import com.cinema.entract.app.ui.settings.SettingsViewModel
 import com.cinema.entract.app.ui.startup.StartupViewModel

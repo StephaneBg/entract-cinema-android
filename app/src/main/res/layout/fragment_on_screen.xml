@@ -57,6 +57,7 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:paddingBottom="@dimen/padding_size_bottom_fab_screen"
+            android:stateListAnimator="@animator/appbar_animator"
             tools:listitem="@layout/list_item_on_screen_movie"
             />
 

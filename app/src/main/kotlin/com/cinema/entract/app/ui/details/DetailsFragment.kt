@@ -72,11 +72,7 @@ class DetailsFragment : BaseLceFragment<NestedScrollView>() {
         contentView.setOnScrollChangeListener(
             AppBarNestedScrollViewOnScrollListener(find(R.id.appBar))
         )
-    }
-
-    override fun onStart() {
-        super.onStart()
-        observe(cinemaViewModel.state, ::renderState)
+        observe(cinemaViewModel.observableState, ::renderState)
     }
 
     private fun renderState(state: CinemaState?) {

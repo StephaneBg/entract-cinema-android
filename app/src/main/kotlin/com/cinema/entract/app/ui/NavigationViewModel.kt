@@ -26,9 +26,9 @@ class NavigationViewModel : ScopedViewModel<NavAction, NavState>() {
                 when (action.origin) {
                     NavOrigin.ON_SCREEN -> NavState.OnScreen
                     NavOrigin.SCHEDULE,
-                    NavOrigin.DETAILS -> NavState.Home
+                    NavOrigin.DETAILS,
                     NavOrigin.INFO,
-                    NavOrigin.SETTINGS -> error("No hook from settings")
+                    NavOrigin.SETTINGS -> NavState.Home
                 }
             }
             is NavAction.Schedule -> NavState.Schedule
@@ -49,16 +49,6 @@ class NavigationViewModel : ScopedViewModel<NavAction, NavState>() {
     }
 }
 
-sealed class NavState {
-    object Home : NavState()
-    object OnScreen : NavState()
-    object Details : NavState()
-    object Schedule : NavState()
-    object Info : NavState()
-    object Settings : NavState()
-    object Back : NavState()
-}
-
 sealed class NavAction {
     data class OnScreen(val origin: NavOrigin) : NavAction()
     data class Schedule(val origin: NavOrigin) : NavAction()
@@ -66,6 +56,16 @@ sealed class NavAction {
     object Details : NavAction()
     object Info : NavAction()
     object Settings : NavAction()
+}
+
+enum class NavState {
+    Home,
+    OnScreen,
+    Details,
+    Schedule,
+    Info,
+    Settings,
+    Back
 }
 
 enum class NavOrigin {

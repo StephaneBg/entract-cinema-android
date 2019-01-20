@@ -28,14 +28,15 @@ import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ui.BaseFragment
 import com.cinema.entract.core.widget.AppBarNestedScrollViewOnScrollListener
+import com.cinema.entract.data.interactor.CinemaUseCase
 import com.google.android.material.switchmaterial.SwitchMaterial
 import org.jetbrains.anko.startActivity
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.sharedViewModel
-import org.koin.androidx.viewmodel.ext.viewModel
 
 class SettingsFragment : BaseFragment() {
 
-    private val settingsViewModel by viewModel<SettingsViewModel>()
+    private val useCase by inject<CinemaUseCase>()
     private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
 
     override fun onCreateView(
@@ -52,24 +53,24 @@ class SettingsFragment : BaseFragment() {
         )
 
         find<SwitchMaterial>(R.id.event).apply {
-            isChecked = settingsViewModel.isEventEnabled()
+            isChecked = useCase.isEventEnabled()
             setOnCheckedChangeListener { _, isChecked ->
-                settingsViewModel.setEventPreference(isChecked)
+                useCase.setEventPreference(isChecked)
             }
         }
 
         find<SwitchMaterial>(R.id.data).apply {
-            isChecked = settingsViewModel.isOnlyOnWifi()
+            isChecked = useCase.isOnlyOnWifi()
             setOnCheckedChangeListener { _, isChecked ->
-                settingsViewModel.setOnlyOnWifi(isChecked)
+                useCase.setOnlyOnWifi(isChecked)
                 cinemaViewModel.dispatch(CinemaAction.LoadMovies())
             }
         }
 
         find<SwitchMaterial>(R.id.dark).apply {
-            isChecked = settingsViewModel.isDarkMode()
+            isChecked = useCase.isDarkMode()
             setOnCheckedChangeListener { _, isChecked ->
-                settingsViewModel.setDarkMode(isChecked)
+                useCase.setDarkMode(isChecked)
                 requireActivity().run {
                     startActivity<CinemaActivity>()
                     finish()

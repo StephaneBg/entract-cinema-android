@@ -36,7 +36,7 @@ open class ScopedViewModel<Action, State> : ViewModel(), CoroutineScope {
 
     private val actions = Channel<Action>()
     protected val innerState = MutableLiveData<State>()
-    val state: LiveData<State> = innerState
+    val observableState: LiveData<State> = innerState
 
     init {
         launch {
@@ -53,8 +53,8 @@ open class ScopedViewModel<Action, State> : ViewModel(), CoroutineScope {
         launch {
             try {
                 tryBlock()
-            } catch (e: Throwable) {
-                if (e !is CancellationException) catchBlock(e)
+            } catch (throwable: Throwable) {
+                if (throwable !is CancellationException) catchBlock(throwable)
             }
         }
     }

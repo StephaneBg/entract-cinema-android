@@ -56,7 +56,7 @@ class ScheduleFragment : BaseLceFragment<EmptinessLayout>() {
             setAdapter(scheduleAdapter)
         }
 
-        observe(cinemaViewModel.state, ::renderState)
+        observe(cinemaViewModel.observableState, ::renderState)
 
         savedInstanceState ?: cinemaViewModel.dispatch(CinemaAction.LoadSchedule)
     }

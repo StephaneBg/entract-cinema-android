@@ -20,18 +20,18 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ui.details.DetailsFragment
-import com.cinema.entract.app.ui.event.EventDialogFragment
 import com.cinema.entract.app.ui.information.InformationFragment
 import com.cinema.entract.app.ui.onscreen.OnScreenFragment
 import com.cinema.entract.app.ui.schedule.ScheduleFragment
 import com.cinema.entract.app.ui.settings.SettingsFragment
-import com.cinema.entract.app.ui.settings.SettingsViewModel
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ext.replaceFragment
 import com.cinema.entract.core.ui.BaseActivity
 import com.cinema.entract.core.ui.scrollToTop
+import com.cinema.entract.data.interactor.CinemaUseCase
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.jetbrains.anko.find
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.viewModel
 import org.threeten.bp.LocalDate
 
@@ -40,41 +40,28 @@ class CinemaActivity : BaseActivity() {
     private val cinemaViewModel by viewModel<CinemaViewModel>()
     private val navViewModel by viewModel<NavigationViewModel>()
     private val tagViewModel by viewModel<TagViewModel>()
-    private val settingsViewModel by viewModel<SettingsViewModel>()
+    private val useCase by inject<CinemaUseCase>()
 
-    private var onScreenState: CinemaState.OnScreen? = null
     private lateinit var bottomNav: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(
-            if (settingsViewModel.isDarkMode()) R.style.Theme_Cinema_Dark
+            if (useCase.isDarkMode()) R.style.Theme_Cinema_Dark
             else R.style.Theme_Cinema_Light
         )
         setContentView(R.layout.activity_cinema)
         initBottomNavigation()
 
-        savedInstanceState ?: showFragment(OnScreenFragment.newInstance())
-        observe(cinemaViewModel.state, ::renderState)
-        observe(navViewModel.state, ::manageNavigation)
-    }
+        observe(navViewModel.observableState, ::manageNavigation)
 
-    private fun renderState(state: CinemaState?) {
-        onScreenState = null
-        when (state) {
-            is CinemaState.OnScreen -> {
-                onScreenState = state
-                state.eventUrl.getContent()?.let {
-                    EventDialogFragment.show(supportFragmentManager, it)
-                }
-            }
-        }
+        savedInstanceState ?: showFragment(OnScreenFragment.newInstance())
     }
 
     private fun manageNavigation(state: NavState?) {
         when (state) {
-            is NavState.Home -> bottomNav.selectedItemId = R.id.on_screen
-            is NavState.OnScreen -> when (val fragment = displayedFragment()) {
+            NavState.Home -> bottomNav.selectedItemId = R.id.on_screen
+            NavState.OnScreen -> when (val fragment = displayedFragment()) {
                 is OnScreenFragment -> {
                     if (!fragment.scrollToTop() && !fragment.isTodayDisplayed())
                         cinemaViewModel.dispatch(CinemaAction.LoadMovies(LocalDate.now()))
@@ -92,7 +79,7 @@ class CinemaActivity : BaseActivity() {
                     tagViewModel.dispatch(TagAction.Schedule)
                 }
             }
-            is NavState.Details -> showFragment(DetailsFragment.newInstance(), true)
+            NavState.Details -> showFragment(DetailsFragment.newInstance(), true)
             NavState.Info -> showFragment(InformationFragment.newInstance())
             NavState.Settings -> showFragment(SettingsFragment.newInstance())
             NavState.Back -> when (val fragment = displayedFragment()) {

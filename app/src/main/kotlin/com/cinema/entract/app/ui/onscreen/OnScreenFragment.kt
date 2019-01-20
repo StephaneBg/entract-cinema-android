@@ -21,7 +21,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,6 +31,7 @@ import com.cinema.entract.app.ui.CinemaState
 import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.app.ui.NavAction
 import com.cinema.entract.app.ui.NavigationViewModel
+import com.cinema.entract.app.ui.event.EventDialogFragment
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ui.BaseLceFragment
@@ -53,9 +53,6 @@ class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
     private lateinit var date: TextView
 
     private var currentState: CinemaState.OnScreen? = null
-    private val animController by lazy {
-        AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.layout_animation_fall_down)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,7 +76,7 @@ class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
         }
         date = find(R.id.date)
 
-        observe(cinemaViewModel.state, ::renderState)
+        observe(cinemaViewModel.observableState, ::renderState)
 
         savedInstanceState ?: cinemaViewModel.dispatch(CinemaAction.LoadMovies())
     }
@@ -94,6 +91,7 @@ class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
                 fab.isVisible = null != state.dateRange
                 updateMovies(state.movies)
                 showContent()
+                showEvent(state)
             }
             is CinemaState.Error -> {
                 date.text = getString(R.string.app_name)
@@ -103,7 +101,6 @@ class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
     }
 
     private fun updateMovies(movies: List<Movie>) {
-        contentView.recyclerView.layoutAnimation = animController
         onScreenAdapter.updateMovies(movies)
         showContent()
         contentView.recyclerView.scheduleLayoutAnimation()
@@ -139,6 +136,12 @@ class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
                 datePicker.maxDate = it.maximumDate
                 show()
             }
+        }
+    }
+
+    private fun showEvent(state: CinemaState.OnScreen) {
+        state.eventUrl.getContent()?.let {
+            EventDialogFragment.show(childFragmentManager, it)
         }
     }
 

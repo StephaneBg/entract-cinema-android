@@ -32,7 +32,7 @@ object Versions {
     val retrofit = "2.5.0"
     val retrofitCoroutines = "0.9.2"
     val anko = "0.10.8"
-    val koin = "2.0.0-alpha-4"
+    val koin = "2.0.0-alpha-6"
     val ktx = "1.1.0-alpha03"
     val glide = "4.8.0"
     val jsr310 = "1.1.1"

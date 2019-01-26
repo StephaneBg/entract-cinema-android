@@ -47,13 +47,13 @@ class CinemaViewModel(
     }
 
     private fun retrieveMovies(date: LocalDate? = null) {
-        innerState.postValue(CinemaState.Loading())
+        state.postValue(CinemaState.Loading())
         launchAsync(
             {
                 val movies = useCase.getMovies(date)
                 val dateRange = useCase.getDateRange()
                 eventUrl ?: getEventUrl()
-                innerState.postValue(
+                state.postValue(
                     CinemaState.OnScreen(
                         movies.map { movieMapper.mapToUi(it) },
                         useCase.getDate(),
@@ -64,7 +64,7 @@ class CinemaViewModel(
             },
             {
                 Timber.e(it)
-                innerState.postValue(CinemaState.Error(it))
+                state.postValue(CinemaState.Error(it))
             }
         )
     }
@@ -76,33 +76,33 @@ class CinemaViewModel(
     }
 
     private fun retrieveDetails(movie: Movie) {
-        innerState.postValue(CinemaState.Loading())
+        state.postValue(CinemaState.Loading())
         launchAsync(
             {
                 val retrievedMovie = useCase.getMovie(movieMapper.mapToData(movie))
-                innerState.postValue(
+                state.postValue(
                     CinemaState.Details(useCase.getDate(), movieMapper.mapToUi(retrievedMovie))
                 )
             },
             {
                 Timber.e(it)
-                innerState.postValue(CinemaState.Error(it, movie))
+                state.postValue(CinemaState.Error(it, movie))
             }
         )
     }
 
     private fun retrieveSchedule() {
-        innerState.postValue(CinemaState.Loading())
+        state.postValue(CinemaState.Loading())
         launchAsync(
             {
                 val schedule = useCase.getSchedule()
-                innerState.postValue(
+                state.postValue(
                     CinemaState.Schedule(useCase.getDate(), scheduleMapper.mapToUi(schedule))
                 )
             },
             {
                 Timber.e(it)
-                innerState.postValue(CinemaState.Error(it))
+                state.postValue(CinemaState.Error(it))
             }
         )
     }

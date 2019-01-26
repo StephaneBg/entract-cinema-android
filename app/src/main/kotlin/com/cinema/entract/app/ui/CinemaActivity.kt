@@ -87,6 +87,7 @@ class CinemaActivity : BaseActivity() {
                     if (fragment.isTodayDisplayed()) super.onBackPressed()
                     else cinemaViewModel.dispatch(CinemaAction.LoadMovies(LocalDate.now()))
                 }
+                is DetailsFragment -> supportFragmentManager.popBackStack()
                 else -> {
                     supportFragmentManager.popBackStack()
                     showFragment(OnScreenFragment.newInstance())

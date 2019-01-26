@@ -25,15 +25,15 @@ class StartupViewModel(private val useCase: CinemaUseCase) :
 
     fun prefetch() = launchAsync(
         {
-            innerState.postValue(StartupState(isLoading = true))
+            state.postValue(StartupState(isLoading = true))
             useCase.getMovies()
             useCase.getDateRange()
             val eventUrl = useCase.getEventUrl()
-            innerState.postValue(StartupState(isIdle = true, eventUrl = eventUrl))
+            state.postValue(StartupState(isIdle = true, eventUrl = eventUrl))
         },
         {
             Timber.e(it)
-            innerState.postValue(StartupState(isLoadError = true))
+            state.postValue(StartupState(isLoadError = true))
         }
     )
 }

@@ -103,7 +103,6 @@ class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
     private fun updateMovies(movies: List<Movie>) {
         onScreenAdapter.updateMovies(movies)
         showContent()
-        contentView.recyclerView.scheduleLayoutAnimation()
     }
 
     private fun manageError(exception: Throwable?) {

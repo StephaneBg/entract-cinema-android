@@ -45,7 +45,7 @@ class NavigationViewModel : ScopedViewModel<NavAction, NavState>() {
             is NavAction.Info -> NavState.Info
             is NavAction.Settings -> NavState.Settings
         }
-        innerState.postValue(newState)
+        state.postValue(newState)
     }
 }
 

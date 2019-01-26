@@ -35,8 +35,8 @@ open class ScopedViewModel<Action, State> : ViewModel(), CoroutineScope {
         get() = job + Dispatchers.Main
 
     private val actions = Channel<Action>()
-    protected val innerState = MutableLiveData<State>()
-    val observableState: LiveData<State> = innerState
+    protected val state = MutableLiveData<State>()
+    val observableState: LiveData<State> = state
 
     init {
         launch {

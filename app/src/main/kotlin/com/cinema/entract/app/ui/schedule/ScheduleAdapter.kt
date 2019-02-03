@@ -31,7 +31,7 @@ import com.cinema.entract.app.ui.CinemaAction
 import com.cinema.entract.app.ui.NavAction
 import com.cinema.entract.app.ui.NavOrigin
 import com.cinema.entract.core.ext.inflate
-import org.jetbrains.anko.find
+import com.cinema.entract.core.ui.bindView
 
 class ScheduleAdapter(private val selection: (CinemaAction, NavAction) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -92,13 +92,13 @@ class ScheduleAdapter(private val selection: (CinemaAction, NavAction) -> Unit) 
     inner class MovieHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         ScheduleViewHolder<MovieEntry> {
 
-        private val schedule = itemView.find<TextView>(R.id.schedule)
-        private val title = itemView.find<TextView>(R.id.title)
-        private val originalVersion = itemView.find<ImageView>(R.id.originalVersion)
-        private val threeDimension = itemView.find<ImageView>(R.id.threeDimension)
-        private val underTwelve = itemView.find<ImageView>(R.id.underTwelve)
-        private val explicitContent = itemView.find<ImageView>(R.id.explicitContent)
-        private val artMovie = itemView.find<ImageView>(R.id.artMovie)
+        private val schedule by bindView<TextView>(R.id.schedule)
+        private val title by bindView<TextView>(R.id.title)
+        private val originalVersion by bindView<ImageView>(R.id.originalVersion)
+        private val threeDimension by bindView<ImageView>(R.id.threeDimension)
+        private val underTwelve by bindView<ImageView>(R.id.underTwelve)
+        private val explicitContent by bindView<ImageView>(R.id.explicitContent)
+        private val artMovie by bindView<ImageView>(R.id.artMovie)
 
         override fun bind(model: MovieEntry) {
             schedule.text = model.movie.schedule

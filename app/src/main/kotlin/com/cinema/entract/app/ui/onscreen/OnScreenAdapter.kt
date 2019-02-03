@@ -29,7 +29,7 @@ import com.cinema.entract.app.ext.displayPlaceHolder
 import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.core.ext.inflate
-import org.jetbrains.anko.find
+import com.cinema.entract.core.ui.bindView
 
 class OnScreenAdapter(private val selection: (Movie) -> Unit) :
     RecyclerView.Adapter<OnScreenAdapter.ViewHolder>() {
@@ -50,15 +50,15 @@ class OnScreenAdapter(private val selection: (Movie) -> Unit) :
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val cover = itemView.find<ImageView>(R.id.cover)
-        private val title = itemView.find<TextView>(R.id.title)
-        private val schedule = itemView.find<TextView>(R.id.schedule)
-        private val duration = itemView.find<TextView>(R.id.duration)
-        private val originalVersion = itemView.find<ImageView>(R.id.originalVersion)
-        private val threeDimension = itemView.find<ImageView>(R.id.threeDimension)
-        private val underTwelve = itemView.find<ImageView>(R.id.underTwelve)
-        private val explicitContent = itemView.find<ImageView>(R.id.explicitContent)
-        private val artMovie = itemView.find<ImageView>(R.id.artMovie)
+        private val cover by bindView<ImageView>(R.id.cover)
+        private val title by bindView<TextView>(R.id.title)
+        private val schedule by bindView<TextView>(R.id.schedule)
+        private val duration by bindView<TextView>(R.id.duration)
+        private val originalVersion by bindView<ImageView>(R.id.originalVersion)
+        private val threeDimension by bindView<ImageView>(R.id.threeDimension)
+        private val underTwelve by bindView<ImageView>(R.id.underTwelve)
+        private val explicitContent by bindView<ImageView>(R.id.explicitContent)
+        private val artMovie by bindView<ImageView>(R.id.artMovie)
 
         @SuppressLint("SetTextI18n")
         fun bind(movie: Movie) {

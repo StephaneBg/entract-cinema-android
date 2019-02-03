@@ -35,6 +35,7 @@ import com.cinema.entract.app.ui.event.EventDialogFragment
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ui.BaseLceFragment
+import com.cinema.entract.core.ui.bindView
 import com.cinema.entract.core.widget.AppBarRecyclerViewOnScrollListener
 import com.cinema.entract.core.widget.EmptinessLayout
 import com.cinema.entract.data.ext.isToday
@@ -47,10 +48,10 @@ class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
 
     private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
     private val navViewModel by sharedViewModel<NavigationViewModel>()
-    private lateinit var onScreenAdapter: OnScreenAdapter
     private lateinit var datePickerDialog: DatePickerDialog
-    private lateinit var fab: FloatingActionButton
-    private lateinit var date: TextView
+    private val onScreenAdapter = OnScreenAdapter(::onMovieSelected)
+    private val fab by bindView<FloatingActionButton>(R.id.fab)
+    private val date by bindView<TextView>(R.id.date)
 
     private var currentState: CinemaState.OnScreen? = null
 
@@ -63,7 +64,6 @@ class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        onScreenAdapter = OnScreenAdapter(::onMovieSelected)
         with(contentView) {
             recyclerView.layoutManager = LinearLayoutManager(activity)
             recyclerView.setHasFixedSize(true)
@@ -71,10 +71,7 @@ class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
             setAdapter(onScreenAdapter)
         }
 
-        fab = find<FloatingActionButton>(R.id.fab).apply {
-            setOnClickListener { displayDatePicker() }
-        }
-        date = find(R.id.date)
+        fab.setOnClickListener { displayDatePicker() }
 
         observe(cinemaViewModel.observableState, ::renderState)
 

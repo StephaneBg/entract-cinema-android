@@ -19,10 +19,10 @@ import org.gradle.api.JavaVersion
 object Versions {
     val java = JavaVersion.VERSION_1_8
     val androidGradle = "3.3.0"
-    val kotlin = "1.3.20"
+    val kotlin = "1.3.21"
     val googleServices = "4.2.0"
     val coroutines = "1.1.1"
-    val appcompat = "1.1.0-alpha01"
+    val appcompat = "1.1.0-alpha02"
     val vectorDrawable = "1.1.0-alpha01"
     val recyclerView = "1.1.0-alpha02"
     val material = "1.1.0-alpha03"

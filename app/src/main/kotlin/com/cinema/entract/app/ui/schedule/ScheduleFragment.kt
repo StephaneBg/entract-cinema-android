@@ -22,6 +22,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cinema.entract.app.R
+import com.cinema.entract.app.model.DayHeader
+import com.cinema.entract.app.model.MovieEntry
+import com.cinema.entract.app.model.WeekHeader
 import com.cinema.entract.app.ui.CinemaAction
 import com.cinema.entract.app.ui.CinemaState
 import com.cinema.entract.app.ui.CinemaViewModel
@@ -32,13 +35,14 @@ import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ui.BaseLceFragment
 import com.cinema.entract.core.widget.AppBarRecyclerViewOnScrollListener
 import com.cinema.entract.core.widget.EmptinessLayout
+import com.cinema.entract.core.widget.GenericRecyclerViewAdapter
 import org.koin.androidx.viewmodel.ext.sharedViewModel
 
 class ScheduleFragment : BaseLceFragment<EmptinessLayout>() {
 
     private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
     private val navViewModel by sharedViewModel<NavigationViewModel>()
-    private val scheduleAdapter = ScheduleAdapter(::handleSelection)
+    private val scheduleAdapter = GenericRecyclerViewAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,11 +69,17 @@ class ScheduleFragment : BaseLceFragment<EmptinessLayout>() {
         when (state) {
             is CinemaState.Loading -> showLoading()
             is CinemaState.Schedule -> {
-                scheduleAdapter.updateSchedule(state.schedule)
+                val adapters = state.schedule.map {
+                    when (it) {
+                        is WeekHeader -> WeekHeaderAdapter(it)
+                        is DayHeader -> DayHeaderAdapter(it, ::handleSelection)
+                        is MovieEntry -> MovieAdapter(it, ::handleSelection)
+                    }
+                }
+                scheduleAdapter.updateItems(adapters)
                 showContent()
             }
             is CinemaState.Error -> showError(state.error) {
-
                 cinemaViewModel.dispatch(CinemaAction.LoadSchedule)
             }
         }

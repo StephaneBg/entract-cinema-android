@@ -26,9 +26,9 @@ import com.cinema.entract.app.R
 import org.jetbrains.anko.colorAttr
 import org.jetbrains.anko.dip
 
-class ScheduleItemDecorator(val context: Context) : RecyclerView.ItemDecoration() {
+class ScheduleItemDecorator(private val context: Context) : RecyclerView.ItemDecoration() {
 
-    private val keyline = context.resources.getDimension(R.dimen.keyline_list)
+    private val keyLine = context.resources.getDimension(R.dimen.keyline_list)
     private val marginMedium =
         context.resources.getDimension(R.dimen.margin_padding_size_medium).toInt()
     private val height = context.dip(1)
@@ -47,9 +47,9 @@ class ScheduleItemDecorator(val context: Context) : RecyclerView.ItemDecoration(
             outRect.setEmpty()
         } else {
             when (parent.adapter?.getItemViewType(position)) {
-                ScheduleAdapter.TYPE_WEEK_HEADER -> outRect.top = marginMedium
-                ScheduleAdapter.TYPE_DAY_HEADER -> outRect.setEmpty()
-                ScheduleAdapter.TYPE_MOVIE -> outRect.bottom = height
+                R.layout.list_item_schedule_week_header -> outRect.top = marginMedium
+                R.layout.list_item_schedule_day_header -> outRect.setEmpty()
+                R.layout.list_item_schedule_movie -> outRect.bottom = height
             }
         }
     }
@@ -61,18 +61,18 @@ class ScheduleItemDecorator(val context: Context) : RecyclerView.ItemDecoration(
             val position = parent.getChildAdapterPosition(view)
 
             if (i < itemCount - 1 &&
-                ScheduleAdapter.TYPE_MOVIE == parent.adapter?.getItemViewType(position)
+                R.layout.list_item_schedule_movie == parent.adapter?.getItemViewType(position)
             ) {
                 when (parent.adapter?.getItemViewType(position + 1)) {
-                    ScheduleAdapter.TYPE_MOVIE -> c.drawRect(
-                        view.left + view.paddingLeft + keyline,
+                    R.layout.list_item_schedule_movie -> c.drawRect(
+                        view.left + view.paddingLeft + keyLine,
                         view.bottom.toFloat(),
                         view.right.toFloat(),
                         (view.bottom + height).toFloat(),
                         paint
                     )
 
-                    ScheduleAdapter.TYPE_WEEK_HEADER -> c.drawRect(
+                    R.layout.list_item_schedule_week_header -> c.drawRect(
                         view.left.toFloat(),
                         view.bottom.toFloat(),
                         view.right.toFloat(),

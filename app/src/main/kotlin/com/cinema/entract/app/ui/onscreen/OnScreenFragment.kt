@@ -38,6 +38,7 @@ import com.cinema.entract.core.ui.BaseLceFragment
 import com.cinema.entract.core.ui.bindView
 import com.cinema.entract.core.widget.AppBarRecyclerViewOnScrollListener
 import com.cinema.entract.core.widget.EmptinessLayout
+import com.cinema.entract.core.widget.GenericRecyclerViewAdapter
 import com.cinema.entract.data.ext.isToday
 import com.cinema.entract.data.ext.longFormatToUi
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -49,7 +50,7 @@ class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
     private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
     private val navViewModel by sharedViewModel<NavigationViewModel>()
     private lateinit var datePickerDialog: DatePickerDialog
-    private val onScreenAdapter = OnScreenAdapter(::onMovieSelected)
+    private val onScreenAdapter = GenericRecyclerViewAdapter()
     private val fab by bindView<FloatingActionButton>(R.id.fab)
     private val date by bindView<TextView>(R.id.date)
 
@@ -98,7 +99,8 @@ class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
     }
 
     private fun updateMovies(movies: List<Movie>) {
-        onScreenAdapter.updateMovies(movies)
+        val adapters = movies.map { MovieAdapter(it, ::onMovieSelected) }
+        onScreenAdapter.updateItems(adapters)
         showContent()
     }
 

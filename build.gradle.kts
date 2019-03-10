@@ -17,7 +17,7 @@ import org.jlleitschuh.gradle.ktlint.KtlintExtension
  */
 
 plugins {
-    id("com.github.ben-manes.versions") version "0.20.0"
+    id("com.github.ben-manes.versions") version "0.21.0"
     id("org.jlleitschuh.gradle.ktlint") version "7.1.0"
 }
 

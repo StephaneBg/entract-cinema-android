@@ -19,27 +19,20 @@ package com.cinema.entract.core.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
 
-open class ScopedViewModel<Action, State> : ViewModel(), CoroutineScope {
-
-    private val job = Job()
-    override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.Main
+open class BaseViewModel<Action, State> : ViewModel() {
 
     private val actions = Channel<Action>()
     protected val state = MutableLiveData<State>()
     val observableState: LiveData<State> = state
 
     init {
-        launch {
+        viewModelScope.launch {
             actions.consumeEach {
                 bindActions(it)
             }
@@ -50,7 +43,7 @@ open class ScopedViewModel<Action, State> : ViewModel(), CoroutineScope {
         tryBlock: suspend () -> T,
         catchBlock: (Throwable) -> T
     ) {
-        launch {
+        viewModelScope.launch {
             try {
                 tryBlock()
             } catch (throwable: Throwable) {
@@ -60,14 +53,8 @@ open class ScopedViewModel<Action, State> : ViewModel(), CoroutineScope {
     }
 
     fun dispatch(action: Action) {
-        launch { actions.send(action) }
+        viewModelScope.launch { actions.send(action) }
     }
 
     protected open suspend fun bindActions(action: Action) = Unit
-
-    override fun onCleared() {
-        super.onCleared()
-        job.cancel()
-        actions.close()
-    }
 }

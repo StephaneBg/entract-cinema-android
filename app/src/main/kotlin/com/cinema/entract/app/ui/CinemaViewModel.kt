@@ -22,8 +22,8 @@ import com.cinema.entract.app.mapper.ScheduleMapper
 import com.cinema.entract.app.model.DateRange
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.model.ScheduleEntry
+import com.cinema.entract.core.ui.BaseViewModel
 import com.cinema.entract.core.ui.Event
-import com.cinema.entract.core.ui.ScopedViewModel
 import com.cinema.entract.data.ext.toEpochMilliSecond
 import com.cinema.entract.data.interactor.CinemaUseCase
 import org.threeten.bp.LocalDate
@@ -36,7 +36,7 @@ class CinemaViewModel(
     private val movieMapper: MovieMapper,
     private val scheduleMapper: ScheduleMapper,
     private val dateRangeMapper: DateRangeMapper
-) : ScopedViewModel<CinemaAction, CinemaState>() {
+) : BaseViewModel<CinemaAction, CinemaState>() {
 
     private var eventUrl: Event<String?>? = null
 

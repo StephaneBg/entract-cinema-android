@@ -16,12 +16,12 @@
 
 package com.cinema.entract.app.ui.startup
 
-import com.cinema.entract.core.ui.ScopedViewModel
+import com.cinema.entract.core.ui.BaseViewModel
 import com.cinema.entract.data.interactor.CinemaUseCase
 import timber.log.Timber
 
 class StartupViewModel(private val useCase: CinemaUseCase) :
-    ScopedViewModel<Nothing, StartupState>() {
+    BaseViewModel<Nothing, StartupState>() {
 
     fun prefetch() = launchAsync(
         {

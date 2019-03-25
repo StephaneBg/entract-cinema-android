@@ -36,7 +36,7 @@ import com.cinema.entract.core.ui.BaseLceFragment
 import com.cinema.entract.core.widget.AppBarRecyclerViewOnScrollListener
 import com.cinema.entract.core.widget.EmptinessLayout
 import com.cinema.entract.core.widget.GenericRecyclerViewAdapter
-import org.koin.androidx.viewmodel.ext.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class ScheduleFragment : BaseLceFragment<EmptinessLayout>() {
 

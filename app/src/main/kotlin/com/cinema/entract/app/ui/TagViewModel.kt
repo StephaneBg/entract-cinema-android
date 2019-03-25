@@ -16,10 +16,10 @@
 
 package com.cinema.entract.app.ui
 
-import com.cinema.entract.core.ui.ScopedViewModel
+import com.cinema.entract.core.ui.BaseViewModel
 import com.cinema.entract.data.interactor.TagUseCase
 
-class TagViewModel(private val useCase: TagUseCase) : ScopedViewModel<TagAction, Nothing>() {
+class TagViewModel(private val useCase: TagUseCase) : BaseViewModel<TagAction, Nothing>() {
 
     override suspend fun bindActions(action: TagAction) = launchAsync(
         {

@@ -32,7 +32,7 @@ import com.cinema.entract.data.interactor.CinemaUseCase
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.jetbrains.anko.find
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.threeten.bp.LocalDate
 
 class CinemaActivity : BaseActivity() {

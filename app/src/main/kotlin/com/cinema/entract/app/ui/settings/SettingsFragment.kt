@@ -32,7 +32,7 @@ import com.cinema.entract.data.interactor.CinemaUseCase
 import com.google.android.material.switchmaterial.SwitchMaterial
 import org.jetbrains.anko.startActivity
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class SettingsFragment : BaseFragment() {
 

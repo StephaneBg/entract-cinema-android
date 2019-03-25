@@ -16,9 +16,9 @@
 
 package com.cinema.entract.app.ui
 
-import com.cinema.entract.core.ui.ScopedViewModel
+import com.cinema.entract.core.ui.BaseViewModel
 
-class NavigationViewModel : ScopedViewModel<NavAction, NavState>() {
+class NavigationViewModel : BaseViewModel<NavAction, NavState>() {
 
     override suspend fun bindActions(action: NavAction) {
         val newState = when (action) {

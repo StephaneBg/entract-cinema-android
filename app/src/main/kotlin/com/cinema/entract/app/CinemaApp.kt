@@ -24,10 +24,7 @@ import com.cinema.entract.data.di.dataModule
 import com.cinema.entract.remote.di.remoteModule
 import com.jakewharton.threetenabp.AndroidThreeTen
 import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
-import org.koin.core.logger.EmptyLogger
-import org.koin.core.logger.Level
 import timber.log.Timber
 
 class CinemaApp : Application() {
@@ -39,7 +36,6 @@ class CinemaApp : Application() {
         if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
 
         startKoin {
-            androidLogger(Level.DEBUG, EmptyLogger())
             androidContext(this@CinemaApp)
             modules(
                 coreModule,

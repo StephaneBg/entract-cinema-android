@@ -14,27 +14,15 @@
   ~ limitations under the License.
   -->
 <resources>
-    <color name="primary">@color/gray_lighter</color>
+    <color name="primary">@color/black_lighter</color>
     <color name="primary_dark">@color/black_darker</color>
-    <color name="on_primary">@color/gray_darker</color>
+    <color name="on_primary">@color/white</color>
 
-    <color name="secondary">@color/red_darker</color>
+    <color name="secondary">@color/red_lighter</color>
     <color name="on_secondary">@color/white</color>
 
-    <color name="on_background">@color/gray_darker</color>
+    <color name="on_background">@color/gray_lighter</color>
 
-    <color name="surface">@color/gray_lighter</color>
-    <color name="on_surface">@color/gray_darker</color>
-
-
-    <color name="white">#FFFFFF</color>
-
-    <color name="black_lighter">#202020</color>
-    <color name="black_darker">#262626</color>
-
-    <color name="gray_lighter">#FDFDFD</color>
-    <color name="gray_darker">#666666</color>
-
-    <color name="red_lighter">#EF5350</color>
-    <color name="red_darker">#942102</color>
+    <color name="surface">@color/black_lighter</color>
+    <color name="on_surface">@color/white</color>
 </resources>

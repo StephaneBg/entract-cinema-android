@@ -1,5 +1,3 @@
-import org.jlleitschuh.gradle.ktlint.KtlintExtension
-
 /*
  * Copyright 2018 Stéphane Baiget
  *
@@ -18,7 +16,6 @@ import org.jlleitschuh.gradle.ktlint.KtlintExtension
 
 plugins {
     id("com.github.ben-manes.versions") version "0.21.0"
-    id("org.jlleitschuh.gradle.ktlint") version "7.4.0"
 }
 
 buildscript {
@@ -41,12 +38,5 @@ allprojects {
         google()
         maven("https://jitpack.io")
         maven("https://oss.sonatype.org/content/repositories/snapshots")
-    }
-}
-
-subprojects {
-    apply(plugin = "org.jlleitschuh.gradle.ktlint")
-    configure<KtlintExtension> {
-        android.set(true)
     }
 }

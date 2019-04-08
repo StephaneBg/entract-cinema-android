@@ -14,14 +14,13 @@
   ~ limitations under the License.
   -->
 
-<TextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    style="?attr/textAppearanceBody1"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/margin_padding_size_medium"
-    android:textColor="?attr/colorSecondary"
-    android:textStyle="bold"
-    tools:text="Du 16 au 25 janvier"
-    />
+<resources>
+
+    <style name="Widget.Cinema.Button" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">16dp</item>
+        <item name="rippleColor">?colorOnBackground</item>
+        <item name="android:textColor">?colorOnBackground</item>
+        <item name="iconTint">?colorOnBackground</item>
+        <item name="strokeColor">?colorSecondary</item>
+    </style>
+</resources>

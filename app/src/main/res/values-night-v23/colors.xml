@@ -13,15 +13,6 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-
-<TextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    style="?attr/textAppearanceBody1"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/margin_padding_size_medium"
-    android:textColor="?attr/colorSecondary"
-    android:textStyle="bold"
-    tools:text="Du 16 au 25 janvier"
-    />
+<resources>
+    <color name="primary_dark">@color/black_lighter</color>
+</resources>

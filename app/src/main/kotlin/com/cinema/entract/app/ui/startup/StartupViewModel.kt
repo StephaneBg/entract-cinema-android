@@ -29,7 +29,7 @@ class StartupViewModel(private val useCase: CinemaUseCase) : ViewModel() {
 
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
         Timber.e(exception)
-        innerState.postValue(StartupState(isLoadError = true))
+        innerState.postValue(StartupState(isLoaded = true))
     }
 
     private val innerState = MutableLiveData<StartupState>()
@@ -39,14 +39,15 @@ class StartupViewModel(private val useCase: CinemaUseCase) : ViewModel() {
         innerState.postValue(StartupState(isLoading = true))
         useCase.getMovies()
         useCase.getDateRange()
-        val eventUrl = useCase.getEventUrl()
-        innerState.postValue(StartupState(isIdle = true, eventUrl = eventUrl))
+        innerState.postValue(
+            StartupState(isIdle = true, eventUrl = useCase.getEventUrl().peekContent())
+        )
     }
 }
 
 data class StartupState(
     val isIdle: Boolean = false,
     val isLoading: Boolean = false,
-    val isLoadError: Boolean = false,
+    val isLoaded: Boolean = false,
     val eventUrl: String? = null
 )

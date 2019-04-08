@@ -26,18 +26,18 @@ import com.cinema.entract.app.model.WeekHeader
 import com.cinema.entract.app.ui.CinemaAction
 import com.cinema.entract.app.ui.NavAction
 import com.cinema.entract.app.ui.NavOrigin
-import com.cinema.entract.core.ui.bindView
 import com.cinema.entract.core.widget.BaseViewHolder
 import com.cinema.entract.core.widget.ItemAdapter
+import org.jetbrains.anko.find
 
 class DayHeaderAdapter(
     private val dayHeader: DayHeader,
     private val selection: (CinemaAction, NavAction) -> Unit
 ) : ItemAdapter(R.layout.list_item_schedule_day_header) {
 
-    override fun BaseViewHolder.onBindViewHolder() {
-        (itemView as TextView).text = dayHeader.dateUi
-        itemView.setOnClickListener {
+    override fun BaseViewHolder.onBindViewHolder() = with(itemView as TextView) {
+        text = dayHeader.dateUi
+        setOnClickListener {
             selection(
                 CinemaAction.LoadMovies(dayHeader.date),
                 NavAction.OnScreen(NavOrigin.SCHEDULE)
@@ -49,8 +49,8 @@ class DayHeaderAdapter(
 class WeekHeaderAdapter(private val weekHeader: WeekHeader) :
     ItemAdapter(R.layout.list_item_schedule_week_header) {
 
-    override fun BaseViewHolder.onBindViewHolder() {
-        (itemView as TextView).text = weekHeader.dateUi
+    override fun BaseViewHolder.onBindViewHolder() = with(itemView as TextView) {
+        text = weekHeader.dateUi
     }
 }
 
@@ -59,23 +59,15 @@ class MovieAdapter(
     private val selection: (CinemaAction, NavAction) -> Unit
 ) : ItemAdapter(R.layout.list_item_schedule_movie) {
 
-    private val schedule by bindView<TextView>(R.id.schedule)
-    private val title by bindView<TextView>(R.id.title)
-    private val originalVersion by bindView<ImageView>(R.id.originalVersion)
-    private val threeDimension by bindView<ImageView>(R.id.threeDimension)
-    private val underTwelve by bindView<ImageView>(R.id.underTwelve)
-    private val explicitContent by bindView<ImageView>(R.id.explicitContent)
-    private val artMovie by bindView<ImageView>(R.id.artMovie)
-
-    override fun BaseViewHolder.onBindViewHolder() {
-        schedule.text = model.movie.schedule
-        title.text = model.movie.title
-        originalVersion.isVisible = model.movie.isOriginalVersion
-        threeDimension.isVisible = model.movie.isThreeDimension
-        underTwelve.isVisible = model.movie.isUnderTwelve
-        explicitContent.isVisible = model.movie.isExplicitContent
-        artMovie.isVisible = model.movie.isArtMovie
-        itemView.setOnClickListener {
+    override fun BaseViewHolder.onBindViewHolder() = with(itemView) {
+        find<TextView>(R.id.schedule).text = model.movie.schedule
+        find<TextView>(R.id.title).text = model.movie.title
+        find<ImageView>(R.id.originalVersion).isVisible = model.movie.isOriginalVersion
+        find<ImageView>(R.id.threeDimension).isVisible = model.movie.isThreeDimension
+        find<ImageView>(R.id.underTwelve).isVisible = model.movie.isUnderTwelve
+        find<ImageView>(R.id.explicitContent).isVisible = model.movie.isExplicitContent
+        find<ImageView>(R.id.artMovie).isVisible = model.movie.isArtMovie
+        setOnClickListener {
             selection(CinemaAction.LoadDetails(model.movie), NavAction.Details)
         }
     }

@@ -17,13 +17,12 @@
 package com.cinema.entract.core.ext
 
 import android.content.Context
+import android.content.res.Configuration
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
-import com.cinema.entract.core.R
-import org.jetbrains.anko.colorAttr
+import org.jetbrains.anko.configuration
 
 fun Context.color(@ColorRes id: Int): Int = ContextCompat.getColor(this, id)
 
-fun Context.primaryColor(): Int = colorAttr(R.attr.colorPrimary)
-
-fun Context.secondaryColor(): Int = colorAttr(R.attr.colorSecondary)
+fun Context.isDarkTheme(): Boolean =
+    configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES

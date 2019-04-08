@@ -24,6 +24,6 @@ interface UserPreferencesRepo {
     fun isOnlyOnWifi(): Boolean
     fun setOnlyOnWifi(onlyOnWifi: Boolean)
 
-    fun isDarkMode(): Boolean
-    fun setDarkMode(dark: Boolean)
+    fun getThemeMode(): Int
+    fun setThemeMode(mode: Int)
 }

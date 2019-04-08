@@ -64,7 +64,7 @@ class CinemaViewModel(
                     movies.map { movieMapper.mapToUi(it) },
                     useCase.getDate(),
                     dateRangeMapper.mapToUi(dateRange),
-                    getEventUrl()
+                    useCase.getEventUrl()
                 )
             }
 
@@ -87,11 +87,6 @@ class CinemaViewModel(
                 CinemaState.Error(action.error)
             }
         }
-    }
-
-    private suspend fun getEventUrl(): Event<String?> {
-        val url = useCase.getEventUrl()
-        return Event(if (url.isNotEmpty()) url else null)
     }
 
     fun getSessionSchedule(movie: Movie): Pair<Long, Long> {

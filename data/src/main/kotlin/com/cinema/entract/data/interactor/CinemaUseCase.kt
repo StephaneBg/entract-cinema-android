@@ -17,6 +17,7 @@
 package com.cinema.entract.data.interactor
 
 import com.cinema.entract.core.network.NetworkUtils
+import com.cinema.entract.core.ui.Event
 import com.cinema.entract.data.ext.formatToUTC
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
@@ -29,6 +30,7 @@ class CinemaUseCase(
 ) {
 
     private var currentDate: LocalDate? = null
+    private var eventUrl: Event<String?>? = null
 
     fun getDate(): LocalDate = currentDate ?: LocalDate.now()
 
@@ -51,7 +53,10 @@ class CinemaUseCase(
 
     suspend fun getSchedule(): List<WeekData> = dataStore.getSchedule().filter { it.hasMovies }
 
-    suspend fun getEventUrl(): String = if (isEventEnabled()) dataStore.getEventUrl() else ""
+    suspend fun getEventUrl(): Event<String?> {
+        val url = if (isEventEnabled()) dataStore.getEventUrl().takeIf { it.isNotEmpty() } else null
+        return eventUrl ?: Event(url).also { eventUrl = it }
+    }
 
     private fun canDisplayMedia(): Boolean =
         !dataStore.getUserPreferences().isOnlyOnWifi() || networkUtils.isConnectedOnWifi()
@@ -66,8 +71,7 @@ class CinemaUseCase(
     fun setOnlyOnWifi(onlyOnWifi: Boolean) =
         dataStore.getUserPreferences().setOnlyOnWifi(onlyOnWifi)
 
-    fun isDarkMode(): Boolean = dataStore.getUserPreferences().isDarkMode()
+    fun getThemeMode(): Int = dataStore.getUserPreferences().getThemeMode()
 
-    fun setDarkMode(dark: Boolean) =
-        dataStore.getUserPreferences().setDarkMode(dark)
+    fun setThemeMode(mode: Int) = dataStore.getUserPreferences().setThemeMode(mode)
 }

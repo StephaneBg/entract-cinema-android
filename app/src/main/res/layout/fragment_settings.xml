@@ -17,30 +17,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="?colorPrimary"
-        android:stateListAnimator="@animator/appbar_animator"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
-
-        <TextView
-            android:id="@+id/title"
-            style="?textAppearanceHeadline5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/margin_padding_size_medium"
-            android:text="@string/settings_title"
-            />
-    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
@@ -58,15 +38,29 @@
             android:layout_height="wrap_content"
             >
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/event"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/themeMode"
+                style="?attr/textAppearanceBody1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/margin_padding_size_medium"
-                android:text="@string/settings_event"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/themeModeAction"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/data"
+                tools:text="@string/settings_system_mode"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/themeModeAction"
+                style="@style/Widget.Cinema.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_padding_size_medium"
+                android:text="@string/settings_mode_change"
+                app:layout_constraintBottom_toBottomOf="@id/themeMode"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/themeMode"
+                app:layout_constraintTop_toTopOf="@id/themeMode"
                 />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
@@ -81,15 +75,35 @@
                 />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/dark"
+                android:id="@+id/event"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/margin_padding_size_medium"
-                android:text="@string/settings_dark_mode"
+                android:text="@string/settings_event"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/data"
+                app:layout_constraintTop_toTopOf="parent"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <TextView
+            android:id="@+id/title"
+            style="?textAppearanceHeadline5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_padding_size_medium"
+            android:text="@string/settings_title"
+            />
+    </com.google.android.material.appbar.AppBarLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

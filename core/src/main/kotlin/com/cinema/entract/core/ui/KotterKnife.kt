@@ -24,7 +24,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
-import com.cinema.entract.core.widget.ItemAdapter
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 import androidx.fragment.app.DialogFragment as SupportDialogFragment
@@ -42,9 +41,6 @@ fun <V : View> SupportDialogFragment.bindView(id: Int)
 fun <V : View> SupportFragment.bindView(id: Int)
         : ReadOnlyProperty<SupportFragment, V> = required(id, viewFinder)
 
-fun <V : View> ItemAdapter.bindView(id: Int)
-        : ReadOnlyProperty<ItemAdapter, V> = required(id, viewFinder)
-
 private val View.viewFinder: View.(Int) -> View?
     get() = { findViewById(it) }
 private val Activity.viewFinder: Activity.(Int) -> View?
@@ -53,8 +49,6 @@ private val SupportDialogFragment.viewFinder: SupportDialogFragment.(Int) -> Vie
     get() = { dialog!!.findViewById(it) }
 private val SupportFragment.viewFinder: SupportFragment.(Int) -> View?
     get() = { view!!.findViewById(it) }
-private val ItemAdapter.viewFinder: ItemAdapter.(Int) -> View?
-    get() = { holder!!.itemView.findViewById(it) }
 
 private fun viewNotFound(id: Int, desc: KProperty<*>): Nothing =
     error("View ID $id for '${desc.name}' not found.")

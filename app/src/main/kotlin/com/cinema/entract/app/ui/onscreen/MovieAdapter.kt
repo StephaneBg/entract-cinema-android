@@ -33,22 +33,20 @@ class MovieAdapter(
     private val selection: (Movie) -> Unit
 ) : ItemAdapter(R.layout.list_item_on_screen_movie) {
 
-    override fun BaseViewHolder.onBindViewHolder() {
-        with(itemView) {
-            find<ImageView>(R.id.cover).apply {
-                if (movie.coverUrl.isNotEmpty()) load(movie.coverUrl) else displayPlaceHolder()
-            }
-            find<TextView>(R.id.title).text = movie.title
-            find<TextView>(R.id.schedule).text =
-                context.getString(R.string.on_screen_schedule, movie.schedule)
-            find<TextView>(R.id.duration).text =
-                context.getString(R.string.on_screen_duration, movie.duration)
-            find<ImageView>(R.id.originalVersion).isVisible = movie.isOriginalVersion
-            find<ImageView>(R.id.threeDimension).isVisible = movie.isThreeDimension
-            find<ImageView>(R.id.underTwelve).isVisible = movie.isUnderTwelve
-            find<ImageView>(R.id.explicitContent).isVisible = movie.isExplicitContent
-            find<ImageView>(R.id.artMovie).isInvisible = !movie.isArtMovie
-            setOnClickListener { selection(movie) }
+    override fun BaseViewHolder.onBindViewHolder() = with(itemView) {
+        find<ImageView>(R.id.cover).apply {
+            if (movie.coverUrl.isNotEmpty()) load(movie.coverUrl) else displayPlaceHolder()
         }
+        find<TextView>(R.id.title).text = movie.title
+        find<TextView>(R.id.schedule).text =
+            context.getString(R.string.on_screen_schedule, movie.schedule)
+        find<TextView>(R.id.duration).text =
+            context.getString(R.string.on_screen_duration, movie.duration)
+        find<ImageView>(R.id.originalVersion).isVisible = movie.isOriginalVersion
+        find<ImageView>(R.id.threeDimension).isVisible = movie.isThreeDimension
+        find<ImageView>(R.id.underTwelve).isVisible = movie.isUnderTwelve
+        find<ImageView>(R.id.explicitContent).isVisible = movie.isExplicitContent
+        find<ImageView>(R.id.artMovie).isInvisible = !movie.isArtMovie
+        setOnClickListener { selection(movie) }
     }
 }

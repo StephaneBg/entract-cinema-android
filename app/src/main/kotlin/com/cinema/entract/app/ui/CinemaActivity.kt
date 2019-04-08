@@ -17,6 +17,7 @@
 package com.cinema.entract.app.ui
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ui.details.DetailsFragment
@@ -24,8 +25,10 @@ import com.cinema.entract.app.ui.information.InformationFragment
 import com.cinema.entract.app.ui.onscreen.OnScreenFragment
 import com.cinema.entract.app.ui.schedule.ScheduleFragment
 import com.cinema.entract.app.ui.settings.SettingsFragment
+import com.cinema.entract.core.ext.isDarkTheme
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ext.replaceFragment
+import com.cinema.entract.core.ext.setLightStatusBar
 import com.cinema.entract.core.ui.BaseActivity
 import com.cinema.entract.core.ui.scrollToTop
 import com.cinema.entract.data.interactor.CinemaUseCase
@@ -34,6 +37,7 @@ import org.jetbrains.anko.find
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.threeten.bp.LocalDate
+
 
 class CinemaActivity : BaseActivity() {
 
@@ -46,11 +50,11 @@ class CinemaActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(
-            if (useCase.isDarkMode()) R.style.Theme_Cinema_Dark
-            else R.style.Theme_Cinema_Light
-        )
+
+        AppCompatDelegate.setDefaultNightMode(useCase.getThemeMode())
+
         setContentView(R.layout.activity_cinema)
+        if (!isDarkTheme()) setLightStatusBar()
         initBottomNavigation()
 
         observe(navViewModel.state, ::manageNavigation)
@@ -120,6 +124,7 @@ class CinemaActivity : BaseActivity() {
                     navViewModel.process(NavAction.Schedule(NavOrigin.SCHEDULE))
                     true
                 }
+                bottomNav.selectedItemId -> true
                 R.id.information -> {
                     navViewModel.process(NavAction.Info)
                     true

@@ -43,11 +43,9 @@
         android:layout_marginTop="@dimen/margin_padding_size_small"
         android:layout_marginEnd="@dimen/margin_padding_size_small"
         android:text="@string/event_close"
-        android:textColor="@color/black_darker"
-        app:backgroundTint="@color/white"
+        android:textColor="?attr/colorControlNormal"
+        app:backgroundTint="?android:colorBackground"
         app:icon="@drawable/ic_close_black_24dp"
-        app:iconTint="@color/black_darker"
-        app:rippleColor="@color/gray_darker"
-        app:strokeColor="@color/white"
+        app:iconTint="?attr/colorControlNormal"
         />
 </FrameLayout>

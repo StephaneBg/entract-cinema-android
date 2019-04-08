@@ -16,10 +16,15 @@
 
 package com.cinema.entract.app.ui.settings
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.widget.NestedScrollView
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ui.CinemaAction
@@ -33,6 +38,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 import org.jetbrains.anko.startActivity
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import kotlin.math.max
 
 class SettingsFragment : BaseFragment() {
 
@@ -67,17 +73,63 @@ class SettingsFragment : BaseFragment() {
             }
         }
 
-        find<SwitchMaterial>(R.id.dark).apply {
-            isChecked = useCase.isDarkMode()
-            setOnCheckedChangeListener { _, isChecked ->
-                useCase.setDarkMode(isChecked)
-                requireActivity().run {
-                    startActivity<CinemaActivity>()
-                    finish()
+        find<TextView>(R.id.themeMode).text = getModeText()
+
+        find<Button>(R.id.themeModeAction).setOnClickListener {
+            AlertDialog.Builder(requireContext())
+                .setSingleChoiceItems(getChoices(), getCurrentChoice()) { _, which ->
+                    saveSelectedChoice(which)
+                    requireActivity().run {
+                        startActivity<CinemaActivity>()
+                        finish()
+                    }
                 }
-            }
+                .create()
+                .show()
         }
     }
+
+    private fun getChoices(): Array<String> {
+        val choices = mutableListOf<String>()
+        if (isPieOrAbove()) choices += getString(R.string.settings_system_mode)
+        choices += getString(R.string.settings_light_mode)
+        choices += getString(R.string.settings_dark_mode)
+        choices += getString(R.string.settings_battery_mode)
+        return choices.toTypedArray()
+    }
+
+    private fun getCurrentChoice(): Int {
+        val mode = useCase.getThemeMode()
+        return if (isPieOrAbove()) {
+            if (-1 == mode) 0 else mode
+        } else {
+            max(0, mode - 1)
+        }
+    }
+
+    private fun saveSelectedChoice(which: Int) {
+        val mode = if (isPieOrAbove()) {
+            if (0 == which) -1 else which
+        } else {
+            which + 1
+        }
+        useCase.setThemeMode(mode)
+    }
+
+    private fun getModeText(): String {
+        var mode = useCase.getThemeMode()
+        mode = if (!isPieOrAbove() && AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM == mode)
+            AppCompatDelegate.MODE_NIGHT_NO else mode
+        return when (mode) {
+            AppCompatDelegate.MODE_NIGHT_NO -> getString(R.string.settings_light_mode)
+            AppCompatDelegate.MODE_NIGHT_YES -> getString(R.string.settings_dark_mode)
+            AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY -> getString(R.string.settings_battery_mode)
+            else -> getString(R.string.settings_system_mode)
+        }
+
+    }
+
+    private fun isPieOrAbove(): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.P
 
     companion object {
         fun newInstance(): SettingsFragment = SettingsFragment()

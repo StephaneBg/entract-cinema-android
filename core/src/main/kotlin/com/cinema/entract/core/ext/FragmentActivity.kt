@@ -16,6 +16,8 @@
 
 package com.cinema.entract.core.ext
 
+import android.os.Build
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 
@@ -59,4 +61,12 @@ fun FragmentActivity.replaceFragment(
     setCustomAnimations(animIn, animOut, animIn, animOut)
     replace(frameId, fragment)
     if (addToBackStack) addToBackStack(null)
+}
+
+fun FragmentActivity.setLightStatusBar() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        var flags = window.decorView.systemUiVisibility
+        flags = flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        window.decorView.systemUiVisibility = flags
+    }
 }

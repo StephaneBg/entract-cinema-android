@@ -24,8 +24,7 @@ import com.cinema.entract.core.ext.inflate
 
 class GenericRecyclerViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 
-    var items: List<ItemAdapter> = emptyList()
-        private set
+    private var items: List<ItemAdapter> = emptyList()
 
     fun updateItems(newItems: List<ItemAdapter>, diffResult: DiffUtil.DiffResult? = null) {
         items = newItems
@@ -41,7 +40,6 @@ class GenericRecyclerViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
         return items.first { it.layoutId == layoutId }.onCreateViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) =
         items[position].onBindBaseViewHolder(holder)
-    }
 }

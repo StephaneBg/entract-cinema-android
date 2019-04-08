@@ -21,26 +21,19 @@
     android:layout_height="match_parent"
     >
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBar"
-        android:layout_width="0dp"
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@id/loadingView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?colorPrimary"
-        android:stateListAnimator="@animator/appbar_animator"
+        android:layout_marginTop="@dimen/margin_padding_size_large"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
-
-        <TextView
-            android:id="@+id/date"
-            style="?textAppearanceHeadline5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/margin_padding_size_medium"
-            tools:text="Date"
-            />
-    </com.google.android.material.appbar.AppBarLayout>
+        app:layout_constraintTop_toBottomOf="@id/appBar"
+        tools:visibility="visible"
+        />
 
     <com.cinema.entract.core.widget.EmptinessLayout
         android:id="@id/contentView"
@@ -51,15 +44,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appBar"
         >
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingBottom="@dimen/padding_size_bottom_fab_screen"
-            android:layoutAnimation="@anim/layout_animation_fall_down"
-            tools:listitem="@layout/list_item_on_screen_movie"
-            />
 
         <LinearLayout
             android:id="@id/emptyView"
@@ -75,7 +59,7 @@
                 android:layout_width="96dp"
                 android:layout_height="96dp"
                 android:importantForAccessibility="no"
-                android:tint="?colorOnBackground"
+                android:tint="?attr/colorOnBackground"
                 app:srcCompat="@drawable/ic_movie_black_24dp"
                 />
 
@@ -86,6 +70,15 @@
                 />
         </LinearLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:layoutAnimation="@anim/layout_animation_fall_down"
+            android:paddingBottom="@dimen/padding_size_bottom_fab_screen"
+            tools:listitem="@layout/list_item_on_screen_movie"
+            />
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"
@@ -93,27 +86,13 @@
             android:layout_gravity="bottom|right"
             android:layout_marginRight="@dimen/margin_padding_size_medium"
             android:layout_marginBottom="@dimen/margin_padding_size_medium"
-            android:tint="?colorPrimaryVariant"
+            android:tint="?attr/colorPrimary"
             android:visibility="gone"
             app:srcCompat="@drawable/ic_date_range_black_24dp"
             tools:ignore="RtlHardcoded"
             tools:visibility="visible"
             />
     </com.cinema.entract.core.widget.EmptinessLayout>
-
-    <androidx.core.widget.ContentLoadingProgressBar
-        android:id="@id/loadingView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_padding_size_large"
-        android:indeterminate="true"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appBar"
-        tools:visibility="visible"
-        />
 
     <com.cinema.entract.core.widget.ErrorView
         android:layout_width="wrap_content"
@@ -126,4 +105,24 @@
         app:layout_constraintTop_toBottomOf="@id/appBar"
         tools:visibility="visible"
         />
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <TextView
+            android:id="@+id/date"
+            style="?attr/textAppearanceHeadline5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_padding_size_medium"
+            tools:text="Date"
+            />
+    </com.google.android.material.appbar.AppBarLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

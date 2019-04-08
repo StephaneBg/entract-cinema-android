@@ -21,16 +21,9 @@ import androidx.annotation.LayoutRes
 
 abstract class ItemAdapter(@LayoutRes open val layoutId: Int) {
 
-    var holder: BaseViewHolder? = null
-        private set
-
     fun onCreateViewHolder(itemView: View) = BaseViewHolder(itemView)
 
-    @Suppress("UNCHECKED_CAST")
-    fun onBindBaseViewHolder(holder: BaseViewHolder) {
-        this.holder = holder
-        holder.onBindViewHolder()
-    }
+    fun onBindBaseViewHolder(holder: BaseViewHolder) = holder.onBindViewHolder()
 
     abstract fun BaseViewHolder.onBindViewHolder()
 }

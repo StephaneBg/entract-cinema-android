@@ -48,7 +48,6 @@ dependencies {
     implementation(Libs.koinAndroid)
     implementation(Libs.retrofit)
     implementation(Libs.retrofitConverterMoshi)
-    implementation(Libs.retrofitAdapterCoroutines)
     implementation(Libs.jsr310)
     implementation(Libs.timber)
 }

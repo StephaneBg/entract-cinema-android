@@ -53,7 +53,7 @@ class CinemaActivity : BaseActivity() {
         setContentView(R.layout.activity_cinema)
         initBottomNavigation()
 
-        observe(navViewModel.observableState, ::manageNavigation)
+        observe(navViewModel.state, ::manageNavigation)
 
         savedInstanceState ?: showFragment(OnScreenFragment.newInstance())
     }
@@ -64,7 +64,7 @@ class CinemaActivity : BaseActivity() {
             NavState.OnScreen -> when (val fragment = displayedFragment()) {
                 is OnScreenFragment -> {
                     if (!fragment.scrollToTop() && !fragment.isTodayDisplayed())
-                        cinemaViewModel.dispatch(CinemaAction.LoadMovies(LocalDate.now()))
+                        cinemaViewModel.process(CinemaAction.RefreshMovies(LocalDate.now()))
                 }
                 else -> {
                     supportFragmentManager.popBackStack()
@@ -76,7 +76,7 @@ class CinemaActivity : BaseActivity() {
                 else -> {
                     supportFragmentManager.popBackStack()
                     showFragment(ScheduleFragment.newInstance())
-                    tagViewModel.dispatch(TagAction.Schedule)
+                    tagViewModel.tag(TagAction.Schedule)
                 }
             }
             NavState.Details -> showFragment(DetailsFragment.newInstance(), true)
@@ -85,7 +85,7 @@ class CinemaActivity : BaseActivity() {
             NavState.Back -> when (val fragment = displayedFragment()) {
                 is OnScreenFragment -> {
                     if (fragment.isTodayDisplayed()) super.onBackPressed()
-                    else cinemaViewModel.dispatch(CinemaAction.LoadMovies(LocalDate.now()))
+                    else cinemaViewModel.process(CinemaAction.RefreshMovies(LocalDate.now()))
                 }
                 is DetailsFragment -> supportFragmentManager.popBackStack()
                 else -> {
@@ -105,7 +105,7 @@ class CinemaActivity : BaseActivity() {
             is SettingsFragment -> NavOrigin.SETTINGS
             else -> error("Incorrect origin fragment")
         }
-        navViewModel.dispatch(NavAction.Back(origin))
+        navViewModel.process(NavAction.Back(origin))
     }
 
     private fun initBottomNavigation() {
@@ -113,19 +113,19 @@ class CinemaActivity : BaseActivity() {
         bottomNav.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.on_screen -> {
-                    navViewModel.dispatch(NavAction.OnScreen(NavOrigin.ON_SCREEN))
+                    navViewModel.process(NavAction.OnScreen(NavOrigin.ON_SCREEN))
                     true
                 }
                 R.id.schedule -> {
-                    navViewModel.dispatch(NavAction.Schedule(NavOrigin.SCHEDULE))
+                    navViewModel.process(NavAction.Schedule(NavOrigin.SCHEDULE))
                     true
                 }
                 R.id.information -> {
-                    navViewModel.dispatch(NavAction.Info)
+                    navViewModel.process(NavAction.Info)
                     true
                 }
                 R.id.settings -> {
-                    navViewModel.dispatch(NavAction.Settings)
+                    navViewModel.process(NavAction.Settings)
                     true
                 }
                 else -> false

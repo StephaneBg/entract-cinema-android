@@ -36,43 +36,43 @@ class RemoteRepoImpl(
 ) : RemoteRepo {
 
     override suspend fun getMovies(date: String): List<MovieData> = withContext(Dispatchers.IO) {
-        val movies = service.getMovies(date).await()
+        val movies = service.getMovies(date)
         movies.map { movieMapper.mapToData(it) }
     }
 
     override suspend fun getSchedule(): List<WeekData> = withContext(Dispatchers.IO) {
-        val schedule = service.getSchedule().await()
+        val schedule = service.getSchedule()
         schedule.map { weekMapper.mapToData(it) }
     }
 
     override suspend fun getEventUrl(): String = withContext(Dispatchers.IO) {
-        val event = service.getEvent().await()
+        val event = service.getEvent()
         eventMapper.mapToData(event)
     }
 
     override suspend fun getDateRange(): DateRangeData = withContext(Dispatchers.IO) {
-        val parameters = service.getParameters().await()
+        val parameters = service.getParameters()
         parameters.periode?.let { dateRangeMapper.mapToData(it) }
             ?: error("Incorrect server response")
     }
 
     override suspend fun registerNotifications(token: String) = withContext(Dispatchers.IO) {
-        service.registerNotifications(token = token).await()
+        service.registerNotifications(token = token)
     }
 
     override suspend fun tagSchedule() = withContext(Dispatchers.IO) {
-        service.tagSchedule().await()
+        service.tagSchedule()
     }
 
     override suspend fun tagEvent() = withContext(Dispatchers.IO) {
-        service.tagEvent().await()
+        service.tagEvent()
     }
 
     override suspend fun tagDetails(sessionId: String) = withContext(Dispatchers.IO) {
-        service.tagDetails(sessionId = sessionId).await()
+        service.tagDetails(sessionId = sessionId)
     }
 
     override suspend fun tagCalendar(sessionId: String) = withContext(Dispatchers.IO) {
-        service.tagCalendar(sessionId = sessionId).await()
+        service.tagCalendar(sessionId = sessionId)
     }
 }

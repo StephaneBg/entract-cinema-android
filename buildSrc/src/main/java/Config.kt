@@ -18,26 +18,27 @@ import org.gradle.api.JavaVersion
 
 object Versions {
     val java = JavaVersion.VERSION_1_8
-    val androidGradle = "3.3.2"
-    val kotlin = "1.3.21"
+    val androidGradle = "3.4.0"
+    val kotlin = "1.3.31"
     val googleServices = "4.2.0"
-    val coroutines = "1.1.1"
-    val appcompat = "1.1.0-alpha03"
+    val coroutines = "1.2.1"
+    val appcompat = "1.1.0-alpha04"
     val vectorDrawable = "1.1.0-alpha01"
-    val recyclerView = "1.1.0-alpha03"
-    val material = "1.1.0-alpha04"
-    val constraintLayout = "2.0.0-alpha3"
-    val lifecyle = "2.1.0-alpha03"
+    val recyclerView = "1.1.0-alpha04"
+    val material = "1.1.0-alpha06"
+    val constraintLayout = "2.0.0-alpha5"
+    val lifecyle = "2.1.0-alpha04"
     val timber = "4.7.1"
-    val retrofit = "2.5.0"
+    val retrofit = "2.5.1-SNAPSHOT"
     val retrofitCoroutines = "0.9.2"
     val anko = "0.10.8"
-    val koin = "2.0.0-rc-1"
+    val koin = "2.0.0-rc-3"
+    val kaskade = "0.2.3"
     val ktx = "1.1.0-alpha05"
     val glide = "4.9.0"
     val jsr310 = "1.2.0"
     val firebaseCore = "16.0.8"
-    val firebaseMessaging = "17.5.0"
+    val firebaseMessaging = "17.6.0"
 }
 
 object Build {
@@ -74,6 +75,9 @@ object Libs {
     val retrofitAdapterCoroutines =
         "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${Versions.retrofitCoroutines}"
     val koinAndroid = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
+    val kaskadeCore = "com.github.gumil.kaskade:kaskade:${Versions.kaskade}"
+    val kaskadeLiveData = "com.github.gumil.kaskade:kaskade-livedata:${Versions.kaskade}"
+    val kaskadeCoroutines = "com.github.gumil.kaskade:kaskade-coroutines:${Versions.kaskade}"
     val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
     val jsr310 = "com.jakewharton.threetenabp:threetenabp:${Versions.jsr310}"
 }

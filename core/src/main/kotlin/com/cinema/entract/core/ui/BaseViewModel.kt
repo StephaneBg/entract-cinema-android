@@ -16,45 +16,23 @@
 
 package com.cinema.entract.core.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.consumeEach
-import kotlinx.coroutines.launch
+import io.gumil.kaskade.Action
+import io.gumil.kaskade.Kaskade
+import io.gumil.kaskade.State
+import io.gumil.kaskade.livedata.stateLiveData
+import kotlinx.coroutines.CoroutineExceptionHandler
 
-open class BaseViewModel<Action, State> : ViewModel() {
+abstract class BaseViewModel<ACTION : Action, STATE : State> : ViewModel() {
 
-    private val actions = Channel<Action>()
-    protected val state = MutableLiveData<State>()
-    val observableState: LiveData<State> = state
+    protected abstract val exceptionHandler: CoroutineExceptionHandler
+    protected abstract val stateContainer: Kaskade<ACTION, STATE>
+    val state by lazy { stateContainer.stateLiveData() }
 
-    init {
-        viewModelScope.launch {
-            actions.consumeEach {
-                bindActions(it)
-            }
-        }
+    override fun onCleared() {
+        super.onCleared()
+        stateContainer.unsubscribe()
     }
 
-    protected fun <T> launchAsync(
-        tryBlock: suspend () -> T,
-        catchBlock: (Throwable) -> T
-    ) {
-        viewModelScope.launch {
-            try {
-                tryBlock()
-            } catch (throwable: Throwable) {
-                if (throwable !is CancellationException) catchBlock(throwable)
-            }
-        }
-    }
-
-    fun dispatch(action: Action) {
-        viewModelScope.launch { actions.send(action) }
-    }
-
-    protected open suspend fun bindActions(action: Action) = Unit
+    fun process(action: ACTION) = stateContainer.process(action)
 }

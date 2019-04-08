@@ -60,9 +60,9 @@ class ScheduleFragment : BaseLceFragment<EmptinessLayout>() {
             setAdapter(scheduleAdapter)
         }
 
-        observe(cinemaViewModel.observableState, ::renderState)
+        observe(cinemaViewModel.state, ::renderState)
 
-        savedInstanceState ?: cinemaViewModel.dispatch(CinemaAction.LoadSchedule)
+        savedInstanceState ?: cinemaViewModel.process(CinemaAction.RefreshSchedule)
     }
 
     private fun renderState(state: CinemaState?) {
@@ -80,14 +80,14 @@ class ScheduleFragment : BaseLceFragment<EmptinessLayout>() {
                 showContent()
             }
             is CinemaState.Error -> showError(state.error) {
-                cinemaViewModel.dispatch(CinemaAction.LoadSchedule)
+                cinemaViewModel.process(CinemaAction.RefreshSchedule)
             }
         }
     }
 
     private fun handleSelection(cinemaAction: CinemaAction, navAction: NavAction) {
-        cinemaViewModel.dispatch(cinemaAction)
-        navViewModel.dispatch(navAction)
+        cinemaViewModel.process(cinemaAction)
+        navViewModel.process(navAction)
     }
 
     companion object {

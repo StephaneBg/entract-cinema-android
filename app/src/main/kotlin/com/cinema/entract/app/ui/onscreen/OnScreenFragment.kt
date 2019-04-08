@@ -74,9 +74,9 @@ class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
 
         fab.setOnClickListener { displayDatePicker() }
 
-        observe(cinemaViewModel.observableState, ::renderState)
+        observe(cinemaViewModel.state, ::renderState)
 
-        savedInstanceState ?: cinemaViewModel.dispatch(CinemaAction.LoadMovies())
+        savedInstanceState ?: cinemaViewModel.process(CinemaAction.RefreshMovies())
     }
 
     private fun renderState(state: CinemaState?) {
@@ -105,13 +105,13 @@ class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
     }
 
     private fun manageError(exception: Throwable?) {
-        showError(exception) { cinemaViewModel.dispatch(CinemaAction.LoadMovies()) }
+        showError(exception) { cinemaViewModel.process(CinemaAction.RefreshMovies()) }
         date.text = getString(R.string.app_name)
     }
 
     private fun onMovieSelected(movie: Movie) {
-        cinemaViewModel.dispatch(CinemaAction.LoadDetails(movie))
-        navViewModel.dispatch(NavAction.Details)
+        cinemaViewModel.process(CinemaAction.LoadDetails(movie))
+        navViewModel.process(NavAction.Details)
     }
 
     private fun displayDatePicker() {
@@ -123,7 +123,7 @@ class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
                 R.style.Theme_Cinema_Dialog,
                 { _, year, month, dayOfMonth ->
                     val pickedDate = LocalDate.of(year, month + 1, dayOfMonth)
-                    cinemaViewModel.dispatch(CinemaAction.LoadMovies(pickedDate))
+                    cinemaViewModel.process(CinemaAction.RefreshMovies(pickedDate))
                     datePickerDialog.dismiss()
                 },
                 date.year,

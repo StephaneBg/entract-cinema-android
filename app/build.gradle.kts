@@ -100,6 +100,8 @@ dependencies {
     implementation(Libs.firebaseCore)
     implementation(Libs.firebaseMessaging)
     implementation(Libs.timber)
+    implementation(Libs.kaskadeCore)
+    implementation(Libs.kaskadeCoroutines)
 }
 
 plugins.apply("com.google.gms.google-services")

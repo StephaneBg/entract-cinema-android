@@ -72,7 +72,7 @@ class DetailsFragment : BaseLceFragment<NestedScrollView>() {
         contentView.setOnScrollChangeListener(
             AppBarNestedScrollViewOnScrollListener(find(R.id.appBar))
         )
-        observe(cinemaViewModel.observableState, ::renderState)
+        observe(cinemaViewModel.state, ::renderState)
     }
 
     private fun renderState(state: CinemaState?) {
@@ -81,12 +81,12 @@ class DetailsFragment : BaseLceFragment<NestedScrollView>() {
             is CinemaState.Error -> {
                 find<TextView>(R.id.dateTime).text = getString(R.string.app_name)
                 showError(state.error) {
-                    state.movie?.let { cinemaViewModel.dispatch(CinemaAction.LoadDetails(it)) }
+                    state.movie?.let { cinemaViewModel.process(CinemaAction.LoadDetails(it)) }
                 }
             }
             is CinemaState.Details -> {
                 val movie = state.movie
-                tagViewModel.dispatch(TagAction.Details(movie.sessionId))
+                tagViewModel.tag(TagAction.Details(movie.sessionId))
 
                 find<TextView>(R.id.dateTime).text = getString(
                     R.string.details_date_with_time,
@@ -157,8 +157,8 @@ class DetailsFragment : BaseLceFragment<NestedScrollView>() {
                     find<ImageView>(R.id.originalVersion).isVisible = movie.isOriginalVersion
                     find<ImageView>(R.id.threeDimension).isVisible = movie.isThreeDimension
                     setOnClickListener {
-                        cinemaViewModel.dispatch(CinemaAction.LoadMovies(movie.date))
-                        navViewModel.dispatch(NavAction.OnScreen(NavOrigin.DETAILS))
+                        cinemaViewModel.process(CinemaAction.LoadMovies(movie.date))
+                        navViewModel.process(NavAction.OnScreen(NavOrigin.DETAILS))
                     }
                 }
             }
@@ -193,7 +193,7 @@ class DetailsFragment : BaseLceFragment<NestedScrollView>() {
             .putExtra(Events.DESCRIPTION, getString(R.string.app_name))
             .putExtra(Events.EVENT_LOCATION, getString(R.string.information_address))
             .putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY)
-        tagViewModel.dispatch(TagAction.Calendar(movie.sessionId))
+        tagViewModel.tag(TagAction.Calendar(movie.sessionId))
         startActivity(intent)
     }
 

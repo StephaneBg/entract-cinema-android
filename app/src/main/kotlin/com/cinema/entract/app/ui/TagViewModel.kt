@@ -16,22 +16,26 @@
 
 package com.cinema.entract.app.ui
 
-import com.cinema.entract.core.ui.BaseViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.cinema.entract.data.interactor.TagUseCase
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
-class TagViewModel(private val useCase: TagUseCase) : BaseViewModel<TagAction, Nothing>() {
+class TagViewModel(private val useCase: TagUseCase) : ViewModel() {
 
-    override suspend fun bindActions(action: TagAction) = launchAsync(
-        {
+    fun tag(action: TagAction) = viewModelScope.launch {
+        try {
             when (action) {
                 TagAction.Schedule -> useCase.tagSchedule()
                 TagAction.Event -> useCase.tagEvent()
                 is TagAction.Details -> useCase.tagDetails(action.sessionId)
                 is TagAction.Calendar -> useCase.tagCalendar(action.sessionId)
             }
-        },
-        {}
-    )
+        } catch (e: Exception) {
+            Timber.e(e)
+        }
+    }
 }
 
 sealed class TagAction {

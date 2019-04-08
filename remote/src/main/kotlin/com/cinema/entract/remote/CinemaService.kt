@@ -28,38 +28,38 @@ import retrofit2.http.Query
 interface CinemaService {
 
     @GET("getFilmsJour.php")
-    fun getMovies(@Query("jour") day: String): Deferred<List<MovieRemote>>
+    suspend fun getMovies(@Query("jour") day: String): List<MovieRemote>
 
     @GET("getProgramme.php")
-    fun getSchedule(): Deferred<List<WeekRemote>>
+    suspend fun getSchedule(): List<WeekRemote>
 
     @GET("getParametres.php")
-    fun getParameters(): Deferred<ParametersRemote>
+    suspend fun getParameters(): ParametersRemote
 
     @GET("getLiensEvenement.php")
-    fun getEvent(): Deferred<EventRemote>
+    suspend fun getEvent(): EventRemote
 
     @PUT("registerPushNotifications")
-    fun registerNotifications(
+    suspend fun registerNotifications(
         @Query("type") type: String = "android",
         @Query("deviceToken") token: String
-    ): Deferred<Unit>
+    )
 
     @PUT("updateStatistiques.php")
-    fun tagSchedule(@Query("page") type: String = "page_programme"): Deferred<Unit>
+    suspend fun tagSchedule(@Query("page") type: String = "page_programme")
 
     @PUT("updateStatistiques.php")
-    fun tagEvent(@Query("page") type: String = "page_evt"): Deferred<Unit>
+    suspend fun tagEvent(@Query("page") type: String = "page_evt")
 
     @PUT("updateStatistiques.php")
-    fun tagDetails(
+    suspend fun tagDetails(
         @Query("page") type: String = "page_detail",
         @Query("seance") sessionId: String
-    ): Deferred<Unit>
+    )
 
     @PUT("updateStatistiques.php")
-    fun tagCalendar(
+    suspend fun tagCalendar(
         @Query("page") type: String = "ajout_cal",
         @Query("seance") sessionId: String
-    ): Deferred<Unit>
+    )
 }

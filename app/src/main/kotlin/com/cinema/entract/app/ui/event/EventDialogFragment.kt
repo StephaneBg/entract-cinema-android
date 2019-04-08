@@ -50,7 +50,7 @@ class EventDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        tagViewModel.dispatch(TagAction.Event)
+        tagViewModel.tag(TagAction.Event)
 
         find<ImageView>(R.id.cover).load(
             arguments?.getString(COVER_URL) ?: error("Use show()!")

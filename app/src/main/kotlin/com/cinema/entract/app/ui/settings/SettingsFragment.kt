@@ -63,7 +63,7 @@ class SettingsFragment : BaseFragment() {
             isChecked = useCase.isOnlyOnWifi()
             setOnCheckedChangeListener { _, isChecked ->
                 useCase.setOnlyOnWifi(isChecked)
-                cinemaViewModel.dispatch(CinemaAction.LoadMovies())
+                cinemaViewModel.process(CinemaAction.LoadMovies())
             }
         }
 

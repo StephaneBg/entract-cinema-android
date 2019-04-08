@@ -56,4 +56,6 @@ dependencies {
     implementation(Libs.material)
     implementation(Libs.lifecycle)
     implementation(Libs.timber)
+    implementation(Libs.kaskadeCore)
+    implementation(Libs.kaskadeLiveData)
 }

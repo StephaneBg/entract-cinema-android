@@ -42,31 +42,25 @@ class CacheRepoImpl(
         it.map { movie -> movieMapper.mapToData(movie) }
     }
 
-    override fun cacheMovies(date: String, movies: List<MovieData>): List<MovieData> {
+    override fun cacheMovies(date: String, movies: List<MovieData>): List<MovieData> = movies.also {
         moviesMap[date] = movies.map { movieMapper.mapFromData(it) }
-        return movies
     }
 
     override fun getSchedule(): List<WeekData>? = schedule?.map { weekMapper.mapToData(it) }
 
-    override fun cacheSchedule(weeks: List<WeekData>): List<WeekData> {
+    override fun cacheSchedule(weeks: List<WeekData>): List<WeekData> = weeks.also {
         schedule = weeks.map { weekMapper.mapFromData(it) }
-        return weeks
     }
 
     override fun getDateRange(): DateRangeData? = dateRange?.let {
         dateRangeMapper.mapToData(it)
     }
 
-    override fun cacheDateRange(range: DateRangeData): DateRangeData {
+    override fun cacheDateRange(range: DateRangeData): DateRangeData = range.also {
         dateRange = dateRangeMapper.mapFromData(range)
-        return range
     }
 
     override fun getEventUrl(): String? = eventUrl
 
-    override fun cacheEventUrl(url: String): String {
-        eventUrl = url
-        return url
-    }
+    override fun cacheEventUrl(url: String): String = url.also { eventUrl = url }
 }

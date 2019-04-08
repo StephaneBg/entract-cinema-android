@@ -42,7 +42,7 @@ class StartupActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_startup)
-        observe(viewModel.observableState, ::renderState)
+        observe(viewModel.state, ::renderState)
         viewModel.prefetch()
     }
 

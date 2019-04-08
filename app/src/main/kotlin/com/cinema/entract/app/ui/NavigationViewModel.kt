@@ -17,39 +17,53 @@
 package com.cinema.entract.app.ui
 
 import com.cinema.entract.core.ui.BaseViewModel
+import io.gumil.kaskade.Action
+import io.gumil.kaskade.Kaskade
+import io.gumil.kaskade.State
+import kotlinx.coroutines.CoroutineExceptionHandler
+import timber.log.Timber
 
 class NavigationViewModel : BaseViewModel<NavAction, NavState>() {
 
-    override suspend fun bindActions(action: NavAction) {
-        val newState = when (action) {
-            is NavAction.OnScreen -> {
-                when (action.origin) {
-                    NavOrigin.ON_SCREEN -> NavState.OnScreen
-                    NavOrigin.SCHEDULE,
-                    NavOrigin.DETAILS,
-                    NavOrigin.INFO,
-                    NavOrigin.SETTINGS -> NavState.Home
-                }
+    override val exceptionHandler = CoroutineExceptionHandler { _, exception ->
+        Timber.e(exception)
+    }
+
+    override val stateContainer = Kaskade.create<NavAction, NavState>(NavState.Home) {
+        on<NavAction.OnScreen> {
+            when (action.origin) {
+                NavOrigin.ON_SCREEN -> NavState.OnScreen
+                NavOrigin.SCHEDULE,
+                NavOrigin.DETAILS,
+                NavOrigin.INFO,
+                NavOrigin.SETTINGS -> NavState.Home
             }
-            is NavAction.Schedule -> NavState.Schedule
-            is NavAction.Back -> {
-                when (action.origin) {
-                    NavOrigin.ON_SCREEN,
-                    NavOrigin.DETAILS -> NavState.Back
-                    NavOrigin.SCHEDULE -> NavState.Home
-                    NavOrigin.INFO,
-                    NavOrigin.SETTINGS -> NavState.Home
-                }
-            }
-            is NavAction.Details -> NavState.Details
-            is NavAction.Info -> NavState.Info
-            is NavAction.Settings -> NavState.Settings
         }
-        state.postValue(newState)
+        on<NavAction.Schedule> {
+            NavState.Schedule
+        }
+        on<NavAction.Back> {
+            when (action.origin) {
+                NavOrigin.ON_SCREEN,
+                NavOrigin.DETAILS -> NavState.Back
+                NavOrigin.SCHEDULE -> NavState.Home
+                NavOrigin.INFO,
+                NavOrigin.SETTINGS -> NavState.Home
+            }
+        }
+        on<NavAction.Details> {
+            NavState.Details
+        }
+        on<NavAction.Info> {
+            NavState.Info
+        }
+        on<NavAction.Settings> {
+            NavState.Settings
+        }
     }
 }
 
-sealed class NavAction {
+sealed class NavAction : Action {
     data class OnScreen(val origin: NavOrigin) : NavAction()
     data class Schedule(val origin: NavOrigin) : NavAction()
     data class Back(val origin: NavOrigin) : NavAction()
@@ -58,7 +72,7 @@ sealed class NavAction {
     object Settings : NavAction()
 }
 
-enum class NavState {
+enum class NavState : State {
     Home,
     OnScreen,
     Details,

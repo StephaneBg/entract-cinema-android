@@ -18,7 +18,7 @@ import org.jlleitschuh.gradle.ktlint.KtlintExtension
 
 plugins {
     id("com.github.ben-manes.versions") version "0.21.0"
-    id("org.jlleitschuh.gradle.ktlint") version "7.2.1"
+    id("org.jlleitschuh.gradle.ktlint") version "7.4.0"
 }
 
 buildscript {
@@ -40,6 +40,7 @@ allprojects {
         jcenter()
         google()
         maven("https://jitpack.io")
+        maven("https://oss.sonatype.org/content/repositories/snapshots")
     }
 }
 
@@ -48,8 +49,4 @@ subprojects {
     configure<KtlintExtension> {
         android.set(true)
     }
-}
-
-tasks.register("clean", Delete::class.java) {
-    delete(rootProject.buildDir)
 }

@@ -16,6 +16,7 @@
 
 package com.cinema.entract.app.ui
 
+import androidx.lifecycle.viewModelScope
 import com.cinema.entract.app.mapper.DateRangeMapper
 import com.cinema.entract.app.mapper.MovieMapper
 import com.cinema.entract.app.mapper.ScheduleMapper
@@ -26,6 +27,12 @@ import com.cinema.entract.core.ui.BaseViewModel
 import com.cinema.entract.core.ui.Event
 import com.cinema.entract.data.ext.toEpochMilliSecond
 import com.cinema.entract.data.interactor.CinemaUseCase
+import com.gumil.kaskade.coroutines.coroutines
+import io.gumil.kaskade.Action
+import io.gumil.kaskade.Kaskade
+import io.gumil.kaskade.State
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.plus
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
@@ -38,73 +45,53 @@ class CinemaViewModel(
     private val dateRangeMapper: DateRangeMapper
 ) : BaseViewModel<CinemaAction, CinemaState>() {
 
-    private var eventUrl: Event<String?>? = null
-
-    override suspend fun bindActions(action: CinemaAction) = when (action) {
-        is CinemaAction.LoadMovies -> retrieveMovies(action.date)
-        CinemaAction.LoadSchedule -> retrieveSchedule()
-        is CinemaAction.LoadDetails -> retrieveDetails(action.movie)
+    override val exceptionHandler = CoroutineExceptionHandler { _, exception ->
+        Timber.e(exception)
+        process(CinemaAction.Error(exception))
     }
 
-    private fun retrieveMovies(date: LocalDate? = null) {
-        state.postValue(CinemaState.Loading())
-        launchAsync(
-            {
-                val movies = useCase.getMovies(date)
+    override val stateContainer = Kaskade.create<CinemaAction, CinemaState>(CinemaState.Loading()) {
+        coroutines(viewModelScope + exceptionHandler) {
+            on<CinemaAction.RefreshMovies> {
+                process(CinemaAction.LoadMovies(action.date))
+                CinemaState.Loading()
+            }
+
+            on<CinemaAction.LoadMovies> {
+                val movies = useCase.getMovies(action.date)
                 val dateRange = useCase.getDateRange()
-                eventUrl ?: getEventUrl()
-                state.postValue(
-                    CinemaState.OnScreen(
-                        movies.map { movieMapper.mapToUi(it) },
-                        useCase.getDate(),
-                        dateRangeMapper.mapToUi(dateRange),
-                        eventUrl ?: Event(null)
-                    )
+                CinemaState.OnScreen(
+                    movies.map { movieMapper.mapToUi(it) },
+                    useCase.getDate(),
+                    dateRangeMapper.mapToUi(dateRange),
+                    getEventUrl()
                 )
-            },
-            {
-                Timber.e(it)
-                state.postValue(CinemaState.Error(it))
             }
-        )
-    }
 
-    private suspend fun getEventUrl(): Event<String?>? {
-        val url = useCase.getEventUrl()
-        eventUrl = Event(if (url.isNotEmpty()) url else null)
-        return eventUrl
-    }
-
-    private fun retrieveDetails(movie: Movie) {
-        state.postValue(CinemaState.Loading())
-        launchAsync(
-            {
-                val retrievedMovie = useCase.getMovie(movieMapper.mapToData(movie))
-                state.postValue(
-                    CinemaState.Details(useCase.getDate(), movieMapper.mapToUi(retrievedMovie))
-                )
-            },
-            {
-                Timber.e(it)
-                state.postValue(CinemaState.Error(it, movie))
+            on<CinemaAction.RefreshSchedule> {
+                process(CinemaAction.LoadSchedule)
+                CinemaState.Loading()
             }
-        )
-    }
 
-    private fun retrieveSchedule() {
-        state.postValue(CinemaState.Loading())
-        launchAsync(
-            {
+            on<CinemaAction.LoadSchedule> {
                 val schedule = useCase.getSchedule()
-                state.postValue(
-                    CinemaState.Schedule(useCase.getDate(), scheduleMapper.mapToUi(schedule))
-                )
-            },
-            {
-                Timber.e(it)
-                state.postValue(CinemaState.Error(it))
+                CinemaState.Schedule(useCase.getDate(), scheduleMapper.mapToUi(schedule))
             }
-        )
+
+            on<CinemaAction.LoadDetails> {
+                val retrievedMovie = useCase.getMovie(movieMapper.mapToData(action.movie))
+                CinemaState.Details(useCase.getDate(), movieMapper.mapToUi(retrievedMovie))
+            }
+
+            on<CinemaAction.Error> {
+                CinemaState.Error(action.error)
+            }
+        }
+    }
+
+    private suspend fun getEventUrl(): Event<String?> {
+        val url = useCase.getEventUrl()
+        return Event(if (url.isNotEmpty()) url else null)
     }
 
     fun getSessionSchedule(movie: Movie): Pair<Long, Long> {
@@ -133,14 +120,16 @@ class CinemaViewModel(
     }
 }
 
-sealed class CinemaAction {
+sealed class CinemaAction : Action {
+    data class RefreshMovies(val date: LocalDate? = null) : CinemaAction()
     data class LoadMovies(val date: LocalDate? = null) : CinemaAction()
+    object RefreshSchedule : CinemaAction()
     object LoadSchedule : CinemaAction()
     data class LoadDetails(val movie: Movie) : CinemaAction()
+    data class Error(val error: Throwable?) : CinemaAction()
 }
 
-sealed class CinemaState {
-
+sealed class CinemaState : State {
     data class OnScreen(
         val movies: List<Movie>,
         val date: LocalDate,

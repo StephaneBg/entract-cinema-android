@@ -16,26 +16,32 @@
 
 package com.cinema.entract.app.ui.startup
 
-import com.cinema.entract.core.ui.BaseViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.cinema.entract.data.interactor.CinemaUseCase
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class StartupViewModel(private val useCase: CinemaUseCase) :
-    BaseViewModel<Nothing, StartupState>() {
+class StartupViewModel(private val useCase: CinemaUseCase) : ViewModel() {
 
-    fun prefetch() = launchAsync(
-        {
-            state.postValue(StartupState(isLoading = true))
-            useCase.getMovies()
-            useCase.getDateRange()
-            val eventUrl = useCase.getEventUrl()
-            state.postValue(StartupState(isIdle = true, eventUrl = eventUrl))
-        },
-        {
-            Timber.e(it)
-            state.postValue(StartupState(isLoadError = true))
-        }
-    )
+    private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
+        Timber.e(exception)
+        innerState.postValue(StartupState(isLoadError = true))
+    }
+
+    private val innerState = MutableLiveData<StartupState>()
+    val state: LiveData<StartupState> = innerState
+
+    fun prefetch() = viewModelScope.launch(exceptionHandler) {
+        innerState.postValue(StartupState(isLoading = true))
+        useCase.getMovies()
+        useCase.getDateRange()
+        val eventUrl = useCase.getEventUrl()
+        innerState.postValue(StartupState(isIdle = true, eventUrl = eventUrl))
+    }
 }
 
 data class StartupState(

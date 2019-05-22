@@ -44,7 +44,7 @@ class CinemaNotificationService : FirebaseMessagingService(), CoroutineScope {
     private val job = Job()
 
     override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.Main
+        get() = job + Dispatchers.IO
 
     override fun onNewToken(token: String) {
         Timber.d("New token is $token")

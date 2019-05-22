@@ -24,8 +24,6 @@ import com.cinema.entract.remote.mapper.DateRangeMapper
 import com.cinema.entract.remote.mapper.EventMapper
 import com.cinema.entract.remote.mapper.MovieMapper
 import com.cinema.entract.remote.mapper.WeekMapper
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class RemoteRepoImpl(
     private val service: CinemaService,
@@ -35,44 +33,26 @@ class RemoteRepoImpl(
     private val eventMapper: EventMapper
 ) : RemoteRepo {
 
-    override suspend fun getMovies(date: String): List<MovieData> = withContext(Dispatchers.IO) {
-        val movies = service.getMovies(date)
-        movies.map { movieMapper.mapToData(it) }
-    }
+    override suspend fun getMovies(date: String): List<MovieData> =
+        service.getMovies(date).map { movieMapper.mapToData(it) }
 
-    override suspend fun getSchedule(): List<WeekData> = withContext(Dispatchers.IO) {
-        val schedule = service.getSchedule()
-        schedule.map { weekMapper.mapToData(it) }
-    }
+    override suspend fun getSchedule(): List<WeekData> =
+        service.getSchedule().map { weekMapper.mapToData(it) }
 
-    override suspend fun getEventUrl(): String = withContext(Dispatchers.IO) {
-        val event = service.getEvent()
-        eventMapper.mapToData(event)
-    }
+    override suspend fun getEventUrl(): String = eventMapper.mapToData(service.getEvent())
 
-    override suspend fun getDateRange(): DateRangeData = withContext(Dispatchers.IO) {
-        val parameters = service.getParameters()
-        parameters.periode?.let { dateRangeMapper.mapToData(it) }
-            ?: error("Incorrect server response")
-    }
+    override suspend fun getDateRange(): DateRangeData = service.getParameters().periode?.let {
+        dateRangeMapper.mapToData(it)
+    } ?: error("Incorrect server response")
 
-    override suspend fun registerNotifications(token: String) = withContext(Dispatchers.IO) {
+    override suspend fun registerNotifications(token: String) =
         service.registerNotifications(token = token)
-    }
 
-    override suspend fun tagSchedule() = withContext(Dispatchers.IO) {
-        service.tagSchedule()
-    }
+    override suspend fun tagSchedule() = service.tagSchedule()
 
-    override suspend fun tagEvent() = withContext(Dispatchers.IO) {
-        service.tagEvent()
-    }
+    override suspend fun tagEvent() = service.tagEvent()
 
-    override suspend fun tagDetails(sessionId: String) = withContext(Dispatchers.IO) {
-        service.tagDetails(sessionId = sessionId)
-    }
+    override suspend fun tagDetails(sessionId: String) = service.tagDetails(sessionId = sessionId)
 
-    override suspend fun tagCalendar(sessionId: String) = withContext(Dispatchers.IO) {
-        service.tagCalendar(sessionId = sessionId)
-    }
+    override suspend fun tagCalendar(sessionId: String) = service.tagCalendar(sessionId = sessionId)
 }

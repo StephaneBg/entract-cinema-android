@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cinema.entract.data.interactor.CinemaUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -35,12 +36,13 @@ class StartupViewModel(private val useCase: CinemaUseCase) : ViewModel() {
     private val innerState = MutableLiveData<StartupState>()
     val state: LiveData<StartupState> = innerState
 
-    fun prefetch() = viewModelScope.launch(exceptionHandler) {
+    fun prefetch() = viewModelScope.launch(exceptionHandler + Dispatchers.IO) {
         innerState.postValue(StartupState(isLoading = true))
         useCase.getMovies()
         useCase.getDateRange()
+        val url = useCase.getEventUrl().peekContent()
         innerState.postValue(
-            StartupState(isIdle = true, eventUrl = useCase.getEventUrl().peekContent())
+            StartupState(isIdle = true, eventUrl = url)
         )
     }
 }

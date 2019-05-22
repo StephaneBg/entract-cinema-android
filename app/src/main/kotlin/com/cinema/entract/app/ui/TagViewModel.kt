@@ -19,12 +19,13 @@ package com.cinema.entract.app.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cinema.entract.data.interactor.TagUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class TagViewModel(private val useCase: TagUseCase) : ViewModel() {
 
-    fun tag(action: TagAction) = viewModelScope.launch {
+    fun tag(action: TagAction) = viewModelScope.launch(Dispatchers.IO) {
         try {
             when (action) {
                 TagAction.Schedule -> useCase.tagSchedule()

@@ -32,7 +32,9 @@ import io.gumil.kaskade.Action
 import io.gumil.kaskade.Kaskade
 import io.gumil.kaskade.State
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.plus
+import kotlinx.coroutines.withContext
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
@@ -58,14 +60,17 @@ class CinemaViewModel(
             }
 
             on<CinemaAction.LoadMovies> {
-                val movies = useCase.getMovies(action.date)
-                val dateRange = useCase.getDateRange()
-                CinemaState.OnScreen(
-                    movies.map { movieMapper.mapToUi(it) },
-                    useCase.getDate(),
-                    dateRangeMapper.mapToUi(dateRange),
-                    useCase.getEventUrl()
-                )
+                withContext(Dispatchers.IO) {
+                    val movies = useCase.getMovies(action.date)
+                    val dateRange = useCase.getDateRange()
+                    val url = useCase.getEventUrl()
+                    CinemaState.OnScreen(
+                        movies.map { movieMapper.mapToUi(it) },
+                        useCase.getDate(),
+                        dateRangeMapper.mapToUi(dateRange),
+                        url
+                    )
+                }
             }
 
             on<CinemaAction.RefreshSchedule> {
@@ -74,13 +79,17 @@ class CinemaViewModel(
             }
 
             on<CinemaAction.LoadSchedule> {
-                val schedule = useCase.getSchedule()
-                CinemaState.Schedule(useCase.getDate(), scheduleMapper.mapToUi(schedule))
+                withContext(Dispatchers.IO) {
+                    val schedule = useCase.getSchedule()
+                    CinemaState.Schedule(useCase.getDate(), scheduleMapper.mapToUi(schedule))
+                }
             }
 
             on<CinemaAction.LoadDetails> {
-                val retrievedMovie = useCase.getMovie(movieMapper.mapToData(action.movie))
-                CinemaState.Details(useCase.getDate(), movieMapper.mapToUi(retrievedMovie))
+                withContext(Dispatchers.IO) {
+                    val retrievedMovie = useCase.getMovie(movieMapper.mapToData(action.movie))
+                    CinemaState.Details(useCase.getDate(), movieMapper.mapToUi(retrievedMovie))
+                }
             }
 
             on<CinemaAction.Error> {

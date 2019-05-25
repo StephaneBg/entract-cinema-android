@@ -58,7 +58,7 @@
                 android:layout_width="96dp"
                 android:layout_height="96dp"
                 android:importantForAccessibility="no"
-                android:tint="?attr/colorOnBackground"
+                android:tint="?colorOnBackground"
                 app:srcCompat="@drawable/ic_movie_black_24dp"
                 />
 
@@ -92,7 +92,7 @@
         android:id="@+id/appBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        style="@style/Widget.Cinema.AppBarLayout.Primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -100,7 +100,7 @@
 
         <TextView
             android:id="@+id/title"
-            style="?attr/textAppearanceHeadline5"
+            style="?textAppearanceHeadline5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/margin_padding_size_medium"

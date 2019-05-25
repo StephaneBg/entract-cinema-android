@@ -31,17 +31,16 @@ import com.cinema.entract.app.ui.CinemaState
 import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.app.ui.NavAction
 import com.cinema.entract.app.ui.NavigationViewModel
-import com.cinema.entract.app.ui.event.EventDialogFragment
-import com.cinema.entract.core.ext.find
+import com.cinema.entract.app.ui.event.EventActivity
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ui.BaseLceFragment
 import com.cinema.entract.core.ui.bindView
-import com.cinema.entract.core.widget.AppBarRecyclerViewOnScrollListener
 import com.cinema.entract.core.widget.EmptinessLayout
 import com.cinema.entract.core.widget.GenericRecyclerViewAdapter
 import com.cinema.entract.data.ext.isToday
 import com.cinema.entract.data.ext.longFormatToUi
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import org.jetbrains.anko.startActivity
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.threeten.bp.LocalDate
 
@@ -68,7 +67,6 @@ class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
         with(contentView) {
             recyclerView.layoutManager = LinearLayoutManager(activity)
             recyclerView.setHasFixedSize(true)
-            recyclerView.addOnScrollListener(AppBarRecyclerViewOnScrollListener(find(R.id.appBar)))
             setAdapter(onScreenAdapter)
         }
 
@@ -120,7 +118,7 @@ class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
             val date = state.date
             datePickerDialog = DatePickerDialog(
                 requireContext(),
-                R.style.Theme_Cinema_Dialog,
+                R.style.DatePicker_Cinema_Dialog,
                 { _, year, month, dayOfMonth ->
                     val pickedDate = LocalDate.of(year, month + 1, dayOfMonth)
                     cinemaViewModel.process(CinemaAction.RefreshMovies(pickedDate))
@@ -139,7 +137,7 @@ class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
 
     private fun showEvent(state: CinemaState.OnScreen) {
         state.eventUrl.getContent()?.let {
-            EventDialogFragment.show(childFragmentManager, it)
+            requireActivity().startActivity<EventActivity>(EventActivity.COVER_URL to it)
         }
     }
 

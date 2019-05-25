@@ -18,8 +18,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:background="#44000000"
     >
 
@@ -27,25 +27,23 @@
         android:id="@+id/cover"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_margin="@dimen/margin_padding_size_medium"
         android:importantForAccessibility="no"
         tools:layout_height="192dp"
         tools:layout_width="192dp"
         tools:srcCompat="@drawable/ic_movie_black_24dp"
+        tools:tint="?colorOnSurface"
         />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/close"
-        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|end"
         android:layout_marginTop="@dimen/margin_padding_size_small"
         android:layout_marginEnd="@dimen/margin_padding_size_small"
         android:text="@string/event_close"
-        android:textColor="?attr/colorControlNormal"
-        app:backgroundTint="?android:colorBackground"
         app:icon="@drawable/ic_close_black_24dp"
-        app:iconTint="?attr/colorControlNormal"
         />
 </FrameLayout>

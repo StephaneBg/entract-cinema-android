@@ -14,5 +14,5 @@
   ~ limitations under the License.
   -->
 <resources>
-    <color name="primary_dark">@color/gray_lighter</color>
+    <color name="primary_variant">#FFFFFF</color>
 </resources>

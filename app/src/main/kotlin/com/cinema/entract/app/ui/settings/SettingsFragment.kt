@@ -21,24 +21,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.widget.NestedScrollView
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ui.CinemaAction
 import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ui.BaseFragment
-import com.cinema.entract.core.widget.AppBarNestedScrollViewOnScrollListener
 import com.cinema.entract.data.interactor.CinemaUseCase
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.switchmaterial.SwitchMaterial
 import org.jetbrains.anko.startActivity
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import kotlin.math.max
 
 class SettingsFragment : BaseFragment() {
 
@@ -53,10 +49,6 @@ class SettingsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        find<NestedScrollView>(R.id.scrollView).setOnScrollChangeListener(
-            AppBarNestedScrollViewOnScrollListener(find(R.id.appBar))
-        )
 
         find<SwitchMaterial>(R.id.event).apply {
             isChecked = useCase.isEventEnabled()
@@ -73,11 +65,10 @@ class SettingsFragment : BaseFragment() {
             }
         }
 
-        find<TextView>(R.id.themeMode).text = getModeText()
-
-        find<Button>(R.id.themeModeAction).setOnClickListener {
-            AlertDialog.Builder(requireContext())
-                .setSingleChoiceItems(getChoices(), getCurrentChoice()) { _, which ->
+        find<TextView>(R.id.themeMode).setOnClickListener {
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.settings_select_theme_mode)
+                .setSingleChoiceItems(R.array.settings_theme_modes, getCurrentChoice()) { _, which ->
                     saveSelectedChoice(which)
                     requireActivity().run {
                         startActivity<CinemaActivity>()
@@ -89,47 +80,25 @@ class SettingsFragment : BaseFragment() {
         }
     }
 
-    private fun getChoices(): Array<String> {
-        val choices = mutableListOf<String>()
-        if (isPieOrAbove()) choices += getString(R.string.settings_system_mode)
-        choices += getString(R.string.settings_light_mode)
-        choices += getString(R.string.settings_dark_mode)
-        choices += getString(R.string.settings_battery_mode)
-        return choices.toTypedArray()
-    }
-
-    private fun getCurrentChoice(): Int {
-        val mode = useCase.getThemeMode()
-        return if (isPieOrAbove()) {
-            if (-1 == mode) 0 else mode
-        } else {
-            max(0, mode - 1)
-        }
+    private fun getCurrentChoice(): Int = when (useCase.getThemeMode()) {
+        AppCompatDelegate.MODE_NIGHT_NO -> 0
+        AppCompatDelegate.MODE_NIGHT_YES -> 1
+        AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY,
+        AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> 2
+        else -> error("Incorrect value")
     }
 
     private fun saveSelectedChoice(which: Int) {
-        val mode = if (isPieOrAbove()) {
-            if (0 == which) -1 else which
-        } else {
-            which + 1
+        val mode = when (which) {
+            0 -> AppCompatDelegate.MODE_NIGHT_NO
+            1 -> AppCompatDelegate.MODE_NIGHT_YES
+            2 -> if (isQOrAbove()) AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM else AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
+            else -> error("Incorrect value")
         }
         useCase.setThemeMode(mode)
     }
 
-    private fun getModeText(): String {
-        var mode = useCase.getThemeMode()
-        mode = if (!isPieOrAbove() && AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM == mode)
-            AppCompatDelegate.MODE_NIGHT_NO else mode
-        return when (mode) {
-            AppCompatDelegate.MODE_NIGHT_NO -> getString(R.string.settings_light_mode)
-            AppCompatDelegate.MODE_NIGHT_YES -> getString(R.string.settings_dark_mode)
-            AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY -> getString(R.string.settings_battery_mode)
-            else -> getString(R.string.settings_system_mode)
-        }
-
-    }
-
-    private fun isPieOrAbove(): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.P
+    private fun isQOrAbove(): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
 
     companion object {
         fun newInstance(): SettingsFragment = SettingsFragment()

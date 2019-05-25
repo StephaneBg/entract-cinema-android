@@ -14,14 +14,11 @@
   ~ limitations under the License.
   -->
 
-<TextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    style="?textAppearanceHeadline6"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/margin_padding_size_medium"
-    android:textColor="?colorSecondary"
-    android:textStyle="bold"
-    tools:text="Du 16 au 25 janvier"
-    />
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.Cinema" parent="Base.Theme">
+        <item name="android:windowLightStatusBar" tools:ignore="NewApi">false</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">false</item>
+        <item name="elevationOverlaysEnabled">false</item>
+    </style>
+</resources>

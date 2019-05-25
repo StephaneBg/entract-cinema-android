@@ -65,18 +65,18 @@
                 tools:adjustViewBounds="true"
                 tools:scaleType="fitCenter"
                 tools:srcCompat="@drawable/ic_movie_black_24dp"
-                tools:tint="?attr/colorOnPrimary"
+                tools:tint="?colorOnPrimary"
                 />
 
             <ImageView
                 android:id="@+id/originalVersion"
-                style="?attr/textAppearanceBody1"
+                style="?textAppearanceBody1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_padding_size_medium"
                 android:layout_marginBottom="@dimen/margin_padding_size_medium"
                 android:importantForAccessibility="no"
-                android:tint="?attr/colorOnBackground"
+                android:tint="?colorOnBackground"
                 app:layout_constraintStart_toStartOf="@id/duration"
                 app:layout_constraintTop_toBottomOf="@id/duration"
                 app:srcCompat="@drawable/ic_original_version_black_24dp"
@@ -84,13 +84,13 @@
 
             <ImageView
                 android:id="@+id/threeDimension"
-                style="?attr/textAppearanceBody1"
+                style="?textAppearanceBody1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_padding_size_medium"
                 android:layout_marginBottom="@dimen/margin_padding_size_medium"
                 android:importantForAccessibility="no"
-                android:tint="?attr/colorOnBackground"
+                android:tint="?colorOnBackground"
                 app:layout_constraintStart_toEndOf="@id/originalVersion"
                 app:layout_constraintTop_toBottomOf="@id/duration"
                 app:srcCompat="@drawable/ic_three_dimension_black_24dp"
@@ -98,13 +98,13 @@
 
             <ImageView
                 android:id="@+id/underTwelve"
-                style="?attr/textAppearanceBody1"
+                style="?textAppearanceBody1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_padding_size_medium"
                 android:layout_marginBottom="@dimen/margin_padding_size_medium"
                 android:importantForAccessibility="no"
-                android:tint="?attr/colorOnBackground"
+                android:tint="?colorOnBackground"
                 app:layout_constraintStart_toEndOf="@id/threeDimension"
                 app:layout_constraintTop_toBottomOf="@id/duration"
                 app:srcCompat="@drawable/ic_under_twelve_black_24dp"
@@ -112,13 +112,13 @@
 
             <ImageView
                 android:id="@+id/explicitContent"
-                style="?attr/textAppearanceBody1"
+                style="?textAppearanceBody1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_padding_size_medium"
                 android:layout_marginBottom="@dimen/margin_padding_size_medium"
                 android:importantForAccessibility="no"
-                android:tint="?attr/colorOnBackground"
+                android:tint="?colorOnBackground"
                 app:layout_constraintStart_toEndOf="@id/underTwelve"
                 app:layout_constraintTop_toBottomOf="@id/duration"
                 app:srcCompat="@drawable/ic_explicit_content_black_24dp"
@@ -126,13 +126,13 @@
 
             <ImageView
                 android:id="@+id/artMovie"
-                style="?attr/textAppearanceBody1"
+                style="?textAppearanceBody1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_padding_size_medium"
                 android:layout_marginBottom="@dimen/margin_padding_size_medium"
                 android:importantForAccessibility="no"
-                android:tint="?attr/colorOnBackground"
+                android:tint="?colorOnBackground"
                 app:layout_constraintStart_toEndOf="@id/explicitContent"
                 app:layout_constraintTop_toBottomOf="@id/duration"
                 app:srcCompat="@drawable/ic_art_movie_24dp"
@@ -165,7 +165,7 @@
 
             <TextView
                 android:id="@+id/director"
-                style="?attr/textAppearanceBody2"
+                style="?textAppearanceBody2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -193,7 +193,7 @@
 
             <TextView
                 android:id="@+id/year"
-                style="?attr/textAppearanceBody2"
+                style="?textAppearanceBody2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -207,7 +207,7 @@
 
             <TextView
                 android:id="@+id/genre"
-                style="?attr/textAppearanceBody2"
+                style="?textAppearanceBody2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -221,7 +221,7 @@
 
             <TextView
                 android:id="@+id/duration"
-                style="?attr/textAppearanceBody2"
+                style="?textAppearanceBody2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -236,7 +236,7 @@
 
             <TextView
                 android:id="@+id/synopsisTitle"
-                style="?attr/textAppearanceHeadline6"
+                style="?textAppearanceHeadline6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -251,7 +251,7 @@
 
             <TextView
                 android:id="@+id/synopsis"
-                style="?attr/textAppearanceBody1"
+                style="?textAppearanceBody1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -265,7 +265,7 @@
 
             <TextView
                 android:id="@+id/underTwelveNotice"
-                style="?attr/textAppearanceBody1"
+                style="?textAppearanceBody1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -279,7 +279,7 @@
 
             <TextView
                 android:id="@+id/explicitContentNotice"
-                style="?attr/textAppearanceBody1"
+                style="?textAppearanceBody1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -293,7 +293,7 @@
 
             <TextView
                 android:id="@+id/nextTitle"
-                style="?attr/textAppearanceHeadline6"
+                style="?textAppearanceHeadline6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -361,7 +361,7 @@
         android:id="@+id/appBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        style="@style/Widget.Cinema.AppBarLayout.Primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

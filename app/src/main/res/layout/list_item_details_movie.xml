@@ -20,7 +20,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
+    android:background="?selectableItemBackground"
     android:paddingStart="@dimen/margin_padding_size_medium"
     android:paddingTop="@dimen/margin_padding_size_small"
     android:paddingEnd="@dimen/margin_padding_size_medium"
@@ -29,12 +29,12 @@
 
     <ImageView
         android:id="@+id/originalVersion"
-        style="?attr/textAppearanceBody1"
+        style="?textAppearanceBody1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_padding_size_small"
         android:importantForAccessibility="no"
-        android:tint="?attr/colorOnBackground"
+        android:tint="?colorOnBackground"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,13 +45,13 @@
 
     <ImageView
         android:id="@+id/threeDimension"
-        style="?attr/textAppearanceBody1"
+        style="?textAppearanceBody1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_padding_size_medium"
         android:layout_marginTop="@dimen/margin_padding_size_small"
         android:importantForAccessibility="no"
-        android:tint="?attr/colorOnBackground"
+        android:tint="?colorOnBackground"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/originalVersion"
@@ -63,7 +63,7 @@
 
     <TextView
         android:id="@+id/dateSchedule"
-        style="?attr/textAppearanceBody1"
+        style="?textAppearanceBody1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"

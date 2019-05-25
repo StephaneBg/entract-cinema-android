@@ -53,6 +53,8 @@
 
         <activity android:name=".ui.CinemaActivity" />
 
+        <activity android:name=".ui.event.EventActivity" />
+
         <service android:name="com.cinema.entract.app.ui.notif.CinemaNotificationService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

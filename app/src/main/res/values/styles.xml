@@ -14,66 +14,32 @@
   ~ limitations under the License.
   -->
 
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
-    <style name="Theme.Cinema.Startup" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryDark">@color/white</item>
-        <item name="colorSecondary">@color/secondary</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
-    </style>
-
-    <style name="Theme.Cinema" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="colorOnPrimary">@color/on_primary</item>
-
-        <item name="colorSecondary">@color/secondary</item>
-        <item name="colorOnSecondary">@color/on_secondary</item>
-
-        <item name="colorOnBackground">@color/on_background</item>
-
-        <item name="colorSurface">@color/surface</item>
-        <item name="colorOnSurface">@color/on_surface</item>
-
-        <item name="fontFamily">@font/raleway</item>
-        <item name="textAppearanceHeadline5">@style/TextAppearance.Cinema.Headline5</item>
-
-        <item name="switchStyle">@style/Widget.Cinema.Switch</item>
-        <item name="materialButtonStyle">@style/Widget.Cinema.Button</item>
-        <item name="elevationOverlaysEnabled">false</item>
-    </style>
-
-    <!-- TextAppearance -->
-    <style name="TextAppearance.Cinema.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
-        <item name="fontFamily">@font/patua_one</item>
-    </style>
-
-    <!-- Widget -->
     <style name="Widget.Cinema.Button" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="cornerRadius">16dp</item>
-        <item name="rippleColor">?attr/colorOnBackground</item>
-        <item name="android:textColor">?attr/colorSecondary</item>
-        <item name="iconTint">?attr/colorSecondary</item>
+        <item name="rippleColor">?colorOnBackground</item>
+        <item name="android:textColor">?colorSecondary</item>
+        <item name="iconTint">?colorSecondary</item>
     </style>
 
     <style name="Widget.Cinema.Switch" parent="Widget.MaterialComponents.CompoundButton.Switch">
         <item name="useMaterialThemeColors">false</item>
-        <item name="android:textAppearance">?attr/textAppearanceBody1</item>
-    </style>
-
-    <style name="Theme.Cinema.Dialog" parent="Theme.MaterialComponents.Light.Dialog">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorSecondary">@color/secondary</item>
-        <item name="android:colorBackground">@color/primary</item>
-        <item name="colorOnBackground">@color/on_primary</item>
-        <item name="android:buttonBarPositiveButtonStyle">@style/Widget.Cinema.Button.Dialog</item>
-        <item name="android:buttonBarNegativeButtonStyle">@style/Widget.Cinema.Button.Dialog</item>
-        <item name="android:buttonBarNeutralButtonStyle">@style/Widget.Cinema.Button.Dialog</item>
+        <item name="android:textAppearance">?textAppearanceBody1</item>
     </style>
 
     <style name="Widget.Cinema.Button.Dialog" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:textColor">?attr/colorSecondary</item>
-        <item name="rippleColor">?attr/colorOnBackground</item>
+        <item name="android:textColor">?colorSecondary</item>
+        <item name="rippleColor">?colorOnBackground</item>
+    </style>
+
+    <style name="Widget.Cinema.AppBarLayout.Primary" parent="Widget.Design.AppBarLayout" />
+
+    <style name="DatePicker.Cinema.Dialog" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/Widget.Cinema.Button.Dialog</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/Widget.Cinema.Button.Dialog</item>
+        <item name="android:buttonBarNeutralButtonStyle">@style/Widget.Cinema.Button.Dialog</item>
     </style>
 </resources>

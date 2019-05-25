@@ -30,10 +30,8 @@ import com.cinema.entract.app.ui.CinemaState
 import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.app.ui.NavAction
 import com.cinema.entract.app.ui.NavigationViewModel
-import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ui.BaseLceFragment
-import com.cinema.entract.core.widget.AppBarRecyclerViewOnScrollListener
 import com.cinema.entract.core.widget.EmptinessLayout
 import com.cinema.entract.core.widget.GenericRecyclerViewAdapter
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -55,8 +53,7 @@ class ScheduleFragment : BaseLceFragment<EmptinessLayout>() {
 
         with(contentView) {
             recyclerView.layoutManager = LinearLayoutManager(context)
-            recyclerView.addItemDecoration(ScheduleItemDecorator(context))
-            recyclerView.addOnScrollListener(AppBarRecyclerViewOnScrollListener(find(R.id.appBar)))
+            recyclerView.addItemDecoration(ScheduleDecoration(context))
             setAdapter(scheduleAdapter)
         }
 

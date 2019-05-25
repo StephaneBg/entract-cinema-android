@@ -13,6 +13,10 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
 <resources>
-    <color name="primary_dark">@color/black_lighter</color>
+
+    <style name="TextAppearance.Cinema.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="fontFamily">@font/patua_one</item>
+    </style>
 </resources>

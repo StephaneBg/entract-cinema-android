@@ -38,10 +38,8 @@ class MovieAdapter(
             if (movie.coverUrl.isNotEmpty()) load(movie.coverUrl) else displayPlaceHolder()
         }
         find<TextView>(R.id.title).text = movie.title
-        find<TextView>(R.id.schedule).text =
-            context.getString(R.string.on_screen_schedule, movie.schedule)
-        find<TextView>(R.id.duration).text =
-            context.getString(R.string.on_screen_duration, movie.duration)
+        find<TextView>(R.id.schedule).text = movie.schedule
+        find<TextView>(R.id.duration).text = movie.duration
         find<ImageView>(R.id.originalVersion).isVisible = movie.isOriginalVersion
         find<ImageView>(R.id.threeDimension).isVisible = movie.isThreeDimension
         find<ImageView>(R.id.underTwelve).isVisible = movie.isUnderTwelve

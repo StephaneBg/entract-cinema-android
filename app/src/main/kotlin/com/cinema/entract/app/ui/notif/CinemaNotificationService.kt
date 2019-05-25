@@ -85,7 +85,7 @@ class CinemaNotificationService : FirebaseMessagingService(), CoroutineScope {
 
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification_white_24dp)
-            .setColor(color(R.color.red_darker))
+            .setColor(color(R.color.secondary))
             .setContentTitle(appName)
             .setContentText(message)
             .setContentIntent(pendingIntent)

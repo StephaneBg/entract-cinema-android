@@ -31,7 +31,7 @@ object Versions {
     val timber = "4.7.1"
     val retrofit = "2.5.1-SNAPSHOT"
     val anko = "0.10.8"
-    val koin = "2.0.0-rc-3"
+    val koin = "2.0.0"
     val kaskade = "0.2.3"
     val ktx = "1.1.0-beta01"
     val glide = "4.9.0"
@@ -46,9 +46,9 @@ object Build {
 }
 
 object Android {
-    val minSdkVersion = 21
-    val targetSdkVersion = 28
-    val compileSdkVersion = targetSdkVersion
+    const val minSdkVersion = 21
+    const val targetSdkVersion = 29
+    const val compileSdkVersion = "android-Q"
 }
 
 object Libs {
@@ -61,7 +61,6 @@ object Libs {
     val recyclerview = "androidx.recyclerview:recyclerview:${Versions.recyclerView}"
     val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
     val lifecycle = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecyle}"
-    val lifecycleCompiler = "androidx.lifecycle:lifecycle-compiler:${Versions.lifecyle}"
     val ktx = "androidx.core:core-ktx:${Versions.ktx}"
 
     val material = "com.google.android.material:material:${Versions.material}"

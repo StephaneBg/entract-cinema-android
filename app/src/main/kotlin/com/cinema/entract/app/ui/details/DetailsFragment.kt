@@ -50,7 +50,6 @@ import com.cinema.entract.core.ext.inflate
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ext.toSpanned
 import com.cinema.entract.core.ui.BaseLceFragment
-import com.cinema.entract.core.widget.AppBarNestedScrollViewOnScrollListener
 import com.cinema.entract.data.ext.longFormatToUi
 import org.jetbrains.anko.find
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -69,9 +68,6 @@ class DetailsFragment : BaseLceFragment<NestedScrollView>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        contentView.setOnScrollChangeListener(
-            AppBarNestedScrollViewOnScrollListener(find(R.id.appBar))
-        )
         observe(cinemaViewModel.state, ::renderState)
     }
 

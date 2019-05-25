@@ -20,9 +20,9 @@
     style="?textAppearanceBody2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
+    android:background="?selectableItemBackground"
     android:padding="@dimen/margin_padding_size_medium"
-    android:textColor="?attr/colorSecondary"
+    android:textColor="?colorSecondary"
     android:textStyle="bold"
     tools:text="15 septembre 2018"
     />

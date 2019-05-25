@@ -54,7 +54,7 @@
 
             <TextView
                 android:id="@+id/place"
-                style="?attr/textAppearanceHeadline6"
+                style="?textAppearanceHeadline6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -67,7 +67,7 @@
 
             <TextView
                 android:id="@+id/address"
-                style="?attr/textAppearanceSubtitle1"
+                style="?textAppearanceSubtitle1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
@@ -145,7 +145,7 @@
         android:id="@+id/appBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        style="@style/Widget.Cinema.AppBarLayout.Primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -153,7 +153,7 @@
 
         <TextView
             android:id="@+id/title"
-            style="?attr/textAppearanceHeadline5"
+            style="?textAppearanceHeadline5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/margin_padding_size_medium"

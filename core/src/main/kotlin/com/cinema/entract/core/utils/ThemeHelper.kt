@@ -14,28 +14,14 @@
  * limitations under the License.
  */
 
-plugins {
-    id("com.github.ben-manes.versions") version "0.21.0"
-}
+package com.cinema.entract.core.utils
 
-buildscript {
-    repositories {
-        jcenter()
-        google()
-        maven("https://plugins.gradle.org/m2/")
-    }
+import androidx.annotation.IdRes
+import androidx.appcompat.app.AppCompatDelegate
+import com.cinema.entract.core.R
 
-    dependencies {
-        classpath(kotlin("gradle-plugin", Versions.kotlin))
-        classpath(Build.androidGradle)
-        classpath(Build.googleServices)
-    }
-}
-
-allprojects {
-    repositories {
-        jcenter()
-        google()
-        maven("https://jitpack.io")
-    }
+fun convertThemeMode(@IdRes themeId: Int): Int = when (themeId) {
+    R.id.theme_light -> AppCompatDelegate.MODE_NIGHT_NO
+    R.id.theme_dark -> AppCompatDelegate.MODE_NIGHT_YES
+    else -> if (isQOrAbove()) AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM else AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
 }

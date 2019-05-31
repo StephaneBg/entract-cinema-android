@@ -86,7 +86,7 @@ dependencies {
     implementation(kotlin("stdlib", Versions.kotlin))
     implementation(Libs.coroutinesCore)
     implementation(Libs.coroutinesAndroid)
-    implementation(Libs.appcompat)
+    implementation(Libs.appCompat)
     implementation(Libs.ktx)
     implementation(Libs.recyclerview)
     implementation(Libs.vectorDrawable)

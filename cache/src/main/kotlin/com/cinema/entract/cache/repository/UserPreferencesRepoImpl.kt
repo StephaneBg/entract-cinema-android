@@ -17,12 +17,15 @@
 package com.cinema.entract.cache.repository
 
 import android.content.Context
+import android.content.SharedPreferences
+import androidx.annotation.IdRes
 import androidx.core.content.edit
+import com.cinema.entract.cache.R
 import com.cinema.entract.data.repository.UserPreferencesRepo
 
 class UserPreferencesRepoImpl(context: Context) : UserPreferencesRepo {
 
-    private val preferences = context.getSharedPreferences(USER_PREFS, Context.MODE_PRIVATE)
+    private val preferences: SharedPreferences = context.getSharedPreferences(USER_PREFS, Context.MODE_PRIVATE)
 
     override fun isEventEnabled(): Boolean = preferences.getBoolean(USER_PREF_EVENT, true)
 
@@ -36,9 +39,10 @@ class UserPreferencesRepoImpl(context: Context) : UserPreferencesRepo {
         putBoolean(USER_PREF_DATA, onlyOnWifi)
     }
 
-    override fun getThemeMode(): Int = preferences.getInt(USER_PREF_THEME_MODE, -1)
+    @IdRes
+    override fun getThemeMode(): Int = preferences.getInt(USER_PREF_THEME_MODE, R.id.theme_default)
 
-    override fun setThemeMode(mode: Int) = preferences.edit {
+    override fun setThemeMode(@IdRes mode: Int) = preferences.edit {
         putInt(USER_PREF_THEME_MODE, mode)
     }
 

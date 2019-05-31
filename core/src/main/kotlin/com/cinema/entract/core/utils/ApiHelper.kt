@@ -14,28 +14,8 @@
  * limitations under the License.
  */
 
-plugins {
-    id("com.github.ben-manes.versions") version "0.21.0"
-}
+package com.cinema.entract.core.utils
 
-buildscript {
-    repositories {
-        jcenter()
-        google()
-        maven("https://plugins.gradle.org/m2/")
-    }
+import android.os.Build
 
-    dependencies {
-        classpath(kotlin("gradle-plugin", Versions.kotlin))
-        classpath(Build.androidGradle)
-        classpath(Build.googleServices)
-    }
-}
-
-allprojects {
-    repositories {
-        jcenter()
-        google()
-        maven("https://jitpack.io")
-    }
-}
+fun isQOrAbove(): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q

@@ -16,6 +16,8 @@
 
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <style name="Theme.Cinema" parent="Base.Theme" />
+
     <style name="Theme.Cinema.Startup" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primary_variant</item>
@@ -27,7 +29,13 @@
         <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>
     </style>
 
-    <style name="Theme.Cinema" parent="Base.Theme" />
+    <style name="Theme.Cinema.Event">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:statusBarColor">@color/overlay</item>
+        <item name="android:navigationBarColor">@color/overlay</item>
+    </style>
 
     <style name="Base.Theme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primary</item>

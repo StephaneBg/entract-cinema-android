@@ -17,9 +17,9 @@
 <resources>
 
     <style name="Widget.Cinema.Button" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor">?colorSecondary</item>
         <item name="cornerRadius">16dp</item>
         <item name="rippleColor">?colorOnBackground</item>
-        <item name="android:textColor">?colorSecondary</item>
         <item name="iconTint">?colorSecondary</item>
     </style>
 

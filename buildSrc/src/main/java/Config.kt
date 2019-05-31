@@ -22,20 +22,20 @@ object Versions {
     val kotlin = "1.3.31"
     val googleServices = "4.2.0"
     val coroutines = "1.2.1"
-    val appcompat = "1.1.0-alpha05"
-    val vectorDrawable = "1.1.0-beta01"
-    val recyclerView = "1.1.0-alpha05"
-    val material = "1.1.0-alpha06"
+    val appCompat = "1.1.0-beta01"
+    val vectorDrawable = "1.1.0-beta02"
+    val recyclerView = "1.1.0-alpha06"
+    val material = "1.1.0-alpha07"
     val constraintLayout = "2.0.0-beta1"
     val lifecyle = "2.1.0-alpha04"
-    val timber = "4.7.1"
-    val retrofit = "2.5.1-SNAPSHOT"
-    val anko = "0.10.8"
-    val koin = "2.0.0"
-    val kaskade = "0.2.3"
     val ktx = "1.1.0-beta01"
+    val timber = "4.7.1"
+    val retrofit = "2.6.0"
+    val anko = "0.10.8"
+    val koin = "2.0.1"
+    val kaskade = "0.2.3"
     val glide = "4.9.0"
-    val jsr310 = "1.2.0"
+    val jsr310 = "1.2.1"
     val firebaseCore = "16.0.9"
     val firebaseMessaging = "18.0.0"
 }
@@ -48,7 +48,7 @@ object Build {
 object Android {
     const val minSdkVersion = 21
     const val targetSdkVersion = 29
-    const val compileSdkVersion = "android-Q"
+    const val compileSdkVersion = "android-29"
 }
 
 object Libs {
@@ -56,7 +56,7 @@ object Libs {
     val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
     val anko = "org.jetbrains.anko:anko-commons:${Versions.anko}"
 
-    val appcompat = "androidx.appcompat:appcompat:${Versions.appcompat}"
+    val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
     val vectorDrawable = "androidx.vectordrawable:vectordrawable:${Versions.vectorDrawable}"
     val recyclerview = "androidx.recyclerview:recyclerview:${Versions.recyclerView}"
     val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"

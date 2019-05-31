@@ -18,6 +18,7 @@ package com.cinema.entract.data.interactor
 
 import com.cinema.entract.core.network.NetworkUtils
 import com.cinema.entract.core.ui.Event
+import com.cinema.entract.core.utils.convertThemeMode
 import com.cinema.entract.data.ext.formatToUTC
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
@@ -63,15 +64,15 @@ class CinemaUseCase(
 
     fun isEventEnabled(): Boolean = dataStore.getUserPreferences().isEventEnabled()
 
-    fun setEventPreference(enabled: Boolean) =
-        dataStore.getUserPreferences().setEventPreference(enabled)
+    fun setEventPreference(enabled: Boolean) = dataStore.getUserPreferences().setEventPreference(enabled)
 
     fun isOnlyOnWifi(): Boolean = dataStore.getUserPreferences().isOnlyOnWifi()
 
-    fun setOnlyOnWifi(onlyOnWifi: Boolean) =
-        dataStore.getUserPreferences().setOnlyOnWifi(onlyOnWifi)
+    fun setOnlyOnWifi(onlyOnWifi: Boolean) = dataStore.getUserPreferences().setOnlyOnWifi(onlyOnWifi)
 
-    fun getThemeMode(): Int = dataStore.getUserPreferences().getThemeMode()
+    fun getPrefThemeMode(): Int = dataStore.getUserPreferences().getThemeMode()
 
-    fun setThemeMode(mode: Int) = dataStore.getUserPreferences().setThemeMode(mode)
+    fun setPrefThemeMode(mode: Int) = dataStore.getUserPreferences().setThemeMode(mode)
+
+    fun getThemeMode(): Int = convertThemeMode(getPrefThemeMode())
 }

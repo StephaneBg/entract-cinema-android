@@ -16,13 +16,11 @@
 
 package com.cinema.entract.app.ui.settings
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatDelegate
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ui.CinemaAction
 import com.cinema.entract.app.ui.CinemaActivity
@@ -80,25 +78,20 @@ class SettingsFragment : BaseFragment() {
         }
     }
 
-    private fun getCurrentChoice(): Int = when (useCase.getThemeMode()) {
-        AppCompatDelegate.MODE_NIGHT_NO -> 0
-        AppCompatDelegate.MODE_NIGHT_YES -> 1
-        AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY,
-        AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> 2
-        else -> error("Incorrect value")
+    private fun getCurrentChoice(): Int = when (useCase.getPrefThemeMode()) {
+        R.id.theme_light -> 0
+        R.id.theme_dark -> 1
+        else -> 2
     }
 
     private fun saveSelectedChoice(which: Int) {
         val mode = when (which) {
-            0 -> AppCompatDelegate.MODE_NIGHT_NO
-            1 -> AppCompatDelegate.MODE_NIGHT_YES
-            2 -> if (isQOrAbove()) AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM else AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
-            else -> error("Incorrect value")
+            0 -> R.id.theme_light
+            1 -> R.id.theme_dark
+            else -> R.id.theme_default
         }
-        useCase.setThemeMode(mode)
+        useCase.setPrefThemeMode(mode)
     }
-
-    private fun isQOrAbove(): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
 
     companion object {
         fun newInstance(): SettingsFragment = SettingsFragment()

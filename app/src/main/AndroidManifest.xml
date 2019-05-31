@@ -34,11 +34,6 @@
         tools:ignore="GoogleAppIndexingWarning"
         >
 
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts"
-            />
-
         <activity
             android:name=".ui.startup.StartupActivity"
             android:label="@string/app_name"
@@ -53,7 +48,15 @@
 
         <activity android:name=".ui.CinemaActivity" />
 
-        <activity android:name=".ui.event.EventActivity" />
+        <activity
+            android:name=".ui.event.EventActivity"
+            android:theme="@style/Theme.Cinema.Event"
+            />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts"
+            />
 
         <service android:name="com.cinema.entract.app.ui.notif.CinemaNotificationService">
             <intent-filter>

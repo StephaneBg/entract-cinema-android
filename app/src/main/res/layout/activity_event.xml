@@ -20,7 +20,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="#44000000"
+    android:background="@color/overlay"
     >
 
     <ImageView
@@ -44,6 +44,7 @@
         android:layout_marginTop="@dimen/margin_padding_size_small"
         android:layout_marginEnd="@dimen/margin_padding_size_small"
         android:text="@string/event_close"
+        app:backgroundTint="?colorPrimary"
         app:icon="@drawable/ic_close_black_24dp"
         />
 </FrameLayout>

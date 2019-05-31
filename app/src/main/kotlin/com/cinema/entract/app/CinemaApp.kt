@@ -38,11 +38,13 @@ class CinemaApp : Application() {
         startKoin {
             androidContext(this@CinemaApp)
             modules(
-                coreModule,
-                cacheModule,
-                remoteModule,
-                dataModule,
-                uiModule
+                listOf(
+                    coreModule,
+                    cacheModule,
+                    remoteModule,
+                    dataModule,
+                    uiModule
+                )
             )
         }
     }

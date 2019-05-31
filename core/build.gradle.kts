@@ -49,7 +49,7 @@ dependencies {
     implementation(Libs.koinAndroid)
     implementation(Libs.coroutinesCore)
     implementation(Libs.coroutinesAndroid)
-    implementation(Libs.appcompat)
+    implementation(Libs.appCompat)
     implementation(Libs.ktx)
     implementation(Libs.anko)
     implementation(Libs.vectorDrawable)

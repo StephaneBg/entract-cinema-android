@@ -41,6 +41,8 @@ class InformationFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setTitle(R.string.information_title)
+
         find<Button>(R.id.navigate).setOnClickListener {
             val gmmIntentUri = "geo:43.7700499,1.2948405?q=Grenade+Cinéma".toUri()
             val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)

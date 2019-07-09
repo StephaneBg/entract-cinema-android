@@ -72,7 +72,7 @@ class DetailsFragment : BaseLceFragment<NestedScrollView>() {
         when (state) {
             is CinemaState.Loading -> showLoading()
             is CinemaState.Error -> {
-                find<TextView>(R.id.dateTime).text = getString(R.string.app_name)
+                setTitle(R.string.app_name)
                 showError(state.error) {
                     state.movie?.let { cinemaViewModel.process(CinemaAction.LoadDetails(it)) }
                 }
@@ -81,11 +81,7 @@ class DetailsFragment : BaseLceFragment<NestedScrollView>() {
                 val movie = state.movie
                 tagViewModel.tag(TagAction.Details(movie.sessionId))
 
-                find<TextView>(R.id.dateTime).text = getString(
-                    R.string.details_date_with_time,
-                    movie.date.longFormatToUi(),
-                    movie.schedule
-                )
+                setTitle(getString(R.string.details_date_with_time, movie.date.longFormatToUi(), movie.schedule))
                 find<ImageView>(R.id.cover).apply {
                     if (movie.coverUrl.isNotEmpty()) load(movie.coverUrl) else displayPlaceHolder()
                 }
@@ -98,18 +94,18 @@ class DetailsFragment : BaseLceFragment<NestedScrollView>() {
                 find<ImageView>(R.id.artMovie).isVisible = movie.isArtMovie
                 find<TextView>(R.id.explicitContentNotice).isVisible = movie.isExplicitContent
                 find<TextView>(R.id.director).text =
-                        getString(R.string.details_director, movie.director).toSpanned()
+                    getString(R.string.details_director, movie.director).toSpanned()
                 with(find<TextView>(R.id.cast)) {
                     if (movie.cast.isEmpty()) isVisible = false
                     else text = getString(R.string.details_cast, movie.cast).toSpanned()
                 }
                 find<TextView>(R.id.year).text =
-                        getString(
-                            R.string.details_production_year,
-                            movie.yearOfProduction
-                        ).toSpanned()
+                    getString(
+                        R.string.details_production_year,
+                        movie.yearOfProduction
+                    ).toSpanned()
                 find<TextView>(R.id.duration).text =
-                        getString(R.string.details_duration, movie.duration)
+                    getString(R.string.details_duration, movie.duration)
                 find<TextView>(R.id.genre).text = movie.genre
 
                 with(find<TextView>(R.id.synopsis)) {

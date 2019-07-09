@@ -46,16 +46,20 @@ class CinemaActivity : BaseActivity() {
         AppCompatDelegate.setDefaultNightMode(useCase.getThemeMode())
 
         setContentView(R.layout.activity_cinema)
+        setSupportActionBar(find(R.id.toolbar))
+
         val bnv = find<BottomNavigationView>(R.id.bottomNavigation)
         bnv.setupWithNavController(findNavController(R.id.navHost))
         bnv.setOnNavigationItemReselectedListener {
             when (val fragment = getNavHostFragment()?.getDisplayedFragment()) {
-                is OnScreenFragment -> if (!fragment.isTodayDisplayed()) cinemaViewModel.process(
-                    CinemaAction.LoadMovies(LocalDate.now())
-                )
+                is OnScreenFragment -> manageOnScreen(fragment)
                 is ScheduleFragment -> fragment.scrollToTop()
             }
         }
+    }
+
+    private fun manageOnScreen(fragment: OnScreenFragment) {
+        if (!fragment.isTodayDisplayed()) cinemaViewModel.process(CinemaAction.LoadMovies(LocalDate.now()))
     }
 
     private fun getNavHostFragment(): NavHostFragment? =

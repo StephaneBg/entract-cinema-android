@@ -51,6 +51,8 @@ class SettingsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setTitle(R.string.settings_title)
+
         find<SwitchMaterial>(R.id.event).apply {
             isChecked = useCase.isEventEnabled()
             setOnCheckedChangeListener { _, isChecked ->

@@ -21,7 +21,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -49,7 +48,6 @@ class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
     private lateinit var datePickerDialog: DatePickerDialog
     private val onScreenAdapter = GenericRecyclerViewAdapter()
     private val fab by bindView<FloatingActionButton>(R.id.fab)
-    private val date by bindView<TextView>(R.id.date)
 
     private var currentState: CinemaState.OnScreen? = null
 
@@ -81,16 +79,13 @@ class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
             is CinemaState.Loading -> showLoading()
             is CinemaState.OnScreen -> {
                 currentState = state
-                date.text = state.date.longFormatToUi()
+                setTitle(state.date.longFormatToUi())
                 fab.isVisible = null != state.dateRange
                 updateMovies(state.movies)
                 showContent()
                 showEvent(state)
             }
-            is CinemaState.Error -> {
-                date.text = getString(R.string.app_name)
-                manageError(state.error)
-            }
+            is CinemaState.Error -> manageError(state.error)
         }
     }
 
@@ -102,7 +97,7 @@ class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
 
     private fun manageError(exception: Throwable?) {
         showError(exception) { cinemaViewModel.process(CinemaAction.RefreshMovies()) }
-        date.text = getString(R.string.app_name)
+        setTitle(R.string.app_name)
     }
 
     private fun onMovieSelected(movie: Movie) {

@@ -53,6 +53,8 @@ class ScheduleFragment : BaseLceFragment<EmptinessLayout>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setTitle(R.string.schedule_title)
+
         with(contentView) {
             recyclerView.layoutManager = LinearLayoutManager(context)
             recyclerView.addItemDecoration(ScheduleDecoration(context))

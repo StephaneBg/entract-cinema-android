@@ -35,7 +35,7 @@ class EventActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event)
 
-        find<ImageView>(R.id.cover).load(intent.getStringExtra(COVER_URL))
+        find<ImageView>(R.id.cover).load(intent.getStringExtra(COVER_URL) ?: error("Missing extra"))
         find<MaterialButton>(R.id.close).setOnClickListener { finish() }
 
         tagViewModel.tag(TagAction.Event)

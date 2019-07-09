@@ -16,16 +16,8 @@
 
 package com.cinema.entract.app.ui.startup
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.core.widget.ContentLoadingProgressBar
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.Target
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.core.ext.observe
@@ -52,42 +44,9 @@ class StartupActivity : BaseActivity() {
 
     private fun renderState(state: StartupState?) = when {
         null == state || state.isLoading -> Unit
-        state.isIdle -> prefetchCover(state.eventUrl)
-        else -> closeStartup()
-    }
-
-    private fun prefetchCover(url: String?) {
-        Glide.with(this)
-            .asBitmap()
-            .load(url)
-            .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL))
-            .addListener(object : RequestListener<Bitmap?> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<Bitmap?>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    closeStartup()
-                    return true
-                }
-
-                override fun onResourceReady(
-                    resource: Bitmap?,
-                    model: Any?,
-                    target: Target<Bitmap?>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    closeStartup()
-                    return true
-                }
-            })
-            .submit()
-    }
-
-    private fun closeStartup() {
-        startActivity<CinemaActivity>()
-        finish()
+        else -> {
+            startActivity<CinemaActivity>()
+            finish()
+        }
     }
 }

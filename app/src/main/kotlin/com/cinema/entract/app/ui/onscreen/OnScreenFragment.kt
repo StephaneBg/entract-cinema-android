@@ -23,14 +23,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cinema.entract.app.R
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.CinemaAction
 import com.cinema.entract.app.ui.CinemaState
 import com.cinema.entract.app.ui.CinemaViewModel
-import com.cinema.entract.app.ui.NavAction
-import com.cinema.entract.app.ui.NavigationViewModel
 import com.cinema.entract.app.ui.event.EventActivity
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ui.BaseLceFragment
@@ -47,7 +46,6 @@ import org.threeten.bp.LocalDate
 class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
 
     private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
-    private val navViewModel by sharedViewModel<NavigationViewModel>()
     private lateinit var datePickerDialog: DatePickerDialog
     private val onScreenAdapter = GenericRecyclerViewAdapter()
     private val fab by bindView<FloatingActionButton>(R.id.fab)
@@ -109,7 +107,7 @@ class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
 
     private fun onMovieSelected(movie: Movie) {
         cinemaViewModel.process(CinemaAction.LoadDetails(movie))
-        navViewModel.process(NavAction.Details)
+        findNavController().navigate(R.id.action_onScreenFragment_to_detailsFragment)
     }
 
     private fun displayDatePicker() {
@@ -142,8 +140,4 @@ class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
     }
 
     fun isTodayDisplayed(): Boolean = currentState?.date?.isToday() == true
-
-    companion object {
-        fun newInstance(): OnScreenFragment = OnScreenFragment()
-    }
 }

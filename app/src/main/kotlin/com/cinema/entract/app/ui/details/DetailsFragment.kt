@@ -33,6 +33,7 @@ import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
+import androidx.navigation.findNavController
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ext.displayPlaceHolder
 import com.cinema.entract.app.ext.load
@@ -40,9 +41,6 @@ import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.CinemaAction
 import com.cinema.entract.app.ui.CinemaState
 import com.cinema.entract.app.ui.CinemaViewModel
-import com.cinema.entract.app.ui.NavAction
-import com.cinema.entract.app.ui.NavOrigin
-import com.cinema.entract.app.ui.NavigationViewModel
 import com.cinema.entract.app.ui.TagAction
 import com.cinema.entract.app.ui.TagViewModel
 import com.cinema.entract.core.ext.find
@@ -57,7 +55,6 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class DetailsFragment : BaseLceFragment<NestedScrollView>() {
 
     private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
-    private val navViewModel by sharedViewModel<NavigationViewModel>()
     private val tagViewModel by sharedViewModel<TagViewModel>()
 
     override fun onCreateView(
@@ -154,7 +151,7 @@ class DetailsFragment : BaseLceFragment<NestedScrollView>() {
                     find<ImageView>(R.id.threeDimension).isVisible = movie.isThreeDimension
                     setOnClickListener {
                         cinemaViewModel.process(CinemaAction.LoadMovies(movie.date))
-                        navViewModel.process(NavAction.OnScreen(NavOrigin.DETAILS))
+                        findNavController().navigate(R.id.action_detailsFragment_to_onScreenFragment)
                     }
                 }
             }
@@ -191,9 +188,5 @@ class DetailsFragment : BaseLceFragment<NestedScrollView>() {
             .putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY)
         tagViewModel.tag(TagAction.Calendar(movie.sessionId))
         startActivity(intent)
-    }
-
-    companion object {
-        fun newInstance() = DetailsFragment()
     }
 }

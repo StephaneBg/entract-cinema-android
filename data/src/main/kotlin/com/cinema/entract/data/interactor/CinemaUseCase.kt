@@ -70,9 +70,9 @@ class CinemaUseCase(
 
     fun setOnlyOnWifi(onlyOnWifi: Boolean) = dataStore.getUserPreferences().setOnlyOnWifi(onlyOnWifi)
 
-    fun getPrefThemeMode(): Int = dataStore.getUserPreferences().getThemeMode()
+    fun getPrefThemeMode(): String = dataStore.getUserPreferences().getThemeMode()
 
-    fun setPrefThemeMode(mode: Int) = dataStore.getUserPreferences().setThemeMode(mode)
+    fun setPrefThemeMode(mode: String) = dataStore.getUserPreferences().setThemeMode(mode)
 
     fun getThemeMode(): Int = convertThemeMode(getPrefThemeMode())
 }

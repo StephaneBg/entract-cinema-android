@@ -20,12 +20,13 @@ import android.os.Build
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.commit
 
 fun FragmentActivity.addFragment(
     frameId: Int,
     fragment: Fragment,
     addToBackStack: Boolean = false
-) = supportFragmentManager.inTransaction {
+) = supportFragmentManager.commit {
     add(frameId, fragment)
     if (addToBackStack) addToBackStack(null)
 }
@@ -36,7 +37,7 @@ fun FragmentActivity.addFragment(
     addToBackStack: Boolean = false,
     animIn: Int,
     animOut: Int
-) = supportFragmentManager.inTransaction {
+) = supportFragmentManager.commit {
     setCustomAnimations(animIn, animOut, animIn, animOut)
     add(frameId, fragment)
     if (addToBackStack) addToBackStack(null)
@@ -46,7 +47,7 @@ fun FragmentActivity.replaceFragment(
     frameId: Int,
     fragment: Fragment,
     addToBackStack: Boolean = false
-) = supportFragmentManager.inTransaction {
+) = supportFragmentManager.commit {
     replace(frameId, fragment)
     if (addToBackStack) addToBackStack(null)
 }
@@ -57,7 +58,7 @@ fun FragmentActivity.replaceFragment(
     addToBackStack: Boolean = false,
     animIn: Int,
     animOut: Int
-) = supportFragmentManager.inTransaction {
+) = supportFragmentManager.commit {
     setCustomAnimations(animIn, animOut, animIn, animOut)
     replace(frameId, fragment)
     if (addToBackStack) addToBackStack(null)

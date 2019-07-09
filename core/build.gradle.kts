@@ -14,15 +14,9 @@
  * limitations under the License.
  */
 
-import org.jetbrains.kotlin.gradle.dsl.Coroutines
-
 plugins {
     id("com.android.library")
     kotlin("android")
-}
-
-kotlin {
-    experimental { coroutines = Coroutines.ENABLE }
 }
 
 android {
@@ -50,11 +44,12 @@ dependencies {
     implementation(Libs.coroutinesCore)
     implementation(Libs.coroutinesAndroid)
     implementation(Libs.appCompat)
-    implementation(Libs.ktx)
+    implementation(Libs.coreKtx)
+    implementation(Libs.fragmentKtx)
     implementation(Libs.anko)
     implementation(Libs.vectorDrawable)
     implementation(Libs.material)
-    implementation(Libs.lifecycle)
+    implementation(Libs.lifecyleViewmodel)
     implementation(Libs.timber)
     implementation(Libs.kaskadeCore)
     implementation(Libs.kaskadeLiveData)

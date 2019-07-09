@@ -20,6 +20,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.IdRes
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cinema.entract.app.R
 import com.cinema.entract.app.model.DayHeader
@@ -28,8 +30,8 @@ import com.cinema.entract.app.model.WeekHeader
 import com.cinema.entract.app.ui.CinemaAction
 import com.cinema.entract.app.ui.CinemaState
 import com.cinema.entract.app.ui.CinemaViewModel
-import com.cinema.entract.app.ui.NavAction
-import com.cinema.entract.app.ui.NavigationViewModel
+import com.cinema.entract.app.ui.TagAction
+import com.cinema.entract.app.ui.TagViewModel
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ui.BaseLceFragment
 import com.cinema.entract.core.widget.EmptinessLayout
@@ -39,7 +41,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class ScheduleFragment : BaseLceFragment<EmptinessLayout>() {
 
     private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
-    private val navViewModel by sharedViewModel<NavigationViewModel>()
+    private val tagViewModel by sharedViewModel<TagViewModel>()
     private val scheduleAdapter = GenericRecyclerViewAdapter()
 
     override fun onCreateView(
@@ -60,6 +62,8 @@ class ScheduleFragment : BaseLceFragment<EmptinessLayout>() {
         observe(cinemaViewModel.state, ::renderState)
 
         savedInstanceState ?: cinemaViewModel.process(CinemaAction.RefreshSchedule)
+
+        tagViewModel.tag(TagAction.Schedule)
     }
 
     private fun renderState(state: CinemaState?) {
@@ -82,12 +86,8 @@ class ScheduleFragment : BaseLceFragment<EmptinessLayout>() {
         }
     }
 
-    private fun handleSelection(cinemaAction: CinemaAction, navAction: NavAction) {
+    private fun handleSelection(cinemaAction: CinemaAction, @IdRes destination: Int) {
         cinemaViewModel.process(cinemaAction)
-        navViewModel.process(navAction)
-    }
-
-    companion object {
-        fun newInstance(): ScheduleFragment = ScheduleFragment()
+        findNavController().navigate(destination)
     }
 }

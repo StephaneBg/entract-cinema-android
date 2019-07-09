@@ -21,8 +21,4 @@
     <item name="errorMessage" type="id" />
     <item name="loadingView" type="id" />
     <item name="emptyView" type="id" />
-
-    <item name="theme_light" type="id" />
-    <item name="theme_dark" type="id" />
-    <item name="theme_default" type="id" />
 </resources>

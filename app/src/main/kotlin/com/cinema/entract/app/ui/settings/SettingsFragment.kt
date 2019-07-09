@@ -27,6 +27,9 @@ import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ui.BaseFragment
+import com.cinema.entract.core.utils.THEME_MODE_AUTO
+import com.cinema.entract.core.utils.THEME_MODE_DARK
+import com.cinema.entract.core.utils.THEME_MODE_LIGHT
 import com.cinema.entract.data.interactor.CinemaUseCase
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.switchmaterial.SwitchMaterial
@@ -79,21 +82,17 @@ class SettingsFragment : BaseFragment() {
     }
 
     private fun getCurrentChoice(): Int = when (useCase.getPrefThemeMode()) {
-        R.id.theme_light -> 0
-        R.id.theme_dark -> 1
+        THEME_MODE_LIGHT -> 0
+        THEME_MODE_DARK -> 1
         else -> 2
     }
 
     private fun saveSelectedChoice(which: Int) {
         val mode = when (which) {
-            0 -> R.id.theme_light
-            1 -> R.id.theme_dark
-            else -> R.id.theme_default
+            0 -> THEME_MODE_LIGHT
+            1 -> THEME_MODE_DARK
+            else -> THEME_MODE_AUTO
         }
         useCase.setPrefThemeMode(mode)
-    }
-
-    companion object {
-        fun newInstance(): SettingsFragment = SettingsFragment()
     }
 }

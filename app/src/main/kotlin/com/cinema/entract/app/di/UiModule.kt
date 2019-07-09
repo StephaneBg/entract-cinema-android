@@ -20,7 +20,6 @@ import com.cinema.entract.app.mapper.DateRangeMapper
 import com.cinema.entract.app.mapper.MovieMapper
 import com.cinema.entract.app.mapper.ScheduleMapper
 import com.cinema.entract.app.ui.CinemaViewModel
-import com.cinema.entract.app.ui.NavigationViewModel
 import com.cinema.entract.app.ui.TagViewModel
 import com.cinema.entract.app.ui.startup.StartupViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -35,5 +34,4 @@ val uiModule = module {
     viewModel { StartupViewModel(get()) }
     viewModel { CinemaViewModel(get(), get(), get(), get()) }
     viewModel { TagViewModel(get()) }
-    viewModel { NavigationViewModel() }
 }

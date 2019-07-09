@@ -62,8 +62,4 @@ class InformationFragment : BaseFragment() {
             requireContext().browse("https://www.facebook.com/profile.php?movieId=410990495629466")
         }
     }
-
-    companion object {
-        fun newInstance(): InformationFragment = InformationFragment()
-    }
 }

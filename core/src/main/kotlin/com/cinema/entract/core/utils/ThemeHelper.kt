@@ -16,12 +16,14 @@
 
 package com.cinema.entract.core.utils
 
-import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatDelegate
-import com.cinema.entract.core.R
 
-fun convertThemeMode(@IdRes themeId: Int): Int = when (themeId) {
-    R.id.theme_light -> AppCompatDelegate.MODE_NIGHT_NO
-    R.id.theme_dark -> AppCompatDelegate.MODE_NIGHT_YES
+const val THEME_MODE_LIGHT = "THEME_MODE_LIGHT"
+const val THEME_MODE_DARK = "THEME_MODE_DARK"
+const val THEME_MODE_AUTO = "THEME_MODE_AUTO"
+
+fun convertThemeMode(mode: String): Int = when (mode) {
+    THEME_MODE_LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
+    THEME_MODE_DARK -> AppCompatDelegate.MODE_NIGHT_YES
     else -> if (isQOrAbove()) AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM else AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
 }

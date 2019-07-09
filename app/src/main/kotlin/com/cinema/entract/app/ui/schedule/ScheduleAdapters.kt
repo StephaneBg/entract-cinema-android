@@ -24,24 +24,19 @@ import com.cinema.entract.app.model.DayHeader
 import com.cinema.entract.app.model.MovieEntry
 import com.cinema.entract.app.model.WeekHeader
 import com.cinema.entract.app.ui.CinemaAction
-import com.cinema.entract.app.ui.NavAction
-import com.cinema.entract.app.ui.NavOrigin
 import com.cinema.entract.core.widget.BaseViewHolder
 import com.cinema.entract.core.widget.ItemAdapter
 import org.jetbrains.anko.find
 
 class DayHeaderAdapter(
     private val dayHeader: DayHeader,
-    private val selection: (CinemaAction, NavAction) -> Unit
+    private val selection: (CinemaAction, Int) -> Unit
 ) : ItemAdapter(R.layout.list_item_schedule_day_header) {
 
     override fun BaseViewHolder.onBindViewHolder() = with(itemView as TextView) {
         text = dayHeader.dateUi
         setOnClickListener {
-            selection(
-                CinemaAction.LoadMovies(dayHeader.date),
-                NavAction.OnScreen(NavOrigin.SCHEDULE)
-            )
+            selection(CinemaAction.LoadMovies(dayHeader.date), R.id.action_scheduleFragment_to_onScreenFragment)
         }
     }
 }
@@ -56,7 +51,7 @@ class WeekHeaderAdapter(private val weekHeader: WeekHeader) :
 
 class MovieAdapter(
     private val model: MovieEntry,
-    private val selection: (CinemaAction, NavAction) -> Unit
+    private val selection: (CinemaAction, Int) -> Unit
 ) : ItemAdapter(R.layout.list_item_schedule_movie) {
 
     override fun BaseViewHolder.onBindViewHolder() = with(itemView) {
@@ -68,7 +63,7 @@ class MovieAdapter(
         find<ImageView>(R.id.explicitContent).isVisible = model.movie.isExplicitContent
         find<ImageView>(R.id.artMovie).isVisible = model.movie.isArtMovie
         setOnClickListener {
-            selection(CinemaAction.LoadDetails(model.movie), NavAction.Details)
+            selection(CinemaAction.LoadDetails(model.movie), R.id.action_scheduleFragment_to_detailsFragment)
         }
     }
 }

@@ -45,6 +45,6 @@ dependencies {
 
     implementation(kotlin("stdlib", Versions.kotlin))
     implementation(Libs.koinAndroid)
-    implementation(Libs.ktx)
+    implementation(Libs.coreKtx)
     implementation(Libs.jsr310)
 }

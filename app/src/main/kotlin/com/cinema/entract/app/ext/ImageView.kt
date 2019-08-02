@@ -17,11 +17,8 @@
 package com.cinema.entract.app.ext
 
 import android.widget.ImageView
-import com.bumptech.glide.Glide
 import com.cinema.entract.app.R
 import org.jetbrains.anko.colorAttr
-
-fun ImageView.load(url: String) = Glide.with(context).load(url).into(this)
 
 fun ImageView.displayPlaceHolder() = with(this) {
     adjustViewBounds = true

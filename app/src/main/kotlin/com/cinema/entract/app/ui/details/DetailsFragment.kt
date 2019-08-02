@@ -34,15 +34,12 @@ import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.navigation.findNavController
+import coil.api.load
+import coil.size.Scale
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ext.displayPlaceHolder
-import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.model.Movie
-import com.cinema.entract.app.ui.CinemaAction
-import com.cinema.entract.app.ui.CinemaState
-import com.cinema.entract.app.ui.CinemaViewModel
-import com.cinema.entract.app.ui.TagAction
-import com.cinema.entract.app.ui.TagViewModel
+import com.cinema.entract.app.ui.*
 import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.inflate
 import com.cinema.entract.core.ext.observe
@@ -81,9 +78,19 @@ class DetailsFragment : BaseLceFragment<NestedScrollView>() {
                 val movie = state.movie
                 tagViewModel.tag(TagAction.Details(movie.sessionId))
 
-                setTitle(getString(R.string.details_date_with_time, movie.date.longFormatToUi(), movie.schedule))
+                setTitle(
+                    getString(
+                        R.string.details_date_with_time,
+                        movie.date.longFormatToUi(),
+                        movie.schedule
+                    )
+                )
                 find<ImageView>(R.id.cover).apply {
-                    if (movie.coverUrl.isNotEmpty()) load(movie.coverUrl) else displayPlaceHolder()
+                    if (movie.coverUrl.isNotEmpty()) load(movie.coverUrl) {
+                        scale(Scale.FILL)
+                        scaleType = ImageView.ScaleType.CENTER_INSIDE
+                    }
+                    else displayPlaceHolder()
                 }
                 find<TextView>(R.id.title).text = movie.title
                 find<ImageView>(R.id.originalVersion).isVisible = movie.isOriginalVersion

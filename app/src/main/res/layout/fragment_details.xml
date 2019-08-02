@@ -58,7 +58,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
                 android:importantForAccessibility="no"
-                android:scaleType="fitCenter"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/director"
                 app:layout_constraintWidth_percent="0.3"

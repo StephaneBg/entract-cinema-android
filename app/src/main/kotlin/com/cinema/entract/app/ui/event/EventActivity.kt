@@ -18,8 +18,8 @@ package com.cinema.entract.app.ui.event
 
 import android.os.Bundle
 import android.widget.ImageView
+import coil.api.load
 import com.cinema.entract.app.R
-import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.ui.TagAction
 import com.cinema.entract.app.ui.TagViewModel
 import com.cinema.entract.core.ui.BaseActivity
@@ -35,7 +35,7 @@ class EventActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event)
 
-        find<ImageView>(R.id.cover).load(intent.getStringExtra(COVER_URL) ?: error("Missing extra"))
+        find<ImageView>(R.id.cover).load(intent.getStringExtra(COVER_URL))
         find<MaterialButton>(R.id.close).setOnClickListener { finish() }
 
         tagViewModel.tag(TagAction.Event)

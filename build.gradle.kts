@@ -1,3 +1,5 @@
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+
 /*
  * Copyright 2019 Stéphane Baiget
  *
@@ -15,7 +17,7 @@
  */
 
 plugins {
-    id("com.github.ben-manes.versions") version "0.21.0"
+    id("com.github.ben-manes.versions") version "0.25.0"
 }
 
 buildscript {
@@ -38,4 +40,25 @@ allprojects {
         google()
         maven("https://jitpack.io")
     }
+}
+
+// ./gradlew dependencyUpdates -Drevision=release
+tasks.named<DependencyUpdatesTask>("dependencyUpdates") {
+    resolutionStrategy {
+        componentSelection {
+            all {
+                val rejected = listOf("alpha", "beta", "rc", "cr", "m", "preview", "test", "b", "ea", "eap").any { qualifier ->
+                    candidate.version.matches(Regex("(?i).*[.-]$qualifier[.\\d-+]*"))
+                }
+                if (rejected) {
+                    reject("Release candidate")
+                }
+            }
+        }
+    }
+    // optional parameters
+    checkForGradleUpdate = true
+    outputFormatter = "json"
+    outputDir = "build/dependencyUpdates"
+    reportfileName = "report"
 }

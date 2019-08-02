@@ -27,10 +27,10 @@ import com.cinema.entract.core.ui.BaseViewModel
 import com.cinema.entract.core.ui.Event
 import com.cinema.entract.data.ext.toEpochMilliSecond
 import com.cinema.entract.data.interactor.CinemaUseCase
-import com.gumil.kaskade.coroutines.coroutines
-import io.gumil.kaskade.Action
-import io.gumil.kaskade.Kaskade
-import io.gumil.kaskade.State
+import dev.gumil.kaskade.Action
+import dev.gumil.kaskade.Kaskade
+import dev.gumil.kaskade.State
+import dev.gumil.kaskade.coroutines.coroutines
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.plus

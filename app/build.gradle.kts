@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
+
 /*
  * Copyright 2019 Stéphane Baiget
  *
@@ -31,6 +33,11 @@ android {
         targetCompatibility = Versions.java
     }
 
+    kotlinOptions {
+        this as KotlinJvmOptions
+        jvmTarget = "1.8"
+    }
+
     defaultConfig {
         applicationId = "com.cinema.entract.app"
         versionCode = versionMajor * 100 + versionMinor * 10 + versionPatch
@@ -47,7 +54,6 @@ android {
             isMinifyEnabled = true
             isDebuggable = false
             isJniDebuggable = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard.pro")
         }
     }
 
@@ -89,7 +95,6 @@ dependencies {
     implementation(Libs.appCompat)
     implementation(Libs.coreKtx)
     implementation(Libs.recyclerView)
-    implementation(Libs.vectorDrawable)
     implementation(Libs.material)
     implementation(Libs.constraintLayout)
     implementation(Libs.lifecyleViewmodel)
@@ -97,7 +102,7 @@ dependencies {
     implementation(Libs.navUi)
     implementation(Libs.anko)
     implementation(Libs.koinAndroid)
-    implementation(Libs.glide)
+    implementation(Libs.coil)
     implementation(Libs.jsr310)
     implementation(Libs.firebaseCore)
     implementation(Libs.firebaseMessaging)

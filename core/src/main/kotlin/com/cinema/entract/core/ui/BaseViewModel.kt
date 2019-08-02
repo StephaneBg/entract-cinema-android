@@ -17,10 +17,10 @@
 package com.cinema.entract.core.ui
 
 import androidx.lifecycle.ViewModel
-import io.gumil.kaskade.Action
-import io.gumil.kaskade.Kaskade
-import io.gumil.kaskade.State
-import io.gumil.kaskade.livedata.stateLiveData
+import dev.gumil.kaskade.Action
+import dev.gumil.kaskade.Kaskade
+import dev.gumil.kaskade.State
+import dev.gumil.kaskade.livedata.stateLiveData
 import kotlinx.coroutines.CoroutineExceptionHandler
 
 abstract class BaseViewModel<ACTION : Action, STATE : State> : ViewModel() {

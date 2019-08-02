@@ -20,9 +20,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import coil.api.load
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ext.displayPlaceHolder
-import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.core.widget.BaseViewHolder
 import com.cinema.entract.core.widget.ItemAdapter

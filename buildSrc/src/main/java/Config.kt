@@ -36,6 +36,7 @@ object Versions {
     const val koin = "2.0.1"
     const val kaskade = "0.3.7"
     const val coil = "0.7.0"
+    const val glide = "4.9.0"
     const val jsr310 = "1.2.1"
     const val firebaseCore = "17.2.0"
     const val firebaseMessaging = "20.0.0"
@@ -79,5 +80,6 @@ object Libs {
     val kaskadeLiveData = "dev.gumil.kaskade:livedata:${Versions.kaskade}"
     val kaskadeCoroutines = "dev.gumil.kaskade:coroutines:${Versions.kaskade}"
     val coil = "io.coil-kt:coil:${Versions.coil}"
+    val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
     val jsr310 = "com.jakewharton.threetenabp:threetenabp:${Versions.jsr310}"
 }

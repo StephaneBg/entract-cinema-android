@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 /*
  * Copyright 2019 Stéphane Baiget
@@ -22,7 +22,7 @@ plugins {
 }
 
 val versionMajor = 1
-val versionMinor = 4
+val versionMinor = 5
 val versionPatch = 0
 
 android {
@@ -31,11 +31,6 @@ android {
     compileOptions {
         sourceCompatibility = Versions.java
         targetCompatibility = Versions.java
-    }
-
-    kotlinOptions {
-        this as KotlinJvmOptions
-        jvmTarget = "1.8"
     }
 
     defaultConfig {
@@ -54,6 +49,10 @@ android {
             isMinifyEnabled = true
             isDebuggable = false
             isJniDebuggable = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 
@@ -80,6 +79,12 @@ android {
         exclude("**/*.txt")
         exclude("**/*.xml")
         exclude("**/*.properties")
+    }
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }
 

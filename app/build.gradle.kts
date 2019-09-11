@@ -102,7 +102,7 @@ dependencies {
     implementation(Libs.navUi)
     implementation(Libs.anko)
     implementation(Libs.koinAndroid)
-    implementation(Libs.coil)
+    implementation(Libs.glide)
     implementation(Libs.jsr310)
     implementation(Libs.firebaseCore)
     implementation(Libs.firebaseMessaging)

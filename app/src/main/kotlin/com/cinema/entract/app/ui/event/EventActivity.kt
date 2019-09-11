@@ -18,8 +18,8 @@ package com.cinema.entract.app.ui.event
 
 import android.os.Bundle
 import android.widget.ImageView
-import coil.api.load
 import com.cinema.entract.app.R
+import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.ui.TagAction
 import com.cinema.entract.app.ui.TagViewModel
 import com.cinema.entract.core.ui.BaseActivity

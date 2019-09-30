@@ -19,4 +19,4 @@ package com.cinema.entract.data.ext
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneOffset
 
-fun LocalDateTime.toEpochMilliSecond() = this.toEpochSecond(ZoneOffset.ofHours(1)) * 1000
+fun LocalDateTime.toEpochMilliSecond() = this.toEpochSecond(ZoneOffset.ofHours(2)) * 1000

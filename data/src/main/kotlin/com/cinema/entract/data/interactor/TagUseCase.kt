@@ -17,9 +17,9 @@
 package com.cinema.entract.data.interactor
 
 import com.cinema.entract.data.BuildConfig
-import com.cinema.entract.data.source.CinemaDataStore
+import com.cinema.entract.data.source.DataStore
 
-class TagUseCase(private val dataStore: CinemaDataStore) {
+class TagUseCase(private val dataStore: DataStore) {
 
     suspend fun tagSchedule() = performTag { dataStore.tagSchedule() }
 

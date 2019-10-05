@@ -16,9 +16,9 @@
 
 package com.cinema.entract.data.interactor
 
-import com.cinema.entract.data.source.CinemaDataStore
+import com.cinema.entract.data.source.DataStore
 
-class NotifUseCase(private val dataStore: CinemaDataStore) {
+class NotifUseCase(private val dataStore: DataStore) {
 
     suspend fun registerNotifications(token: String) = dataStore.registerNotifications(token)
 }

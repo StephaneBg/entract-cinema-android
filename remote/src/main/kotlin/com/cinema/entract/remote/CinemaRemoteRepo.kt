@@ -25,7 +25,7 @@ import com.cinema.entract.remote.mapper.EventMapper
 import com.cinema.entract.remote.mapper.MovieMapper
 import com.cinema.entract.remote.mapper.WeekMapper
 
-class RemoteRepoImpl(
+class CinemaRemoteRepo(
     private val service: CinemaService,
     private val movieMapper: MovieMapper,
     private val weekMapper: WeekMapper,
@@ -45,14 +45,23 @@ class RemoteRepoImpl(
         dateRangeMapper.mapToData(it)
     } ?: error("Incorrect server response")
 
-    override suspend fun registerNotifications(token: String) =
+    override suspend fun registerNotifications(token: String) {
         service.registerNotifications(token = token)
+    }
 
-    override suspend fun tagSchedule() = service.tagSchedule()
+    override suspend fun tagSchedule() {
+        service.tagSchedule()
+    }
 
-    override suspend fun tagEvent() = service.tagEvent()
+    override suspend fun tagEvent() {
+        service.tagEvent()
+    }
 
-    override suspend fun tagDetails(sessionId: String) = service.tagDetails(sessionId = sessionId)
+    override suspend fun tagDetails(sessionId: String) {
+        service.tagDetails(sessionId = sessionId)
+    }
 
-    override suspend fun tagCalendar(sessionId: String) = service.tagCalendar(sessionId = sessionId)
+    override suspend fun tagCalendar(sessionId: String) {
+        service.tagCalendar(sessionId = sessionId)
+    }
 }

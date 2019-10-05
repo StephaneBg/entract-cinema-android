@@ -22,11 +22,11 @@ import com.cinema.entract.core.utils.convertThemeMode
 import com.cinema.entract.data.ext.formatToUTC
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
-import com.cinema.entract.data.source.CinemaDataStore
+import com.cinema.entract.data.source.DataStore
 import org.threeten.bp.LocalDate
 
 class CinemaUseCase(
-    private val dataStore: CinemaDataStore,
+    private val dataStore: DataStore,
     private val networkUtils: NetworkUtils
 ) {
 

@@ -13,32 +13,53 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.cinema.entract.data.source
 
 import com.cinema.entract.data.model.DateRangeData
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
+import com.cinema.entract.data.repository.CacheRepo
+import com.cinema.entract.data.repository.RemoteRepo
 import com.cinema.entract.data.repository.UserPreferencesRepo
 
-interface CinemaDataStore {
+class CinemaDataStore(
+    private val cacheRepo: CacheRepo,
+    private val remoteRepo: RemoteRepo,
+    private val userPreferencesRepo: UserPreferencesRepo
+) : DataStore {
 
-    suspend fun getMovies(date: String): List<MovieData>
+    override suspend fun getMovies(date: String): List<MovieData> =
+        cacheRepo.getMovies(date) ?: cacheRepo.cacheMovies(date, remoteRepo.getMovies(date))
 
-    suspend fun getSchedule(): List<WeekData>
+    override suspend fun getSchedule(): List<WeekData> =
+        cacheRepo.getSchedule() ?: cacheRepo.cacheSchedule(remoteRepo.getSchedule())
 
-    suspend fun getDateRange(): DateRangeData
+    override suspend fun getDateRange(): DateRangeData =
+        cacheRepo.getDateRange() ?: cacheRepo.cacheDateRange(remoteRepo.getDateRange())
 
-    suspend fun getEventUrl(): String
+    override suspend fun getEventUrl(): String =
+        cacheRepo.getEventUrl() ?: cacheRepo.cacheEventUrl(remoteRepo.getEventUrl())
 
-    suspend fun registerNotifications(token: String)
+    override suspend fun registerNotifications(token: String) {
+        remoteRepo.registerNotifications(token)
+    }
 
-    suspend fun tagSchedule()
+    override suspend fun tagSchedule() {
+        remoteRepo.tagSchedule()
+    }
 
-    suspend fun tagEvent()
+    override suspend fun tagEvent() {
+        remoteRepo.tagEvent()
+    }
 
-    suspend fun tagDetails(sessionId: String)
+    override suspend fun tagDetails(sessionId: String) {
+        remoteRepo.tagDetails(sessionId)
+    }
 
-    suspend fun tagCalendar(sessionId: String)
+    override suspend fun tagCalendar(sessionId: String) {
+        remoteRepo.tagCalendar(sessionId)
+    }
 
-    fun getUserPreferences(): UserPreferencesRepo
+    override fun getUserPreferences(): UserPreferencesRepo = userPreferencesRepo
 }

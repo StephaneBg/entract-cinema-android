@@ -27,7 +27,7 @@ import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
 import com.cinema.entract.data.repository.CacheRepo
 
-class CacheRepoImpl(
+class CinemaCacheRepo(
     private val movieMapper: MovieMapper,
     private val weekMapper: WeekMapper,
     private val dateRangeMapper: DateRangeMapper

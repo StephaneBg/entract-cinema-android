@@ -20,7 +20,7 @@ import com.cinema.entract.data.interactor.CinemaUseCase
 import com.cinema.entract.data.interactor.NotifUseCase
 import com.cinema.entract.data.interactor.TagUseCase
 import com.cinema.entract.data.source.CinemaDataStore
-import com.cinema.entract.data.source.CinemaDataStoreImpl
+import com.cinema.entract.data.source.DataStore
 import org.koin.dsl.module
 
 val dataModule = module {
@@ -28,5 +28,5 @@ val dataModule = module {
     single { CinemaUseCase(get(), get()) }
     single { TagUseCase(get()) }
     single { NotifUseCase(get()) }
-    single<CinemaDataStore> { CinemaDataStoreImpl(get(), get(), get()) }
+    single<DataStore> { CinemaDataStore(get(), get(), get()) }
 }

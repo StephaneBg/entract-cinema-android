@@ -17,12 +17,9 @@
 package com.cinema.entract.remote.di
 
 import com.cinema.entract.data.repository.RemoteRepo
-import com.cinema.entract.remote.*
-import com.cinema.entract.remote.mapper.DateRangeMapper
-import com.cinema.entract.remote.mapper.DayMapper
-import com.cinema.entract.remote.mapper.EventMapper
-import com.cinema.entract.remote.mapper.MovieMapper
-import com.cinema.entract.remote.mapper.WeekMapper
+import com.cinema.entract.remote.CinemaRemoteRepo
+import com.cinema.entract.remote.CinemaService
+import com.cinema.entract.remote.mapper.*
 import com.cinema.entract.remote.network.ConnectivityInterceptor
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
@@ -56,7 +53,7 @@ val remoteModule = module {
     single { DateRangeMapper() }
     single { EventMapper() }
 
-    factory<RemoteRepo> { RemoteRepoImpl(get(), get(), get(), get(), get()) }
+    factory<RemoteRepo> { CinemaRemoteRepo(get(), get(), get(), get(), get()) }
 }
 
 private const val TIME_OUT = 30L

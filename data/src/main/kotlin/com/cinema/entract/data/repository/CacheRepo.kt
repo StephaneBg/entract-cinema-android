@@ -32,7 +32,7 @@ interface CacheRepo {
 
     fun getDateRange(): DateRangeData?
 
-    fun cacheDateRange(range: DateRangeData): DateRangeData
+    fun cacheDateRange(range: DateRangeData?): DateRangeData?
 
     fun getEventUrl(): String?
 

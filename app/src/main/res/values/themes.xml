@@ -55,6 +55,7 @@
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog.Alert</item>
         <item name="switchStyle">@style/Widget.Cinema.Switch</item>
         <item name="materialButtonStyle">@style/Widget.Cinema.Button</item>
+        <item name="materialCalendarTheme">@style/ThemeOverlay.Cinema.MaterialCalendar</item>
 
         <item name="android:statusBarColor">?colorPrimaryVariant</item>
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>

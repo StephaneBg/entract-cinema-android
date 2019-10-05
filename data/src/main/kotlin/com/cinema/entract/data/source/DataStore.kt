@@ -26,7 +26,7 @@ interface DataStore {
 
     suspend fun getSchedule(): List<WeekData>
 
-    suspend fun getDateRange(): DateRangeData
+    suspend fun getDateRange(): DateRangeData?
 
     suspend fun getEventUrl(): String
 

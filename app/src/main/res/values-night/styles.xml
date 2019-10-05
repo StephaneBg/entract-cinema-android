@@ -23,13 +23,4 @@
         <item name="iconTint">?colorOnBackground</item>
         <item name="strokeColor">?colorSecondary</item>
     </style>
-
-    <style name="DatePicker.Cinema.Dialog" parent="Theme.MaterialComponents.Dialog">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorSecondary">@color/secondary</item>
-        <item name="android:background">@color/primary</item>
-        <item name="android:buttonBarPositiveButtonStyle">@style/Widget.Cinema.Button.Dialog</item>
-        <item name="android:buttonBarNegativeButtonStyle">@style/Widget.Cinema.Button.Dialog</item>
-        <item name="android:buttonBarNeutralButtonStyle">@style/Widget.Cinema.Button.Dialog</item>
-    </style>
 </resources>

@@ -16,7 +16,6 @@
 
 package com.cinema.entract.app.ui.onscreen
 
-import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +25,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cinema.entract.app.R
 import com.cinema.entract.app.databinding.FragmentOnScreenBinding
+import com.cinema.entract.app.model.DateParameters
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.CinemaAction
 import com.cinema.entract.app.ui.CinemaState
@@ -36,18 +36,20 @@ import com.cinema.entract.core.ui.BaseLceFragment
 import com.cinema.entract.core.widget.GenericRecyclerViewAdapter
 import com.cinema.entract.data.ext.isToday
 import com.cinema.entract.data.ext.longFormatToUi
+import com.cinema.entract.data.ext.toUtcEpochMilliSecond
+import com.cinema.entract.data.ext.toUtcLocalDate
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.MaterialDatePicker
 import org.jetbrains.anko.startActivity
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.threeten.bp.LocalDate
 
 class OnScreenFragment : BaseLceFragment() {
 
     private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
-    private lateinit var datePickerDialog: DatePickerDialog
+    private lateinit var datePickerDialog: MaterialDatePicker<Long>
     private val onScreenAdapter = GenericRecyclerViewAdapter()
     private lateinit var binding: FragmentOnScreenBinding
-
-    private var currentState: CinemaState.OnScreen? = null
+    private var dateParams: DateParameters? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,13 +78,13 @@ class OnScreenFragment : BaseLceFragment() {
     }
 
     private fun renderState(state: CinemaState?) {
-        currentState = null
         when (state) {
             is CinemaState.Loading -> showLoading()
             is CinemaState.OnScreen -> {
-                currentState = state
-                setTitle(state.date.longFormatToUi())
-                binding.fab.isVisible = null != state.dateRange
+                dateParams = state.dateParams
+                setTitle(dateParams?.currentDate?.longFormatToUi())
+                binding.fab.isVisible =
+                    null != dateParams?.minimumDate && null != dateParams?.maximumDate
                 updateMovies(state.movies)
                 showContent()
                 showEvent(state)
@@ -108,24 +110,28 @@ class OnScreenFragment : BaseLceFragment() {
     }
 
     private fun displayDatePicker() {
-        val state = currentState
-        state?.dateRange?.let {
-            val date = state.date
-            datePickerDialog = DatePickerDialog(
-                requireContext(),
-                R.style.DatePicker_Cinema_Dialog,
-                { _, year, month, dayOfMonth ->
-                    val pickedDate = LocalDate.of(year, month + 1, dayOfMonth)
+        dateParams?.let {
+            if (null != it.minimumDate && null != it.maximumDate) {
+                val currentMilliSec = it.currentDate.toUtcEpochMilliSecond()
+                val minMilliSec = it.minimumDate.toUtcEpochMilliSecond()
+                val maxMilliSec = it.maximumDate.toUtcEpochMilliSecond()
+                datePickerDialog = MaterialDatePicker.Builder.datePicker()
+                    .setTitleText(R.string.on_screen_date_picker_title)
+                    .setSelection(currentMilliSec)
+                    .setCalendarConstraints(
+                        CalendarConstraints.Builder()
+                            .setOpenAt(currentMilliSec)
+                            .setStart(minMilliSec)
+                            .setEnd(maxMilliSec)
+                            .setValidator(CinemaDateValidator(minMilliSec, maxMilliSec))
+                            .build()
+                    )
+                    .build()
+                datePickerDialog.addOnPositiveButtonClickListener { selectionInMilliSec ->
+                    val pickedDate = selectionInMilliSec.toUtcLocalDate()
                     cinemaViewModel.process(CinemaAction.RefreshMovies(pickedDate))
-                    datePickerDialog.dismiss()
-                },
-                date.year,
-                date.monthValue - 1,
-                date.dayOfMonth
-            ).apply {
-                datePicker.minDate = it.minimumDate
-                datePicker.maxDate = it.maximumDate
-                show()
+                }
+                datePickerDialog.show(childFragmentManager, null)
             }
         }
     }
@@ -136,5 +142,5 @@ class OnScreenFragment : BaseLceFragment() {
         }
     }
 
-    fun isTodayDisplayed(): Boolean = currentState?.date?.isToday() == true
+    fun isTodayDisplayed(): Boolean = dateParams?.currentDate?.isToday() == true
 }

@@ -35,7 +35,7 @@ class CinemaDataStore(
     override suspend fun getSchedule(): List<WeekData> =
         cacheRepo.getSchedule() ?: cacheRepo.cacheSchedule(remoteRepo.getSchedule())
 
-    override suspend fun getDateRange(): DateRangeData =
+    override suspend fun getDateRange(): DateRangeData? =
         cacheRepo.getDateRange() ?: cacheRepo.cacheDateRange(remoteRepo.getDateRange())
 
     override suspend fun getEventUrl(): String =

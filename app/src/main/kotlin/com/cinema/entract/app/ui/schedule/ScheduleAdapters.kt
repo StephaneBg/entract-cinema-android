@@ -20,9 +20,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.core.view.isVisible
 import com.cinema.entract.app.R
-import com.cinema.entract.app.databinding.ListItemScheduleDayHeaderBinding
 import com.cinema.entract.app.databinding.ListItemScheduleMovieBinding
-import com.cinema.entract.app.databinding.ListItemScheduleWeekHeaderBinding
 import com.cinema.entract.app.model.DayHeader
 import com.cinema.entract.app.model.MovieEntry
 import com.cinema.entract.app.model.WeekHeader
@@ -35,8 +33,7 @@ class DayHeaderAdapter(
 ) : ItemAdapter(R.layout.list_item_schedule_day_header) {
 
     override fun onBindViewHolder(itemView: View) {
-        val binding = ListItemScheduleDayHeaderBinding.bind(itemView)
-        with(binding.root as TextView) {
+        with(itemView as TextView) {
             text = dayHeader.dateUi
             setOnClickListener {
                 selection(
@@ -52,8 +49,7 @@ class WeekHeaderAdapter(private val weekHeader: WeekHeader) :
     ItemAdapter(R.layout.list_item_schedule_week_header) {
 
     override fun onBindViewHolder(itemView: View) {
-        val binding = ListItemScheduleWeekHeaderBinding.bind(itemView)
-        (binding.root as TextView).text = weekHeader.dateUi
+        (itemView as TextView).text = weekHeader.dateUi
     }
 }
 

@@ -41,9 +41,9 @@ class CinemaRemoteRepo(
 
     override suspend fun getEventUrl(): String = eventMapper.mapToData(service.getEvent())
 
-    override suspend fun getDateRange(): DateRangeData = service.getParameters().periode?.let {
+    override suspend fun getDateRange(): DateRangeData? = service.getParameters().periode?.let {
         dateRangeMapper.mapToData(it)
-    } ?: error("Incorrect server response")
+    }
 
     override suspend fun registerNotifications(token: String) {
         service.registerNotifications(token = token)

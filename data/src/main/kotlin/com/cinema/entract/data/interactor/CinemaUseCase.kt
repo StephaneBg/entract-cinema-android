@@ -19,7 +19,8 @@ package com.cinema.entract.data.interactor
 import com.cinema.entract.core.network.NetworkUtils
 import com.cinema.entract.core.ui.Event
 import com.cinema.entract.core.utils.convertThemeMode
-import com.cinema.entract.data.ext.formatToUTC
+import com.cinema.entract.data.ext.formatToUtc
+import com.cinema.entract.data.model.DateRangeData
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
 import com.cinema.entract.data.source.DataStore
@@ -38,7 +39,7 @@ class CinemaUseCase(
     suspend fun getMovies(date: LocalDate? = null): List<MovieData> {
         currentDate = date ?: getDate()
         return dataStore
-            .getMovies(getDate().formatToUTC())
+            .getMovies(getDate().formatToUtc())
             .map {
                 if (!canDisplayMedia()) it.copy(
                     coverUrl = "",
@@ -50,7 +51,7 @@ class CinemaUseCase(
     suspend fun getMovie(movie: MovieData): MovieData =
         getMovies(movie.date).first { it.movieId == movie.movieId }
 
-    suspend fun getDateRange() = dataStore.getDateRange()
+    suspend fun getDateRange(): DateRangeData? = dataStore.getDateRange()
 
     suspend fun getSchedule(): List<WeekData> = dataStore.getSchedule().filter { it.hasMovies }
 

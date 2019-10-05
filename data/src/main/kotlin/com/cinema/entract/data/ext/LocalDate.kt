@@ -16,9 +16,9 @@
 
 package com.cinema.entract.data.ext
 
-import org.threeten.bp.LocalDate
+import org.threeten.bp.*
 import org.threeten.bp.format.DateTimeFormatter
-import java.util.Locale
+import java.util.*
 
 private val longFormatter = DateTimeFormatter.ofPattern("EEEE d MMMM", Locale.FRANCE)
 private val shortFormatter = DateTimeFormatter.ofPattern("d MMMM", Locale.FRANCE)
@@ -31,7 +31,7 @@ fun LocalDate.longFormatToUi(): String = when {
 
 fun LocalDate.shortFormatToUi(): String = this.format(shortFormatter).capitalize()
 
-fun LocalDate.formatToUTC(): String = this.format(DateTimeFormatter.ISO_LOCAL_DATE)
+fun LocalDate.formatToUtc(): String = this.format(DateTimeFormatter.ISO_LOCAL_DATE)
 
 fun LocalDate.isTodayOrLater(): Boolean = this.isAfter(LocalDate.now().minusDays(1))
 
@@ -41,4 +41,8 @@ fun LocalDate.isTomorrow(): Boolean = this == LocalDate.now().plusDays(1)
 
 infix fun LocalDate.sameMonth(other: LocalDate): Boolean = this.monthValue == other.monthValue
 
-fun LocalDate.toEpochMilliSecond() = this.toEpochDay() * 24 * 60 * 60 * 1000
+fun LocalDate.toUtcEpochMilliSecond(): Long =
+    ZonedDateTime.of(this, LocalTime.MIDNIGHT, ZoneOffset.UTC).toEpochSecond() * 1000
+
+fun Long.toUtcLocalDate(): LocalDate =
+    LocalDateTime.ofEpochSecond(this / 1000, 0, ZoneOffset.UTC).toLocalDate()

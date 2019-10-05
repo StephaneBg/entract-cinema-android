@@ -56,8 +56,8 @@ class CinemaCacheRepo(
         dateRangeMapper.mapToData(it)
     }
 
-    override fun cacheDateRange(range: DateRangeData): DateRangeData = range.also {
-        dateRange = dateRangeMapper.mapFromData(range)
+    override fun cacheDateRange(range: DateRangeData?): DateRangeData? = range.also {
+        range?.let { dateRange = dateRangeMapper.mapFromData(it) }
     }
 
     override fun getEventUrl(): String? = eventUrl

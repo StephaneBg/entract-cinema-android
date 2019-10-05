@@ -24,4 +24,5 @@
     android:textColor="?colorSecondary"
     android:textStyle="bold"
     tools:text="Du 16 au 25 janvier"
+    tools:viewBindingIgnore="true"
     />

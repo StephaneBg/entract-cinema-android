@@ -25,4 +25,5 @@
     android:textColor="?colorSecondary"
     android:textStyle="bold"
     tools:text="15 septembre 2018"
+    tools:viewBindingIgnore="true"
     />

@@ -35,11 +35,21 @@
 
     <style name="Widget.Cinema.AppBarLayout.Primary" parent="Widget.Design.AppBarLayout" />
 
-    <style name="DatePicker.Cinema.Dialog" parent="Theme.MaterialComponents.Light.Dialog">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorSecondary">@color/secondary</item>
-        <item name="android:buttonBarPositiveButtonStyle">@style/Widget.Cinema.Button.Dialog</item>
-        <item name="android:buttonBarNegativeButtonStyle">@style/Widget.Cinema.Button.Dialog</item>
-        <item name="android:buttonBarNeutralButtonStyle">@style/Widget.Cinema.Button.Dialog</item>
+    <style name="ThemeOverlay.Cinema.MaterialCalendar"
+        parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <item name="materialCalendarStyle">@style/Widget.Cinema.MaterialCalendar</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.Cinema.Button.Dialog</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.Cinema.Button.Dialog</item>
+    </style>
+
+    <style name="Widget.Cinema.MaterialCalendar"
+        parent="Widget.MaterialComponents.MaterialCalendar">
+        <item name="daySelectedStyle">@style/Widget.Cinema.MaterialCalendar.Day.Selected</item>
+    </style>
+
+    <style name="Widget.Cinema.MaterialCalendar.Day.Selected"
+        parent="Widget.MaterialComponents.MaterialCalendar.Day.Selected">
+        <item name="itemFillColor">?attr/colorSecondary</item>
+        <item name="itemTextColor">?attr/colorPrimary</item>
     </style>
 </resources>

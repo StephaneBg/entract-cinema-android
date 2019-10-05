@@ -22,34 +22,38 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.core.net.toUri
 import com.cinema.entract.app.R
-import com.cinema.entract.core.ext.find
+import com.cinema.entract.app.databinding.FragmentInformationBinding
 import com.cinema.entract.core.ui.BaseFragment
 import org.jetbrains.anko.browse
 import timber.log.Timber
 
 class InformationFragment : BaseFragment() {
 
+    private lateinit var binding: FragmentInformationBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_information, container, false)
+    ): View? {
+        binding = FragmentInformationBinding.inflate(inflater)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setTitle(R.string.information_title)
 
-        find<Button>(R.id.navigate).setOnClickListener {
+        binding.navigate.setOnClickListener {
             val gmmIntentUri = "geo:43.7700499,1.2948405?q=Grenade+Cinéma".toUri()
             val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
             mapIntent.setPackage("com.google.android.apps.maps")
             startActivity(mapIntent)
         }
-        find<Button>(R.id.call).setOnClickListener {
+        binding.call.setOnClickListener {
             try {
                 val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:+33561746234"))
                 startActivity(intent)
@@ -57,10 +61,10 @@ class InformationFragment : BaseFragment() {
                 Timber.e(e)
             }
         }
-        find<Button>(R.id.website).setOnClickListener {
+        binding.website.setOnClickListener {
             requireContext().browse("http://www.grenadecinema.fr")
         }
-        find<Button>(R.id.facebook).setOnClickListener {
+        binding.facebook.setOnClickListener {
             requireContext().browse("https://www.facebook.com/profile.php?movieId=410990495629466")
         }
     }

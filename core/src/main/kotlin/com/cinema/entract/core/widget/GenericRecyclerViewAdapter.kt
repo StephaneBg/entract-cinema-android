@@ -31,7 +31,7 @@ class GenericRecyclerViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
         diffResult?.dispatchUpdatesTo(this) ?: notifyDataSetChanged()
     }
 
-    override fun getItemCount() = items.size
+    override fun getItemCount(): Int = items.size
 
     override fun getItemViewType(position: Int) = items[position].layoutId
 
@@ -40,6 +40,7 @@ class GenericRecyclerViewAdapter : RecyclerView.Adapter<BaseViewHolder>() {
         return items.first { it.layoutId == layoutId }.onCreateViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) =
-        items[position].onBindBaseViewHolder(holder)
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+        items[position].onBindViewHolder(holder.itemView)
+    }
 }

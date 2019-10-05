@@ -39,8 +39,7 @@ class ErrorView @JvmOverloads constructor(
     private val action: Button
 
     init {
-        orientation = LinearLayout.VERTICAL
-        id = R.id.errorView
+        orientation = VERTICAL
         inflate(context, R.layout.widget_error_view, this)
 
         image = find(R.id.errorImage)

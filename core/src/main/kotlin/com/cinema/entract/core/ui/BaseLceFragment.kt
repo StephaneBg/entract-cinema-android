@@ -16,56 +16,45 @@
 
 package com.cinema.entract.core.ui
 
-import android.os.Bundle
 import android.view.View
 import androidx.annotation.CallSuper
 import androidx.core.widget.ContentLoadingProgressBar
-import com.cinema.entract.core.R
-import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ext.hide
 import com.cinema.entract.core.ext.show
-import com.cinema.entract.core.widget.EmptinessLayout
 import com.cinema.entract.core.widget.ErrorView
 
-@Suppress("UNCHECKED_CAST")
-open class BaseLceFragment<T : View> : BaseFragment() {
+open class BaseLceFragment : BaseFragment() {
 
-    lateinit var contentView: T
-    lateinit var loadingView: ContentLoadingProgressBar
-    lateinit var errorView: ErrorView
+    private lateinit var viewHolder: ViewHolder
 
-    @CallSuper
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        contentView = find<View>(R.id.contentView) as T
-        loadingView = find(R.id.loadingView)
-        errorView = find(R.id.errorView)
+    fun initLce(loading: ContentLoadingProgressBar, content: View, error: ErrorView) {
+        viewHolder = ViewHolder(loading, content, error)
     }
 
     @CallSuper
     protected open fun showContent() {
-        errorView.hide()
-        loadingView.hide()
-        contentView.show()
+        viewHolder.errorView.hide()
+        viewHolder.loadingView.hide()
+        viewHolder.contentView.show()
     }
 
     @CallSuper
     protected open fun showLoading() {
-        contentView.hide()
-        errorView.hide()
-        loadingView.show()
+        viewHolder.contentView.hide()
+        viewHolder.errorView.hide()
+        viewHolder.loadingView.show()
     }
 
     @CallSuper
     protected open fun showError(throwable: Throwable?, action: () -> Unit) {
-        contentView.hide()
-        loadingView.hide()
-        errorView.show(getErrorDrawable(throwable), getErrorMessage(throwable), action)
+        viewHolder.contentView.hide()
+        viewHolder.loadingView.hide()
+        viewHolder.errorView.show(getErrorDrawable(throwable), getErrorMessage(throwable), action)
     }
-}
 
-fun BaseLceFragment<EmptinessLayout>.scrollToTop(): Boolean = if (contentView.isScrolled()) {
-    contentView.scrollToTop()
-    true
-} else {
-    false
+    data class ViewHolder(
+        val loadingView: ContentLoadingProgressBar,
+        val contentView: View,
+        val errorView: ErrorView
+    )
 }

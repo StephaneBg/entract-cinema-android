@@ -22,7 +22,7 @@
     >
 
     <androidx.core.widget.ContentLoadingProgressBar
-        android:id="@id/loadingView"
+        android:id="@+id/loadingView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:indeterminate="true"
@@ -35,7 +35,7 @@
         />
 
     <com.cinema.entract.core.widget.EmptinessLayout
-        android:id="@id/contentView"
+        android:id="@+id/contentView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -94,6 +94,7 @@
     </com.cinema.entract.core.widget.EmptinessLayout>
 
     <com.cinema.entract.core.widget.ErrorView
+        android:id="@+id/errorView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"

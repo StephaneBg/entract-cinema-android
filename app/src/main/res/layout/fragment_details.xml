@@ -346,6 +346,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <com.cinema.entract.core.widget.ErrorView
+        android:id="@+id/errorView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"

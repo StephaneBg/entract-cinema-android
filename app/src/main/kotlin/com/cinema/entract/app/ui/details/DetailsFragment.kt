@@ -26,38 +26,37 @@ import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
-import androidx.core.widget.NestedScrollView
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.cinema.entract.app.R
+import com.cinema.entract.app.databinding.FragmentDetailsBinding
+import com.cinema.entract.app.databinding.ListItemDetailsMovieBinding
 import com.cinema.entract.app.ext.displayPlaceHolder
 import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.*
-import com.cinema.entract.core.ext.find
-import com.cinema.entract.core.ext.inflate
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ext.toSpanned
 import com.cinema.entract.core.ui.BaseLceFragment
 import com.cinema.entract.data.ext.longFormatToUi
-import org.jetbrains.anko.find
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class DetailsFragment : BaseLceFragment<NestedScrollView>() {
+class DetailsFragment : BaseLceFragment() {
 
     private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
     private val tagViewModel by sharedViewModel<TagViewModel>()
+    private lateinit var binding: FragmentDetailsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_details, container, false)
+    ): View? {
+        binding = FragmentDetailsBinding.inflate(layoutInflater)
+        initLce(binding.loadingView, binding.contentView, binding.errorView)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -84,34 +83,32 @@ class DetailsFragment : BaseLceFragment<NestedScrollView>() {
                         movie.schedule
                     )
                 )
-                find<ImageView>(R.id.cover).apply {
+                binding.cover.apply {
                     if (movie.coverUrl.isNotEmpty()) load(movie.coverUrl)
                     else displayPlaceHolder()
                 }
-                find<TextView>(R.id.title).text = movie.title
-                find<ImageView>(R.id.originalVersion).isVisible = movie.isOriginalVersion
-                find<ImageView>(R.id.threeDimension).isVisible = movie.isThreeDimension
-                find<ImageView>(R.id.underTwelve).isVisible = movie.isUnderTwelve
-                find<TextView>(R.id.underTwelveNotice).isVisible = movie.isUnderTwelve
-                find<ImageView>(R.id.explicitContent).isVisible = movie.isExplicitContent
-                find<ImageView>(R.id.artMovie).isVisible = movie.isArtMovie
-                find<TextView>(R.id.explicitContentNotice).isVisible = movie.isExplicitContent
-                find<TextView>(R.id.director).text =
-                    getString(R.string.details_director, movie.director).toSpanned()
-                with(find<TextView>(R.id.cast)) {
-                    if (movie.cast.isEmpty()) isVisible = false
-                    else text = getString(R.string.details_cast, movie.cast).toSpanned()
-                }
-                find<TextView>(R.id.year).text =
-                    getString(
-                        R.string.details_production_year,
-                        movie.yearOfProduction
-                    ).toSpanned()
-                find<TextView>(R.id.duration).text =
-                    getString(R.string.details_duration, movie.duration)
-                find<TextView>(R.id.genre).text = movie.genre
+                binding.title.text = movie.title
+                binding.originalVersion.isVisible = movie.isOriginalVersion
+                binding.threeDimension.isVisible = movie.isThreeDimension
+                binding.underTwelve.isVisible = movie.isUnderTwelve
+                binding.underTwelveNotice.isVisible = movie.isUnderTwelve
+                binding.explicitContent.isVisible = movie.isExplicitContent
+                binding.artMovie.isVisible = movie.isArtMovie
+                binding.explicitContentNotice.isVisible = movie.isExplicitContent
+                binding.director.text = getString(
+                    R.string.details_director,
+                    movie.director
+                ).toSpanned()
+                if (movie.cast.isEmpty()) binding.cast.isVisible = false
+                else binding.cast.text = getString(R.string.details_cast, movie.cast).toSpanned()
+                binding.year.text = getString(
+                    R.string.details_production_year,
+                    movie.yearOfProduction
+                ).toSpanned()
+                binding.duration.text = getString(R.string.details_duration, movie.duration)
+                binding.genre.text = movie.genre
 
-                with(find<TextView>(R.id.synopsis)) {
+                with(binding.synopsis) {
                     text = movie.synopsis
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         justificationMode = Layout.JUSTIFICATION_MODE_INTER_WORD
@@ -120,42 +117,48 @@ class DetailsFragment : BaseLceFragment<NestedScrollView>() {
 
                 manageNextMovies(movie.nextMovies)
 
-                with(find<Button>(R.id.teaser)) {
+                with(binding.teaser) {
                     if (movie.teaserId.isNotEmpty()) {
                         setOnClickListener { showTeaser(movie) }
                     } else {
                         isVisible = false
                     }
                 }
-                find<Button>(R.id.agenda).setOnClickListener { addCalendarEvent(movie) }
+                binding.agenda.setOnClickListener { addCalendarEvent(movie) }
                 showContent()
             }
         }
     }
 
     private fun manageNextMovies(movies: List<Movie>) {
-        val container = find<LinearLayout>(R.id.nextContainer)
+        val container = binding.nextContainer
         if (movies.isEmpty()) {
-            container.inflate(R.layout.list_item_details_movie, true)
-                .find<TextView>(R.id.dateSchedule).setText(R.string.details_no_next_movies)
+            val listItem = inflateNextListItem(container)
+            listItem.dateSchedule.setText(R.string.details_no_next_movies)
         } else {
             movies.forEach { movie ->
-                with(container.inflate(R.layout.list_item_details_movie, true)) {
-                    find<TextView>(R.id.dateSchedule).text = getString(
-                        R.string.details_date_with_time,
-                        movie.date.longFormatToUi(),
-                        movie.schedule
-                    )
-                    find<ImageView>(R.id.originalVersion).isVisible = movie.isOriginalVersion
-                    find<ImageView>(R.id.threeDimension).isVisible = movie.isThreeDimension
-                    setOnClickListener {
-                        cinemaViewModel.process(CinemaAction.LoadMovies(movie.date))
-                        findNavController().navigate(R.id.action_detailsFragment_to_onScreenFragment)
-                    }
+                val listItem = inflateNextListItem(container)
+                listItem.dateSchedule.text = getString(
+                    R.string.details_date_with_time,
+                    movie.date.longFormatToUi(),
+                    movie.schedule
+                )
+                listItem.originalVersion.isVisible = movie.isOriginalVersion
+                listItem.threeDimension.isVisible = movie.isThreeDimension
+                listItem.root.setOnClickListener {
+                    cinemaViewModel.process(CinemaAction.LoadMovies(movie.date))
+                    findNavController().navigate(R.id.action_detailsFragment_to_onScreenFragment)
                 }
             }
         }
     }
+
+    private fun inflateNextListItem(parent: ViewGroup): ListItemDetailsMovieBinding =
+        ListItemDetailsMovieBinding.inflate(
+            LayoutInflater.from(context),
+            parent,
+            true
+        )
 
     private fun showTeaser(movie: Movie) {
         try {

@@ -20,19 +20,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.cinema.entract.app.R
+import com.cinema.entract.app.databinding.FragmentSettingsBinding
 import com.cinema.entract.app.ui.CinemaAction
 import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.app.ui.CinemaViewModel
-import com.cinema.entract.core.ext.find
 import com.cinema.entract.core.ui.BaseFragment
 import com.cinema.entract.core.utils.THEME_MODE_AUTO
 import com.cinema.entract.core.utils.THEME_MODE_DARK
 import com.cinema.entract.core.utils.THEME_MODE_LIGHT
 import com.cinema.entract.data.interactor.CinemaUseCase
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.switchmaterial.SwitchMaterial
 import org.jetbrains.anko.startActivity
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -41,26 +39,30 @@ class SettingsFragment : BaseFragment() {
 
     private val useCase by inject<CinemaUseCase>()
     private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
+    private lateinit var binding: FragmentSettingsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_settings, container, false)
+    ): View? {
+        binding = FragmentSettingsBinding.inflate(inflater)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setTitle(R.string.settings_title)
 
-        find<SwitchMaterial>(R.id.event).apply {
+        binding.event.apply {
             isChecked = useCase.isEventEnabled()
             setOnCheckedChangeListener { _, isChecked ->
                 useCase.setEventPreference(isChecked)
             }
         }
 
-        find<SwitchMaterial>(R.id.data).apply {
+        binding.data.apply {
             isChecked = useCase.isOnlyOnWifi()
             setOnCheckedChangeListener { _, isChecked ->
                 useCase.setOnlyOnWifi(isChecked)
@@ -68,7 +70,7 @@ class SettingsFragment : BaseFragment() {
             }
         }
 
-        find<TextView>(R.id.themeMode).setOnClickListener {
+        binding.themeMode.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.settings_select_theme_mode)
                 .setSingleChoiceItems(R.array.settings_theme_modes, getCurrentChoice()) { _, which ->

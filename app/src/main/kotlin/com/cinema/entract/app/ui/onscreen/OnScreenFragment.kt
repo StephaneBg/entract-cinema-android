@@ -25,6 +25,7 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cinema.entract.app.R
+import com.cinema.entract.app.databinding.FragmentOnScreenBinding
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.CinemaAction
 import com.cinema.entract.app.ui.CinemaState
@@ -32,22 +33,19 @@ import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.app.ui.event.EventActivity
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ui.BaseLceFragment
-import com.cinema.entract.core.ui.bindView
-import com.cinema.entract.core.widget.EmptinessLayout
 import com.cinema.entract.core.widget.GenericRecyclerViewAdapter
 import com.cinema.entract.data.ext.isToday
 import com.cinema.entract.data.ext.longFormatToUi
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.jetbrains.anko.startActivity
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.threeten.bp.LocalDate
 
-class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
+class OnScreenFragment : BaseLceFragment() {
 
     private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
     private lateinit var datePickerDialog: DatePickerDialog
     private val onScreenAdapter = GenericRecyclerViewAdapter()
-    private val fab by bindView<FloatingActionButton>(R.id.fab)
+    private lateinit var binding: FragmentOnScreenBinding
 
     private var currentState: CinemaState.OnScreen? = null
 
@@ -55,18 +53,22 @@ class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_on_screen, container, false)
+    ): View? {
+        binding = FragmentOnScreenBinding.inflate(inflater)
+        initLce(binding.loadingView, binding.contentView, binding.errorView)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(contentView) {
+        with(binding.contentView) {
             recyclerView.layoutManager = LinearLayoutManager(activity)
             recyclerView.setHasFixedSize(true)
             setAdapter(onScreenAdapter)
         }
 
-        fab.setOnClickListener { displayDatePicker() }
+        binding.fab.setOnClickListener { displayDatePicker() }
 
         observe(cinemaViewModel.state, ::renderState)
 
@@ -80,7 +82,7 @@ class OnScreenFragment : BaseLceFragment<EmptinessLayout>() {
             is CinemaState.OnScreen -> {
                 currentState = state
                 setTitle(state.date.longFormatToUi())
-                fab.isVisible = null != state.dateRange
+                binding.fab.isVisible = null != state.dateRange
                 updateMovies(state.movies)
                 showContent()
                 showEvent(state)

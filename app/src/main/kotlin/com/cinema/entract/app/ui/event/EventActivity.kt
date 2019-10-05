@@ -17,14 +17,11 @@
 package com.cinema.entract.app.ui.event
 
 import android.os.Bundle
-import android.widget.ImageView
-import com.cinema.entract.app.R
+import com.cinema.entract.app.databinding.ActivityEventBinding
 import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.ui.TagAction
 import com.cinema.entract.app.ui.TagViewModel
 import com.cinema.entract.core.ui.BaseActivity
-import com.google.android.material.button.MaterialButton
-import org.jetbrains.anko.find
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EventActivity : BaseActivity() {
@@ -33,10 +30,11 @@ class EventActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_event)
+        val binding = ActivityEventBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        find<ImageView>(R.id.cover).load(intent.getStringExtra(COVER_URL))
-        find<MaterialButton>(R.id.close).setOnClickListener { finish() }
+        binding.cover.load(intent.getStringExtra(COVER_URL))
+        binding.close.setOnClickListener { finish() }
 
         tagViewModel.tag(TagAction.Event)
     }

@@ -16,27 +16,34 @@
 
 package com.cinema.entract.app.ui.schedule
 
-import android.widget.ImageView
+import android.view.View
 import android.widget.TextView
 import androidx.core.view.isVisible
 import com.cinema.entract.app.R
+import com.cinema.entract.app.databinding.ListItemScheduleDayHeaderBinding
+import com.cinema.entract.app.databinding.ListItemScheduleMovieBinding
+import com.cinema.entract.app.databinding.ListItemScheduleWeekHeaderBinding
 import com.cinema.entract.app.model.DayHeader
 import com.cinema.entract.app.model.MovieEntry
 import com.cinema.entract.app.model.WeekHeader
 import com.cinema.entract.app.ui.CinemaAction
-import com.cinema.entract.core.widget.BaseViewHolder
 import com.cinema.entract.core.widget.ItemAdapter
-import org.jetbrains.anko.find
 
 class DayHeaderAdapter(
     private val dayHeader: DayHeader,
     private val selection: (CinemaAction, Int) -> Unit
 ) : ItemAdapter(R.layout.list_item_schedule_day_header) {
 
-    override fun BaseViewHolder.onBindViewHolder() = with(itemView as TextView) {
-        text = dayHeader.dateUi
-        setOnClickListener {
-            selection(CinemaAction.LoadMovies(dayHeader.date), R.id.action_scheduleFragment_to_onScreenFragment)
+    override fun onBindViewHolder(itemView: View) {
+        val binding = ListItemScheduleDayHeaderBinding.bind(itemView)
+        with(binding.root as TextView) {
+            text = dayHeader.dateUi
+            setOnClickListener {
+                selection(
+                    CinemaAction.LoadMovies(dayHeader.date),
+                    R.id.action_scheduleFragment_to_onScreenFragment
+                )
+            }
         }
     }
 }
@@ -44,8 +51,9 @@ class DayHeaderAdapter(
 class WeekHeaderAdapter(private val weekHeader: WeekHeader) :
     ItemAdapter(R.layout.list_item_schedule_week_header) {
 
-    override fun BaseViewHolder.onBindViewHolder() = with(itemView as TextView) {
-        text = weekHeader.dateUi
+    override fun onBindViewHolder(itemView: View) {
+        val binding = ListItemScheduleWeekHeaderBinding.bind(itemView)
+        (binding.root as TextView).text = weekHeader.dateUi
     }
 }
 
@@ -54,16 +62,21 @@ class MovieAdapter(
     private val selection: (CinemaAction, Int) -> Unit
 ) : ItemAdapter(R.layout.list_item_schedule_movie) {
 
-    override fun BaseViewHolder.onBindViewHolder() = with(itemView) {
-        find<TextView>(R.id.schedule).text = model.movie.schedule
-        find<TextView>(R.id.title).text = model.movie.title
-        find<ImageView>(R.id.originalVersion).isVisible = model.movie.isOriginalVersion
-        find<ImageView>(R.id.threeDimension).isVisible = model.movie.isThreeDimension
-        find<ImageView>(R.id.underTwelve).isVisible = model.movie.isUnderTwelve
-        find<ImageView>(R.id.explicitContent).isVisible = model.movie.isExplicitContent
-        find<ImageView>(R.id.artMovie).isVisible = model.movie.isArtMovie
-        setOnClickListener {
-            selection(CinemaAction.LoadDetails(model.movie), R.id.action_scheduleFragment_to_detailsFragment)
+    override fun onBindViewHolder(itemView: View) {
+        with(ListItemScheduleMovieBinding.bind(itemView)) {
+            schedule.text = model.movie.schedule
+            title.text = model.movie.title
+            originalVersion.isVisible = model.movie.isOriginalVersion
+            threeDimension.isVisible = model.movie.isThreeDimension
+            underTwelve.isVisible = model.movie.isUnderTwelve
+            explicitContent.isVisible = model.movie.isExplicitContent
+            artMovie.isVisible = model.movie.isArtMovie
+            root.setOnClickListener {
+                selection(
+                    CinemaAction.LoadDetails(model.movie),
+                    R.id.action_scheduleFragment_to_detailsFragment
+                )
+            }
         }
     }
 }

@@ -24,38 +24,39 @@ import androidx.annotation.IdRes
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cinema.entract.app.R
+import com.cinema.entract.app.databinding.FragmentScheduleBinding
 import com.cinema.entract.app.model.DayHeader
 import com.cinema.entract.app.model.MovieEntry
 import com.cinema.entract.app.model.WeekHeader
-import com.cinema.entract.app.ui.CinemaAction
-import com.cinema.entract.app.ui.CinemaState
-import com.cinema.entract.app.ui.CinemaViewModel
-import com.cinema.entract.app.ui.TagAction
-import com.cinema.entract.app.ui.TagViewModel
+import com.cinema.entract.app.ui.*
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ui.BaseLceFragment
-import com.cinema.entract.core.widget.EmptinessLayout
 import com.cinema.entract.core.widget.GenericRecyclerViewAdapter
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class ScheduleFragment : BaseLceFragment<EmptinessLayout>() {
+class ScheduleFragment : BaseLceFragment() {
 
     private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
     private val tagViewModel by sharedViewModel<TagViewModel>()
     private val scheduleAdapter = GenericRecyclerViewAdapter()
+    private lateinit var binding: FragmentScheduleBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_schedule, container, false)
+    ): View? {
+        binding = FragmentScheduleBinding.inflate(inflater)
+        initLce(binding.loadingView, binding.contentView, binding.errorView)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setTitle(R.string.schedule_title)
 
-        with(contentView) {
+        with(binding.contentView) {
             recyclerView.layoutManager = LinearLayoutManager(context)
             recyclerView.addItemDecoration(ScheduleDecoration(context))
             setAdapter(scheduleAdapter)
@@ -91,5 +92,12 @@ class ScheduleFragment : BaseLceFragment<EmptinessLayout>() {
     private fun handleSelection(cinemaAction: CinemaAction, @IdRes destination: Int) {
         cinemaViewModel.process(cinemaAction)
         findNavController().navigate(destination)
+    }
+
+    fun scrollToTop() = if (binding.contentView.isScrolled()) {
+        binding.contentView.scrollToTop()
+        true
+    } else {
+        false
     }
 }

@@ -56,6 +56,8 @@ android {
         }
     }
 
+    viewBinding { isEnabled = true }
+
     bundle {
         language {
             enableSplit = true

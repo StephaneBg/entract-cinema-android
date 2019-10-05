@@ -17,29 +17,29 @@
 package com.cinema.entract.app.ui.startup
 
 import android.os.Bundle
-import androidx.core.widget.ContentLoadingProgressBar
-import com.cinema.entract.app.R
+import com.cinema.entract.app.databinding.ActivityStartupBinding
 import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ui.BaseActivity
-import org.jetbrains.anko.find
 import org.jetbrains.anko.startActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class StartupActivity : BaseActivity() {
 
     private val viewModel by viewModel<StartupViewModel>()
+    private lateinit var binding: ActivityStartupBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_startup)
+        binding = ActivityStartupBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         observe(viewModel.state, ::renderState)
         viewModel.prefetch()
     }
 
     override fun onStart() {
         super.onStart()
-        find<ContentLoadingProgressBar>(R.id.progress).show()
+        binding.progress.show()
     }
 
     private fun renderState(state: StartupState?) = when {

@@ -23,13 +23,11 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.cinema.entract.app.R
+import com.cinema.entract.app.databinding.ActivityCinemaBinding
 import com.cinema.entract.app.ui.onscreen.OnScreenFragment
 import com.cinema.entract.app.ui.schedule.ScheduleFragment
 import com.cinema.entract.core.ui.BaseActivity
-import com.cinema.entract.core.ui.scrollToTop
 import com.cinema.entract.data.interactor.CinemaUseCase
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import org.jetbrains.anko.find
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.threeten.bp.LocalDate
@@ -45,12 +43,12 @@ class CinemaActivity : BaseActivity() {
 
         AppCompatDelegate.setDefaultNightMode(useCase.getThemeMode())
 
-        setContentView(R.layout.activity_cinema)
-        setSupportActionBar(find(R.id.toolbar))
+        val binding = ActivityCinemaBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
 
-        val bnv = find<BottomNavigationView>(R.id.bottomNavigation)
-        bnv.setupWithNavController(findNavController(R.id.navHost))
-        bnv.setOnNavigationItemReselectedListener {
+        binding.bottomNavigation.setupWithNavController(findNavController(R.id.navHost))
+        binding.bottomNavigation.setOnNavigationItemReselectedListener {
             when (val fragment = getNavHostFragment()?.getDisplayedFragment()) {
                 is OnScreenFragment -> manageOnScreen(fragment)
                 is ScheduleFragment -> fragment.scrollToTop()

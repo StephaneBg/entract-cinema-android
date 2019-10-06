@@ -21,6 +21,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.cinema.entract.app.R
 import com.cinema.entract.app.databinding.ActivityCinemaBinding
@@ -47,7 +49,19 @@ class CinemaActivity : BaseActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
-        binding.bottomNavigation.setupWithNavController(findNavController(R.id.navHost))
+        val navController = findNavController(R.id.navHost)
+
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.onScreenFragment,
+                R.id.scheduleFragment,
+                R.id.informationFragment,
+                R.id.settingsFragment
+            )
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
+
+        binding.bottomNavigation.setupWithNavController(navController)
         binding.bottomNavigation.setOnNavigationItemReselectedListener {
             when (val fragment = getNavHostFragment()?.getDisplayedFragment()) {
                 is OnScreenFragment -> manageOnScreen(fragment)
@@ -63,5 +77,6 @@ class CinemaActivity : BaseActivity() {
     private fun getNavHostFragment(): NavHostFragment? =
         supportFragmentManager.findFragmentById(R.id.navHost) as? NavHostFragment
 
-    private fun NavHostFragment.getDisplayedFragment(): Fragment? = childFragmentManager.primaryNavigationFragment
+    private fun NavHostFragment.getDisplayedFragment(): Fragment? =
+        childFragmentManager.primaryNavigationFragment
 }

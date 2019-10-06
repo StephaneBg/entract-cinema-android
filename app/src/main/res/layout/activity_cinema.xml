@@ -57,7 +57,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleTextAppearance="?textAppearanceHeadline5"
         tools:title="@string/app_name"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

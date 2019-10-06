@@ -24,11 +24,12 @@ class NetworkUtils(context: Context) {
     private val connectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
+    @Suppress("DEPRECATION")
     fun isNetworkAvailable(): Boolean {
         return connectivityManager.activeNetworkInfo?.isConnected ?: false
     }
 
     @Suppress("DEPRECATION")
     fun isConnectedOnWifi(): Boolean =
-        connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected
+        connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)?.isConnected ?: false
 }

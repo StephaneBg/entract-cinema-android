@@ -22,7 +22,7 @@ plugins {
 }
 
 val versionMajor = 1
-val versionMinor = 5
+val versionMinor = 6
 val versionPatch = 0
 
 android {
@@ -119,4 +119,3 @@ dependencies {
 }
 
 plugins.apply("com.google.gms.google-services")
-

@@ -154,11 +154,7 @@ class DetailsFragment : BaseLceFragment() {
     }
 
     private fun inflateNextListItem(parent: ViewGroup): ListItemDetailsMovieBinding =
-        ListItemDetailsMovieBinding.inflate(
-            LayoutInflater.from(context),
-            parent,
-            true
-        )
+        ListItemDetailsMovieBinding.inflate(LayoutInflater.from(context), parent, true)
 
     private fun showTeaser(movie: Movie) {
         try {

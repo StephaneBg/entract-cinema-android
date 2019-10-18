@@ -16,11 +16,10 @@
 
 package com.cinema.entract.remote
 
-import com.cinema.entract.remote.model.EventRemote
 import com.cinema.entract.remote.model.MovieRemote
 import com.cinema.entract.remote.model.ParametersRemote
+import com.cinema.entract.remote.model.PromotionalRemote
 import com.cinema.entract.remote.model.WeekRemote
-import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.PUT
 import retrofit2.http.Query
@@ -37,7 +36,7 @@ interface CinemaService {
     suspend fun getParameters(): ParametersRemote
 
     @GET("getLiensEvenement.php")
-    suspend fun getEvent(): EventRemote
+    suspend fun getPromotional(): PromotionalRemote
 
     @PUT("registerPushNotifications")
     suspend fun registerNotifications(
@@ -49,7 +48,7 @@ interface CinemaService {
     suspend fun tagSchedule(@Query("page") type: String = "page_programme")
 
     @PUT("updateStatistiques.php")
-    suspend fun tagEvent(@Query("page") type: String = "page_evt")
+    suspend fun tagPromotional(@Query("page") type: String = "page_evt")
 
     @PUT("updateStatistiques.php")
     suspend fun tagDetails(

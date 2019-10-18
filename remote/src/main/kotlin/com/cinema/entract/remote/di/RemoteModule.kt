@@ -51,7 +51,7 @@ val remoteModule = module {
     single { DayMapper(get()) }
     single { WeekMapper(get()) }
     single { DateRangeMapper() }
-    single { EventMapper() }
+    single { PromotionalMapper() }
 
     factory<RemoteRepo> { CinemaRemoteRepo(get(), get(), get(), get(), get()) }
 }

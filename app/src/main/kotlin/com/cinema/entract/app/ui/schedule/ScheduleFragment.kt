@@ -20,7 +20,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.IdRes
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cinema.entract.app.R
@@ -28,10 +27,14 @@ import com.cinema.entract.app.databinding.FragmentScheduleBinding
 import com.cinema.entract.app.model.DayHeader
 import com.cinema.entract.app.model.MovieEntry
 import com.cinema.entract.app.model.WeekHeader
-import com.cinema.entract.app.ui.*
-import com.cinema.entract.core.ext.observe
+import com.cinema.entract.app.ui.CinemaState
+import com.cinema.entract.app.ui.CinemaViewModel
+import com.cinema.entract.app.ui.TagAction
+import com.cinema.entract.app.ui.TagViewModel
 import com.cinema.entract.core.ui.BaseLceFragment
 import com.cinema.entract.core.widget.GenericRecyclerViewAdapter
+import io.uniflow.androidx.flow.onStates
+import io.uniflow.core.flow.UIState
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class ScheduleFragment : BaseLceFragment() {
@@ -62,39 +65,39 @@ class ScheduleFragment : BaseLceFragment() {
             setAdapter(scheduleAdapter)
         }
 
-        observe(cinemaViewModel.state, ::renderState)
+        onStates(cinemaViewModel) { state ->
+            when (state) {
+                is UIState.Loading -> showLoading()
+                is CinemaState.Schedule -> {
+                    val adapters = state.schedule.map {
+                        when (it) {
+                            is WeekHeader -> WeekHeaderAdapter(it)
+                            is DayHeader -> DayHeaderAdapter(it) { date, destination ->
+                                cinemaViewModel.selectDate(date)
+                                findNavController().navigate(destination)
 
-        savedInstanceState ?: cinemaViewModel.process(CinemaAction.RefreshSchedule)
+                            }
+                            is MovieEntry -> MovieAdapter(it) { movie, destination ->
+                                cinemaViewModel.loadMovieDetails(movie)
+                                findNavController().navigate(destination)
+                            }
+                        }
+                    }
+                    scheduleAdapter.updateItems(adapters)
+                    showContent()
+                }
+                is CinemaState.Error -> showError(state.error) {
+                    cinemaViewModel.loadSchedule()
+                }
+            }
+        }
+
+        savedInstanceState ?: cinemaViewModel.loadSchedule()
 
         tagViewModel.tag(TagAction.Schedule)
     }
 
-    private fun renderState(state: CinemaState?) {
-        when (state) {
-            is CinemaState.Loading -> showLoading()
-            is CinemaState.Schedule -> {
-                val adapters = state.schedule.map {
-                    when (it) {
-                        is WeekHeader -> WeekHeaderAdapter(it)
-                        is DayHeader -> DayHeaderAdapter(it, ::handleSelection)
-                        is MovieEntry -> MovieAdapter(it, ::handleSelection)
-                    }
-                }
-                scheduleAdapter.updateItems(adapters)
-                showContent()
-            }
-            is CinemaState.Error -> showError(state.error) {
-                cinemaViewModel.process(CinemaAction.RefreshSchedule)
-            }
-        }
-    }
-
-    private fun handleSelection(cinemaAction: CinemaAction, @IdRes destination: Int) {
-        cinemaViewModel.process(cinemaAction)
-        findNavController().navigate(destination)
-    }
-
-    fun scrollToTop() = if (binding.contentView.isScrolled()) {
+    fun scrollToTop(): Boolean = if (binding.contentView.isScrolled()) {
         binding.contentView.scrollToTop()
         true
     } else {

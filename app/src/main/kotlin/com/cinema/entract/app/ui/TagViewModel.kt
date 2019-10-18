@@ -29,7 +29,7 @@ class TagViewModel(private val useCase: TagUseCase) : ViewModel() {
         try {
             when (action) {
                 TagAction.Schedule -> useCase.tagSchedule()
-                TagAction.Event -> useCase.tagEvent()
+                TagAction.Promotional -> useCase.tagEvent()
                 is TagAction.Details -> useCase.tagDetails(action.sessionId)
                 is TagAction.Calendar -> useCase.tagCalendar(action.sessionId)
             }
@@ -41,7 +41,7 @@ class TagViewModel(private val useCase: TagUseCase) : ViewModel() {
 
 sealed class TagAction {
     object Schedule : TagAction()
-    object Event : TagAction()
+    object Promotional : TagAction()
     data class Details(val sessionId: String) : TagAction()
     data class Calendar(val sessionId: String) : TagAction()
 }

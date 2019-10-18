@@ -22,7 +22,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.cinema.entract.app.R
 import com.cinema.entract.app.databinding.FragmentSettingsBinding
-import com.cinema.entract.app.ui.CinemaAction
 import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.core.ui.BaseFragment
@@ -55,10 +54,10 @@ class SettingsFragment : BaseFragment() {
 
         setTitle(R.string.settings_title)
 
-        binding.event.apply {
-            isChecked = useCase.isEventEnabled()
+        binding.promotional.apply {
+            isChecked = useCase.isPromotionalEnabled()
             setOnCheckedChangeListener { _, isChecked ->
-                useCase.setEventPreference(isChecked)
+                useCase.setPromotionalPreference(isChecked)
             }
         }
 
@@ -66,7 +65,7 @@ class SettingsFragment : BaseFragment() {
             isChecked = useCase.isOnlyOnWifi()
             setOnCheckedChangeListener { _, isChecked ->
                 useCase.setOnlyOnWifi(isChecked)
-                cinemaViewModel.process(CinemaAction.LoadMovies())
+                cinemaViewModel.loadMovies()
             }
         }
 

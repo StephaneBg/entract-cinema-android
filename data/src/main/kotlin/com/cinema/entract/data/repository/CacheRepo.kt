@@ -34,7 +34,7 @@ interface CacheRepo {
 
     fun cacheDateRange(range: DateRangeData?): DateRangeData?
 
-    fun getEventUrl(): String?
+    fun getPromotionalUrl(): String?
 
-    fun cacheEventUrl(url: String): String
+    fun cachePromotionalUrl(url: String): String
 }

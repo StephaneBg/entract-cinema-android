@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
-package com.cinema.entract.remote.model
+package com.cinema.entract.remote.mapper
 
-data class EventRemote(val lien: String?)
+import com.cinema.entract.remote.model.PromotionalRemote
+
+class PromotionalMapper : Mapper<PromotionalRemote, String> {
+
+    override fun mapToData(model: PromotionalRemote) = model.lien ?: ""
+}

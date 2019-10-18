@@ -22,14 +22,15 @@ import androidx.core.view.isVisible
 import com.cinema.entract.app.R
 import com.cinema.entract.app.databinding.ListItemScheduleMovieBinding
 import com.cinema.entract.app.model.DayHeader
+import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.model.MovieEntry
 import com.cinema.entract.app.model.WeekHeader
-import com.cinema.entract.app.ui.CinemaAction
 import com.cinema.entract.core.widget.ItemAdapter
+import org.threeten.bp.LocalDate
 
 class DayHeaderAdapter(
     private val dayHeader: DayHeader,
-    private val selection: (CinemaAction, Int) -> Unit
+    private val selection: (LocalDate, Int) -> Unit
 ) : ItemAdapter(R.layout.list_item_schedule_day_header) {
 
     override fun onBindViewHolder(itemView: View) {
@@ -37,7 +38,7 @@ class DayHeaderAdapter(
             text = dayHeader.dateUi
             setOnClickListener {
                 selection(
-                    CinemaAction.LoadMovies(dayHeader.date),
+                    dayHeader.date,
                     R.id.action_scheduleFragment_to_onScreenFragment
                 )
             }
@@ -55,7 +56,7 @@ class WeekHeaderAdapter(private val weekHeader: WeekHeader) :
 
 class MovieAdapter(
     private val model: MovieEntry,
-    private val selection: (CinemaAction, Int) -> Unit
+    private val selection: (Movie, Int) -> Unit
 ) : ItemAdapter(R.layout.list_item_schedule_movie) {
 
     override fun onBindViewHolder(itemView: View) {
@@ -69,7 +70,7 @@ class MovieAdapter(
             artMovie.isVisible = model.movie.isArtMovie
             root.setOnClickListener {
                 selection(
-                    CinemaAction.LoadDetails(model.movie),
+                    model.movie,
                     R.id.action_scheduleFragment_to_detailsFragment
                 )
             }

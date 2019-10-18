@@ -16,40 +16,24 @@
 
 package com.cinema.entract.app.ui.startup
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.cinema.entract.core.ui.BaseViewModel
 import com.cinema.entract.data.interactor.CinemaUseCase
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import io.uniflow.core.flow.StateFlowAction
+import io.uniflow.core.flow.UIState
 import timber.log.Timber
 
-class StartupViewModel(private val useCase: CinemaUseCase) : ViewModel() {
+class StartupViewModel(private val useCase: CinemaUseCase) : BaseViewModel() {
 
-    private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
-        Timber.e(exception)
-        innerState.postValue(StartupState(isLoaded = true))
+    override suspend fun onError(error: Exception) {
+        Timber.e(error)
+        setState { UIState.Failed() }
     }
 
-    private val innerState = MutableLiveData<StartupState>()
-    val state: LiveData<StartupState> = innerState
-
-    fun prefetch() = viewModelScope.launch(exceptionHandler + Dispatchers.IO) {
-        innerState.postValue(StartupState(isLoading = true))
+    fun prefetch(): StateFlowAction = stateFlow {
+        setState(UIState.Loading)
         useCase.getMovies()
         useCase.getDateRange()
-        val url = useCase.getEventUrl().peekContent()
-        innerState.postValue(
-            StartupState(isIdle = true, eventUrl = url)
-        )
+        useCase.getEventUrl()
+        setState(UIState.Success)
     }
 }
-
-data class StartupState(
-    val isIdle: Boolean = false,
-    val isLoading: Boolean = false,
-    val isLoaded: Boolean = false,
-    val eventUrl: String? = null
-)

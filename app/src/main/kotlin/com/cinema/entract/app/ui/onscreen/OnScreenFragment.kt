@@ -22,16 +22,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.cinema.entract.app.R
 import com.cinema.entract.app.databinding.FragmentOnScreenBinding
 import com.cinema.entract.app.model.DateParameters
 import com.cinema.entract.app.model.Movie
-import com.cinema.entract.app.ui.CinemaAction
+import com.cinema.entract.app.ui.CinemaEvent
 import com.cinema.entract.app.ui.CinemaState
 import com.cinema.entract.app.ui.CinemaViewModel
-import com.cinema.entract.app.ui.event.EventActivity
-import com.cinema.entract.core.ext.observe
+import com.cinema.entract.app.ui.promotional.PromotionalActivity
 import com.cinema.entract.core.ui.BaseLceFragment
 import com.cinema.entract.core.widget.GenericRecyclerViewAdapter
 import com.cinema.entract.data.ext.isToday
@@ -40,6 +38,9 @@ import com.cinema.entract.data.ext.toUtcEpochMilliSecond
 import com.cinema.entract.data.ext.toUtcLocalDate
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
+import io.uniflow.androidx.flow.onEvents
+import io.uniflow.androidx.flow.onStates
+import io.uniflow.core.flow.UIState
 import org.jetbrains.anko.startActivity
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -65,47 +66,48 @@ class OnScreenFragment : BaseLceFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding.contentView) {
-            recyclerView.layoutManager = LinearLayoutManager(activity)
             recyclerView.setHasFixedSize(true)
             setAdapter(onScreenAdapter)
         }
 
         binding.fab.setOnClickListener { displayDatePicker() }
 
-        observe(cinemaViewModel.state, ::renderState)
-
-        savedInstanceState ?: cinemaViewModel.process(CinemaAction.RefreshMovies())
-    }
-
-    private fun renderState(state: CinemaState?) {
-        when (state) {
-            is CinemaState.Loading -> showLoading()
-            is CinemaState.OnScreen -> {
-                dateParams = state.dateParams
-                setTitle(dateParams?.currentDate?.longFormatToUi())
-                binding.fab.isVisible =
-                    null != dateParams?.minimumDate && null != dateParams?.maximumDate
-                updateMovies(state.movies)
-                showContent()
-                showEvent(state)
+        onStates(cinemaViewModel) { state ->
+            when (state) {
+                is CinemaState.Init -> cinemaViewModel.loadPromotional()
+                is UIState.Loading -> showLoading()
+                is CinemaState.OnScreen -> {
+                    dateParams = state.dateParams
+                    setTitle(dateParams?.currentDate?.longFormatToUi())
+                    binding.fab.isVisible =
+                        null != dateParams?.minimumDate && null != dateParams?.maximumDate
+                    updateMovies(state.movies)
+                    showContent()
+                }
+                is CinemaState.Error -> {
+                    showError(state.error) { cinemaViewModel.loadMovies() }
+                    setTitle(R.string.app_name)
+                }
             }
-            is CinemaState.Error -> manageError(state.error)
         }
+
+        onEvents(cinemaViewModel) { event ->
+            when (val data = event.take()) {
+                is CinemaEvent.Promotional ->
+                    requireActivity().startActivity<PromotionalActivity>(PromotionalActivity.COVER_URL to data.url)
+            }
+        }
+
+        savedInstanceState ?: cinemaViewModel.loadMovies()
     }
 
     private fun updateMovies(movies: List<Movie>) {
         val adapters = movies.map { MovieAdapter(it, ::onMovieSelected) }
         onScreenAdapter.updateItems(adapters)
-        showContent()
-    }
-
-    private fun manageError(exception: Throwable?) {
-        showError(exception) { cinemaViewModel.process(CinemaAction.RefreshMovies()) }
-        setTitle(R.string.app_name)
     }
 
     private fun onMovieSelected(movie: Movie) {
-        cinemaViewModel.process(CinemaAction.LoadDetails(movie))
+        cinemaViewModel.loadMovieDetails(movie)
         findNavController().navigate(R.id.action_onScreenFragment_to_detailsFragment)
     }
 
@@ -129,16 +131,11 @@ class OnScreenFragment : BaseLceFragment() {
                     .build()
                 datePickerDialog.addOnPositiveButtonClickListener { selectionInMilliSec ->
                     val pickedDate = selectionInMilliSec.toUtcLocalDate()
-                    cinemaViewModel.process(CinemaAction.RefreshMovies(pickedDate))
+                    cinemaViewModel.selectDate(pickedDate)
+                    cinemaViewModel.loadMovies()
                 }
                 datePickerDialog.show(childFragmentManager, null)
             }
-        }
-    }
-
-    private fun showEvent(state: CinemaState.OnScreen) {
-        state.eventUrl.getContent()?.let {
-            requireActivity().startActivity<EventActivity>(EventActivity.COVER_URL to it)
         }
     }
 

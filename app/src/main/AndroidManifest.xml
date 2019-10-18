@@ -49,7 +49,7 @@
         <activity android:name=".ui.CinemaActivity" />
 
         <activity
-            android:name=".ui.event.EventActivity"
+            android:name=".ui.promotional.PromotionalActivity"
             android:theme="@style/Theme.Cinema.Event"
             />
 

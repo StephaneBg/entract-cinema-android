@@ -21,8 +21,8 @@ import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
 import com.cinema.entract.data.repository.RemoteRepo
 import com.cinema.entract.remote.mapper.DateRangeMapper
-import com.cinema.entract.remote.mapper.EventMapper
 import com.cinema.entract.remote.mapper.MovieMapper
+import com.cinema.entract.remote.mapper.PromotionalMapper
 import com.cinema.entract.remote.mapper.WeekMapper
 
 class CinemaRemoteRepo(
@@ -30,7 +30,7 @@ class CinemaRemoteRepo(
     private val movieMapper: MovieMapper,
     private val weekMapper: WeekMapper,
     private val dateRangeMapper: DateRangeMapper,
-    private val eventMapper: EventMapper
+    private val promotionalMapper: PromotionalMapper
 ) : RemoteRepo {
 
     override suspend fun getMovies(date: String): List<MovieData> =
@@ -39,7 +39,8 @@ class CinemaRemoteRepo(
     override suspend fun getSchedule(): List<WeekData> =
         service.getSchedule().map { weekMapper.mapToData(it) }
 
-    override suspend fun getEventUrl(): String = eventMapper.mapToData(service.getEvent())
+    override suspend fun getPromotionalUrl(): String =
+        promotionalMapper.mapToData(service.getPromotional())
 
     override suspend fun getDateRange(): DateRangeData? = service.getParameters().periode?.let {
         dateRangeMapper.mapToData(it)
@@ -53,8 +54,8 @@ class CinemaRemoteRepo(
         service.tagSchedule()
     }
 
-    override suspend fun tagEvent() {
-        service.tagEvent()
+    override suspend fun tagPromotional() {
+        service.tagPromotional()
     }
 
     override suspend fun tagDetails(sessionId: String) {

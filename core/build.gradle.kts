@@ -52,6 +52,5 @@ dependencies {
     implementation(Libs.material)
     implementation(Libs.lifecyleViewmodel)
     implementation(Libs.timber)
-    implementation(Libs.kaskadeCore)
-    implementation(Libs.kaskadeLiveData)
+    implementation(Libs.uniflow)
 }

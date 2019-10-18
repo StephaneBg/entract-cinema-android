@@ -19,8 +19,9 @@ package com.cinema.entract.app.ui.startup
 import android.os.Bundle
 import com.cinema.entract.app.databinding.ActivityStartupBinding
 import com.cinema.entract.app.ui.CinemaActivity
-import com.cinema.entract.core.ext.observe
 import com.cinema.entract.core.ui.BaseActivity
+import io.uniflow.androidx.flow.onStates
+import io.uniflow.core.flow.UIState
 import org.jetbrains.anko.startActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -31,22 +32,21 @@ class StartupActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityStartupBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        observe(viewModel.state, ::renderState)
-        viewModel.prefetch()
-    }
 
-    override fun onStart() {
-        super.onStart()
-        binding.progress.show()
-    }
-
-    private fun renderState(state: StartupState?) = when {
-        null == state || state.isLoading -> Unit
-        else -> {
-            startActivity<CinemaActivity>()
-            finish()
+        onStates(viewModel) { state ->
+            when (state) {
+                is UIState.Loading -> binding.progress.show()
+                is UIState.Success,
+                is UIState.Failed -> {
+                    startActivity<CinemaActivity>()
+                    finish()
+                }
+            }
         }
+
+        viewModel.prefetch()
     }
 }

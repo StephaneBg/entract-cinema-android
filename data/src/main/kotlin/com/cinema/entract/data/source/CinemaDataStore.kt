@@ -38,8 +38,9 @@ class CinemaDataStore(
     override suspend fun getDateRange(): DateRangeData? =
         cacheRepo.getDateRange() ?: cacheRepo.cacheDateRange(remoteRepo.getDateRange())
 
-    override suspend fun getEventUrl(): String =
-        cacheRepo.getEventUrl() ?: cacheRepo.cacheEventUrl(remoteRepo.getEventUrl())
+    override suspend fun getPromotionalUrl(): String =
+        cacheRepo.getPromotionalUrl()
+            ?: cacheRepo.cachePromotionalUrl(remoteRepo.getPromotionalUrl())
 
     override suspend fun registerNotifications(token: String) {
         remoteRepo.registerNotifications(token)
@@ -50,7 +51,7 @@ class CinemaDataStore(
     }
 
     override suspend fun tagEvent() {
-        remoteRepo.tagEvent()
+        remoteRepo.tagPromotional()
     }
 
     override suspend fun tagDetails(sessionId: String) {

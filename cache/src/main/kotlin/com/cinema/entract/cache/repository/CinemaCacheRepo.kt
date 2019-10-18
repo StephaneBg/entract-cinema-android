@@ -36,7 +36,7 @@ class CinemaCacheRepo(
     private val moviesMap = mutableMapOf<String, List<MovieCache>>()
     private var schedule: List<WeekCache>? = null
     private var dateRange: DateRangeCache? = null
-    private var eventUrl: String? = null
+    private var promotionalUrl: String? = null
 
     override fun getMovies(date: String): List<MovieData>? = moviesMap[date]?.let {
         it.map { movie -> movieMapper.mapToData(movie) }
@@ -60,7 +60,7 @@ class CinemaCacheRepo(
         range?.let { dateRange = dateRangeMapper.mapFromData(it) }
     }
 
-    override fun getEventUrl(): String? = eventUrl
+    override fun getPromotionalUrl(): String? = promotionalUrl
 
-    override fun cacheEventUrl(url: String): String = url.also { eventUrl = url }
+    override fun cachePromotionalUrl(url: String): String = url.also { promotionalUrl = url }
 }

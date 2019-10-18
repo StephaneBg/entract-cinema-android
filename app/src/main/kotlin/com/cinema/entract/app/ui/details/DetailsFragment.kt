@@ -35,11 +35,15 @@ import com.cinema.entract.app.databinding.ListItemDetailsMovieBinding
 import com.cinema.entract.app.ext.displayPlaceHolder
 import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.model.Movie
-import com.cinema.entract.app.ui.*
-import com.cinema.entract.core.ext.observe
+import com.cinema.entract.app.ui.CinemaState
+import com.cinema.entract.app.ui.CinemaViewModel
+import com.cinema.entract.app.ui.TagAction
+import com.cinema.entract.app.ui.TagViewModel
 import com.cinema.entract.core.ext.toSpanned
 import com.cinema.entract.core.ui.BaseLceFragment
 import com.cinema.entract.data.ext.longFormatToUi
+import io.uniflow.androidx.flow.onStates
+import io.uniflow.core.flow.UIState
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class DetailsFragment : BaseLceFragment() {
@@ -60,72 +64,75 @@ class DetailsFragment : BaseLceFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observe(cinemaViewModel.state, ::renderState)
-    }
-
-    private fun renderState(state: CinemaState?) {
-        when (state) {
-            is CinemaState.Loading -> showLoading()
-            is CinemaState.Error -> {
-                setTitle(R.string.app_name)
-                showError(state.error) {
-                    state.movie?.let { cinemaViewModel.process(CinemaAction.LoadDetails(it)) }
+        onStates(cinemaViewModel) { state ->
+            when (state) {
+                is UIState.Loading -> showLoading()
+                is CinemaState.Error -> {
+                    setTitle(R.string.app_name)
+                    showError(state.error) {
+                        if (null == state.movie) {
+                            findNavController().popBackStack()
+                        } else {
+                            cinemaViewModel.loadMovieDetails(state.movie)
+                        }
+                    }
                 }
-            }
-            is CinemaState.Details -> {
-                val movie = state.movie
-                tagViewModel.tag(TagAction.Details(movie.sessionId))
+                is CinemaState.Details -> {
+                    val movie = state.movie
+                    tagViewModel.tag(TagAction.Details(movie.sessionId))
 
-                setTitle(
-                    getString(
-                        R.string.details_date_with_time,
-                        movie.date.longFormatToUi(),
-                        movie.schedule
+                    setTitle(
+                        getString(
+                            R.string.details_date_with_time,
+                            movie.date.longFormatToUi(),
+                            movie.schedule
+                        )
                     )
-                )
-                binding.cover.apply {
-                    if (movie.coverUrl.isNotEmpty()) load(movie.coverUrl)
-                    else displayPlaceHolder()
-                }
-                binding.title.text = movie.title
-                binding.originalVersion.isVisible = movie.isOriginalVersion
-                binding.threeDimension.isVisible = movie.isThreeDimension
-                binding.underTwelve.isVisible = movie.isUnderTwelve
-                binding.underTwelveNotice.isVisible = movie.isUnderTwelve
-                binding.explicitContent.isVisible = movie.isExplicitContent
-                binding.artMovie.isVisible = movie.isArtMovie
-                binding.explicitContentNotice.isVisible = movie.isExplicitContent
-                binding.director.text = getString(
-                    R.string.details_director,
-                    movie.director
-                ).toSpanned()
-                if (movie.cast.isEmpty()) binding.cast.isVisible = false
-                else binding.cast.text = getString(R.string.details_cast, movie.cast).toSpanned()
-                binding.year.text = getString(
-                    R.string.details_production_year,
-                    movie.yearOfProduction
-                ).toSpanned()
-                binding.duration.text = getString(R.string.details_duration, movie.duration)
-                binding.genre.text = movie.genre
-
-                with(binding.synopsis) {
-                    text = movie.synopsis
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        justificationMode = Layout.JUSTIFICATION_MODE_INTER_WORD
+                    binding.cover.apply {
+                        if (movie.coverUrl.isNotEmpty()) load(movie.coverUrl)
+                        else displayPlaceHolder()
                     }
-                }
+                    binding.title.text = movie.title
+                    binding.originalVersion.isVisible = movie.isOriginalVersion
+                    binding.threeDimension.isVisible = movie.isThreeDimension
+                    binding.underTwelve.isVisible = movie.isUnderTwelve
+                    binding.underTwelveNotice.isVisible = movie.isUnderTwelve
+                    binding.explicitContent.isVisible = movie.isExplicitContent
+                    binding.artMovie.isVisible = movie.isArtMovie
+                    binding.explicitContentNotice.isVisible = movie.isExplicitContent
+                    binding.director.text = getString(
+                        R.string.details_director,
+                        movie.director
+                    ).toSpanned()
+                    if (movie.cast.isEmpty()) binding.cast.isVisible = false
+                    else binding.cast.text =
+                        getString(R.string.details_cast, movie.cast).toSpanned()
+                    binding.year.text = getString(
+                        R.string.details_production_year,
+                        movie.yearOfProduction
+                    ).toSpanned()
+                    binding.duration.text = getString(R.string.details_duration, movie.duration)
+                    binding.genre.text = movie.genre
 
-                manageNextMovies(movie.nextMovies)
-
-                with(binding.teaser) {
-                    if (movie.teaserId.isNotEmpty()) {
-                        setOnClickListener { showTeaser(movie) }
-                    } else {
-                        isVisible = false
+                    with(binding.synopsis) {
+                        text = movie.synopsis
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            justificationMode = Layout.JUSTIFICATION_MODE_INTER_WORD
+                        }
                     }
+
+                    manageNextMovies(movie.nextMovies)
+
+                    with(binding.teaser) {
+                        if (movie.teaserId.isNotEmpty()) {
+                            setOnClickListener { showTeaser(movie) }
+                        } else {
+                            isVisible = false
+                        }
+                    }
+                    binding.agenda.setOnClickListener { addCalendarEvent(movie) }
+                    showContent()
                 }
-                binding.agenda.setOnClickListener { addCalendarEvent(movie) }
-                showContent()
             }
         }
     }
@@ -146,7 +153,8 @@ class DetailsFragment : BaseLceFragment() {
                 listItem.originalVersion.isVisible = movie.isOriginalVersion
                 listItem.threeDimension.isVisible = movie.isThreeDimension
                 listItem.root.setOnClickListener {
-                    cinemaViewModel.process(CinemaAction.LoadMovies(movie.date))
+                    cinemaViewModel.selectDate(movie.date)
+                    cinemaViewModel.loadMovies()
                     findNavController().navigate(R.id.action_detailsFragment_to_onScreenFragment)
                 }
             }

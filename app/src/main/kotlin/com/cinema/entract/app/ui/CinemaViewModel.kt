@@ -16,24 +16,17 @@
 
 package com.cinema.entract.app.ui
 
-import androidx.lifecycle.viewModelScope
 import com.cinema.entract.app.mapper.MovieMapper
 import com.cinema.entract.app.mapper.ScheduleMapper
 import com.cinema.entract.app.model.DateParameters
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.model.ScheduleEntry
 import com.cinema.entract.core.ui.BaseViewModel
-import com.cinema.entract.core.ui.Event
 import com.cinema.entract.data.ext.toEpochMilliSecond
 import com.cinema.entract.data.interactor.CinemaUseCase
-import dev.gumil.kaskade.Action
-import dev.gumil.kaskade.Kaskade
-import dev.gumil.kaskade.State
-import dev.gumil.kaskade.coroutines.coroutines
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.plus
-import kotlinx.coroutines.withContext
+import io.uniflow.core.flow.StateFlowAction
+import io.uniflow.core.flow.UIEvent
+import io.uniflow.core.flow.UIState
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
@@ -43,57 +36,54 @@ class CinemaViewModel(
     private val useCase: CinemaUseCase,
     private val movieMapper: MovieMapper,
     private val scheduleMapper: ScheduleMapper
-) : BaseViewModel<CinemaAction, CinemaState>() {
+) : BaseViewModel() {
 
-    override val exceptionHandler = CoroutineExceptionHandler { _, exception ->
-        Timber.e(exception)
-        process(CinemaAction.Error(exception))
+    init {
+        setState { CinemaState.Init }
     }
 
-    override val stateContainer = Kaskade.create<CinemaAction, CinemaState>(CinemaState.Loading()) {
-        coroutines(viewModelScope + exceptionHandler) {
-            on<CinemaAction.RefreshMovies> {
-                process(CinemaAction.LoadMovies(action.date))
-                CinemaState.Loading()
-            }
+    override suspend fun onError(error: Exception) {
+        Timber.e(error)
+        setState { CinemaState.Error(error) }
+    }
 
-            on<CinemaAction.LoadMovies> {
-                withContext(Dispatchers.IO) {
-                    val movies = useCase.getMovies(action.date)
-                    val date = useCase.getDate()
-                    val dateRange = useCase.getDateRange()
-                    val url = useCase.getEventUrl()
-                    CinemaState.OnScreen(
-                        movies.map { movieMapper.mapToUi(it) },
-                        DateParameters(date, dateRange?.minimumDate, dateRange?.maximumDate),
-                        url
-                    )
-                }
-            }
+    fun loadMovies(): StateFlowAction = stateFlow {
+        setState(UIState.Loading)
+        val movies = useCase.getMovies()
+        val date = useCase.getDate()
+        val dateRange = useCase.getDateRange()
+        setState(
+            CinemaState.OnScreen(
+                movies.map { movieMapper.mapToUi(it) },
+                DateParameters(date, dateRange?.minimumDate, dateRange?.maximumDate)
+            )
+        )
+    }
 
-            on<CinemaAction.RefreshSchedule> {
-                process(CinemaAction.LoadSchedule)
-                CinemaState.Loading()
-            }
+    fun selectDate(date: LocalDate) {
+        useCase.setDate(date)
+    }
 
-            on<CinemaAction.LoadSchedule> {
-                withContext(Dispatchers.IO) {
-                    val schedule = useCase.getSchedule()
-                    CinemaState.Schedule(useCase.getDate(), scheduleMapper.mapToUi(schedule))
-                }
-            }
+    fun loadSchedule(): StateFlowAction = stateFlow {
+        setState(UIState.Loading)
+        val schedule = useCase.getSchedule()
+        setState(CinemaState.Schedule(useCase.getDate(), scheduleMapper.mapToUi(schedule)))
+    }
 
-            on<CinemaAction.LoadDetails> {
-                withContext(Dispatchers.IO) {
-                    val retrievedMovie = useCase.getMovie(movieMapper.mapToData(action.movie))
-                    CinemaState.Details(useCase.getDate(), movieMapper.mapToUi(retrievedMovie))
-                }
-            }
-
-            on<CinemaAction.Error> {
-                CinemaState.Error(action.error)
-            }
+    fun loadMovieDetails(movie: Movie): StateFlowAction = stateFlow(
+        {
+            setState(UIState.Loading)
+            val retrievedMovie = useCase.getMovie(movieMapper.mapToData(movie))
+            setState(CinemaState.Details(useCase.getDate(), movieMapper.mapToUi(retrievedMovie)))
+        },
+        {
+            CinemaState.Error(it, movie)
         }
+    )
+
+    fun loadPromotional() = withState {
+        val url = useCase.getEventUrl()
+        url?.let { sendEvent(CinemaEvent.Promotional(it)) }
     }
 
     fun getSessionSchedule(movie: Movie): Pair<Long, Long> {
@@ -122,27 +112,21 @@ class CinemaViewModel(
     }
 }
 
-sealed class CinemaAction : Action {
-    data class RefreshMovies(val date: LocalDate? = null) : CinemaAction()
-    data class LoadMovies(val date: LocalDate? = null) : CinemaAction()
-    object RefreshSchedule : CinemaAction()
-    object LoadSchedule : CinemaAction()
-    data class LoadDetails(val movie: Movie) : CinemaAction()
-    data class Error(val error: Throwable?) : CinemaAction()
-}
+sealed class CinemaState : UIState() {
+    object Init : CinemaState()
 
-sealed class CinemaState : State {
     data class OnScreen(
         val movies: List<Movie>,
-        val dateParams: DateParameters,
-        val eventUrl: Event<String?>
+        val dateParams: DateParameters
     ) : CinemaState()
 
     data class Schedule(val date: LocalDate, val schedule: List<ScheduleEntry>) : CinemaState()
 
     data class Details(val date: LocalDate, val movie: Movie) : CinemaState()
 
-    data class Loading(val refresh: Boolean = false) : CinemaState()
+    data class Error(val error: Throwable, val movie: Movie? = null) : CinemaState()
+}
 
-    data class Error(val error: Throwable? = null, val movie: Movie? = null) : CinemaState()
+sealed class CinemaEvent : UIEvent() {
+    data class Promotional(val url: String) : CinemaEvent()
 }

@@ -71,7 +71,10 @@ class CinemaActivity : BaseActivity() {
     }
 
     private fun manageOnScreen(fragment: OnScreenFragment) {
-        if (!fragment.isTodayDisplayed()) cinemaViewModel.process(CinemaAction.LoadMovies(LocalDate.now()))
+        if (!fragment.isTodayDisplayed()) {
+            cinemaViewModel.selectDate(LocalDate.now())
+            cinemaViewModel.loadMovies()
+        }
     }
 
     private fun getNavHostFragment(): NavHostFragment? =

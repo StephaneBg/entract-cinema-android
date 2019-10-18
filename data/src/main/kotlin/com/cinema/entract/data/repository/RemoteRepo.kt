@@ -28,13 +28,13 @@ interface RemoteRepo {
 
     suspend fun getDateRange(): DateRangeData?
 
-    suspend fun getEventUrl(): String
+    suspend fun getPromotionalUrl(): String
 
     suspend fun registerNotifications(token: String)
 
     suspend fun tagSchedule()
 
-    suspend fun tagEvent()
+    suspend fun tagPromotional()
 
     suspend fun tagDetails(sessionId: String)
 

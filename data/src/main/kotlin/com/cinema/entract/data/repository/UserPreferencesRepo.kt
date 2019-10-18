@@ -18,8 +18,8 @@ package com.cinema.entract.data.repository
 
 interface UserPreferencesRepo {
 
-    fun isEventEnabled(): Boolean
-    fun setEventPreference(enabled: Boolean)
+    fun isPromotionalEnabled(): Boolean
+    fun setPromotionalPreference(enabled: Boolean)
 
     fun isOnlyOnWifi(): Boolean
     fun setOnlyOnWifi(onlyOnWifi: Boolean)

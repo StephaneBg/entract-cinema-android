@@ -17,7 +17,6 @@
 package com.cinema.entract.data.interactor
 
 import com.cinema.entract.core.network.NetworkUtils
-import com.cinema.entract.core.ui.Event
 import com.cinema.entract.core.utils.convertThemeMode
 import com.cinema.entract.data.ext.formatToUtc
 import com.cinema.entract.data.model.DateRangeData
@@ -32,12 +31,14 @@ class CinemaUseCase(
 ) {
 
     private var currentDate: LocalDate? = null
-    private var eventUrl: Event<String?>? = null
+
+    fun setDate(date: LocalDate) {
+        currentDate = date
+    }
 
     fun getDate(): LocalDate = currentDate ?: LocalDate.now()
 
-    suspend fun getMovies(date: LocalDate? = null): List<MovieData> {
-        currentDate = date ?: getDate()
+    suspend fun getMovies(): List<MovieData> {
         return dataStore
             .getMovies(getDate().formatToUtc())
             .map {
@@ -48,32 +49,38 @@ class CinemaUseCase(
             }
     }
 
-    suspend fun getMovie(movie: MovieData): MovieData =
-        getMovies(movie.date).first { it.movieId == movie.movieId }
+    suspend fun getMovie(movie: MovieData): MovieData {
+        setDate(movie.date)
+        return getMovies().first { it.movieId == movie.movieId }
+    }
 
     suspend fun getDateRange(): DateRangeData? = dataStore.getDateRange()
 
     suspend fun getSchedule(): List<WeekData> = dataStore.getSchedule().filter { it.hasMovies }
 
-    suspend fun getEventUrl(): Event<String?> {
-        val url = if (isEventEnabled()) dataStore.getEventUrl().takeIf { it.isNotEmpty() } else null
-        return eventUrl ?: Event(url).also { eventUrl = it }
-    }
+    suspend fun getEventUrl(): String? =
+        if (isPromotionalEnabled()) dataStore.getPromotionalUrl().takeIf { it.isNotEmpty() } else null
 
     private fun canDisplayMedia(): Boolean =
         !dataStore.getUserPreferences().isOnlyOnWifi() || networkUtils.isConnectedOnWifi()
 
-    fun isEventEnabled(): Boolean = dataStore.getUserPreferences().isEventEnabled()
+    fun isPromotionalEnabled(): Boolean = dataStore.getUserPreferences().isPromotionalEnabled()
 
-    fun setEventPreference(enabled: Boolean) = dataStore.getUserPreferences().setEventPreference(enabled)
+    fun setPromotionalPreference(enabled: Boolean) {
+        dataStore.getUserPreferences().setPromotionalPreference(enabled)
+    }
 
     fun isOnlyOnWifi(): Boolean = dataStore.getUserPreferences().isOnlyOnWifi()
 
-    fun setOnlyOnWifi(onlyOnWifi: Boolean) = dataStore.getUserPreferences().setOnlyOnWifi(onlyOnWifi)
+    fun setOnlyOnWifi(onlyOnWifi: Boolean) {
+        dataStore.getUserPreferences().setOnlyOnWifi(onlyOnWifi)
+    }
 
     fun getPrefThemeMode(): String = dataStore.getUserPreferences().getThemeMode()
 
-    fun setPrefThemeMode(mode: String) = dataStore.getUserPreferences().setThemeMode(mode)
+    fun setPrefThemeMode(mode: String) {
+        dataStore.getUserPreferences().setThemeMode(mode)
+    }
 
     fun getThemeMode(): Int = convertThemeMode(getPrefThemeMode())
 }

@@ -75,6 +75,7 @@
             android:clipToPadding="false"
             android:layoutAnimation="@anim/layout_animation_fall_down"
             android:paddingBottom="@dimen/padding_size_bottom_fab_screen"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/list_item_on_screen_movie"
             />
 

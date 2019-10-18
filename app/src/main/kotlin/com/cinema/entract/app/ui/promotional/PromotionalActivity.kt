@@ -14,29 +14,29 @@
  * limitations under the License.
  */
 
-package com.cinema.entract.app.ui.event
+package com.cinema.entract.app.ui.promotional
 
 import android.os.Bundle
-import com.cinema.entract.app.databinding.ActivityEventBinding
+import com.cinema.entract.app.databinding.ActivityPromotionalBinding
 import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.ui.TagAction
 import com.cinema.entract.app.ui.TagViewModel
 import com.cinema.entract.core.ui.BaseActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class EventActivity : BaseActivity() {
+class PromotionalActivity : BaseActivity() {
 
     private val tagViewModel by viewModel<TagViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityEventBinding.inflate(layoutInflater)
+        val binding = ActivityPromotionalBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.cover.load(intent.getStringExtra(COVER_URL))
         binding.close.setOnClickListener { finish() }
 
-        tagViewModel.tag(TagAction.Event)
+        tagViewModel.tag(TagAction.Promotional)
     }
 
     companion object {

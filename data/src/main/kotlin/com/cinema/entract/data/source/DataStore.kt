@@ -28,7 +28,7 @@ interface DataStore {
 
     suspend fun getDateRange(): DateRangeData?
 
-    suspend fun getEventUrl(): String
+    suspend fun getPromotionalUrl(): String
 
     suspend fun registerNotifications(token: String)
 

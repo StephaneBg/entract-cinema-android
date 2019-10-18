@@ -27,9 +27,9 @@ class CinemaUserPreferencesRepo(context: Context) : UserPreferencesRepo {
     private val preferences: SharedPreferences =
         context.getSharedPreferences(USER_PREFS, Context.MODE_PRIVATE)
 
-    override fun isEventEnabled(): Boolean = preferences.getBoolean(USER_PREF_EVENT, true)
+    override fun isPromotionalEnabled(): Boolean = preferences.getBoolean(USER_PREF_EVENT, true)
 
-    override fun setEventPreference(enabled: Boolean) {
+    override fun setPromotionalPreference(enabled: Boolean) {
         preferences.edit {
             putBoolean(USER_PREF_EVENT, enabled)
         }

@@ -17,7 +17,7 @@
 package com.cinema.entract.app.ui.startup
 
 import android.os.Bundle
-import com.cinema.entract.app.databinding.ActivityStartupBinding
+import com.cinema.entract.app.R
 import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.core.ui.BaseActivity
 import io.uniflow.androidx.flow.onStates
@@ -28,17 +28,14 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class StartupActivity : BaseActivity() {
 
     private val viewModel by viewModel<StartupViewModel>()
-    private lateinit var binding: ActivityStartupBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityStartupBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_startup)
 
         onStates(viewModel) { state ->
             when (state) {
-                is UIState.Loading -> binding.progress.show()
                 is UIState.Success,
                 is UIState.Failed -> {
                     startActivity<CinemaActivity>()

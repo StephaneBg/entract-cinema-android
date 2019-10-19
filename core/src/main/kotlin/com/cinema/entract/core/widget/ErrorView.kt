@@ -25,7 +25,6 @@ import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.cinema.entract.core.R
-import com.cinema.entract.core.ext.show
 import org.jetbrains.anko.find
 
 class ErrorView @JvmOverloads constructor(
@@ -47,7 +46,7 @@ class ErrorView @JvmOverloads constructor(
         action = find(R.id.errorAction)
     }
 
-    fun show(
+    fun setMessage(
         @DrawableRes drawable: Int = R.drawable.ic_error_outline_black_24dp,
         @StringRes msg: Int = R.string.error_general,
         retryAction: () -> Unit
@@ -55,6 +54,5 @@ class ErrorView @JvmOverloads constructor(
         image.setImageResource(drawable)
         message.setText(msg)
         action.setOnClickListener { retryAction() }
-        show()
     }
 }

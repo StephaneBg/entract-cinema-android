@@ -19,45 +19,7 @@ package com.cinema.entract.core.ext
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
-import android.widget.EditText
 import androidx.annotation.LayoutRes
 
-fun View.show() {
-    animate()
-        .setDuration(
-            context.resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
-        )
-        .alpha(1f)
-        .withStartAction {
-            alpha = 0f
-            visibility = View.VISIBLE
-        }
-        .start()
-}
-
-fun View.hide() {
-    animate()
-        .setDuration(
-            context.resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
-        )
-        .alpha(0f)
-        .withEndAction { visibility = View.INVISIBLE }
-        .start()
-}
-
-fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {
-    return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
-}
-
-fun EditText.onImeActionDone(function: () -> Unit) {
-    setOnEditorActionListener { _, actionId, _ ->
-        when (actionId) {
-            EditorInfo.IME_ACTION_DONE -> {
-                function()
-                true
-            }
-            else -> false
-        }
-    }
-}
+fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View =
+    LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)

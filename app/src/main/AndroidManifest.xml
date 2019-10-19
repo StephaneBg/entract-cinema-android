@@ -50,7 +50,7 @@
 
         <activity
             android:name=".ui.promotional.PromotionalActivity"
-            android:theme="@style/Theme.Cinema.Event"
+            android:theme="@style/Theme.Cinema.Promotional"
             />
 
         <meta-data

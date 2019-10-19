@@ -17,43 +17,47 @@
 package com.cinema.entract.core.ui
 
 import android.view.View
+import android.widget.ProgressBar
 import androidx.annotation.CallSuper
-import androidx.core.widget.ContentLoadingProgressBar
-import com.cinema.entract.core.ext.hide
-import com.cinema.entract.core.ext.show
+import androidx.core.view.isVisible
 import com.cinema.entract.core.widget.ErrorView
 
 open class BaseLceFragment : BaseFragment() {
 
     private lateinit var viewHolder: ViewHolder
 
-    fun initLce(loading: ContentLoadingProgressBar, content: View, error: ErrorView) {
+    fun initLce(loading: ProgressBar, content: View, error: ErrorView) {
         viewHolder = ViewHolder(loading, content, error)
     }
 
     @CallSuper
     protected open fun showContent() {
-        viewHolder.errorView.hide()
-        viewHolder.loadingView.hide()
-        viewHolder.contentView.show()
+        viewHolder.errorView.isVisible = false
+        viewHolder.loadingView.isVisible = false
+        viewHolder.contentView.isVisible = true
     }
 
     @CallSuper
     protected open fun showLoading() {
-        viewHolder.contentView.hide()
-        viewHolder.errorView.hide()
-        viewHolder.loadingView.show()
+        viewHolder.contentView.isVisible = false
+        viewHolder.errorView.isVisible = false
+        viewHolder.loadingView.isVisible = true
     }
 
     @CallSuper
     protected open fun showError(throwable: Throwable?, action: () -> Unit) {
-        viewHolder.contentView.hide()
-        viewHolder.loadingView.hide()
-        viewHolder.errorView.show(getErrorDrawable(throwable), getErrorMessage(throwable), action)
+        viewHolder.contentView.isVisible = false
+        viewHolder.loadingView.isVisible = false
+        viewHolder.errorView.setMessage(
+            getErrorDrawable(throwable),
+            getErrorMessage(throwable),
+            action
+        )
+        viewHolder.errorView.isVisible = true
     }
 
     data class ViewHolder(
-        val loadingView: ContentLoadingProgressBar,
+        val loadingView: ProgressBar,
         val contentView: View,
         val errorView: ErrorView
     )

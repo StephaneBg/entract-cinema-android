@@ -25,7 +25,7 @@
     <fragment
         android:id="@+id/onScreenFragment"
         android:name="com.cinema.entract.app.ui.onscreen.OnScreenFragment"
-        android:label="OnScreenFragment"
+        android:label="@string/app_name"
         tools:layout="@layout/fragment_on_screen"
         >
         <action
@@ -40,7 +40,7 @@
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.cinema.entract.app.ui.details.DetailsFragment"
-        android:label="DetailsFragment"
+        android:label="@string/app_name"
         tools:layout="@layout/fragment_details"
         >
         <action
@@ -57,7 +57,7 @@
     <fragment
         android:id="@+id/scheduleFragment"
         android:name="com.cinema.entract.app.ui.schedule.ScheduleFragment"
-        android:label="ScheduleFragment"
+        android:label="@string/schedule_title"
         tools:layout="@layout/fragment_schedule"
         >
         <action
@@ -74,13 +74,13 @@
     <fragment
         android:id="@+id/informationFragment"
         android:name="com.cinema.entract.app.ui.information.InformationFragment"
-        android:label="InformationFragment"
+        android:label="@string/information_title"
         tools:layout="@layout/fragment_information"
         />
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.cinema.entract.app.ui.settings.SettingsFragment"
-        android:label="SettingsFragment"
+        android:label="@string/settings_title"
         tools:layout="@layout/fragment_settings"
         />
 </navigation>

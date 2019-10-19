@@ -71,7 +71,9 @@ class EmptinessLayout @JvmOverloads constructor(
         isVisible = !isEmptyVisible
     }
 
-    fun scrollToTop() = recyclerView.smoothScrollToPosition(0)
+    fun scrollToTop() {
+        recyclerView.smoothScrollToPosition(0)
+    }
 
     fun isScrolled(): Boolean = (recyclerView.layoutManager as LinearLayoutManager)
         .findFirstVisibleItemPosition() != 0

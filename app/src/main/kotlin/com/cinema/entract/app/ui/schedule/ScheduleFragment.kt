@@ -22,7 +22,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.cinema.entract.app.R
 import com.cinema.entract.app.databinding.FragmentScheduleBinding
 import com.cinema.entract.app.model.DayHeader
 import com.cinema.entract.app.model.MovieEntry
@@ -56,8 +55,6 @@ class ScheduleFragment : BaseLceFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        setTitle(R.string.schedule_title)
 
         with(binding.contentView) {
             recyclerView.layoutManager = LinearLayoutManager(context)

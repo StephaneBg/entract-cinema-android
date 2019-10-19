@@ -26,9 +26,11 @@ import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.cinema.entract.app.R
 import com.cinema.entract.app.databinding.FragmentDetailsBinding
 import com.cinema.entract.app.databinding.ListItemDetailsMovieBinding
@@ -64,6 +66,12 @@ class DetailsFragment : BaseLceFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (requireActivity() as AppCompatActivity).apply {
+            setSupportActionBar(binding.toolbar)
+            setupActionBarWithNavController(findNavController())
+        }
+
         onStates(cinemaViewModel) { state ->
             when (state) {
                 is UIState.Loading -> showLoading()

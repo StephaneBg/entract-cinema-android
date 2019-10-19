@@ -48,12 +48,11 @@ open class BaseLceFragment : BaseFragment() {
     protected open fun showError(throwable: Throwable?, action: () -> Unit) {
         viewHolder.contentView.isVisible = false
         viewHolder.loadingView.isVisible = false
-        viewHolder.errorView.setMessage(
+        viewHolder.errorView.show(
             getErrorDrawable(throwable),
             getErrorMessage(throwable),
             action
         )
-        viewHolder.errorView.isVisible = true
     }
 
     data class ViewHolder(

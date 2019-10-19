@@ -21,8 +21,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.cinema.entract.app.R
 import com.cinema.entract.app.databinding.ActivityCinemaBinding
@@ -47,19 +45,8 @@ class CinemaActivity : BaseActivity() {
 
         val binding = ActivityCinemaBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
 
         val navController = findNavController(R.id.navHost)
-
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.onScreenFragment,
-                R.id.scheduleFragment,
-                R.id.informationFragment,
-                R.id.settingsFragment
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
 
         binding.bottomNavigation.setupWithNavController(navController)
         binding.bottomNavigation.setOnNavigationItemReselectedListener {

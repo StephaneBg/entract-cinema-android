@@ -20,7 +20,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.cinema.entract.app.R
@@ -32,6 +31,7 @@ import com.cinema.entract.app.ui.CinemaState
 import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.app.ui.promotional.PromotionalActivity
 import com.cinema.entract.core.ui.BaseLceFragment
+import com.cinema.entract.core.utils.EmptinessHelper
 import com.cinema.entract.core.widget.GenericRecyclerViewAdapter
 import com.cinema.entract.data.ext.isToday
 import com.cinema.entract.data.ext.longFormatToUi
@@ -48,10 +48,11 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class OnScreenFragment : BaseLceFragment() {
 
     private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
-    private lateinit var datePickerDialog: MaterialDatePicker<Long>
     private val onScreenAdapter = GenericRecyclerViewAdapter()
-    private lateinit var binding: FragmentOnScreenBinding
+    private val emptinessHelper = EmptinessHelper()
     private var dateParams: DateParameters? = null
+    private lateinit var datePickerDialog: MaterialDatePicker<Long>
+    private lateinit var binding: FragmentOnScreenBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,21 +60,18 @@ class OnScreenFragment : BaseLceFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentOnScreenBinding.inflate(inflater)
-        initLce(binding.loadingView, binding.contentView, binding.errorView)
+        initLce(binding.loadingView, binding.recyclerView, binding.errorView)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
-
-        with(binding.contentView) {
-            recyclerView.setHasFixedSize(true)
-            setAdapter(onScreenAdapter)
-        }
-
+        setToolbar(binding.toolbar)
+        binding.recyclerView.setHasFixedSize(true)
+        binding.recyclerView.adapter = onScreenAdapter
         binding.fab.setOnClickListener { displayDatePicker() }
+        emptinessHelper.init(binding.recyclerView, binding.emptyView)
 
         onStates(cinemaViewModel) { state ->
             when (state) {

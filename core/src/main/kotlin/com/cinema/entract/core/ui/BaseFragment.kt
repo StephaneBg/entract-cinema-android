@@ -19,6 +19,7 @@ package com.cinema.entract.core.ui
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.cinema.entract.core.R
 import com.cinema.entract.core.network.NoConnectivityException
@@ -46,5 +47,9 @@ open class BaseFragment : Fragment() {
 
     fun setTitle(title: String?) {
         (requireActivity() as? AppCompatActivity)?.supportActionBar?.title = title
+    }
+
+    fun setToolbar(toolbar: Toolbar) {
+        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
     }
 }

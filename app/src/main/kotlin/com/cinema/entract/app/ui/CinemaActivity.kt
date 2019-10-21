@@ -24,6 +24,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.cinema.entract.app.R
 import com.cinema.entract.app.databinding.ActivityCinemaBinding
+import com.cinema.entract.app.ui.details.DetailsFragment
 import com.cinema.entract.app.ui.onscreen.OnScreenFragment
 import com.cinema.entract.app.ui.schedule.ScheduleFragment
 import com.cinema.entract.core.ui.BaseActivity
@@ -53,6 +54,7 @@ class CinemaActivity : BaseActivity() {
             when (val fragment = getNavHostFragment()?.getDisplayedFragment()) {
                 is OnScreenFragment -> manageOnScreen(fragment)
                 is ScheduleFragment -> fragment.scrollToTop()
+                is DetailsFragment -> navController.popBackStack()
             }
         }
     }

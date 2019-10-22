@@ -24,7 +24,6 @@ import com.cinema.entract.app.model.ScheduleEntry
 import com.cinema.entract.core.ui.BaseViewModel
 import com.cinema.entract.data.ext.toEpochMilliSecond
 import com.cinema.entract.data.interactor.CinemaUseCase
-import io.uniflow.core.flow.StateFlowAction
 import io.uniflow.core.flow.UIEvent
 import io.uniflow.core.flow.UIState
 import org.threeten.bp.LocalDate
@@ -47,43 +46,56 @@ class CinemaViewModel(
         setState { CinemaState.Error(error) }
     }
 
-    fun loadMovies(): StateFlowAction = stateFlow {
-        setState(UIState.Loading)
-        val movies = useCase.getMovies()
-        val date = useCase.getDate()
-        val dateRange = useCase.getDateRange()
-        setState(
-            CinemaState.OnScreen(
-                movies.map { movieMapper.mapToUi(it) },
-                DateParameters(date, dateRange?.minimumDate, dateRange?.maximumDate)
+    fun loadMovies() {
+        stateFlow {
+            setState(UIState.Loading)
+            val movies = useCase.getMovies()
+            val date = useCase.getDate()
+            val dateRange = useCase.getDateRange()
+            setState(
+                CinemaState.OnScreen(
+                    movies.map { movieMapper.mapToUi(it) },
+                    DateParameters(date, dateRange?.minimumDate, dateRange?.maximumDate)
+                )
             )
-        )
+        }
     }
 
     fun selectDate(date: LocalDate) {
         useCase.setDate(date)
     }
 
-    fun loadSchedule(): StateFlowAction = stateFlow {
-        setState(UIState.Loading)
-        val schedule = useCase.getSchedule()
-        setState(CinemaState.Schedule(useCase.getDate(), scheduleMapper.mapToUi(schedule)))
+    fun loadSchedule() {
+        stateFlow {
+            setState(UIState.Loading)
+            val schedule = useCase.getSchedule()
+            setState(CinemaState.Schedule(useCase.getDate(), scheduleMapper.mapToUi(schedule)))
+        }
     }
 
-    fun loadMovieDetails(movie: Movie): StateFlowAction = stateFlow(
-        {
-            setState(UIState.Loading)
-            val retrievedMovie = useCase.getMovie(movieMapper.mapToData(movie))
-            setState(CinemaState.Details(useCase.getDate(), movieMapper.mapToUi(retrievedMovie)))
-        },
-        {
-            CinemaState.Error(it, movie)
-        }
-    )
+    fun loadMovieDetails(movie: Movie) {
+        stateFlow(
+            {
+                setState(UIState.Loading)
+                val retrievedMovie = useCase.getMovie(movieMapper.mapToData(movie))
+                setState(
+                    CinemaState.Details(
+                        useCase.getDate(),
+                        movieMapper.mapToUi(retrievedMovie)
+                    )
+                )
+            },
+            {
+                CinemaState.Error(it, movie)
+            }
+        )
+    }
 
-    fun loadPromotional() = withState {
-        val url = useCase.getEventUrl()
-        url?.let { sendEvent(CinemaEvent.Promotional(it)) }
+    fun loadPromotional() {
+        withState {
+            val url = useCase.getEventUrl()
+            url?.let { sendEvent(CinemaEvent.Promotional(it)) }
+        }
     }
 
     fun getSessionSchedule(movie: Movie): Pair<Long, Long> {

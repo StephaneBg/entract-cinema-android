@@ -34,7 +34,7 @@ object Versions {
     const val retrofit = "2.6.2"
     const val anko = "0.10.8"
     const val koin = "2.0.1"
-    const val uniflow = "0.8.4"
+    const val uniflow = "0.8.7"
     const val coil = "0.7.0"
     const val glide = "4.10.0"
     const val jsr310 = "1.2.1"

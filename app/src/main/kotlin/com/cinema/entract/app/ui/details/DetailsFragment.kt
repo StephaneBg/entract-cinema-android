@@ -46,7 +46,9 @@ import com.cinema.entract.core.ui.BaseLceFragment
 import com.cinema.entract.data.ext.longFormatToUi
 import io.uniflow.androidx.flow.onStates
 import io.uniflow.core.flow.UIState
+import org.jetbrains.anko.toast
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import timber.log.Timber
 
 class DetailsFragment : BaseLceFragment() {
 
@@ -191,16 +193,21 @@ class DetailsFragment : BaseLceFragment() {
     }
 
     private fun addCalendarEvent(movie: Movie) {
-        val (beginTime, endTime) = cinemaViewModel.getSessionSchedule(movie)
-        val intent = Intent(Intent.ACTION_INSERT)
-            .setData(Events.CONTENT_URI)
-            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime)
-            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime)
-            .putExtra(Events.TITLE, movie.title)
-            .putExtra(Events.DESCRIPTION, getString(R.string.app_name))
-            .putExtra(Events.EVENT_LOCATION, getString(R.string.information_address))
-            .putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY)
-        tagViewModel.tag(TagAction.Calendar(movie.sessionId))
-        startActivity(intent)
+        try {
+            val (beginTime, endTime) = cinemaViewModel.getSessionSchedule(movie)
+            val intent = Intent(Intent.ACTION_INSERT)
+                .setData(Events.CONTENT_URI)
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime)
+                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime)
+                .putExtra(Events.TITLE, movie.title)
+                .putExtra(Events.DESCRIPTION, getString(R.string.app_name))
+                .putExtra(Events.EVENT_LOCATION, getString(R.string.information_address))
+                .putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY)
+            tagViewModel.tag(TagAction.Calendar(movie.sessionId))
+            startActivity(intent)
+        } catch (e: Exception) {
+            Timber.e(e)
+            requireContext().toast(R.string.error_general)
+        }
     }
 }

@@ -38,7 +38,7 @@ object Versions {
     const val coil = "0.7.0"
     const val glide = "4.10.0"
     const val jsr310 = "1.2.1"
-    const val firebaseCore = "17.2.0"
+    const val firebaseCore = "17.2.1"
     const val firebaseMessaging = "20.0.0"
 }
 

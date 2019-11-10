@@ -16,7 +16,6 @@
 
 package com.cinema.entract.data.ext
 
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.ZoneOffset
+import org.threeten.bp.ZonedDateTime
 
-fun LocalDateTime.toEpochMilliSecond() = this.toEpochSecond(ZoneOffset.ofHours(2)) * 1000
+fun ZonedDateTime.toEpochMilliSecond(): Long = this.toEpochSecond() * 1000

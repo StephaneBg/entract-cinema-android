@@ -27,6 +27,7 @@ import com.cinema.entract.app.R
 import com.cinema.entract.app.databinding.FragmentInformationBinding
 import com.cinema.entract.core.ui.BaseFragment
 import org.jetbrains.anko.browse
+import org.jetbrains.anko.toast
 import timber.log.Timber
 
 class InformationFragment : BaseFragment() {
@@ -48,10 +49,15 @@ class InformationFragment : BaseFragment() {
         setTitle(R.string.information_title)
 
         binding.navigate.setOnClickListener {
-            val gmmIntentUri = "geo:43.7700499,1.2948405?q=Grenade+Cinéma".toUri()
-            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-            mapIntent.setPackage("com.google.android.apps.maps")
-            startActivity(mapIntent)
+            try {
+                val gmmIntentUri = "geo:43.7700499,1.2948405?q=Grenade+Cinéma".toUri()
+                val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                mapIntent.setPackage("com.google.android.apps.maps")
+                startActivity(mapIntent)
+            } catch (e: Exception) {
+                Timber.e(e)
+                requireContext().toast(R.string.error_general)
+            }
         }
         binding.call.setOnClickListener {
             try {

@@ -18,13 +18,13 @@ import org.gradle.api.JavaVersion
 
 object Versions {
     val java = JavaVersion.VERSION_1_8
-    const val androidGradle = "3.6.0-beta01"
+    const val androidGradle = "3.6.0-beta03"
     const val googleServices = "4.3.2"
     const val kotlin = "1.3.50"
     const val coroutines = "1.3.2"
     const val appCompat = "1.1.0"
     const val recyclerView = "1.0.0"
-    const val material = "1.1.0-beta01"
+    const val material = "1.1.0-beta02"
     const val constraintLayout = "1.1.3"
     const val lifecyleViewmodel = "2.1.0"
     const val coreKtx = "1.1.0"
@@ -35,7 +35,6 @@ object Versions {
     const val anko = "0.10.8"
     const val koin = "2.0.1"
     const val uniflow = "0.8.7"
-    const val coil = "0.7.0"
     const val glide = "4.10.0"
     const val jsr310 = "1.2.1"
     const val firebaseCore = "17.2.1"
@@ -77,7 +76,6 @@ object Libs {
     val retrofitConverterMoshi = "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
     val koinAndroid = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
     val uniflow = "io.uniflow:uniflow-androidx:${Versions.uniflow}"
-    val coil = "io.coil-kt:coil:${Versions.coil}"
     val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
     val jsr310 = "com.jakewharton.threetenabp:threetenabp:${Versions.jsr310}"
 }

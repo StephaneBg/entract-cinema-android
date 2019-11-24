@@ -27,7 +27,6 @@ import com.cinema.entract.data.interactor.CinemaUseCase
 import io.uniflow.core.flow.UIEvent
 import io.uniflow.core.flow.UIState
 import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalTime
 import org.threeten.bp.ZoneId
 import org.threeten.bp.ZonedDateTime
 import timber.log.Timber
@@ -100,34 +99,30 @@ class CinemaViewModel(
     }
 
     fun getSessionSchedule(movie: Movie): Pair<Long, Long> {
-        val schedule = movie.schedule.split(":").map { Integer.parseInt(it) }
-        var time = LocalTime.of(schedule[0], schedule[1])
-        val beginTime = ZonedDateTime.of(
+        val beginDateTime = ZonedDateTime.of(
             movie.date.year,
             movie.date.month.value,
             movie.date.dayOfMonth,
-            time.hour,
-            time.minute,
+            movie.schedule.hour,
+            movie.schedule.minute,
             0,
             0,
             ZoneId.systemDefault()
         )
 
-        val duration = movie.duration.split("h").map { Integer.parseInt(it) }
-        time = time.plusHours(duration[0].toLong())
-        time = time.plusMinutes(duration[1].toLong())
-        val endTime = ZonedDateTime.of(
+        val endTime = movie.schedule.plus(movie.duration)
+        val endDateTime = ZonedDateTime.of(
             movie.date.year,
             movie.date.month.value,
             movie.date.dayOfMonth,
-            time.hour,
-            time.minute,
+            endTime.hour,
+            endTime.minute,
             0,
             0,
             ZoneId.systemDefault()
         )
 
-        return beginTime.toEpochMilliSecond() to endTime.toEpochMilliSecond()
+        return beginDateTime.toEpochMilliSecond() to endDateTime.toEpochMilliSecond()
     }
 }
 

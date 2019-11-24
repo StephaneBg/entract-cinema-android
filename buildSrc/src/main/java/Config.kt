@@ -18,9 +18,9 @@ import org.gradle.api.JavaVersion
 
 object Versions {
     val java = JavaVersion.VERSION_1_8
-    const val androidGradle = "3.6.0-beta03"
+    const val androidGradle = "3.6.0-beta04"
     const val googleServices = "4.3.2"
-    const val kotlin = "1.3.50"
+    const val kotlin = "1.3.60"
     const val coroutines = "1.3.2"
     const val appCompat = "1.1.0"
     const val recyclerView = "1.0.0"

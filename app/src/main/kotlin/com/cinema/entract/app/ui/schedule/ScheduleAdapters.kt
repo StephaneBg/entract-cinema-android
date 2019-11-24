@@ -26,6 +26,7 @@ import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.model.MovieEntry
 import com.cinema.entract.app.model.WeekHeader
 import com.cinema.entract.core.widget.ItemAdapter
+import com.cinema.entract.data.ext.formatToUi
 import org.threeten.bp.LocalDate
 
 class DayHeaderAdapter(
@@ -61,7 +62,7 @@ class MovieAdapter(
 
     override fun onBindViewHolder(itemView: View) {
         with(ListItemScheduleMovieBinding.bind(itemView)) {
-            schedule.text = model.movie.schedule
+            schedule.text = model.movie.schedule.formatToUi()
             title.text = model.movie.title
             originalVersion.isVisible = model.movie.isOriginalVersion
             threeDimension.isVisible = model.movie.isThreeDimension

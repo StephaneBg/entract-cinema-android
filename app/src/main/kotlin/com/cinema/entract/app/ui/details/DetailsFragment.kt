@@ -43,6 +43,7 @@ import com.cinema.entract.app.ui.TagAction
 import com.cinema.entract.app.ui.TagViewModel
 import com.cinema.entract.core.ext.toSpanned
 import com.cinema.entract.core.ui.BaseLceFragment
+import com.cinema.entract.data.ext.formatToUi
 import com.cinema.entract.data.ext.longFormatToUi
 import io.uniflow.androidx.flow.onStates
 import io.uniflow.core.flow.UIState
@@ -121,7 +122,7 @@ class DetailsFragment : BaseLceFragment() {
                         R.string.details_production_year,
                         movie.yearOfProduction
                     ).toSpanned()
-                    binding.duration.text = getString(R.string.details_duration, movie.duration)
+                    binding.duration.text = movie.duration.formatToUi()
                     binding.genre.text = movie.genre
 
                     with(binding.synopsis) {

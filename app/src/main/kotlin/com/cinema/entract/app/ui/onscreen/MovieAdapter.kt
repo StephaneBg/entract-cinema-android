@@ -25,6 +25,7 @@ import com.cinema.entract.app.ext.displayPlaceHolder
 import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.core.widget.ItemAdapter
+import com.cinema.entract.data.ext.formatToUi
 
 class MovieAdapter(
     private val movie: Movie,
@@ -34,11 +35,12 @@ class MovieAdapter(
     override fun onBindViewHolder(itemView: View) {
         val binding = ListItemOnScreenMovieBinding.bind(itemView)
         binding.cover.apply {
-            if (movie.coverUrl.isNotEmpty()) load(movie.coverUrl) else displayPlaceHolder()
+            if (movie.coverUrl.isNotEmpty()) load(movie.coverUrl)
+            else displayPlaceHolder()
         }
         binding.title.text = movie.title
-        binding.schedule.text = movie.schedule
-        binding.duration.text = movie.duration
+        binding.schedule.text = movie.schedule.formatToUi()
+        binding.duration.text = movie.duration.formatToUi()
         binding.originalVersion.isVisible = movie.isOriginalVersion
         binding.threeDimension.isVisible = movie.isThreeDimension
         binding.underTwelve.isVisible = movie.isUnderTwelve

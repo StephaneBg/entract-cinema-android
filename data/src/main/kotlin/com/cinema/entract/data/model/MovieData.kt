@@ -16,21 +16,23 @@
 
 package com.cinema.entract.data.model
 
+import org.threeten.bp.Duration
 import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalTime
 
 data class MovieData(
     val sessionId: String,
     val movieId: String,
     val title: String,
     val date: LocalDate,
-    val schedule: String,
+    val schedule: LocalTime,
     val isThreeDimension: Boolean,
     val isOriginalVersion: Boolean,
     val isArtMovie: Boolean,
     val isUnderTwelve: Boolean,
     val isExplicitContent: Boolean,
     val coverUrl: String,
-    val duration: String,
+    val duration: Duration,
     val yearOfProduction: String,
     val genre: String,
     val director: String,

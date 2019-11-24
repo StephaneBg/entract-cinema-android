@@ -18,7 +18,9 @@ package com.cinema.entract.remote.mapper
 
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.remote.model.MovieRemote
+import org.threeten.bp.Duration
 import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalTime
 
 class MovieMapper : Mapper<MovieRemote, MovieData> {
 
@@ -27,14 +29,14 @@ class MovieMapper : Mapper<MovieRemote, MovieData> {
         model.id_film ?: "",
         model.titre ?: "",
         LocalDate.parse(model.date) ?: error("Unknown date"),
-        model.horaire ?: "",
+        getSchedule(model.horaire) ?: error("Incorrect schedule"),
         model.troisDimension ?: false,
         model.vo ?: false,
         model.art_essai ?: false,
         model.moins_douze ?: false,
         model.avertissement ?: false,
         model.affiche ?: "",
-        model.duree ?: "",
+        getDuration(model.duree),
         model.annee ?: "",
         model.style ?: "",
         model.de ?: "",
@@ -43,4 +45,27 @@ class MovieMapper : Mapper<MovieRemote, MovieData> {
         model.bande_annonce ?: "",
         model.autres_dates?.map { mapToData(it) } ?: emptyList()
     )
+
+    private fun getSchedule(litteralSchedule: String?): LocalTime? =
+        litteralSchedule
+            ?.split("h")
+            ?.map { Integer.parseInt(it) }
+            ?.let {
+                return LocalTime.of(it[0], it[1])
+            }
+
+    private fun getDuration(litteralDuration: String?): Duration {
+        var duration = Duration.ZERO
+        litteralDuration
+            ?.split("h")
+            ?.map { Integer.parseInt(it).toLong() }
+            ?.forEachIndexed { index, time ->
+                duration = when (index) {
+                    0 -> duration.plusHours(time)
+                    1 -> duration.plusMinutes(time)
+                    else -> error("Incorrect format")
+                }
+            }
+        return duration
+    }
 }

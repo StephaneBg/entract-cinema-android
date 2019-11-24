@@ -28,7 +28,6 @@
     <string name="on_screen_date_picker_title">Sélectionner une date</string>
 
     <string name="details_date_with_time">%1$s à %2$s</string>
-    <string name="details_duration">%1$s</string>
     <string name="details_production_year">Sortie en &lt;b>%1$s&lt;/b></string>
     <string name="details_director">De &lt;b>%1$s&lt;/b></string>
     <string name="details_cast">Avec &lt;b>%1$s&lt;/b></string>

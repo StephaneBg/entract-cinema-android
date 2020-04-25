@@ -48,7 +48,6 @@ dependencies {
     implementation(Libs.appCompat)
     implementation(Libs.coreKtx)
     implementation(Libs.fragmentKtx)
-    implementation(Libs.anko)
     implementation(Libs.material)
     implementation(Libs.lifecyleViewmodel)
     implementation(Libs.timber)

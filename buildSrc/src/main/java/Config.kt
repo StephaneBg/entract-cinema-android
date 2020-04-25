@@ -32,7 +32,6 @@ object Versions {
     const val navigation = "2.2.2"
     const val timber = "4.7.1"
     const val retrofit = "2.8.1"
-    const val anko = "0.10.8"
     const val koin = "2.1.5"
     const val uniflow = "0.10.2"
     const val glide = "4.11.0"
@@ -55,7 +54,6 @@ object Android {
 object Libs {
     val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
     val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
-    val anko = "org.jetbrains.anko:anko-commons:${Versions.anko}"
 
     val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
     val recyclerView = "androidx.recyclerview:recyclerview:${Versions.recyclerView}"

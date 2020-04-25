@@ -107,7 +107,6 @@ dependencies {
     implementation(Libs.lifecyleViewmodel)
     implementation(Libs.navFragment)
     implementation(Libs.navUi)
-    implementation(Libs.anko)
     implementation(Libs.koinAndroid)
     implementation(Libs.glide)
     implementation(Libs.jsr310)

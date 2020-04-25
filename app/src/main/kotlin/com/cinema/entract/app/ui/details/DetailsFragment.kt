@@ -46,7 +46,6 @@ import com.cinema.entract.core.ui.BaseLceFragment
 import com.cinema.entract.data.ext.formatToUi
 import com.cinema.entract.data.ext.longFormatToUi
 import io.uniflow.androidx.flow.onStates
-import io.uniflow.core.flow.UIState
 import org.jetbrains.anko.toast
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
@@ -77,7 +76,7 @@ class DetailsFragment : BaseLceFragment() {
 
         onStates(cinemaViewModel) { state ->
             when (state) {
-                is UIState.Loading -> showLoading()
+                is CinemaState.Loading -> showLoading()
                 is CinemaState.Error -> {
                     setTitle(R.string.app_name)
                     showError(state.error) {

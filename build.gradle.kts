@@ -17,7 +17,7 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
  */
 
 plugins {
-    id("com.github.ben-manes.versions") version "0.27.0"
+    id("com.github.ben-manes.versions") version "0.28.0"
 }
 
 buildscript {
@@ -40,6 +40,24 @@ allprojects {
         google()
         maven("https://jitpack.io")
     }
+
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions {
+            freeCompilerArgs = listOf("-progressive", "-Xuse-experimental=kotlin.Experimental")
+            jvmTarget = Versions.java.toString()
+        }
+    }
+}
+
+subprojects {
+    afterEvaluate {
+        extensions.configure<com.android.build.gradle.BaseExtension> {
+            compileOptions {
+                sourceCompatibility = Versions.java
+                targetCompatibility = Versions.java
+            }
+        }
+    }
 }
 
 // ./gradlew dependencyUpdates -Drevision=release
@@ -47,7 +65,19 @@ tasks.named<DependencyUpdatesTask>("dependencyUpdates") {
     resolutionStrategy {
         componentSelection {
             all {
-                val rejected = listOf("alpha", "beta", "rc", "cr", "m", "preview", "test", "b", "ea", "eap").any { qualifier ->
+                val rejected = listOf(
+                    "alpha",
+                    "beta",
+                    "rc",
+                    "cr",
+                    "m",
+                    "preview",
+                    "test",
+                    "b",
+                    "ea",
+                    "eap",
+                    "release"
+                ).any { qualifier ->
                     candidate.version.matches(Regex("(?i).*[.-]$qualifier[.\\d-+]*"))
                 }
                 if (rejected) {

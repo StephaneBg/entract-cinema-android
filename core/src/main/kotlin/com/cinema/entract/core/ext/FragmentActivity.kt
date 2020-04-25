@@ -26,9 +26,11 @@ fun FragmentActivity.addFragment(
     frameId: Int,
     fragment: Fragment,
     addToBackStack: Boolean = false
-) = supportFragmentManager.commit {
-    add(frameId, fragment)
-    if (addToBackStack) addToBackStack(null)
+) {
+    supportFragmentManager.commit {
+        add(frameId, fragment)
+        if (addToBackStack) addToBackStack(null)
+    }
 }
 
 fun FragmentActivity.addFragment(
@@ -37,19 +39,23 @@ fun FragmentActivity.addFragment(
     addToBackStack: Boolean = false,
     animIn: Int,
     animOut: Int
-) = supportFragmentManager.commit {
-    setCustomAnimations(animIn, animOut, animIn, animOut)
-    add(frameId, fragment)
-    if (addToBackStack) addToBackStack(null)
+) {
+    supportFragmentManager.commit {
+        setCustomAnimations(animIn, animOut, animIn, animOut)
+        add(frameId, fragment)
+        if (addToBackStack) addToBackStack(null)
+    }
 }
 
 fun FragmentActivity.replaceFragment(
     frameId: Int,
     fragment: Fragment,
     addToBackStack: Boolean = false
-) = supportFragmentManager.commit {
-    replace(frameId, fragment)
-    if (addToBackStack) addToBackStack(null)
+) {
+    supportFragmentManager.commit {
+        replace(frameId, fragment)
+        if (addToBackStack) addToBackStack(null)
+    }
 }
 
 fun FragmentActivity.replaceFragment(
@@ -58,10 +64,12 @@ fun FragmentActivity.replaceFragment(
     addToBackStack: Boolean = false,
     animIn: Int,
     animOut: Int
-) = supportFragmentManager.commit {
-    setCustomAnimations(animIn, animOut, animIn, animOut)
-    replace(frameId, fragment)
-    if (addToBackStack) addToBackStack(null)
+) {
+    supportFragmentManager.commit {
+        setCustomAnimations(animIn, animOut, animIn, animOut)
+        replace(frameId, fragment)
+        if (addToBackStack) addToBackStack(null)
+    }
 }
 
 fun FragmentActivity.setLightStatusBar() {

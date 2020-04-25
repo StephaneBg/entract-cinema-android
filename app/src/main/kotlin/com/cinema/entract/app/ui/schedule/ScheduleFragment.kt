@@ -35,7 +35,6 @@ import com.cinema.entract.core.ui.BaseLceFragment
 import com.cinema.entract.core.utils.EmptinessHelper
 import com.cinema.entract.core.widget.GenericRecyclerViewAdapter
 import io.uniflow.androidx.flow.onStates
-import io.uniflow.core.flow.UIState
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class ScheduleFragment : BaseLceFragment() {
@@ -66,7 +65,7 @@ class ScheduleFragment : BaseLceFragment() {
 
         onStates(cinemaViewModel) { state ->
             when (state) {
-                is UIState.Loading -> showLoading()
+                is CinemaState.Loading -> showLoading()
                 is CinemaState.Schedule -> {
                     val adapters = state.schedule.map {
                         when (it) {

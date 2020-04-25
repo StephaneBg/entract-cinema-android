@@ -41,7 +41,6 @@ import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import io.uniflow.androidx.flow.onEvents
 import io.uniflow.androidx.flow.onStates
-import io.uniflow.core.flow.UIState
 import org.jetbrains.anko.startActivity
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -76,7 +75,7 @@ class OnScreenFragment : BaseLceFragment() {
         onStates(cinemaViewModel) { state ->
             when (state) {
                 is CinemaState.Init -> cinemaViewModel.loadPromotional()
-                is UIState.Loading -> showLoading()
+                is CinemaState.Loading -> showLoading()
                 is CinemaState.OnScreen -> {
                     dateParams = state.dateParams
                     setTitle(dateParams?.currentDate?.longFormatToUi())

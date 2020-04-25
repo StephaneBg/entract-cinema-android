@@ -21,7 +21,7 @@ import com.cinema.entract.app.R
 import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.core.ui.BaseActivity
 import io.uniflow.androidx.flow.onStates
-import io.uniflow.core.flow.UIState
+import io.uniflow.core.flow.data.UIState
 import org.jetbrains.anko.startActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

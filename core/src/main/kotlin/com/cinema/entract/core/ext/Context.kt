@@ -72,12 +72,7 @@ private fun Resources.Theme.attr(@AttrRes attribute: Int): TypedValue {
     return typedValue
 }
 
-fun Context.showKeyboard(view: View) {
-    val inputMethodManager: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
-}
-
-fun Context.browse(url: String, newTask: Boolean = false): Boolean = try {
+fun Context.browse(url: String): Boolean = try {
     val intent = Intent(Intent.ACTION_VIEW).apply {
         data = Uri.parse(url)
         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

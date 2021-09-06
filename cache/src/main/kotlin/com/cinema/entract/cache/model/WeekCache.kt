@@ -16,7 +16,7 @@
 
 package com.cinema.entract.cache.model
 
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 data class WeekCache(
     val beginDay: LocalDate,

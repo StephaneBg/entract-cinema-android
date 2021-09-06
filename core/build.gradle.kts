@@ -20,7 +20,7 @@ plugins {
 }
 
 android {
-    compileSdkVersion(Android.compileSdkVersion)
+    compileSdk = Android.compileSdkVersion
 
     compileOptions {
         sourceCompatibility = Versions.java
@@ -28,9 +28,9 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion(Android.minSdkVersion)
-        targetSdkVersion(Android.targetSdkVersion)
-        resConfigs("fr")
+        minSdk = Android.minSdkVersion
+        targetSdk= Android.targetSdkVersion
+        resourceConfigurations.add("fr")
     }
 
     sourceSets {

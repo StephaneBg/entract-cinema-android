@@ -40,8 +40,8 @@ import com.cinema.entract.data.ext.toUtcEpochMilliSecond
 import com.cinema.entract.data.ext.toUtcLocalDate
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
-import io.uniflow.androidx.flow.onEvents
-import io.uniflow.androidx.flow.onStates
+import io.uniflow.android.livedata.onEvents
+import io.uniflow.android.livedata.onStates
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class OnScreenFragment : BaseLceFragment() {
@@ -92,9 +92,9 @@ class OnScreenFragment : BaseLceFragment() {
         }
 
         onEvents(cinemaViewModel) { event ->
-            when (val data = event.take()) {
+            when (event) {
                 is CinemaEvent.Promotional -> requireActivity().start<PromotionalActivity> {
-                    putExtra(PromotionalActivity.COVER_URL, data.url)
+                    putExtra(PromotionalActivity.COVER_URL, event.url)
                 }
             }
         }

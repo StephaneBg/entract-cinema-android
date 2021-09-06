@@ -21,17 +21,18 @@ plugins {
 }
 
 android {
-    compileSdkVersion(Android.compileSdkVersion)
+    compileSdk = Android.compileSdkVersion
 
     compileOptions {
         sourceCompatibility = Versions.java
         targetCompatibility = Versions.java
+        isCoreLibraryDesugaringEnabled = true
     }
 
     defaultConfig {
-        minSdkVersion(Android.minSdkVersion)
-        targetSdkVersion(Android.targetSdkVersion)
-        resConfigs("fr")
+        minSdk = Android.minSdkVersion
+        targetSdk= Android.targetSdkVersion
+        resourceConfigurations.add("fr")
     }
 
     sourceSets {
@@ -46,5 +47,6 @@ dependencies {
     implementation(kotlin("stdlib", Versions.kotlin))
     implementation(Libs.koinAndroid)
     implementation(Libs.coreKtx)
-    implementation(Libs.jsr310)
+
+    coreLibraryDesugaring(Libs.desugaring)
 }

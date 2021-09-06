@@ -31,7 +31,7 @@ import com.cinema.entract.core.ui.BaseActivity
 import com.cinema.entract.data.interactor.CinemaUseCase
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 
 class CinemaActivity : BaseActivity() {

@@ -27,7 +27,7 @@ import com.cinema.entract.app.model.MovieEntry
 import com.cinema.entract.app.model.WeekHeader
 import com.cinema.entract.core.widget.ItemAdapter
 import com.cinema.entract.data.ext.formatToUi
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 class DayHeaderAdapter(
     private val dayHeader: DayHeader,

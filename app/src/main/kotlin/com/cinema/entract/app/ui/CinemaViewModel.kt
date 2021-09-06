@@ -24,13 +24,12 @@ import com.cinema.entract.app.model.ScheduleEntry
 import com.cinema.entract.core.ui.BaseViewModel
 import com.cinema.entract.data.ext.toEpochMilliSecond
 import com.cinema.entract.data.interactor.CinemaUseCase
-import io.uniflow.core.flow.ActionFlow
 import io.uniflow.core.flow.data.UIEvent
 import io.uniflow.core.flow.data.UIState
-import org.threeten.bp.LocalDate
-import org.threeten.bp.ZoneId
-import org.threeten.bp.ZonedDateTime
 import timber.log.Timber
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.ZonedDateTime
 
 class CinemaViewModel(
     private val useCase: CinemaUseCase,
@@ -38,13 +37,7 @@ class CinemaViewModel(
     private val scheduleMapper: ScheduleMapper
 ) : BaseViewModel() {
 
-    init {
-        action {
-            setState { CinemaState.Init }
-        }
-    }
-
-    override suspend fun onError(error: Exception, currentState: UIState, flow: ActionFlow) {
+    override suspend fun onError(error: Exception, currentState: UIState) {
         Timber.e(error)
         action {
             setState { CinemaState.Error(error) }
@@ -53,7 +46,7 @@ class CinemaViewModel(
 
     fun loadMovies() {
         action {
-            setState(UIState.Loading)
+            setState(CinemaState.Loading)
             val movies = useCase.getMovies()
             val date = useCase.getDate()
             val dateRange = useCase.getDateRange()
@@ -72,7 +65,7 @@ class CinemaViewModel(
 
     fun loadSchedule() {
         action {
-            setState(UIState.Loading)
+            setState(CinemaState.Loading)
             val schedule = useCase.getSchedule()
             setState(CinemaState.Schedule(useCase.getDate(), scheduleMapper.mapToUi(schedule)))
         }
@@ -81,7 +74,7 @@ class CinemaViewModel(
     fun loadMovieDetails(movie: Movie) {
         action(
             {
-                setState(UIState.Loading)
+                setState(CinemaState.Loading)
                 val retrievedMovie = useCase.getMovie(movieMapper.mapToData(movie))
                 setState(
                     CinemaState.Details(

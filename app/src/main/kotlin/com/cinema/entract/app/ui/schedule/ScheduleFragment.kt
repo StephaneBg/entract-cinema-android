@@ -34,7 +34,7 @@ import com.cinema.entract.core.ext.scrollToTop
 import com.cinema.entract.core.ui.BaseLceFragment
 import com.cinema.entract.core.utils.EmptinessHelper
 import com.cinema.entract.core.widget.GenericRecyclerViewAdapter
-import io.uniflow.androidx.flow.onStates
+import io.uniflow.android.livedata.onStates
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class ScheduleFragment : BaseLceFragment() {

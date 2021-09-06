@@ -18,13 +18,12 @@ package com.cinema.entract.app.ui.startup
 
 import com.cinema.entract.core.ui.BaseViewModel
 import com.cinema.entract.data.interactor.CinemaUseCase
-import io.uniflow.core.flow.ActionFlow
 import io.uniflow.core.flow.data.UIState
 import timber.log.Timber
 
 class StartupViewModel(private val useCase: CinemaUseCase) : BaseViewModel() {
 
-    override suspend fun onError(error: Exception, currentState: UIState, flow: ActionFlow) {
+    override suspend fun onError(error: Exception, currentState: UIState) {
         Timber.e(error)
         action { setState(UIState.Failed()) }
     }

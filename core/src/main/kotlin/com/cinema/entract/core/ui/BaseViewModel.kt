@@ -16,6 +16,6 @@
 
 package com.cinema.entract.core.ui
 
-import io.uniflow.androidx.flow.AndroidDataFlow
+import io.uniflow.android.AndroidDataFlow
 
 open class BaseViewModel : AndroidDataFlow()

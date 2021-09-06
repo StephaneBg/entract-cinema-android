@@ -16,7 +16,7 @@
 
 package com.cinema.entract.app.model
 
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 sealed class ScheduleEntry
 

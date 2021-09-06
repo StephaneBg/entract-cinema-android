@@ -46,7 +46,7 @@ import com.cinema.entract.core.ext.toSpanned
 import com.cinema.entract.core.ui.BaseLceFragment
 import com.cinema.entract.data.ext.formatToUi
 import com.cinema.entract.data.ext.longFormatToUi
-import io.uniflow.androidx.flow.onStates
+import io.uniflow.android.livedata.onStates
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 

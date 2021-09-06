@@ -18,7 +18,7 @@ package com.cinema.entract.remote.mapper
 
 import com.cinema.entract.data.model.DateRangeData
 import com.cinema.entract.remote.model.DateRangeRemote
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 class DateRangeMapper : Mapper<DateRangeRemote, DateRangeData> {
 

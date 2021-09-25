@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 /*
  * Copyright 2019 Stéphane Baiget
  *
@@ -26,11 +24,12 @@ val versionMinor = 7
 val versionPatch = 0
 
 android {
-    compileSdkVersion(Android.compileSdkVersion)
+    compileSdk = Android.compileSdkVersion
 
     compileOptions {
         sourceCompatibility = Versions.java
         targetCompatibility = Versions.java
+        isCoreLibraryDesugaringEnabled = true
     }
 
     defaultConfig {
@@ -38,9 +37,9 @@ android {
         versionCode = versionMajor * 100 + versionMinor * 10 + versionPatch
         versionName = "$versionMajor.$versionMinor.$versionPatch"
         vectorDrawables.useSupportLibrary = true
-        minSdkVersion(Android.minSdkVersion)
-        targetSdkVersion(Android.targetSdkVersion)
-        resConfigs("fr")
+        minSdk = Android.minSdkVersion
+        targetSdk = Android.targetSdkVersion
+        resourceConfigurations.add("fr")
     }
 
     buildTypes {
@@ -75,18 +74,16 @@ android {
     }
 
     packagingOptions {
-        exclude("**/*.kotlin_module")
-        exclude("**/*.version")
-        exclude("**/kotlin/**")
-        exclude("**/*.txt")
-        exclude("**/*.xml")
-        exclude("**/*.properties")
-    }
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = "1.8"
+        resources {
+            excludes.apply {
+                add("**/*.kotlin_module")
+                add("**/*.version")
+                add("**/kotlin/**")
+                add("**/*.txt")
+                add("**/*.xml")
+                add("**/*.properties")
+            }
+        }
     }
 }
 
@@ -107,14 +104,14 @@ dependencies {
     implementation(Libs.lifecyleViewmodel)
     implementation(Libs.navFragment)
     implementation(Libs.navUi)
-    implementation(Libs.anko)
     implementation(Libs.koinAndroid)
     implementation(Libs.glide)
-    implementation(Libs.jsr310)
     implementation(Libs.firebaseCore)
     implementation(Libs.firebaseMessaging)
     implementation(Libs.timber)
     implementation(Libs.uniflow)
+
+    coreLibraryDesugaring(Libs.desugaring)
 }
 
 plugins.apply("com.google.gms.google-services")

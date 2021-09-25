@@ -24,13 +24,13 @@ import com.cinema.entract.app.R
 import com.cinema.entract.app.databinding.FragmentSettingsBinding
 import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.app.ui.CinemaViewModel
+import com.cinema.entract.core.ext.start
 import com.cinema.entract.core.ui.BaseFragment
 import com.cinema.entract.core.utils.THEME_MODE_AUTO
 import com.cinema.entract.core.utils.THEME_MODE_DARK
 import com.cinema.entract.core.utils.THEME_MODE_LIGHT
 import com.cinema.entract.data.interactor.CinemaUseCase
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import org.jetbrains.anko.startActivity
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -75,7 +75,7 @@ class SettingsFragment : BaseFragment() {
                 .setSingleChoiceItems(R.array.settings_theme_modes, getCurrentChoice()) { _, which ->
                     saveSelectedChoice(which)
                     requireActivity().run {
-                        startActivity<CinemaActivity>()
+                        start<CinemaActivity>()
                         finish()
                     }
                 }

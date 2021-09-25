@@ -20,7 +20,7 @@ plugins {
 }
 
 android {
-    compileSdkVersion(Android.compileSdkVersion)
+    compileSdk = Android.compileSdkVersion
 
     compileOptions {
         sourceCompatibility = Versions.java
@@ -28,9 +28,9 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion(Android.minSdkVersion)
-        targetSdkVersion(Android.targetSdkVersion)
-        resConfigs("fr")
+        minSdk = Android.minSdkVersion
+        targetSdk= Android.targetSdkVersion
+        resourceConfigurations.add("fr")
     }
 
     sourceSets {
@@ -48,7 +48,6 @@ dependencies {
     implementation(Libs.appCompat)
     implementation(Libs.coreKtx)
     implementation(Libs.fragmentKtx)
-    implementation(Libs.anko)
     implementation(Libs.material)
     implementation(Libs.lifecyleViewmodel)
     implementation(Libs.timber)

@@ -22,7 +22,6 @@ import com.cinema.entract.cache.di.cacheModule
 import com.cinema.entract.core.di.coreModule
 import com.cinema.entract.data.di.dataModule
 import com.cinema.entract.remote.di.remoteModule
-import com.jakewharton.threetenabp.AndroidThreeTen
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
@@ -32,7 +31,6 @@ class CinemaApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        AndroidThreeTen.init(this)
         if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
 
         startKoin {

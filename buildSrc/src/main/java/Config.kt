@@ -18,27 +18,25 @@ import org.gradle.api.JavaVersion
 
 object Versions {
     val java = JavaVersion.VERSION_1_8
-    const val androidGradle = "3.6.0-beta04"
+    const val androidGradle = "7.0.2"
     const val googleServices = "4.3.2"
-    const val kotlin = "1.3.60"
-    const val coroutines = "1.3.2"
-    const val appCompat = "1.1.0"
-    const val recyclerView = "1.0.0"
-    const val material = "1.1.0-beta02"
-    const val constraintLayout = "1.1.3"
-    const val lifecyleViewmodel = "2.1.0"
-    const val coreKtx = "1.1.0"
-    const val fragmentKtx = "1.1.0"
-    const val navigation = "2.1.0"
-    const val timber = "4.7.1"
-    const val retrofit = "2.6.2"
-    const val anko = "0.10.8"
-    const val koin = "2.0.1"
-    const val uniflow = "0.8.7"
-    const val glide = "4.10.0"
-    const val jsr310 = "1.2.1"
-    const val firebaseCore = "17.2.1"
-    const val firebaseMessaging = "20.0.0"
+    const val kotlin = "1.5.30"
+    const val coroutines = "1.5.2"
+    const val appCompat = "1.3.1"
+    const val recyclerView = "1.2.0"
+    const val constraintLayout = "2.1.0"
+    const val lifecyleViewmodel = "2.3.1"
+    const val coreKtx = "1.6.0"
+    const val fragmentKtx = "1.3.6"
+    const val navigation = "2.3.5"
+    const val material = "1.4.0"
+    const val timber = "5.0.1"
+    const val retrofit = "2.9.0"
+    const val koin = "3.1.2"
+    const val uniflow = "1.0.10"
+    const val glide = "4.12.0"
+    const val firebaseCore = "19.0.1"
+    const val firebaseMessaging = "22.0.0"
 }
 
 object Build {
@@ -48,24 +46,24 @@ object Build {
 
 object Android {
     const val minSdkVersion = 21
-    const val targetSdkVersion = 29
-    const val compileSdkVersion = 29
+    const val targetSdkVersion = 30
+    const val compileSdkVersion = 30
 }
 
 object Libs {
     val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
     val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
-    val anko = "org.jetbrains.anko:anko-commons:${Versions.anko}"
 
     val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
     val recyclerView = "androidx.recyclerview:recyclerview:${Versions.recyclerView}"
     val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
-    val lifecyleViewmodel =
-        "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecyleViewmodel}"
+    val lifecyleViewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecyleViewmodel}"
     val coreKtx = "androidx.core:core-ktx:${Versions.coreKtx}"
     val fragmentKtx = "androidx.fragment:fragment-ktx:${Versions.fragmentKtx}"
     val navFragment = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
     val navUi = "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
+
+    val desugaring = "com.android.tools:desugar_jdk_libs:1.1.5"
 
     val material = "com.google.android.material:material:${Versions.material}"
     val firebaseCore = "com.google.firebase:firebase-core:${Versions.firebaseCore}"
@@ -74,8 +72,7 @@ object Libs {
     val timber = "com.jakewharton.timber:timber:${Versions.timber}"
     val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
     val retrofitConverterMoshi = "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
-    val koinAndroid = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
-    val uniflow = "io.uniflow:uniflow-androidx:${Versions.uniflow}"
+    val koinAndroid = "io.insert-koin:koin-android:${Versions.koin}"
+    val uniflow = "org.uniflow-kt:uniflow-android:${Versions.uniflow}"
     val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
-    val jsr310 = "com.jakewharton.threetenabp:threetenabp:${Versions.jsr310}"
 }

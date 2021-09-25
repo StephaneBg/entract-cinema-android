@@ -19,10 +19,10 @@ package com.cinema.entract.app.ui.startup
 import android.os.Bundle
 import com.cinema.entract.app.R
 import com.cinema.entract.app.ui.CinemaActivity
+import com.cinema.entract.core.ext.start
 import com.cinema.entract.core.ui.BaseActivity
-import io.uniflow.androidx.flow.onStates
-import io.uniflow.core.flow.UIState
-import org.jetbrains.anko.startActivity
+import io.uniflow.android.livedata.onStates
+import io.uniflow.core.flow.data.UIState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class StartupActivity : BaseActivity() {
@@ -38,7 +38,7 @@ class StartupActivity : BaseActivity() {
             when (state) {
                 is UIState.Success,
                 is UIState.Failed -> {
-                    startActivity<CinemaActivity>()
+                    start<CinemaActivity>()
                     finish()
                 }
             }

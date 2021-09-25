@@ -26,6 +26,7 @@ import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
@@ -45,9 +46,7 @@ import com.cinema.entract.core.ext.toSpanned
 import com.cinema.entract.core.ui.BaseLceFragment
 import com.cinema.entract.data.ext.formatToUi
 import com.cinema.entract.data.ext.longFormatToUi
-import io.uniflow.androidx.flow.onStates
-import io.uniflow.core.flow.UIState
-import org.jetbrains.anko.toast
+import io.uniflow.android.livedata.onStates
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 
@@ -77,7 +76,7 @@ class DetailsFragment : BaseLceFragment() {
 
         onStates(cinemaViewModel) { state ->
             when (state) {
-                is UIState.Loading -> showLoading()
+                is CinemaState.Loading -> showLoading()
                 is CinemaState.Error -> {
                     setTitle(R.string.app_name)
                     showError(state.error) {
@@ -208,7 +207,7 @@ class DetailsFragment : BaseLceFragment() {
             startActivity(intent)
         } catch (e: Exception) {
             Timber.e(e)
-            requireContext().toast(R.string.error_general)
+            Toast.makeText(requireContext(), R.string.error_general, Toast.LENGTH_SHORT).show()
         }
     }
 }

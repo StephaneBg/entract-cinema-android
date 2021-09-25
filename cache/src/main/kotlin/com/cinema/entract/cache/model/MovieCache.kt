@@ -16,9 +16,9 @@
 
 package com.cinema.entract.cache.model
 
-import org.threeten.bp.Duration
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalTime
+import java.time.Duration
+import java.time.LocalDate
+import java.time.LocalTime
 
 data class MovieCache(
     val sessionId: String,

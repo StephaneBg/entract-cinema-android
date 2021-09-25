@@ -1,5 +1,3 @@
-import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
-
 /*
  * Copyright 2019 Stéphane Baiget
  *
@@ -16,15 +14,10 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
  * limitations under the License.
  */
 
-plugins {
-    id("com.github.ben-manes.versions") version "0.27.0"
-}
-
 buildscript {
     repositories {
-        jcenter()
-        google()
-        maven("https://plugins.gradle.org/m2/")
+        maven("https://artifactory.f.bbg/artifactory/g-android-maven-proxy/")
+        maven("https://artifactory.f.bbg/artifactory/maven-third-party-android-libs/")
     }
 
     dependencies {
@@ -36,29 +29,24 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter()
-        google()
-        maven("https://jitpack.io")
+        maven("https://artifactory.f.bbg/artifactory/g-android-maven-proxy/")
+        maven("https://artifactory.f.bbg/artifactory/maven-third-party-android-libs/")
+    }
+
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions {
+            jvmTarget = Versions.java.toString()
+        }
     }
 }
 
-// ./gradlew dependencyUpdates -Drevision=release
-tasks.named<DependencyUpdatesTask>("dependencyUpdates") {
-    resolutionStrategy {
-        componentSelection {
-            all {
-                val rejected = listOf("alpha", "beta", "rc", "cr", "m", "preview", "test", "b", "ea", "eap").any { qualifier ->
-                    candidate.version.matches(Regex("(?i).*[.-]$qualifier[.\\d-+]*"))
-                }
-                if (rejected) {
-                    reject("Release candidate")
-                }
+subprojects {
+    afterEvaluate {
+        extensions.configure<com.android.build.gradle.BaseExtension> {
+            compileOptions {
+                sourceCompatibility = Versions.java
+                targetCompatibility = Versions.java
             }
         }
     }
-    // optional parameters
-    checkForGradleUpdate = true
-    outputFormatter = "json"
-    outputDir = "build/dependencyUpdates"
-    reportfileName = "report"
 }

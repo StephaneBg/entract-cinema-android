@@ -23,7 +23,7 @@ import com.cinema.entract.data.model.DateRangeData
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.data.model.WeekData
 import com.cinema.entract.data.source.DataStore
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 class CinemaUseCase(
     private val dataStore: DataStore,

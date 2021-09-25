@@ -24,12 +24,12 @@ import com.cinema.entract.app.model.ScheduleEntry
 import com.cinema.entract.core.ui.BaseViewModel
 import com.cinema.entract.data.ext.toEpochMilliSecond
 import com.cinema.entract.data.interactor.CinemaUseCase
-import io.uniflow.core.flow.UIEvent
-import io.uniflow.core.flow.UIState
-import org.threeten.bp.LocalDate
-import org.threeten.bp.ZoneId
-import org.threeten.bp.ZonedDateTime
+import io.uniflow.core.flow.data.UIEvent
+import io.uniflow.core.flow.data.UIState
 import timber.log.Timber
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.ZonedDateTime
 
 class CinemaViewModel(
     private val useCase: CinemaUseCase,
@@ -37,18 +37,16 @@ class CinemaViewModel(
     private val scheduleMapper: ScheduleMapper
 ) : BaseViewModel() {
 
-    init {
-        setState { CinemaState.Init }
-    }
-
-    override suspend fun onError(error: Exception) {
+    override suspend fun onError(error: Exception, currentState: UIState) {
         Timber.e(error)
-        setState { CinemaState.Error(error) }
+        action {
+            setState { CinemaState.Error(error) }
+        }
     }
 
     fun loadMovies() {
-        stateFlow {
-            setState(UIState.Loading)
+        action {
+            setState(CinemaState.Loading)
             val movies = useCase.getMovies()
             val date = useCase.getDate()
             val dateRange = useCase.getDateRange()
@@ -66,17 +64,17 @@ class CinemaViewModel(
     }
 
     fun loadSchedule() {
-        stateFlow {
-            setState(UIState.Loading)
+        action {
+            setState(CinemaState.Loading)
             val schedule = useCase.getSchedule()
             setState(CinemaState.Schedule(useCase.getDate(), scheduleMapper.mapToUi(schedule)))
         }
     }
 
     fun loadMovieDetails(movie: Movie) {
-        stateFlow(
+        action(
             {
-                setState(UIState.Loading)
+                setState(CinemaState.Loading)
                 val retrievedMovie = useCase.getMovie(movieMapper.mapToData(movie))
                 setState(
                     CinemaState.Details(
@@ -85,16 +83,15 @@ class CinemaViewModel(
                     )
                 )
             },
-            {
-                CinemaState.Error(it, movie)
+            { exception, _ ->
+                CinemaState.Error(exception, movie)
             }
         )
     }
 
     fun loadPromotional() {
-        withState {
-            val url = useCase.getEventUrl()
-            url?.let { sendEvent(CinemaEvent.Promotional(it)) }
+        action {
+            useCase.getEventUrl()?.let { sendEvent(CinemaEvent.Promotional(it)) }
         }
     }
 
@@ -128,16 +125,10 @@ class CinemaViewModel(
 
 sealed class CinemaState : UIState() {
     object Init : CinemaState()
-
-    data class OnScreen(
-        val movies: List<Movie>,
-        val dateParams: DateParameters
-    ) : CinemaState()
-
+    object Loading : CinemaState()
+    data class OnScreen(val movies: List<Movie>, val dateParams: DateParameters) : CinemaState()
     data class Schedule(val date: LocalDate, val schedule: List<ScheduleEntry>) : CinemaState()
-
     data class Details(val date: LocalDate, val movie: Movie) : CinemaState()
-
     data class Error(val error: Throwable, val movie: Movie? = null) : CinemaState()
 }
 

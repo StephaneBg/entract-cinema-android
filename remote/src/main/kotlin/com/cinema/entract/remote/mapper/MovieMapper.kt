@@ -18,9 +18,9 @@ package com.cinema.entract.remote.mapper
 
 import com.cinema.entract.data.model.MovieData
 import com.cinema.entract.remote.model.MovieRemote
-import org.threeten.bp.Duration
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalTime
+import java.time.Duration
+import java.time.LocalDate
+import java.time.LocalTime
 
 class MovieMapper : Mapper<MovieRemote, MovieData> {
 

@@ -20,17 +20,18 @@ plugins {
 }
 
 android {
-    compileSdkVersion(Android.compileSdkVersion)
+    compileSdk = Android.compileSdkVersion
 
     compileOptions {
         sourceCompatibility = Versions.java
         targetCompatibility = Versions.java
+        isCoreLibraryDesugaringEnabled = true
     }
 
     defaultConfig {
-        minSdkVersion(Android.minSdkVersion)
-        targetSdkVersion(Android.targetSdkVersion)
-        resConfigs("fr")
+        minSdk = Android.minSdkVersion
+        targetSdk= Android.targetSdkVersion
+        resourceConfigurations.add("fr")
     }
 
     sourceSets {
@@ -48,6 +49,7 @@ dependencies {
     implementation(Libs.koinAndroid)
     implementation(Libs.retrofit)
     implementation(Libs.retrofitConverterMoshi)
-    implementation(Libs.jsr310)
     implementation(Libs.timber)
+
+    coreLibraryDesugaring(Libs.desugaring)
 }

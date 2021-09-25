@@ -26,7 +26,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import com.cinema.entract.core.R
-import org.jetbrains.anko.find
 
 class ErrorView @JvmOverloads constructor(
     context: Context,
@@ -42,9 +41,9 @@ class ErrorView @JvmOverloads constructor(
         orientation = VERTICAL
         inflate(context, R.layout.widget_error_view, this)
 
-        image = find(R.id.errorImage)
-        message = find(R.id.errorMessage)
-        action = find(R.id.errorAction)
+        image = findViewById(R.id.errorImage)
+        message = findViewById(R.id.errorMessage)
+        action = findViewById(R.id.errorAction)
     }
 
     fun show(

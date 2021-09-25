@@ -18,7 +18,7 @@ package com.cinema.entract.remote.mapper
 
 import com.cinema.entract.data.model.WeekData
 import com.cinema.entract.remote.model.WeekRemote
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 class WeekMapper(private val mapper: DayMapper) : Mapper<WeekRemote, WeekData> {
 

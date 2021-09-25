@@ -30,6 +30,7 @@ import com.cinema.entract.app.ui.CinemaEvent
 import com.cinema.entract.app.ui.CinemaState
 import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.app.ui.promotional.PromotionalActivity
+import com.cinema.entract.core.ext.start
 import com.cinema.entract.core.ui.BaseLceFragment
 import com.cinema.entract.core.utils.EmptinessHelper
 import com.cinema.entract.core.widget.GenericRecyclerViewAdapter
@@ -39,10 +40,8 @@ import com.cinema.entract.data.ext.toUtcEpochMilliSecond
 import com.cinema.entract.data.ext.toUtcLocalDate
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
-import io.uniflow.androidx.flow.onEvents
-import io.uniflow.androidx.flow.onStates
-import io.uniflow.core.flow.UIState
-import org.jetbrains.anko.startActivity
+import io.uniflow.android.livedata.onEvents
+import io.uniflow.android.livedata.onStates
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class OnScreenFragment : BaseLceFragment() {
@@ -76,7 +75,7 @@ class OnScreenFragment : BaseLceFragment() {
         onStates(cinemaViewModel) { state ->
             when (state) {
                 is CinemaState.Init -> cinemaViewModel.loadPromotional()
-                is UIState.Loading -> showLoading()
+                is CinemaState.Loading -> showLoading()
                 is CinemaState.OnScreen -> {
                     dateParams = state.dateParams
                     setTitle(dateParams?.currentDate?.longFormatToUi())
@@ -93,9 +92,10 @@ class OnScreenFragment : BaseLceFragment() {
         }
 
         onEvents(cinemaViewModel) { event ->
-            when (val data = event.take()) {
-                is CinemaEvent.Promotional ->
-                    requireActivity().startActivity<PromotionalActivity>(PromotionalActivity.COVER_URL to data.url)
+            when (event) {
+                is CinemaEvent.Promotional -> requireActivity().start<PromotionalActivity> {
+                    putExtra(PromotionalActivity.COVER_URL, event.url)
+                }
             }
         }
 

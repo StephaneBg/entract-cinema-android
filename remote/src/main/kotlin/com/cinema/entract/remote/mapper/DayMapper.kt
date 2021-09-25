@@ -18,7 +18,7 @@ package com.cinema.entract.remote.mapper
 
 import com.cinema.entract.data.model.DayData
 import com.cinema.entract.remote.model.DayRemote
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 class DayMapper(private val mapper: MovieMapper) : Mapper<DayRemote, DayData> {
 

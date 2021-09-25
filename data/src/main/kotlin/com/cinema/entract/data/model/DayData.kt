@@ -16,7 +16,7 @@
 
 package com.cinema.entract.data.model
 
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 data class DayData(
     val date: LocalDate,

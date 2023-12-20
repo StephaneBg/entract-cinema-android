@@ -16,17 +16,18 @@
 
 package com.cinema.entract.app.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
 import com.cinema.entract.app.R
 import com.cinema.entract.app.databinding.ActivityCinemaBinding
-import com.cinema.entract.app.ui.details.DetailsFragment
+import com.cinema.entract.app.model.Movie
+import com.cinema.entract.app.ui.details.DetailsActivity
+import com.cinema.entract.app.ui.information.InformationFragment
 import com.cinema.entract.app.ui.onscreen.OnScreenFragment
 import com.cinema.entract.app.ui.schedule.ScheduleFragment
+import com.cinema.entract.app.ui.settings.SettingsFragment
 import com.cinema.entract.core.ui.BaseActivity
 import com.cinema.entract.data.interactor.CinemaUseCase
 import org.koin.android.ext.android.inject
@@ -39,24 +40,41 @@ class CinemaActivity : BaseActivity() {
     private val useCase by inject<CinemaUseCase>()
     private val cinemaViewModel by viewModel<CinemaViewModel>()
 
+    private lateinit var binding: ActivityCinemaBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         AppCompatDelegate.setDefaultNightMode(useCase.getThemeMode())
 
-        val binding = ActivityCinemaBinding.inflate(layoutInflater)
+        binding = ActivityCinemaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navController = findNavController(R.id.navHost)
-
-        binding.bottomNavigation.setupWithNavController(navController)
-        binding.bottomNavigation.setOnNavigationItemReselectedListener {
-            when (val fragment = getNavHostFragment()?.getDisplayedFragment()) {
+        binding.bottomNavigation.setOnItemSelectedListener {
+            displayFragment(it.itemId)
+            true
+        }
+        binding.bottomNavigation.setOnItemReselectedListener {
+            when (val fragment = supportFragmentManager.findFragmentById(R.id.container)) {
                 is OnScreenFragment -> manageOnScreen(fragment)
                 is ScheduleFragment -> fragment.scrollToTop()
-                is DetailsFragment -> navController.popBackStack()
             }
         }
+        displayFragment(R.id.onScreen)
+    }
+
+    private fun displayFragment(id: Int) {
+        val fragment = getFragmentOrCreate(id)
+        supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
+    }
+
+    fun displayDetails(movie: Movie) {
+        cinemaViewModel.selectMovie(movie)
+        startActivity(Intent(this, DetailsActivity::class.java))
+    }
+
+    fun navigateTo(id: Int) {
+        binding.bottomNavigation.selectedItemId = id
     }
 
     private fun manageOnScreen(fragment: OnScreenFragment) {
@@ -66,9 +84,11 @@ class CinemaActivity : BaseActivity() {
         }
     }
 
-    private fun getNavHostFragment(): NavHostFragment? =
-        supportFragmentManager.findFragmentById(R.id.navHost) as? NavHostFragment
-
-    private fun NavHostFragment.getDisplayedFragment(): Fragment? =
-        childFragmentManager.primaryNavigationFragment
+    private fun getFragmentOrCreate(id: Int): Fragment = when (id) {
+        R.id.onScreen -> OnScreenFragment()
+        R.id.schedule -> ScheduleFragment()
+        R.id.information -> InformationFragment()
+        R.id.settings -> SettingsFragment()
+        else -> error("Incorrect id")
+    }
 }

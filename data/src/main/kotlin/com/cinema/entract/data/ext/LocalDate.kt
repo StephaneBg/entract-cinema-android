@@ -22,7 +22,7 @@ import java.time.LocalTime
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
-import java.util.*
+import java.util.Locale
 
 private val longFormatter = DateTimeFormatter.ofPattern("EEEE d MMMM", Locale.FRANCE)
 private val shortFormatter = DateTimeFormatter.ofPattern("d MMMM", Locale.FRANCE)
@@ -30,10 +30,10 @@ private val shortFormatter = DateTimeFormatter.ofPattern("d MMMM", Locale.FRANCE
 fun LocalDate.longFormatToUi(): String = when {
     this.isToday() -> "Aujourd'hui"
     this.isTomorrow() -> "Demain"
-    else -> this.format(longFormatter).capitalize()
+    else -> this.format(longFormatter).toCapitalize()
 }
 
-fun LocalDate.shortFormatToUi(): String = this.format(shortFormatter).capitalize()
+fun LocalDate.shortFormatToUi(): String = this.format(shortFormatter).toCapitalize()
 
 fun LocalDate.formatToUtc(): String = this.format(DateTimeFormatter.ISO_LOCAL_DATE)
 
@@ -50,3 +50,6 @@ fun LocalDate.toUtcEpochMilliSecond(): Long =
 
 fun Long.toUtcLocalDate(): LocalDate =
     LocalDateTime.ofEpochSecond(this / 1000, 0, ZoneOffset.UTC).toLocalDate()
+
+fun String.toCapitalize(): String =
+    replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.FRANCE) else it.toString() }

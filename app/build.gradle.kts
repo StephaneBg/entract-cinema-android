@@ -16,29 +16,23 @@
 
 plugins {
     id("com.android.application")
-    kotlin("android")
+    id("kotlin-android")
+    id("com.google.gms.google-services")
 }
 
 val versionMajor = 1
-val versionMinor = 8
+val versionMinor = 9
 val versionPatch = 0
 
 android {
-    compileSdk = Android.compileSdkVersion
-
-    compileOptions {
-        sourceCompatibility = Versions.java
-        targetCompatibility = Versions.java
-        isCoreLibraryDesugaringEnabled = true
-    }
+    namespace = "com.cinema.entract.app"
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.cinema.entract.app"
         versionCode = versionMajor * 100 + versionMinor * 10 + versionPatch
         versionName = "$versionMajor.$versionMinor.$versionPatch"
-        vectorDrawables.useSupportLibrary = true
-        minSdk = Android.minSdkVersion
-        targetSdk = Android.targetSdkVersion
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         resourceConfigurations.add("fr")
     }
 
@@ -55,7 +49,10 @@ android {
         }
     }
 
-    viewBinding { isEnabled = true }
+    buildFeatures {
+        buildConfig = true
+        viewBinding = true
+    }
 
     bundle {
         language {
@@ -73,7 +70,7 @@ android {
         getByName("main").java.srcDirs("src/main/kotlin")
     }
 
-    packagingOptions {
+    packaging {
         resources {
             excludes.apply {
                 add("**/*.kotlin_module")
@@ -85,6 +82,10 @@ android {
             }
         }
     }
+
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
 }
 
 dependencies {
@@ -93,25 +94,11 @@ dependencies {
     implementation(project(":remote"))
     implementation(project(":data"))
 
-    implementation(kotlin("stdlib", Versions.kotlin))
-    implementation(Libs.coroutinesCore)
-    implementation(Libs.coroutinesAndroid)
-    implementation(Libs.appCompat)
-    implementation(Libs.coreKtx)
-    implementation(Libs.recyclerView)
-    implementation(Libs.material)
-    implementation(Libs.constraintLayout)
-    implementation(Libs.lifecyleViewmodel)
-    implementation(Libs.navFragment)
-    implementation(Libs.navUi)
-    implementation(Libs.koinAndroid)
-    implementation(Libs.glide)
-    implementation(Libs.firebaseCore)
-    implementation(Libs.firebaseMessaging)
-    implementation(Libs.timber)
-    implementation(Libs.uniflow)
+    implementation(libs.androidx.constraintLayout)
+    implementation(libs.androidx.recyclerView)
+    implementation(libs.glide)
+    implementation(platform(libs.google.firebaseBom))
+    implementation(libs.google.firebaseMessaging)
 
-    coreLibraryDesugaring(Libs.desugaring)
+    coreLibraryDesugaring(libs.desugaring)
 }
-
-plugins.apply("com.google.gms.google-services")

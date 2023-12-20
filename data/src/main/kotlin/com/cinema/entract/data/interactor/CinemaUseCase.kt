@@ -31,6 +31,7 @@ class CinemaUseCase(
 ) {
 
     private var currentDate: LocalDate? = null
+    var selectedMovie: MovieData? = null
 
     fun setDate(date: LocalDate) {
         currentDate = date
@@ -38,20 +39,23 @@ class CinemaUseCase(
 
     fun getDate(): LocalDate = currentDate ?: LocalDate.now()
 
-    suspend fun getMovies(): List<MovieData> {
-        return dataStore
-            .getMovies(getDate().formatToUtc())
-            .map {
-                if (!canDisplayMedia()) it.copy(
-                    coverUrl = "",
-                    teaserId = ""
-                ) else it
-            }
-    }
+    suspend fun getMovies(): List<MovieData> = dataStore
+        .getMovies(getDate().formatToUtc())
+        .map {
+            if (!canDisplayMedia()) it.copy(
+                coverUrl = "",
+                teaserId = ""
+            ) else it
+        }
 
-    suspend fun getMovie(movie: MovieData): MovieData {
-        setDate(movie.date)
-        return getMovies().first { it.movieId == movie.movieId }
+    suspend fun getMovie(): MovieData {
+        val movie = selectedMovie
+        if (movie == null) {
+            error("No selected movie")
+        } else {
+            setDate(movie.date)
+            return getMovies().first { it.movieId == movie.movieId }
+        }
     }
 
     suspend fun getDateRange(): DateRangeData? = dataStore.getDateRange()
@@ -59,7 +63,8 @@ class CinemaUseCase(
     suspend fun getSchedule(): List<WeekData> = dataStore.getSchedule().filter { it.hasMovies }
 
     suspend fun getEventUrl(): String? =
-        if (isPromotionalEnabled()) dataStore.getPromotionalUrl().takeIf { it.isNotEmpty() } else null
+        if (isPromotionalEnabled()) dataStore.getPromotionalUrl()
+            .takeIf { it.isNotEmpty() } else null
 
     private fun canDisplayMedia(): Boolean =
         !dataStore.getUserPreferences().isOnlyOnWifi() || networkUtils.isConnectedOnWifi()

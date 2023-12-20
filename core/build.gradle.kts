@@ -16,40 +16,39 @@
 
 plugins {
     id("com.android.library")
-    kotlin("android")
+    id("kotlin-android")
 }
 
 android {
-    compileSdk = Android.compileSdkVersion
-
-    compileOptions {
-        sourceCompatibility = Versions.java
-        targetCompatibility = Versions.java
-    }
+    namespace = "com.cinema.entract.core"
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = Android.minSdkVersion
-        targetSdk= Android.targetSdkVersion
+        minSdk = libs.versions.minSdk.get().toInt()
         resourceConfigurations.add("fr")
+    }
+
+    buildFeatures {
+        buildConfig = true
+        viewBinding = true
     }
 
     sourceSets {
         getByName("main").java.srcDirs("src/main/kotlin")
     }
 
-    viewBinding { isEnabled = true }
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
 }
 
 dependencies {
-    implementation(kotlin("stdlib", Versions.kotlin))
-    implementation(Libs.koinAndroid)
-    implementation(Libs.coroutinesCore)
-    implementation(Libs.coroutinesAndroid)
-    implementation(Libs.appCompat)
-    implementation(Libs.coreKtx)
-    implementation(Libs.fragmentKtx)
-    implementation(Libs.material)
-    implementation(Libs.lifecyleViewmodel)
-    implementation(Libs.timber)
-    implementation(Libs.uniflow)
+    api(libs.koinAndroidX)
+    api(libs.coroutines.android)
+    api(libs.androidx.appCompat)
+    api(libs.androidx.coreKtx)
+    api(libs.androidx.fragmentKtx)
+    api(libs.google.material)
+    api(libs.bundles.androidx.lifecycle)
+    api(libs.timber)
 }

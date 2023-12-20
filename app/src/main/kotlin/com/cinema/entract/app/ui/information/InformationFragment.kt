@@ -39,7 +39,7 @@ class InformationFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentInformationBinding.inflate(inflater)
         return binding.root
     }

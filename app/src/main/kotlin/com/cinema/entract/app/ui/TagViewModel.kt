@@ -40,8 +40,8 @@ class TagViewModel(private val useCase: TagUseCase) : ViewModel() {
 }
 
 sealed class TagAction {
-    object Schedule : TagAction()
-    object Promotional : TagAction()
+    data object Schedule : TagAction()
+    data object Promotional : TagAction()
     data class Details(val sessionId: String) : TagAction()
     data class Calendar(val sessionId: String) : TagAction()
 }

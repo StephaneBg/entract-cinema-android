@@ -18,23 +18,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/onScreenFragment"
+        android:id="@+id/onScreen"
         android:icon="@drawable/selector_nav_on_screen"
         android:title="@string/menu_today"
         />
 
     <item
-        android:id="@+id/scheduleFragment"
+        android:id="@+id/schedule"
         android:icon="@drawable/selector_nav_schedule"
         android:title="@string/menu_coming"
         />
     <item
-        android:id="@+id/informationFragment"
+        android:id="@+id/information"
         android:icon="@drawable/selector_nav_info"
         android:title="@string/menu_information"
         />
     <item
-        android:id="@+id/settingsFragment"
+        android:id="@+id/settings"
         android:icon="@drawable/selector_nav_settings"
         android:title="@string/menu_settings"
         />

@@ -16,48 +16,4 @@
 
 package com.cinema.entract.core.ui
 
-import android.view.View
-import android.widget.ProgressBar
-import androidx.annotation.CallSuper
-import androidx.core.view.isVisible
-import com.cinema.entract.core.widget.ErrorView
-
-open class BaseLceFragment : BaseFragment() {
-
-    private lateinit var viewHolder: ViewHolder
-
-    fun initLce(loading: ProgressBar, content: View, error: ErrorView) {
-        viewHolder = ViewHolder(loading, content, error)
-    }
-
-    @CallSuper
-    protected open fun showContent() {
-        viewHolder.errorView.isVisible = false
-        viewHolder.loadingView.isVisible = false
-        viewHolder.contentView.isVisible = true
-    }
-
-    @CallSuper
-    protected open fun showLoading() {
-        viewHolder.contentView.isVisible = false
-        viewHolder.errorView.isVisible = false
-        viewHolder.loadingView.isVisible = true
-    }
-
-    @CallSuper
-    protected open fun showError(throwable: Throwable?, action: () -> Unit) {
-        viewHolder.contentView.isVisible = false
-        viewHolder.loadingView.isVisible = false
-        viewHolder.errorView.show(
-            getErrorDrawable(throwable),
-            getErrorMessage(throwable),
-            action
-        )
-    }
-
-    data class ViewHolder(
-        val loadingView: ProgressBar,
-        val contentView: View,
-        val errorView: ErrorView
-    )
-}
+open class BaseLceFragment : BaseFragment(), Lce by LceDelegate()

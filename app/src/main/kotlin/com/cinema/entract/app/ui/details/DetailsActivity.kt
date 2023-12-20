@@ -16,24 +16,21 @@
 
 package com.cinema.entract.app.ui.details
 
+import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.graphics.text.LineBreaker
 import android.os.Build
 import android.os.Bundle
 import android.provider.CalendarContract
-import android.provider.CalendarContract.Events
 import android.text.Layout
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.cinema.entract.app.R
-import com.cinema.entract.app.databinding.FragmentDetailsBinding
+import com.cinema.entract.app.databinding.ActivityDetailsBinding
 import com.cinema.entract.app.databinding.ListItemDetailsMovieBinding
 import com.cinema.entract.app.ext.displayPlaceHolder
 import com.cinema.entract.app.ext.load
@@ -43,60 +40,45 @@ import com.cinema.entract.app.ui.CinemaViewModel
 import com.cinema.entract.app.ui.TagAction
 import com.cinema.entract.app.ui.TagViewModel
 import com.cinema.entract.core.ext.toSpanned
-import com.cinema.entract.core.ui.BaseLceFragment
+import com.cinema.entract.core.ui.BaseLceActivity
 import com.cinema.entract.data.ext.formatToUi
 import com.cinema.entract.data.ext.longFormatToUi
-import io.uniflow.android.livedata.onStates
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class DetailsFragment : BaseLceFragment() {
+class DetailsActivity : BaseLceActivity() {
 
-    private val cinemaViewModel by sharedViewModel<CinemaViewModel>()
-    private val tagViewModel by sharedViewModel<TagViewModel>()
-    private lateinit var binding: FragmentDetailsBinding
+    private val cinemaViewModel by viewModel<CinemaViewModel>()
+    private val tagViewModel by viewModel<TagViewModel>()
+    private lateinit var binding: ActivityDetailsBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentDetailsBinding.inflate(layoutInflater)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding = ActivityDetailsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         initLce(binding.loadingView, binding.contentView, binding.errorView)
-        return binding.root
-    }
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        (requireActivity() as AppCompatActivity).apply {
-            setSupportActionBar(binding.toolbar)
-            setupActionBarWithNavController(findNavController())
-        }
-
-        onStates(cinemaViewModel) { state ->
+        cinemaViewModel.observeStates(this) { state ->
             when (state) {
                 is CinemaState.Loading -> showLoading()
                 is CinemaState.Error -> {
                     setTitle(R.string.app_name)
                     showError(state.error) {
-                        if (null == state.movie) {
-                            findNavController().popBackStack()
-                        } else {
-                            cinemaViewModel.loadMovieDetails(state.movie)
-                        }
+                        cinemaViewModel.loadMovieDetails()
                     }
                 }
+
                 is CinemaState.Details -> {
                     val movie = state.movie
                     tagViewModel.tag(TagAction.Details(movie.sessionId))
 
-                    setTitle(
-                        getString(
-                            R.string.details_date_with_time,
-                            movie.date.longFormatToUi(),
-                            movie.schedule
-                        )
+                    title = getString(
+                        R.string.details_date_with_time,
+                        movie.date.longFormatToUi(),
+                        movie.schedule
                     )
                     binding.cover.apply {
                         if (movie.coverUrl.isNotEmpty()) load(movie.coverUrl)
@@ -126,7 +108,10 @@ class DetailsFragment : BaseLceFragment() {
 
                     with(binding.synopsis) {
                         text = movie.synopsis
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                            justificationMode = LineBreaker.JUSTIFICATION_MODE_INTER_WORD
+                        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            @SuppressLint("WrongConstant")
                             justificationMode = Layout.JUSTIFICATION_MODE_INTER_WORD
                         }
                     }
@@ -145,6 +130,12 @@ class DetailsFragment : BaseLceFragment() {
                 }
             }
         }
+
+        cinemaViewModel.loadMovieDetails()
+    }
+
+    override fun onUpPressed() {
+        finish()
     }
 
     private fun manageNextMovies(movies: List<Movie>) {
@@ -165,25 +156,25 @@ class DetailsFragment : BaseLceFragment() {
                 listItem.root.setOnClickListener {
                     cinemaViewModel.selectDate(movie.date)
                     cinemaViewModel.loadMovies()
-                    findNavController().navigate(R.id.action_detailsFragment_to_onScreenFragment)
+                    finish()
                 }
             }
         }
     }
 
     private fun inflateNextListItem(parent: ViewGroup): ListItemDetailsMovieBinding =
-        ListItemDetailsMovieBinding.inflate(LayoutInflater.from(context), parent, true)
+        ListItemDetailsMovieBinding.inflate(LayoutInflater.from(this), parent, true)
 
     private fun showTeaser(movie: Movie) {
         try {
-            requireContext().startActivity(
+            startActivity(
                 Intent(
                     Intent.ACTION_VIEW,
                     "vnd.youtube:${movie.teaserId}".toUri()
                 )
             )
         } catch (ex: ActivityNotFoundException) {
-            requireContext().startActivity(
+            startActivity(
                 Intent(
                     Intent.ACTION_VIEW,
                     "http://www.youtube.com/watch?v=${movie.teaserId}".toUri()
@@ -196,18 +187,24 @@ class DetailsFragment : BaseLceFragment() {
         try {
             val (beginTime, endTime) = cinemaViewModel.getSessionSchedule(movie)
             val intent = Intent(Intent.ACTION_INSERT)
-                .setData(Events.CONTENT_URI)
+                .setData(CalendarContract.Events.CONTENT_URI)
                 .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime)
                 .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime)
-                .putExtra(Events.TITLE, movie.title)
-                .putExtra(Events.DESCRIPTION, getString(R.string.app_name))
-                .putExtra(Events.EVENT_LOCATION, getString(R.string.information_address))
-                .putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY)
+                .putExtra(CalendarContract.Events.TITLE, movie.title)
+                .putExtra(CalendarContract.Events.DESCRIPTION, getString(R.string.app_name))
+                .putExtra(
+                    CalendarContract.Events.EVENT_LOCATION,
+                    getString(R.string.information_address)
+                )
+                .putExtra(
+                    CalendarContract.Events.AVAILABILITY,
+                    CalendarContract.Events.AVAILABILITY_BUSY
+                )
             tagViewModel.tag(TagAction.Calendar(movie.sessionId))
             startActivity(intent)
         } catch (e: Exception) {
             Timber.e(e)
-            Toast.makeText(requireContext(), R.string.error_general, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.error_general, Toast.LENGTH_SHORT).show()
         }
     }
 }

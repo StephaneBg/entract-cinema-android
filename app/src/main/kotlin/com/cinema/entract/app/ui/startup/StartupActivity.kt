@@ -21,8 +21,6 @@ import com.cinema.entract.app.R
 import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.core.ext.start
 import com.cinema.entract.core.ui.BaseActivity
-import io.uniflow.android.livedata.onStates
-import io.uniflow.core.flow.data.UIState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class StartupActivity : BaseActivity() {
@@ -34,10 +32,9 @@ class StartupActivity : BaseActivity() {
 
         setContentView(R.layout.activity_startup)
 
-        onStates(viewModel) { state ->
+        viewModel.observeStates(this) { state ->
             when (state) {
-                is UIState.Success,
-                is UIState.Failed -> {
+                is Start -> {
                     start<CinemaActivity>()
                     finish()
                 }

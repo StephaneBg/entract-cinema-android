@@ -17,23 +17,24 @@
 package com.cinema.entract.app.ui.startup
 
 import com.cinema.entract.core.ui.BaseViewModel
+import com.cinema.entract.core.ui.Empty
+import com.cinema.entract.core.ui.State
 import com.cinema.entract.data.interactor.CinemaUseCase
-import io.uniflow.core.flow.data.UIState
-import timber.log.Timber
 
-class StartupViewModel(private val useCase: CinemaUseCase) : BaseViewModel() {
-
-    override suspend fun onError(error: Exception, currentState: UIState) {
-        Timber.e(error)
-        action { setState(UIState.Failed()) }
-    }
+class StartupViewModel(private val useCase: CinemaUseCase) : BaseViewModel(Empty) {
 
     fun prefetch() {
         action {
             useCase.getMovies()
             useCase.getDateRange()
             useCase.getEventUrl()
-            setState(UIState.Success)
+            setState(Start)
         }
     }
+
+    override suspend fun onError(error: Throwable) {
+        setState(Start)
+    }
 }
+
+data object Start : State

@@ -31,18 +31,13 @@ import java.time.LocalDate
 
 class DayHeaderAdapter(
     private val dayHeader: DayHeader,
-    private val selection: (LocalDate, Int) -> Unit
+    private val selection: (LocalDate) -> Unit
 ) : ItemAdapter(R.layout.list_item_schedule_day_header) {
 
     override fun onBindViewHolder(itemView: View) {
         with(itemView as TextView) {
             text = dayHeader.dateUi
-            setOnClickListener {
-                selection(
-                    dayHeader.date,
-                    R.id.action_scheduleFragment_to_onScreenFragment
-                )
-            }
+            setOnClickListener { selection(dayHeader.date) }
         }
     }
 }
@@ -57,7 +52,7 @@ class WeekHeaderAdapter(private val weekHeader: WeekHeader) :
 
 class MovieAdapter(
     private val model: MovieEntry,
-    private val selection: (Movie, Int) -> Unit
+    private val selection: (Movie) -> Unit
 ) : ItemAdapter(R.layout.list_item_schedule_movie) {
 
     override fun onBindViewHolder(itemView: View) {
@@ -69,12 +64,7 @@ class MovieAdapter(
             underTwelve.isVisible = model.movie.isUnderTwelve
             explicitContent.isVisible = model.movie.isExplicitContent
             artMovie.isVisible = model.movie.isArtMovie
-            root.setOnClickListener {
-                selection(
-                    model.movie,
-                    R.id.action_scheduleFragment_to_detailsFragment
-                )
-            }
+            root.setOnClickListener { selection(model.movie) }
         }
     }
 }

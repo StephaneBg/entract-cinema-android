@@ -21,14 +21,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.navigation.fragment.findNavController
 import com.cinema.entract.app.R
 import com.cinema.entract.app.databinding.FragmentOnScreenBinding
 import com.cinema.entract.app.model.DateParameters
 import com.cinema.entract.app.model.Movie
-import com.cinema.entract.app.ui.CinemaEvent
+import com.cinema.entract.app.ui.CinemaActivity
 import com.cinema.entract.app.ui.CinemaState
 import com.cinema.entract.app.ui.CinemaViewModel
+import com.cinema.entract.app.ui.PromotionalEffect
 import com.cinema.entract.app.ui.promotional.PromotionalActivity
 import com.cinema.entract.core.ext.start
 import com.cinema.entract.core.ui.BaseLceFragment
@@ -40,8 +40,6 @@ import com.cinema.entract.data.ext.toUtcEpochMilliSecond
 import com.cinema.entract.data.ext.toUtcLocalDate
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
-import io.uniflow.android.livedata.onEvents
-import io.uniflow.android.livedata.onStates
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class OnScreenFragment : BaseLceFragment() {
@@ -57,7 +55,7 @@ class OnScreenFragment : BaseLceFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentOnScreenBinding.inflate(inflater)
         initLce(binding.loadingView, binding.recyclerView, binding.errorView)
         return binding.root
@@ -72,7 +70,7 @@ class OnScreenFragment : BaseLceFragment() {
         binding.fab.setOnClickListener { displayDatePicker() }
         emptinessHelper.init(binding.recyclerView, binding.emptyView)
 
-        onStates(cinemaViewModel) { state ->
+        cinemaViewModel.observeStates(this) { state ->
             when (state) {
                 is CinemaState.Init -> cinemaViewModel.loadPromotional()
                 is CinemaState.Loading -> showLoading()
@@ -84,6 +82,7 @@ class OnScreenFragment : BaseLceFragment() {
                     updateMovies(state.movies)
                     showContent()
                 }
+
                 is CinemaState.Error -> {
                     showError(state.error) { cinemaViewModel.loadMovies() }
                     setTitle(R.string.app_name)
@@ -91,15 +90,18 @@ class OnScreenFragment : BaseLceFragment() {
             }
         }
 
-        onEvents(cinemaViewModel) { event ->
-            when (event) {
-                is CinemaEvent.Promotional -> requireActivity().start<PromotionalActivity> {
-                    putExtra(PromotionalActivity.COVER_URL, event.url)
+        cinemaViewModel.observeEffects(this) { effect ->
+            when (effect) {
+                is PromotionalEffect -> requireActivity().start<PromotionalActivity> {
+                    putExtra(PromotionalActivity.COVER_URL, effect.url)
                 }
             }
         }
+    }
 
-        savedInstanceState ?: cinemaViewModel.loadMovies()
+    override fun onResume() {
+        super.onResume()
+        cinemaViewModel.loadMovies()
     }
 
     private fun updateMovies(movies: List<Movie>) {
@@ -108,8 +110,7 @@ class OnScreenFragment : BaseLceFragment() {
     }
 
     private fun onMovieSelected(movie: Movie) {
-        cinemaViewModel.loadMovieDetails(movie)
-        findNavController().navigate(R.id.action_onScreenFragment_to_detailsFragment)
+        (activity as? CinemaActivity)?.displayDetails(movie)
     }
 
     private fun displayDatePicker() {

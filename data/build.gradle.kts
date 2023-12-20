@@ -16,36 +16,33 @@
 
 plugins {
     id("com.android.library")
-    kotlin("android")
+    id("kotlin-android")
 }
 
 android {
-    compileSdk = Android.compileSdkVersion
-
-    compileOptions {
-        sourceCompatibility = Versions.java
-        targetCompatibility = Versions.java
-        isCoreLibraryDesugaringEnabled = true
-    }
+    namespace = "com.cinema.entract.data"
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = Android.minSdkVersion
-        targetSdk= Android.targetSdkVersion
+        minSdk = libs.versions.minSdk.get().toInt()
         resourceConfigurations.add("fr")
     }
 
     sourceSets {
         getByName("main").java.srcDirs("src/main/kotlin")
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
 }
 
 dependencies {
     implementation(project(":core"))
 
-    implementation(kotlin("stdlib", Versions.kotlin))
-    implementation(Libs.coroutinesCore)
-    implementation(Libs.coroutinesAndroid)
-    implementation(Libs.koinAndroid)
-
-    coreLibraryDesugaring(Libs.desugaring)
+    coreLibraryDesugaring(libs.desugaring)
 }

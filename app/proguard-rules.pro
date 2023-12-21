@@ -10,7 +10,11 @@
  # Most of volatile fields are updated with AFU and should not be mangled	
 -keepclassmembernames class kotlinx.** {	
     volatile <fields>;	
-}	
+}
+
+-dontwarn kotlin.time.ClockMark
+-dontwarn kotlin.time.MonoClock
+
 # ServiceLoader support	
 -keepnames class kotlinx.coroutines.internal.MainDispatcherFactory {}	
 -keepnames class kotlinx.coroutines.CoroutineExceptionHandler {}	
@@ -42,11 +46,7 @@
  # Top-level functions that can only be used by Kotlin.	
 -dontwarn retrofit2.-KotlinExtensions	
 
- # ThreeTen ABP	
--keep class org.threeten.bp.** { *; }	
--keep interface org.threeten.bp.** { *; }	
-
- # Application models	
+ # Application models
 -keep class com.cinema.entract.app.model.** { *; }	
 -keep class com.cinema.entract.data.model.** { *; }	
 -keep class com.cinema.entract.remote.model.** { *; }

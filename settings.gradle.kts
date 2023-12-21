@@ -14,6 +14,14 @@
  * limitations under the License.
  */
 
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+        google()
+    }
+}
+
+
 include(
     ":cache",
     ":remote",

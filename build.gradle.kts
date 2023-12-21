@@ -16,26 +16,21 @@
 
 buildscript {
     repositories {
-        maven("https://artifactory.f.bbg/artifactory/g-android-maven-proxy/")
-        maven("https://artifactory.f.bbg/artifactory/maven-third-party-android-libs/")
+        mavenCentral()
+        google()
     }
 
     dependencies {
-        classpath(kotlin("gradle-plugin", Versions.kotlin))
-        classpath(Build.androidGradle)
-        classpath(Build.googleServices)
+        classpath(libs.kotlin.gradlePlugin)
+        classpath(libs.android.gradlePlugin)
+        classpath(libs.google.services)
     }
 }
 
 allprojects {
-    repositories {
-        maven("https://artifactory.f.bbg/artifactory/g-android-maven-proxy/")
-        maven("https://artifactory.f.bbg/artifactory/maven-third-party-android-libs/")
-    }
-
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         kotlinOptions {
-            jvmTarget = Versions.java.toString()
+            jvmTarget = "1.8"
         }
     }
 }
@@ -44,9 +39,13 @@ subprojects {
     afterEvaluate {
         extensions.configure<com.android.build.gradle.BaseExtension> {
             compileOptions {
-                sourceCompatibility = Versions.java
-                targetCompatibility = Versions.java
+                sourceCompatibility = JavaVersion.VERSION_1_8
+                targetCompatibility = JavaVersion.VERSION_1_8
             }
         }
     }
+}
+
+tasks.create<Delete>("clean") {
+    delete(rootProject.layout.buildDirectory)
 }

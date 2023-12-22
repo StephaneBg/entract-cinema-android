@@ -56,11 +56,12 @@
             <ImageView
                 android:id="@+id/cover"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginStart="@dimen/margin_padding_size_medium"
                 android:importantForAccessibility="no"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/director"
+                app:layout_constraintBottom_toBottomOf="@id/duration"
                 app:layout_constraintWidth_percent="0.3"
                 tools:adjustViewBounds="true"
                 tools:scaleType="fitCenter"
@@ -76,7 +77,7 @@
                 android:layout_marginTop="@dimen/margin_padding_size_medium"
                 android:layout_marginBottom="@dimen/margin_padding_size_medium"
                 android:importantForAccessibility="no"
-                android:tint="?colorOnBackground"
+                app:tint="?colorOnBackground"
                 app:layout_constraintStart_toStartOf="@id/duration"
                 app:layout_constraintTop_toBottomOf="@id/duration"
                 app:srcCompat="@drawable/ic_original_version_black_24dp"
@@ -90,7 +91,7 @@
                 android:layout_marginTop="@dimen/margin_padding_size_medium"
                 android:layout_marginBottom="@dimen/margin_padding_size_medium"
                 android:importantForAccessibility="no"
-                android:tint="?colorOnBackground"
+                app:tint="?colorOnBackground"
                 app:layout_constraintStart_toEndOf="@id/originalVersion"
                 app:layout_constraintTop_toBottomOf="@id/duration"
                 app:srcCompat="@drawable/ic_three_dimension_black_24dp"
@@ -104,7 +105,7 @@
                 android:layout_marginTop="@dimen/margin_padding_size_medium"
                 android:layout_marginBottom="@dimen/margin_padding_size_medium"
                 android:importantForAccessibility="no"
-                android:tint="?colorOnBackground"
+                app:tint="?colorOnBackground"
                 app:layout_constraintStart_toEndOf="@id/threeDimension"
                 app:layout_constraintTop_toBottomOf="@id/duration"
                 app:srcCompat="@drawable/ic_under_twelve_black_24dp"
@@ -118,7 +119,7 @@
                 android:layout_marginTop="@dimen/margin_padding_size_medium"
                 android:layout_marginBottom="@dimen/margin_padding_size_medium"
                 android:importantForAccessibility="no"
-                android:tint="?colorOnBackground"
+                app:tint="?colorOnBackground"
                 app:layout_constraintStart_toEndOf="@id/underTwelve"
                 app:layout_constraintTop_toBottomOf="@id/duration"
                 app:srcCompat="@drawable/ic_explicit_content_black_24dp"
@@ -132,7 +133,7 @@
                 android:layout_marginTop="@dimen/margin_padding_size_medium"
                 android:layout_marginBottom="@dimen/margin_padding_size_medium"
                 android:importantForAccessibility="no"
-                android:tint="?colorOnBackground"
+                app:tint="?colorOnBackground"
                 app:layout_constraintStart_toEndOf="@id/explicitContent"
                 app:layout_constraintTop_toBottomOf="@id/duration"
                 app:srcCompat="@drawable/ic_art_movie_24dp"
@@ -353,7 +354,6 @@
         android:layout_gravity="center"
         android:indeterminate="true"
         android:visibility="gone"
-        tools:visibility="visible"
         />
 
     <com.cinema.entract.core.widget.ErrorView
@@ -362,6 +362,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:visibility="gone"
-        tools:visibility="visible"
         />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

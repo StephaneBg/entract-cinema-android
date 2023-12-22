@@ -17,8 +17,8 @@
 package com.cinema.entract.app.ui.promotional
 
 import android.os.Bundle
+import coil.load
 import com.cinema.entract.app.databinding.ActivityPromotionalBinding
-import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.ui.TagAction
 import com.cinema.entract.app.ui.TagViewModel
 import com.cinema.entract.core.ui.BaseActivity

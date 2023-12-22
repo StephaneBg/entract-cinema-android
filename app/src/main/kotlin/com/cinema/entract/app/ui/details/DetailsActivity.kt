@@ -29,11 +29,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
+import coil.load
 import com.cinema.entract.app.R
 import com.cinema.entract.app.databinding.ActivityDetailsBinding
 import com.cinema.entract.app.databinding.ListItemDetailsMovieBinding
 import com.cinema.entract.app.ext.displayPlaceHolder
-import com.cinema.entract.app.ext.load
 import com.cinema.entract.app.model.Movie
 import com.cinema.entract.app.ui.CinemaState
 import com.cinema.entract.app.ui.CinemaViewModel

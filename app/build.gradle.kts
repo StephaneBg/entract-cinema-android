@@ -102,7 +102,7 @@ dependencies {
 
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.recyclerview)
-    implementation(libs.glide)
+    implementation(libs.coil)
     implementation(platform(libs.google.firebaseBom))
     implementation(libs.google.firebaseMessaging)
 

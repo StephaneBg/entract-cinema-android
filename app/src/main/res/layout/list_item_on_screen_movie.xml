@@ -43,7 +43,6 @@
             app:layout_constraintDimensionRatio="2:3"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:scaleType="fitCenter"
             tools:srcCompat="@drawable/ic_movie_black_24dp"
             tools:tint="?colorOnPrimary"
             />

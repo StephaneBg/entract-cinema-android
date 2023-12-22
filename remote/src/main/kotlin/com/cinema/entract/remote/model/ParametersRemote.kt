@@ -16,6 +16,9 @@
 
 package com.cinema.entract.remote.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class ParametersRemote(
-    val periode: DateRangeRemote?
+    val periode: DateRangeRemote? = null
 )

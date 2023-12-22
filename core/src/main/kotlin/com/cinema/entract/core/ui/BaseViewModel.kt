@@ -20,6 +20,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -29,7 +30,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 open class BaseViewModel(defaultState: State) : ViewModel() {
@@ -46,23 +46,23 @@ open class BaseViewModel(defaultState: State) : ViewModel() {
     private val states: Flow<State> by ::innerStates
     private val effects: Flow<Effect> by ::innerEffects
 
-    private val stateWithLifeCycleLiveData: LiveData<State> =
-        states.asLiveData(viewModelScope.coroutineContext)
-    private val effectsWithLifeCycleLiveData: LiveData<Effect> =
-        effects.asLiveData(viewModelScope.coroutineContext)
+    private val stateLiveData: LiveData<State> = states.asLiveData(viewModelScope.coroutineContext)
 
     init {
         currentState = defaultState
     }
 
     fun observeStates(owner: LifecycleOwner, block: (State) -> Unit) {
-        stateWithLifeCycleLiveData.removeObservers(owner)
-        stateWithLifeCycleLiveData.observe(owner, block)
+        stateLiveData.removeObservers(owner)
+        stateLiveData.observe(owner, block)
     }
 
     fun observeEffects(owner: LifecycleOwner, block: (Effect) -> Unit) {
-        effectsWithLifeCycleLiveData.removeObservers(owner)
-        effectsWithLifeCycleLiveData.observe(owner, block)
+        owner.lifecycleScope.launch {
+            effects.collect { effect ->
+                block(effect)
+            }
+        }
     }
 
     fun action(block: suspend (State) -> Unit): Job = action(block, ::onError)
@@ -70,11 +70,9 @@ open class BaseViewModel(defaultState: State) : ViewModel() {
     fun action(
         block: suspend (State) -> Unit,
         onError: suspend (Throwable) -> Unit
-    ): Job = viewModelScope.launch {
+    ): Job = viewModelScope.launch(Dispatchers.IO) {
         try {
-            withContext(Dispatchers.IO) {
-                block(currentState)
-            }
+            block(currentState)
         } catch (e: Exception) {
             onError(e)
         }

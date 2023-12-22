@@ -16,7 +16,10 @@
 
 package com.cinema.entract.remote.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class DayRemote(
-    val jour: String?,
-    val films: List<MovieRemote>?
+    val jour: String? = null,
+    val films: List<MovieRemote>? = null
 )

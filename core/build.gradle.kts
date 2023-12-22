@@ -36,19 +36,18 @@ android {
     sourceSets {
         getByName("main").java.srcDirs("src/main/kotlin")
     }
-
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-    }
 }
 
 dependencies {
-    api(libs.koinAndroidX)
-    api(libs.coroutines.android)
-    api(libs.androidx.appCompat)
-    api(libs.androidx.coreKtx)
-    api(libs.androidx.fragmentKtx)
+    api(libs.kotlinx.coroutines.android)
+    api(libs.androidx.appcompat)
+    api(libs.androidx.core)
+    api(libs.androidx.fragment)
     api(libs.google.material)
-    api(libs.bundles.androidx.lifecycle)
+    api(libs.androidx.lifecycle.process)
+    api(libs.androidx.lifecycle.livedata)
+    api(libs.koin.androidx.viewmodel)
     api(libs.timber)
+
+    coreLibraryDesugaring(libs.android.desugaring)
 }

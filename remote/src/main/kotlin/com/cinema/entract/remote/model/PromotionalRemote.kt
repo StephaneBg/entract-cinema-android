@@ -16,4 +16,7 @@
 
 package com.cinema.entract.remote.model
 
-data class PromotionalRemote(val lien: String?)
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class PromotionalRemote(val lien: String? = null)

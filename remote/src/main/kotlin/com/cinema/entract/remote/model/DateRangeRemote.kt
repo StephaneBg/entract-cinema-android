@@ -16,7 +16,10 @@
 
 package com.cinema.entract.remote.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class DateRangeRemote(
-    val date_minimum: String?,
-    val date_maximum: String?
+    val date_minimum: String? = null,
+    val date_maximum: String? = null
 )

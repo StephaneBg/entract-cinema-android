@@ -26,7 +26,7 @@ import com.cinema.entract.remote.mapper.PromotionalMapper
 import com.cinema.entract.remote.mapper.WeekMapper
 
 class CinemaRemoteRepo(
-    private val service: CinemaService,
+    private val service: CinemaApi,
     private val movieMapper: MovieMapper,
     private val weekMapper: WeekMapper,
     private val dateRangeMapper: DateRangeMapper,
@@ -51,18 +51,18 @@ class CinemaRemoteRepo(
     }
 
     override suspend fun tagSchedule() {
-        service.tagSchedule()
+        service.tag(page = "page_programme")
     }
 
     override suspend fun tagPromotional() {
-        service.tagPromotional()
+        service.tag(page = "page_evt")
     }
 
     override suspend fun tagDetails(sessionId: String) {
-        service.tagDetails(sessionId = sessionId)
+        service.tag(page = "page_detail", sessionId = sessionId)
     }
 
     override suspend fun tagCalendar(sessionId: String) {
-        service.tagCalendar(sessionId = sessionId)
+        service.tag(page = "ajout_cal", sessionId = sessionId)
     }
 }

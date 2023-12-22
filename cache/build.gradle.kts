@@ -31,15 +31,11 @@ android {
     sourceSets {
         getByName("main").java.srcDirs("src/main/kotlin")
     }
-
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-    }
 }
 
 dependencies {
     implementation(project(":core"))
     implementation(project(":data"))
 
-    coreLibraryDesugaring(libs.desugaring)
+    coreLibraryDesugaring(libs.android.desugaring)
 }

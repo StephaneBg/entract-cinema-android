@@ -17,10 +17,11 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
+    id("kotlinx-serialization")
 }
 
 android {
-    namespace = "com.cinema.entract.data"
+    namespace = "com.cinema.entract.remote"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
@@ -31,18 +32,15 @@ android {
     sourceSets {
         getByName("main").java.srcDirs("src/main/kotlin")
     }
-
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-    }
 }
 
 dependencies {
     implementation(project(":core"))
     implementation(project(":data"))
 
-    implementation(libs.retrofit.retrofit)
-    implementation(libs.retrofit.converterMoshi)
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.json)
 
-    coreLibraryDesugaring(libs.desugaring)
+    coreLibraryDesugaring(libs.android.desugaring)
 }

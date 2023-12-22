@@ -17,35 +17,20 @@
 package com.cinema.entract.remote.di
 
 import com.cinema.entract.data.repository.RemoteRepo
+import com.cinema.entract.remote.CinemaApi
 import com.cinema.entract.remote.CinemaRemoteRepo
-import com.cinema.entract.remote.CinemaService
-import com.cinema.entract.remote.mapper.*
-import com.cinema.entract.remote.network.ConnectivityInterceptor
-import okhttp3.OkHttpClient
+import com.cinema.entract.remote.createClient
+import com.cinema.entract.remote.mapper.DateRangeMapper
+import com.cinema.entract.remote.mapper.DayMapper
+import com.cinema.entract.remote.mapper.MovieMapper
+import com.cinema.entract.remote.mapper.PromotionalMapper
+import com.cinema.entract.remote.mapper.WeekMapper
 import org.koin.dsl.module
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.create
-import java.util.concurrent.TimeUnit
 
 val remoteModule = module {
 
-    single {
-        OkHttpClient.Builder()
-            .addInterceptor(ConnectivityInterceptor(get()))
-            .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
-            .readTimeout(TIME_OUT, TimeUnit.SECONDS)
-            .build()
-    }
-
-    single<CinemaService> {
-        Retrofit.Builder()
-            .baseUrl("http://mobile-grenadecinema.fr/php/rest/")
-            .client(get())
-            .addConverterFactory(MoshiConverterFactory.create())
-            .build()
-            .create()
-    }
+    single { createClient() }
+    single { CinemaApi(get()) }
 
     single { MovieMapper() }
     single { DayMapper(get()) }
@@ -55,5 +40,3 @@ val remoteModule = module {
 
     factory<RemoteRepo> { CinemaRemoteRepo(get(), get(), get(), get(), get()) }
 }
-
-private const val TIME_OUT = 30L

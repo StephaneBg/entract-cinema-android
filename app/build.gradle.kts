@@ -22,7 +22,7 @@ plugins {
 
 val versionMajor = 1
 val versionMinor = 9
-val versionPatch = 0
+val versionPatch = 1
 
 android {
     namespace = "com.cinema.entract.app"
@@ -36,16 +36,26 @@ android {
         resourceConfigurations.add("fr")
     }
 
+    signingConfigs {
+        create("release") {
+        }
+    }
+
     buildTypes {
+        getByName("debug") {
+            isDebuggable = true
+            isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("debug")
+        }
+
         getByName("release") {
-            isShrinkResources = true
             isMinifyEnabled = true
             isDebuggable = false
-            isJniDebuggable = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 
@@ -82,10 +92,6 @@ android {
             }
         }
     }
-
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-    }
 }
 
 dependencies {
@@ -94,11 +100,11 @@ dependencies {
     implementation(project(":remote"))
     implementation(project(":data"))
 
-    implementation(libs.androidx.constraintLayout)
-    implementation(libs.androidx.recyclerView)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.recyclerview)
     implementation(libs.glide)
     implementation(platform(libs.google.firebaseBom))
     implementation(libs.google.firebaseMessaging)
 
-    coreLibraryDesugaring(libs.desugaring)
+    coreLibraryDesugaring(libs.android.desugaring)
 }

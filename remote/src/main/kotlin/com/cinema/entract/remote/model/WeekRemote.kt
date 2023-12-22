@@ -16,9 +16,12 @@
 
 package com.cinema.entract.remote.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class WeekRemote(
-    val debutsemaine: String?,
-    val finsemaine: String?,
-    val jours: List<DayRemote>?,
-    val filmsDisponibles: Boolean?
+    val debutsemaine: String? = null,
+    val finsemaine: String? = null,
+    val jours: List<DayRemote>? = null,
+    val filmsDisponibles: Boolean? = null
 )

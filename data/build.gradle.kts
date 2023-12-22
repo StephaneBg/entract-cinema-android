@@ -35,14 +35,10 @@ android {
     buildFeatures {
         buildConfig = true
     }
-
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-    }
 }
 
 dependencies {
     implementation(project(":core"))
 
-    coreLibraryDesugaring(libs.desugaring)
+    coreLibraryDesugaring(libs.android.desugaring)
 }

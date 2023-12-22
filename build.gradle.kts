@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+plugins {
+    alias(libs.plugins.kotlin.serialization) apply false
+}
+
 buildscript {
     repositories {
         mavenCentral()
@@ -21,8 +25,8 @@ buildscript {
     }
 
     dependencies {
-        classpath(libs.kotlin.gradlePlugin)
-        classpath(libs.android.gradlePlugin)
+        classpath(libs.kotlin.gradle)
+        classpath(libs.android.gradle)
         classpath(libs.google.services)
     }
 }
@@ -41,6 +45,7 @@ subprojects {
             compileOptions {
                 sourceCompatibility = JavaVersion.VERSION_1_8
                 targetCompatibility = JavaVersion.VERSION_1_8
+                isCoreLibraryDesugaringEnabled = true
             }
         }
     }

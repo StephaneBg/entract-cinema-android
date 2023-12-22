@@ -16,27 +16,29 @@
 
 package com.cinema.entract.remote.model
 
-import com.squareup.moshi.Json
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class MovieRemote(
-    val id_seance: String?,
-    val id_film: String?,
-    val titre: String?,
-    val date: String?,
-    val horaire: String?,
-    @field:Json(name = "3d") val troisDimension: Boolean?,
-    val vo: Boolean?,
-    val art_essai: Boolean?,
-    val moins_douze: Boolean?,
-    val avertissement: Boolean?,
-    val affiche: String?,
-    val duree: String?,
-    val annee: String?,
-    val pays: String?,
-    val style: String?,
-    val de: String?,
-    val avec: String?,
-    val synopsis: String?,
-    val bande_annonce: String?,
-    val autres_dates: List<MovieRemote>?
+    val id_seance: String? = null,
+    val id_film: String? = null,
+    val titre: String? = null,
+    val date: String? = null,
+    val horaire: String? = null,
+    @SerialName("3d") val troisDimension: Boolean? = null,
+    val vo: Boolean? = null,
+    val art_essai: Boolean? = null,
+    val moins_douze: Boolean? = null,
+    val avertissement: Boolean? = null,
+    val affiche: String? = null,
+    val duree: String? = null,
+    val annee: String? = null,
+    val pays: String? = null,
+    val style: String? = null,
+    val de: String? = null,
+    val avec: String? = null,
+    val synopsis: String? = null,
+    val bande_annonce: String? = null,
+    val autres_dates: List<MovieRemote>? = null
 )

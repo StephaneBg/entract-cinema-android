@@ -22,7 +22,7 @@ plugins {
 
 val versionMajor = 1
 val versionMinor = 9
-val versionPatch = 1
+val versionPatch = 2
 
 android {
     namespace = "com.cinema.entract.app"
